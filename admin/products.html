@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>LIQUIDO | Admin Product Management</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f2f20d",
+                        "background-light": "#f8f8f5",
+                        "background-dark": "#181811",
+                        "surface-dark": "#222210",
+                        "border-dark": "#393928",
+                    },
+                    fontFamily: {
+                        "display": ["Plus Jakarta Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .fill-icon {
+            font-variation-settings: 'FILL' 1;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white min-h-screen">
+<div class="flex h-screen overflow-hidden">
+<!-- Side Navigation -->
+<aside class="w-64 flex flex-col border-r border-border-dark bg-background-dark">
+<div class="p-6 flex flex-col h-full">
+<!-- Brand Identity -->
+<div class="flex items-center gap-3 mb-10">
+<div class="bg-primary rounded-full size-10 flex items-center justify-center text-background-dark">
+<span class="material-symbols-outlined font-bold">water_drop</span>
+</div>
+<div class="flex flex-col">
+<h1 class="text-white text-base font-bold tracking-wider leading-none">LIQUIDO</h1>
+<p class="text-[#baba9c] text-[10px] uppercase font-bold tracking-widest mt-1">Admin Dashboard</p>
+</div>
+</div>
+<!-- Nav Links -->
+<nav class="flex flex-col gap-2 flex-grow">
+<a class="flex items-center gap-3 px-4 py-3 text-[#baba9c] hover:text-white transition-colors" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-sm font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg bg-border-dark text-white" href="#">
+<span class="material-symbols-outlined fill-icon text-primary">inventory_2</span>
+<span class="text-sm font-medium">Products</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-[#baba9c] hover:text-white transition-colors" href="#">
+<span class="material-symbols-outlined">sell</span>
+<span class="text-sm font-medium">Brands</span>
+</a>
+<div class="h-px bg-border-dark my-4"></div>
+<a class="flex items-center gap-3 px-4 py-3 text-[#baba9c] hover:text-white transition-colors" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="text-sm font-medium">Profile</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-[#baba9c] hover:text-white transition-colors" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-sm font-medium">Settings</span>
+</a>
+</nav>
+<!-- Logout -->
+<div class="mt-auto">
+<button class="flex items-center gap-3 px-4 py-3 text-red-400 hover:text-red-500 transition-colors w-full">
+<span class="material-symbols-outlined">logout</span>
+<span class="text-sm font-medium">Sign Out</span>
+</button>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col overflow-y-auto">
+<!-- Header Section -->
+<header class="p-8 pb-4">
+<div class="flex flex-wrap gap-2 mb-2">
+<a class="text-[#baba9c] text-sm font-medium hover:text-white transition-colors" href="#">Dashboard</a>
+<span class="text-[#baba9c] text-sm font-medium">/</span>
+<span class="text-white text-sm font-medium">Product Management</span>
+</div>
+<div class="flex flex-wrap justify-between items-end gap-4">
+<h2 class="text-white text-4xl font-black leading-tight tracking-tight">Product Management</h2>
+<button class="flex items-center gap-2 px-6 py-3 bg-primary text-background-dark rounded-xl font-bold text-sm transition-transform active:scale-95">
+<span class="material-symbols-outlined">add</span>
+<span>Add New Product</span>
+</button>
+</div>
+</header>
+<!-- Filters and Search -->
+<section class="px-8 py-4">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-4">
+<!-- Search Bar -->
+<div class="lg:col-span-6">
+<div class="relative h-12">
+<div class="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none text-[#baba9c]">
+<span class="material-symbols-outlined">search</span>
+</div>
+<input class="w-full h-full bg-border-dark border-none rounded-xl pl-12 text-white placeholder:text-[#baba9c] focus:ring-1 focus:ring-primary text-sm" placeholder="Search products by name or SKU..." type="text"/>
+</div>
+</div>
+<!-- Chips / Filters -->
+<div class="lg:col-span-6 flex flex-wrap gap-2 items-center justify-end">
+<button class="flex items-center gap-2 h-10 px-4 rounded-xl bg-border-dark text-white border border-transparent hover:border-primary/50 transition-all">
+<span class="text-sm font-medium">All Brands</span>
+<span class="material-symbols-outlined text-sm">expand_more</span>
+</button>
+<button class="flex items-center gap-2 h-10 px-4 rounded-xl bg-primary/20 text-primary border border-primary/30">
+<span class="text-sm font-bold">Vaporesso</span>
+<span class="material-symbols-outlined text-sm">close</span>
+</button>
+<button class="flex items-center gap-2 h-10 px-4 rounded-xl bg-border-dark text-white border border-transparent hover:border-primary/50 transition-all">
+<span class="text-sm font-medium">SMOK</span>
+<span class="material-symbols-outlined text-sm">expand_more</span>
+</button>
+<button class="flex items-center gap-2 h-10 px-4 rounded-xl bg-border-dark text-white border border-transparent hover:border-primary/50 transition-all">
+<span class="text-sm font-medium">Category</span>
+<span class="material-symbols-outlined text-sm">filter_list</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Table Section -->
+<section class="px-8 pb-8 flex-grow">
+<div class="bg-surface-dark border border-border-dark rounded-2xl overflow-hidden">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-border-dark/30 border-b border-border-dark">
+<th class="px-6 py-4 text-[#baba9c] font-bold text-xs uppercase tracking-widest">Product Info</th>
+<th class="px-6 py-4 text-[#baba9c] font-bold text-xs uppercase tracking-widest">Brand</th>
+<th class="px-6 py-4 text-[#baba9c] font-bold text-xs uppercase tracking-widest">Category</th>
+<th class="px-6 py-4 text-[#baba9c] font-bold text-xs uppercase tracking-widest">Status</th>
+<th class="px-6 py-4 text-[#baba9c] font-bold text-xs uppercase tracking-widest text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-border-dark">
+<!-- Row 1 -->
+<tr class="hover:bg-white/5 transition-colors group">
+<td class="px-6 py-4">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-lg bg-border-dark flex-shrink-0 bg-cover bg-center border border-border-dark/50" data-alt="vape mod device product" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCnp6gFsD8JEXkOxBdl-YxaGfRcYCEB8uDGxtvkmzqRfzHEs4JVizOJ_zjApy7FFH5mgtCaMh_jSal0EyHJc_lv0VUbA-7q3uRfR49qqJnauGEHvjTayw8WIC_cMmHw8xz82p0A5KoAdABGclLImavNXFOjWLJqeYKmU6Erj51jCGq5oHTujR6EjdHHFvIR6ZWwXYacpB_GxaSZVaZ99sm3gAt3r0VOLrCT0bI8PZhWhOXL1U3a_i624bhgAldM-6zZZKi_RTWpCBg')"></div>
+<div>
+<p class="text-white font-bold text-sm">GEN 200 Kit</p>
+<p class="text-[#baba9c] text-xs">SKU: VP-G200-BLK</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="text-white text-sm">Vaporesso</span>
+</td>
+<td class="px-6 py-4">
+<span class="px-3 py-1 rounded-full bg-border-dark text-[#baba9c] text-[11px] font-bold uppercase tracking-wider">Devices</span>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<div class="size-2 rounded-full bg-primary animate-pulse"></div>
+<span class="text-primary text-xs font-bold uppercase tracking-tighter">In Stock</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex justify-end gap-2">
+<button class="p-2 rounded-lg hover:bg-primary/20 text-primary transition-colors">
+<span class="material-symbols-outlined">edit_square</span>
+</button>
+<button class="p-2 rounded-lg hover:bg-red-500/10 text-red-400 transition-colors">
+<span class="material-symbols-outlined">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-white/5 transition-colors group">
+<td class="px-6 py-4">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-lg bg-border-dark flex-shrink-0 bg-cover bg-center border border-border-dark/50" data-alt="e-liquid bottle product" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBXi0cTasrhz5J4660HzBZ8Y-5VZVxa3I25pzojZz4Be5De8yfINGKcHTj8BaqZ0LZ5u0j5vsAgVzCF5BA9_BnMytGKHpLpcqn6sBwdVLVbihkz44FQKLGPkiex3up3o5x4L6XYvxttmW9gXD8xSFHqbSfeTbuxbDP95D7KO_PPDoGaRE5XmBJEVEOkdgEnB119pgatjMoml9H3lZXCqhtsv83z2_DdQn-uxrKdjpvMi6VYtSHGkzubrKZJCNEOigLXZ3nj4-bCPTA')"></div>
+<div>
+<p class="text-white font-bold text-sm">Blueberry Frost 60ml</p>
+<p class="text-[#baba9c] text-xs">SKU: EL-BF-60-3MG</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="text-white text-sm">LIQUIDO Select</span>
+</td>
+<td class="px-6 py-4">
+<span class="px-3 py-1 rounded-full bg-border-dark text-[#baba9c] text-[11px] font-bold uppercase tracking-wider">E-Liquids</span>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<div class="size-2 rounded-full bg-orange-400"></div>
+<span class="text-orange-400 text-xs font-bold uppercase tracking-tighter">Low Stock</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex justify-end gap-2">
+<button class="p-2 rounded-lg hover:bg-primary/20 text-primary transition-colors">
+<span class="material-symbols-outlined">edit_square</span>
+</button>
+<button class="p-2 rounded-lg hover:bg-red-500/10 text-red-400 transition-colors">
+<span class="material-symbols-outlined">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-white/5 transition-colors group">
+<td class="px-6 py-4">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-lg bg-border-dark flex-shrink-0 bg-cover bg-center border border-border-dark/50" data-alt="coil pack accessory product" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuACQWa4FvSKf1vFdW3Q7D1gf2nETXjgVcIQgHGxN1LZqMFRe3rHlp91j4pvTXtpFCgGyENJuWqbxdv5yWD3Ey3jqfVv_hxP1BKGdTTgba0YDMsgXVP3GOs2JY_PacdjFh-dcQ_uEkfBZJIhv270ftxg9llDvd3LlKQScD6xdn0IX_xtEX0dRdzHSc3PMLGJBmJOeD1kvBaPr5o99wX0hVe7mZyJWPX-x3sLe78hDdQg7Uq0tExHBOOnXIPlF3xw5Vkfq9RYhjmXOp8')"></div>
+<div>
+<p class="text-white font-bold text-sm">GTX Mesh Coils (5pk)</p>
+<p class="text-[#baba9c] text-xs">SKU: VP-GTX-M02</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="text-white text-sm">Vaporesso</span>
+</td>
+<td class="px-6 py-4">
+<span class="px-3 py-1 rounded-full bg-border-dark text-[#baba9c] text-[11px] font-bold uppercase tracking-wider">Accessories</span>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<div class="size-2 rounded-full bg-slate-500"></div>
+<span class="text-slate-500 text-xs font-bold uppercase tracking-tighter">Out of Stock</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex justify-end gap-2">
+<button class="p-2 rounded-lg hover:bg-primary/20 text-primary transition-colors">
+<span class="material-symbols-outlined">edit_square</span>
+</button>
+<button class="p-2 rounded-lg hover:bg-red-500/10 text-red-400 transition-colors">
+<span class="material-symbols-outlined">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-white/5 transition-colors group">
+<td class="px-6 py-4">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-lg bg-border-dark flex-shrink-0 bg-cover bg-center border border-border-dark/50" data-alt="nord pod system product" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDI1ReTtTjD_CkjPnz3eeZum3NSPweFGlX-ObMepRG3Dl58Ff1Pm_Ci7eM1FH-AfMzMdssPOqCDMyYOY_2PY4JgzA32tOlMc-xt4I79k-gag0OLyRkWBrVCk3sf3-6Qusw44DBtvZfoR-BXn-CCr7mXra9opL3XGC5hS3jleuT84N1C0r9TCzQHiGs5k5lvZoNqSPwiZM9ICS2eKRrsUERAzgiX8gDr2x12BbdXYUXu0luxDFbQ-DHoyTykZx0jItMGc9K3cOiYyiQ')"></div>
+<div>
+<p class="text-white font-bold text-sm">Nord 5 Pod Kit</p>
+<p class="text-[#baba9c] text-xs">SKU: SM-N5-RAIN</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="text-white text-sm">SMOK</span>
+</td>
+<td class="px-6 py-4">
+<span class="px-3 py-1 rounded-full bg-border-dark text-[#baba9c] text-[11px] font-bold uppercase tracking-wider">Devices</span>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<div class="size-2 rounded-full bg-primary animate-pulse"></div>
+<span class="text-primary text-xs font-bold uppercase tracking-tighter">In Stock</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex justify-end gap-2">
+<button class="p-2 rounded-lg hover:bg-primary/20 text-primary transition-colors">
+<span class="material-symbols-outlined">edit_square</span>
+</button>
+<button class="p-2 rounded-lg hover:bg-red-500/10 text-red-400 transition-colors">
+<span class="material-symbols-outlined">delete</span>
+</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<!-- Pagination -->
+<div class="flex items-center justify-between px-6 py-4 bg-border-dark/20">
+<p class="text-xs text-[#baba9c] font-medium">Showing 1 to 4 of 48 products</p>
+<div class="flex gap-2">
+<button class="px-3 py-1 rounded-lg border border-border-dark text-[#baba9c] text-xs font-bold hover:bg-border-dark transition-colors">Previous</button>
+<button class="px-3 py-1 rounded-lg bg-primary text-background-dark text-xs font-bold">1</button>
+<button class="px-3 py-1 rounded-lg border border-border-dark text-[#baba9c] text-xs font-bold hover:bg-border-dark transition-colors">2</button>
+<button class="px-3 py-1 rounded-lg border border-border-dark text-[#baba9c] text-xs font-bold hover:bg-border-dark transition-colors">3</button>
+<button class="px-3 py-1 rounded-lg border border-border-dark text-[#baba9c] text-xs font-bold hover:bg-border-dark transition-colors">Next</button>
+</div>
+</div>
+</div>
+</section>
+</main>
+</div>
+</body></html>

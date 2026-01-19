@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Product Detail View | LIQUIDO</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f2f20d",
+                        "background-light": "#f8f8f5",
+                        "background-dark": "#181811",
+                        "surface-dark": "#26261a",
+                    },
+                    fontFamily: {
+                        "display": ["Plus Jakarta Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: "Plus Jakarta Sans", sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-white min-h-screen">
+<div class="layout-container flex h-full grow flex-col">
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-surface-dark px-10 py-3 bg-background-light dark:bg-background-dark">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-4 text-white">
+<div class="size-6 text-primary">
+<svg fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path clip-rule="evenodd" d="M24 4H6V17.3333V30.6667H24V44H42V30.6667V17.3333H24V44Z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+</div>
+<h2 class="text-white text-lg font-bold leading-tight tracking-[-0.015em]">LIQUIDO</h2>
+</div>
+<div class="hidden md:flex items-center gap-9">
+<a class="text-white/70 hover:text-primary text-sm font-medium transition-colors" href="#">Brands</a>
+<a class="text-white/70 hover:text-primary text-sm font-medium transition-colors" href="#">E-Liquids</a>
+<a class="text-white/70 hover:text-primary text-sm font-medium transition-colors" href="#">Devices</a>
+<a class="text-white/70 hover:text-primary text-sm font-medium transition-colors" href="#">Accessories</a>
+<a class="text-white/70 hover:text-primary text-sm font-medium transition-colors" href="#">Store Locator</a>
+</div>
+</div>
+<div class="flex flex-1 justify-end gap-6 items-center">
+<label class="hidden lg:flex flex-col min-w-40 !h-10 max-w-64">
+<div class="flex w-full flex-1 items-stretch rounded-lg h-full">
+<div class="text-[#baba9c] flex border-none bg-surface-dark items-center justify-center pl-4 rounded-l-lg">
+<span class="material-symbols-outlined text-xl">search</span>
+</div>
+<input class="form-input flex w-full min-w-0 flex-1 border-none bg-surface-dark text-white focus:ring-0 h-full placeholder:text-[#baba9c] px-4 rounded-r-lg text-sm" placeholder="Search brands..." value=""/>
+</div>
+</label>
+<button class="flex min-w-[100px] cursor-pointer items-center justify-center rounded-lg h-10 px-5 bg-primary text-black text-sm font-bold tracking-tight">
+<span>Inquire</span>
+</button>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 border-2 border-primary/20" data-alt="User profile avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuChKGaD-3GpkEtdqL7y9UvOtfhpoc0lwTE1ebXmcb39G1fZslJNl2jF7-S042vGmwhUij4VmJ4wB38Cz-X4IX5wIA0RPMX998VO2iBzH38eshOvNbomUq0VJUkFeFKaealJUF7M9BCdXWN3SDYsZzU-nGrA3A0jtPitEgVgEw2kIb5SQjGPPS510o8p80sACmZll_2b9yF_ck2JE5vQLjV5pKX6H2Sp9zq3MOKFBov1pO8_oBdZWfBJxOThuzvkRGevz9ZAwQ-z7Xg");'></div>
+</div>
+</header>
+<main class="max-w-[1200px] mx-auto w-full px-6 py-8">
+<div class="flex flex-wrap gap-2 py-4 mb-4">
+<a class="text-[#baba9c] text-sm font-medium hover:text-primary transition-colors" href="#">Home</a>
+<span class="text-[#baba9c] text-sm">/</span>
+<a class="text-[#baba9c] text-sm font-medium hover:text-primary transition-colors" href="#">E-Liquids</a>
+<span class="text-[#baba9c] text-sm">/</span>
+<span class="text-white text-sm font-medium">Reserve Edition Mango Mint</span>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+<div class="flex flex-col gap-4">
+<div class="relative group aspect-[4/5] w-full rounded-xl overflow-hidden bg-surface-dark border border-white/5 flex items-center justify-center p-8">
+<div class="absolute inset-0 bg-primary/5 blur-3xl rounded-full scale-75"></div>
+<div class="w-full h-full bg-center bg-no-repeat bg-contain relative z-10" data-alt="Premium e-liquid bottle mockup" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuA4H7ux5uT4pQfZZCnaEQH_RfdRvhquxC1UqO0HiA7Tf2Iw1dHVldJrdhreSPdcmhg-S6rP21rkMcS5qQWU8UHNXhsZkshnB0oHRRqdxrr2RDK6_lGPVwwEMDnAaw9fMyLbthQhcZ9KjKfur95CZJbIdQxIjP7bThg4zEcEYpQABjNH0MwqVGJXoTxFRT6Z8S5YlfPSpyHfJBKp3owsge-fHTQq3H-fB89287Fn6KCVdb4nHub93zJoARhBF00vx1cARzofW7mzPtU");'></div>
+</div>
+<div class="grid grid-cols-4 gap-4">
+<div class="aspect-square rounded-lg bg-surface-dark border border-primary/20 p-2 cursor-pointer hover:border-primary transition-all overflow-hidden" data-alt="Alternate product view front">
+<div class="w-full h-full bg-center bg-no-repeat bg-contain" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDLfBNxmRRQHifSVxHWS8nj6HpTXvXVzVbBQJX4IEJatRtWqbUNWnSPTVhQ3L1ehHPEEdQz4_Zz5zmpxXIURjJWKhkrz0Z64GOcSMDQV6e3IlliGLaSiE6VQ2aGJQ3bNrSAVBGha3ygvfjA3xZz-y6ZPHFepabC9ufZEO_dHCybGIO_sJ8cWdLaR6dLQjubQPbPBvFC0o-UrLOzUYNNoryecKfLni0h6jmuQYJB1siquwANhmaPao-lkOFtqHvOwOfmuiFw4AElkiE");'></div>
+</div>
+<div class="aspect-square rounded-lg bg-surface-dark border border-white/5 p-2 cursor-pointer hover:border-primary transition-all overflow-hidden" data-alt="Alternate product view side">
+<div class="w-full h-full bg-center bg-no-repeat bg-contain" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCIRQg7fMRfavCJg-1IxyxJtslJkg4aXTSbSvLxVY2huw39Cqd0At28GQDibQZmsX8iE9tVKEwRO1g32inseoFe0SOsQplJ0v8lCu-7O8gYwqrLI_z8CdZbSrs_rFm5lpmMiFkqa52D2x-Xt4gO201zexcClSI5ze1AIcOJ8m506UdEHKLlcewUDw4aCwlARkmmu5LI5eecGTZiyLt9noWvblUXM4dsYAzz1863XvF-71r1t3p8ZWq9wFkqL1yuKQNUymO1rc3XW2Y");'></div>
+</div>
+<div class="aspect-square rounded-lg bg-surface-dark border border-white/5 p-2 cursor-pointer hover:border-primary transition-all overflow-hidden" data-alt="Packaging view">
+<div class="w-full h-full bg-center bg-no-repeat bg-contain" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuB76fGQ-DC71EEbjl3hlEi2muzEHKjw2FIRXqNGwJbKbSAwi1ldT4gR3j0t09HTPhW5Ks1sHC2IIEgwk_sahu33wwsJlGnP3TV9aELqbOBJZryFV4hggiSZYx40xLBs9xD-7jgrghX6Agf_6-vclU3YZ3ZhPBLDTxntq3X1pu_jPA7D-9A6dPlK6_JfM0UkNS5JpzE3OfioOSzJzxjOVOsdI5HFuS3XByEdfI9OaBD_5XHr2Ul3VxkkUq5LIsNZYI_Sj8WZZ7UQ_8o");'></div>
+</div>
+<div class="aspect-square rounded-lg bg-surface-dark border border-white/5 p-2 cursor-pointer hover:border-primary transition-all overflow-hidden" data-alt="Flavor ingredients visualization">
+<div class="w-full h-full bg-center bg-no-repeat bg-contain" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuB8mO3lf5r8fi9iv1mQ_N3L2MFKf1mm2rCwMzsqHSc3rRwmnzg0bQJEGQA8BUEwpkE5dmb54u0rz0_NcTtxTiAaPctOWuUEMbJmiyBE1HsXhnVChePu0IYkkngclEt76BRAF0ngBHTz8enlU3q3dR1JtxbTsNpScvBBmBF79CL2vQWh4NqJQjMPgefSViE_fvcaHqpbkzPa88LxWqhPYVTBJwhNWRnh4pvGPZN96XS2cFBmYTK3LbdQaGuixApmf3_VSzRa4VQwPzw");'></div>
+</div>
+</div>
+</div>
+<div class="flex flex-col gap-8">
+<div class="flex flex-col gap-2">
+<div class="flex items-center gap-2">
+<span class="bg-primary/20 text-primary text-[10px] font-bold uppercase tracking-widest px-2 py-1 rounded">New Arrival</span>
+<span class="text-[#baba9c] text-sm font-medium tracking-wide uppercase">LIQUIDO Reserve Edition</span>
+</div>
+<h1 class="text-white text-5xl font-black leading-tight tracking-tight">Sweet Mango &amp; Cooling Mint</h1>
+</div>
+<div class="space-y-4">
+<p class="text-white/80 text-lg leading-relaxed font-normal border-l-4 border-primary pl-6 py-2">
+                        A masterfully crafted blend of sun-ripened tropical mangoes finished with a crisp, refreshing menthol exhale. Designed for the discerning vaper who seeks a balanced all-day sensory experience.
+                    </p>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+<div class="bg-surface-dark/50 border border-white/5 p-5 rounded-xl flex flex-col gap-2">
+<div class="flex items-center gap-2 text-primary">
+<span class="material-symbols-outlined text-xl">science</span>
+<span class="text-[10px] uppercase font-bold tracking-widest text-[#baba9c]">Ratio</span>
+</div>
+<p class="text-white text-xl font-bold">30/70 PG/VG</p>
+</div>
+<div class="bg-surface-dark/50 border border-white/5 p-5 rounded-xl flex flex-col gap-2">
+<div class="flex items-center gap-2 text-primary">
+<span class="material-symbols-outlined text-xl">opacity</span>
+<span class="text-[10px] uppercase font-bold tracking-widest text-[#baba9c]">Nicotine</span>
+</div>
+<p class="text-white text-xl font-bold">0, 3, 6 mg</p>
+</div>
+<div class="bg-surface-dark/50 border border-white/5 p-5 rounded-xl flex flex-col gap-2">
+<div class="flex items-center gap-2 text-primary">
+<span class="material-symbols-outlined text-xl">straighten</span>
+<span class="text-[10px] uppercase font-bold tracking-widest text-[#baba9c]">Bottle Size</span>
+</div>
+<p class="text-white text-xl font-bold">60ml Glass</p>
+</div>
+</div>
+<div class="flex flex-col sm:flex-row gap-4 pt-4 border-t border-white/5">
+<button class="flex-1 flex min-w-[200px] items-center justify-center gap-2 rounded-xl h-14 px-8 bg-primary text-black text-base font-bold transition-transform active:scale-95">
+<span class="material-symbols-outlined">location_on</span>
+<span>Find in Store</span>
+</button>
+<button class="flex-1 flex min-w-[200px] items-center justify-center gap-2 rounded-xl h-14 px-8 bg-surface-dark border border-white/10 text-white text-base font-bold hover:bg-white/5 transition-colors">
+<span class="material-symbols-outlined">mail</span>
+<span>Inquire for Bulk</span>
+</button>
+</div>
+<div class="flex flex-col gap-4">
+<h3 class="text-white text-sm font-bold uppercase tracking-wider">Sensory Notes</h3>
+<div class="flex flex-wrap gap-3">
+<div class="flex items-center gap-2 bg-background-dark border border-white/10 px-4 py-2 rounded-full">
+<span class="material-symbols-outlined text-primary text-sm">filter_vintage</span>
+<span class="text-xs font-medium">Sweet Tropical</span>
+</div>
+<div class="flex items-center gap-2 bg-background-dark border border-white/10 px-4 py-2 rounded-full">
+<span class="material-symbols-outlined text-primary text-sm">ac_unit</span>
+<span class="text-xs font-medium">Arctic Menthol</span>
+</div>
+<div class="flex items-center gap-2 bg-background-dark border border-white/10 px-4 py-2 rounded-full">
+<span class="material-symbols-outlined text-primary text-sm">spa</span>
+<span class="text-xs font-medium">Natural Extract</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<section class="mt-24 mb-16">
+<div class="flex items-center justify-between mb-8 border-b border-white/5 pb-4">
+<h2 class="text-2xl font-black tracking-tight">Frequently paired with</h2>
+<a class="text-primary text-sm font-bold flex items-center gap-1 hover:underline" href="#">
+                    View All Related
+                    <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</a>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+<div class="group flex flex-col gap-3">
+<div class="aspect-square rounded-xl bg-surface-dark border border-white/5 overflow-hidden p-4 group-hover:border-primary/40 transition-all">
+<div class="w-full h-full bg-center bg-no-repeat bg-contain" data-alt="Icy Watermelon Pod product" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuB_uDNBwbbTP-OjDdSj7kFhjVTkUbmuP9tY0XkaKQNaem-kngSZkgroxzVVivoYbzpMQJYI5Sf-mI3nLu-4kttd7WkGZgbblZaZo2r5m_6co8gOvsA3OvJFmryuau73b43MBbJhvOExiBcqEdPHbTOexVGaw3FAJyNDfkjiwLCbGETfHWCjdPzNrCPE1SsAv9fBz3F-EsZ_23r9eGUBZLxursZ5ZQ7YHEmnDnLnMfMr3370dQebfAWfoBh8ASU6y_PAvcN16x09pYY");'></div>
+</div>
+<div class="flex flex-col">
+<span class="text-[#baba9c] text-[10px] font-bold uppercase">LIQUIDO Pods</span>
+<h4 class="text-white font-bold text-sm group-hover:text-primary transition-colors">Icy Watermelon Blast</h4>
+</div>
+</div>
+<div class="group flex flex-col gap-3">
+<div class="aspect-square rounded-xl bg-surface-dark border border-white/5 overflow-hidden p-4 group-hover:border-primary/40 transition-all">
+<div class="w-full h-full bg-center bg-no-repeat bg-contain" data-alt="Replacement mesh coils pack" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDKbjIWPSDdPQ-aaIbRHAQEMlnSHqdCvq7NjIaK0OFQ1BwuJn20xwHV9T26pqhUgwvzD0gcESraLMLlHug3HNhMNBBROErvMTXNFiC1yIyG2K8iQ97jjr4_kp79WFduTVY68QQTmMBlkJLmluhxHNb6_MzPs1zTEt444zKlJ4mv2utHBdqEOM_PWFXDLmitS0Um4tiylyqWsUJ6xAfWA-PRTx3HC0ADznCvtmUJoW_4sqr1sZcKSURo1D1l3LFoAQNXOOpaFQWEjEU");'></div>
+</div>
+<div class="flex flex-col">
+<span class="text-[#baba9c] text-[10px] font-bold uppercase">Hardware</span>
+<h4 class="text-white font-bold text-sm group-hover:text-primary transition-colors">Premium Mesh Coils (5pk)</h4>
+</div>
+</div>
+<div class="group flex flex-col gap-3">
+<div class="aspect-square rounded-xl bg-surface-dark border border-white/5 overflow-hidden p-4 group-hover:border-primary/40 transition-all">
+<div class="w-full h-full bg-center bg-no-repeat bg-contain" data-alt="Golden Tobacco Reserve E-Liquid" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuD8H41sG_LBQ6Z201CcZXn1ZAf7FDSwCQnOceMC58LM3InHuTfEHGqemBUBGUkMpp4x25nUxJwApwGROy6IuNU2jm0YVB5MPLC_5JOD21QaWpsGdOWkBox7STMSzn3jnlhGhEglLifcysNa6fKtx0A9VTf2ZCXf-eojdEQwOoh7YrCPC-f3Y_8Tf0XrqY0rXBhuWItyDMJu34aeA_lwQHqTquM0hn89Y_I1fgFRsIvFfdBCzyU2p5HseYkZMzGWbyDwsNvqiT29AOc");'></div>
+</div>
+<div class="flex flex-col">
+<span class="text-[#baba9c] text-[10px] font-bold uppercase">Reserve Edition</span>
+<h4 class="text-white font-bold text-sm group-hover:text-primary transition-colors">Golden Oak Tobacco</h4>
+</div>
+</div>
+<div class="group flex flex-col gap-3">
+<div class="aspect-square rounded-xl bg-surface-dark border border-white/5 overflow-hidden p-4 group-hover:border-primary/40 transition-all">
+<div class="w-full h-full bg-center bg-no-repeat bg-contain" data-alt="Portable charger accessory" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCHFKUZCqx7YUASGpf-09cds6h1o8V2hydrULg80sRttlFUY7D3C_SwJJFIbYxE0flF3yxsImJmOGwSL9qNUKKdrLF2WM8wlJvMxDuX8oyOBKvaEtxA4RryCGCAEDPMjaXa7Q64E92GYqoDH06BQ4WiBK1nfAeUPuUyavxki7_E4P8htvuOrutJYLQ2CN1lwJXg-cBXSE3kwx4_EucCN9Q-8_1A9CTuquNMeMcDb3Dqz_3nwK9UIO1vPbRtriKtnOIqlXGJdNGNEcU");'></div>
+</div>
+<div class="flex flex-col">
+<span class="text-[#baba9c] text-[10px] font-bold uppercase">Accessories</span>
+<h4 class="text-white font-bold text-sm group-hover:text-primary transition-colors">Pocket Power Case</h4>
+</div>
+</div>
+</div>
+</section>
+</main>
+<footer class="bg-[#11110a] border-t border-white/5 pt-20 pb-12">
+<div class="max-w-[1200px] mx-auto px-6">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+<div class="flex flex-col gap-6">
+<div class="flex items-center gap-4">
+<div class="size-8 text-primary">
+<svg fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path clip-rule="evenodd" d="M24 4H6V17.3333V30.6667H24V44H42V30.6667V17.3333H24V4Z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+</div>
+<h2 class="text-white text-2xl font-bold tracking-tight">LIQUIDO</h2>
+</div>
+<p class="text-[#baba9c] text-sm leading-relaxed">
+                        The gold standard in premium vaping experiences. Crafting superior flavor profiles for the discerning modern lifestyle since 2018.
+                    </p>
+<div class="flex gap-4">
+<a class="w-10 h-10 rounded-full bg-surface-dark flex items-center justify-center text-primary hover:bg-primary hover:text-black transition-all" href="#">
+<span class="material-symbols-outlined text-xl">share</span>
+</a>
+<a class="w-10 h-10 rounded-full bg-surface-dark flex items-center justify-center text-primary hover:bg-primary hover:text-black transition-all" href="#">
+<span class="material-symbols-outlined text-xl">public</span>
+</a>
+<a class="w-10 h-10 rounded-full bg-surface-dark flex items-center justify-center text-primary hover:bg-primary hover:text-black transition-all" href="#">
+<span class="material-symbols-outlined text-xl">camera_alt</span>
+</a>
+</div>
+</div>
+<div class="flex flex-col gap-6">
+<h4 class="text-white text-sm font-bold uppercase tracking-widest">Catalog</h4>
+<ul class="flex flex-col gap-3">
+<li><a class="text-[#baba9c] text-sm hover:text-primary transition-colors" href="#">Premium E-Liquids</a></li>
+<li><a class="text-[#baba9c] text-sm hover:text-primary transition-colors" href="#">Nicotine Salts</a></li>
+<li><a class="text-[#baba9c] text-sm hover:text-primary transition-colors" href="#">Vape Devices</a></li>
+<li><a class="text-[#baba9c] text-sm hover:text-primary transition-colors" href="#">Mesh Coils</a></li>
+<li><a class="text-[#baba9c] text-sm hover:text-primary transition-colors" href="#">Accessories</a></li>
+</ul>
+</div>
+<div class="flex flex-col gap-6">
+<h4 class="text-white text-sm font-bold uppercase tracking-widest">Support</h4>
+<ul class="flex flex-col gap-3">
+<li><a class="text-[#baba9c] text-sm hover:text-primary transition-colors" href="#">Store Locator</a></li>
+<li><a class="text-[#baba9c] text-sm hover:text-primary transition-colors" href="#">Wholesale Inquiry</a></li>
+<li><a class="text-[#baba9c] text-sm hover:text-primary transition-colors" href="#">Compliance &amp; Safety</a></li>
+<li><a class="text-[#baba9c] text-sm hover:text-primary transition-colors" href="#">Shipping Policy</a></li>
+<li><a class="text-[#baba9c] text-sm hover:text-primary transition-colors" href="#">Returns &amp; Warranty</a></li>
+</ul>
+</div>
+<div class="flex flex-col gap-6">
+<h4 class="text-white text-sm font-bold uppercase tracking-widest">Contact Us</h4>
+<ul class="flex flex-col gap-4">
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-primary text-xl">location_on</span>
+<span class="text-[#baba9c] text-sm">1247 Industrial Ave,<br/>San Francisco, CA 94103</span>
+</li>
+<li class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-xl">call</span>
+<span class="text-[#baba9c] text-sm">+1 (555) 012-3456</span>
+</li>
+<li class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-xl">mail</span>
+<span class="text-[#baba9c] text-sm">support@liquido.premium</span>
+</li>
+</ul>
+</div>
+</div>
+<div class="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4">
+<p class="text-[#baba9c] text-xs">© 2024 LIQUIDO Reserve. Premium Vaping Solutions. Strictly 21+ only.</p>
+<div class="flex gap-6">
+<a class="text-[#baba9c] text-xs hover:text-primary" href="#">Privacy Policy</a>
+<a class="text-[#baba9c] text-xs hover:text-primary" href="#">Terms of Service</a>
+<a class="text-[#baba9c] text-xs hover:text-primary" href="#">Cookies Settings</a>
+</div>
+</div>
+</div>
+</footer>
+</div>
+
+</body></html>

@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Admin Add Product Form | LIQUIDO</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f2f20d",
+                        "background-light": "#f8f8f5",
+                        "background-dark": "#181811",
+                    },
+                    fontFamily: {
+                        "display": ["Plus Jakarta Sans"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: "Plus Jakarta Sans", sans-serif;
+        }
+        .form-input:focus {
+            border-color: #f2f20d !important;
+            box-shadow: 0 0 0 1px #f2f20d !important;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white min-h-screen">
+<div class="flex flex-col min-h-screen">
+<!-- Top Navigation -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-slate-200 dark:border-[#393928] bg-background-light dark:bg-background-dark px-6 md:px-10 py-3 sticky top-0 z-50">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-4 text-slate-900 dark:text-white">
+<div class="size-6 text-primary">
+<svg fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path clip-rule="evenodd" d="M24 4H6V17.3333V30.6667H24V44H42V30.6667V17.3333H24V4Z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+</div>
+<h2 class="text-slate-900 dark:text-white text-lg font-bold leading-tight tracking-[-0.015em]">LIQUIDO</h2>
+</div>
+<label class="hidden md:flex flex-col min-w-40 h-10 max-w-64">
+<div class="flex w-full flex-1 items-stretch rounded-lg h-full overflow-hidden">
+<div class="text-slate-500 dark:text-[#baba9c] flex border-none bg-slate-100 dark:bg-[#393928] items-center justify-center pl-4 border-r-0">
+<span class="material-symbols-outlined text-xl">search</span>
+</div>
+<input class="form-input flex w-full min-w-0 flex-1 border-none bg-slate-100 dark:bg-[#393928] h-full placeholder:text-slate-500 dark:placeholder:text-[#baba9c] px-4 pl-2 text-base font-normal leading-normal focus:ring-0" placeholder="Search inventory..." value=""/>
+</div>
+</label>
+</div>
+<div class="flex items-center gap-4">
+<nav class="hidden lg:flex items-center gap-6 mr-4">
+<a class="text-slate-700 dark:text-white text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">Dashboard</a>
+<a class="text-slate-700 dark:text-white text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">Brands</a>
+<a class="text-primary text-sm font-bold leading-normal" href="#">Products</a>
+<a class="text-slate-700 dark:text-white text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">Profile</a>
+</nav>
+<div class="flex gap-2">
+<button class="flex items-center justify-center rounded-lg h-10 w-10 bg-slate-100 dark:bg-[#393928] text-slate-700 dark:text-white">
+<span class="material-symbols-outlined text-xl">notifications</span>
+</button>
+<button class="flex items-center justify-center rounded-lg h-10 w-10 bg-slate-100 dark:bg-[#393928] text-slate-700 dark:text-white">
+<span class="material-symbols-outlined text-xl">account_circle</span>
+</button>
+</div>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 border border-slate-200 dark:border-[#393928]" data-alt="Admin user avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAtPmsa_w9SOZcNOVHnqBIeMETWMw_suL-mD7BNhcva4zVGNhUp1p0uKaSf0QO-tzYzfXVJq2W2Vs2RNa6rFne8O1kzHFB_5L8aT-as4vdnEwCCl6vFd6Xtij1XHLNCLGsHW_OuKaDkhklLiVd6ryzM_cNgvgoPRLi80mLeEGRxAaro5iZ0b9y6jP_6UfM6_0tITtqu2jO3kBqZDfEJmnMSWkzj4TODY_YgoloWDoRkrFqpB8b9xGUdCXe-oYE_Vgs5m5EhojaAwb8");'></div>
+</div>
+</header>
+<div class="flex flex-1">
+<!-- Sidebar (Hidden on mobile) -->
+<aside class="hidden md:flex w-64 flex-col border-r border-slate-200 dark:border-[#393928] bg-background-light dark:bg-background-dark p-4 gap-6">
+<div class="flex flex-col px-3">
+<h1 class="text-slate-900 dark:text-white text-base font-bold">LIQUIDO Admin</h1>
+<p class="text-slate-500 dark:text-[#baba9c] text-xs font-normal">Vape Store Management</p>
+</div>
+<nav class="flex flex-col gap-1">
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-700 dark:text-[#baba9c] hover:bg-slate-100 dark:hover:bg-[#27271b] hover:text-primary transition-all" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-sm font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary/10 text-primary" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1">inventory_2</span>
+<span class="text-sm font-bold">Inventory</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-700 dark:text-[#baba9c] hover:bg-slate-100 dark:hover:bg-[#27271b] hover:text-primary transition-all" href="#">
+<span class="material-symbols-outlined">loyalty</span>
+<span class="text-sm font-medium">Brands</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-700 dark:text-[#baba9c] hover:bg-slate-100 dark:hover:bg-[#27271b] hover:text-primary transition-all" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span class="text-sm font-medium">Sales Report</span>
+</a>
+<div class="my-4 border-t border-slate-200 dark:border-[#393928]"></div>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-700 dark:text-[#baba9c] hover:bg-slate-100 dark:hover:bg-[#27271b] hover:text-primary transition-all" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-sm font-medium">Settings</span>
+</a>
+</nav>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 flex flex-col items-center">
+<div class="max-w-[1000px] w-full px-6 py-8">
+<!-- Breadcrumbs -->
+<div class="flex items-center gap-2 mb-6">
+<a class="text-slate-500 dark:text-[#baba9c] text-sm font-medium hover:text-primary" href="#">Dashboard</a>
+<span class="material-symbols-outlined text-slate-400 dark:text-[#54543b] text-base">chevron_right</span>
+<a class="text-slate-500 dark:text-[#baba9c] text-sm font-medium hover:text-primary" href="#">Inventory</a>
+<span class="material-symbols-outlined text-slate-400 dark:text-[#54543b] text-base">chevron_right</span>
+<span class="text-slate-900 dark:text-white text-sm font-bold">Add New Product</span>
+</div>
+<!-- Page Heading -->
+<div class="mb-8">
+<h1 class="text-slate-900 dark:text-white text-4xl font-black tracking-tight mb-2">Add New Product</h1>
+<p class="text-slate-500 dark:text-[#baba9c] text-base">Enter the technical specifications and marketing details for the new vape product.</p>
+</div>
+<!-- Form Card -->
+<div class="bg-white dark:bg-[#1f1f14] border border-slate-200 dark:border-[#393928] rounded-xl overflow-hidden shadow-xl">
+<form class="p-6 md:p-8 space-y-8">
+<!-- Section: Basic Info -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="col-span-1 md:col-span-2">
+<label class="block mb-2">
+<span class="text-slate-900 dark:text-white text-sm font-bold uppercase tracking-wider">Product Name</span>
+<input class="form-input mt-2 block w-full rounded-lg border-slate-200 dark:border-[#54543b] bg-slate-50 dark:bg-[#27271b] text-slate-900 dark:text-white h-12 px-4 placeholder:text-slate-400 dark:placeholder:text-slate-600 focus:ring-primary" placeholder="e.g. Neon Grape Ice 5000" type="text"/>
+</label>
+</div>
+<div class="col-span-1">
+<label class="block mb-2">
+<span class="text-slate-900 dark:text-white text-sm font-bold uppercase tracking-wider">Brand</span>
+<select class="form-select mt-2 block w-full rounded-lg border-slate-200 dark:border-[#54543b] bg-slate-50 dark:bg-[#27271b] text-slate-900 dark:text-white h-12 px-4 focus:ring-primary">
+<option>Select Brand</option>
+<option>Elf Bar</option>
+<option>GeekVape</option>
+<option>Vaporesso</option>
+<option>Voopoo</option>
+<option>Smok</option>
+</select>
+</label>
+</div>
+<div class="col-span-1">
+<label class="block mb-2">
+<span class="text-slate-900 dark:text-white text-sm font-bold uppercase tracking-wider">Category</span>
+<select class="form-select mt-2 block w-full rounded-lg border-slate-200 dark:border-[#54543b] bg-slate-50 dark:bg-[#27271b] text-slate-900 dark:text-white h-12 px-4 focus:ring-primary">
+<option>Select Category</option>
+<option>Disposable</option>
+<option>Pod Systems</option>
+<option>Mods</option>
+<option>E-Liquids</option>
+<option>Accessories</option>
+</select>
+</label>
+</div>
+<div class="col-span-1 md:col-span-2">
+<label class="block mb-2">
+<span class="text-slate-900 dark:text-white text-sm font-bold uppercase tracking-wider">Flavor Profile</span>
+<input class="form-input mt-2 block w-full rounded-lg border-slate-200 dark:border-[#54543b] bg-slate-50 dark:bg-[#27271b] text-slate-900 dark:text-white h-12 px-4 placeholder:text-slate-400 dark:placeholder:text-slate-600 focus:ring-primary" placeholder="e.g. Sweet, Menthol, Fruity" type="text"/>
+</label>
+</div>
+<div class="col-span-1 md:col-span-2">
+<label class="block mb-2">
+<span class="text-slate-900 dark:text-white text-sm font-bold uppercase tracking-wider">Product Description</span>
+<textarea class="form-textarea mt-2 block w-full rounded-lg border-slate-200 dark:border-[#54543b] bg-slate-50 dark:bg-[#27271b] text-slate-900 dark:text-white px-4 py-3 placeholder:text-slate-400 dark:placeholder:text-slate-600 focus:ring-primary" placeholder="Enter full product details and marketing copy..." rows="4"></textarea>
+</label>
+</div>
+</div>
+<!-- Section: Media & Settings -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8 pt-6 border-t border-slate-100 dark:border-[#393928]">
+<div class="col-span-1">
+<p class="text-slate-900 dark:text-white text-sm font-bold uppercase tracking-wider mb-4">Product Image</p>
+<div class="border-2 border-dashed border-slate-200 dark:border-[#393928] rounded-xl p-8 flex flex-col items-center justify-center bg-slate-50/50 dark:bg-[#27271b]/30 group hover:border-primary transition-colors cursor-pointer">
+<span class="material-symbols-outlined text-4xl text-slate-400 dark:text-[#54543b] group-hover:text-primary transition-colors">cloud_upload</span>
+<p class="mt-4 text-slate-600 dark:text-[#baba9c] text-sm font-medium">Drag and drop or <span class="text-primary font-bold">browse</span></p>
+<p class="mt-1 text-slate-400 dark:text-slate-600 text-xs text-center">PNG, JPG or WebP (Max. 5MB)<br/>Recommended 1000x1000px</p>
+</div>
+</div>
+<div class="col-span-1 flex flex-col justify-start">
+<p class="text-slate-900 dark:text-white text-sm font-bold uppercase tracking-wider mb-4">Store Visibility</p>
+<div class="bg-slate-50 dark:bg-[#27271b] p-6 rounded-xl border border-slate-200 dark:border-[#393928]">
+<div class="flex items-center justify-between">
+<div class="flex flex-col">
+<span class="text-slate-900 dark:text-white font-bold">Featured Product</span>
+<span class="text-slate-500 dark:text-[#baba9c] text-xs">Show this item in the homepage slider</span>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox" value=""/>
+<div class="w-11 h-6 bg-slate-300 dark:bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+<div class="mt-6 flex items-center justify-between opacity-60">
+<div class="flex flex-col">
+<span class="text-slate-900 dark:text-white font-bold">Age Restricted</span>
+<span class="text-slate-500 dark:text-[#baba9c] text-xs">Require 21+ ID check at checkout</span>
+</div>
+<label class="relative inline-flex items-center cursor-not-allowed">
+<input checked="" class="sr-only peer" disabled="" type="checkbox" value=""/>
+<div class="w-11 h-6 bg-primary rounded-full after:content-[''] after:absolute after:top-[2px] after:right-[2px] after:bg-white after:rounded-full after:h-5 after:w-5"></div>
+</label>
+</div>
+</div>
+</div>
+</div>
+<!-- Section: Actions -->
+<div class="flex flex-col-reverse sm:flex-row items-center justify-end gap-4 pt-8 border-t border-slate-100 dark:border-[#393928]">
+<button class="w-full sm:w-auto px-8 h-12 flex items-center justify-center rounded-lg text-slate-600 dark:text-white font-bold hover:bg-slate-100 dark:hover:bg-[#393928] transition-all" type="button">
+                                    Cancel
+                                </button>
+<button class="w-full sm:w-auto px-10 h-12 flex items-center justify-center rounded-lg bg-primary text-black font-extrabold shadow-lg shadow-primary/20 hover:scale-105 active:scale-95 transition-all" type="submit">
+                                    Save Product
+                                </button>
+</div>
+</form>
+</div>
+<!-- Form Tips Footer -->
+<div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="flex gap-4 p-4 rounded-lg bg-slate-50 dark:bg-[#1f1f14] border border-slate-100 dark:border-[#393928]">
+<span class="material-symbols-outlined text-primary">info</span>
+<div>
+<h4 class="text-slate-900 dark:text-white text-sm font-bold">Quick Tip</h4>
+<p class="text-slate-500 dark:text-[#baba9c] text-xs leading-relaxed">Use high-resolution images with clear backgrounds for better conversion.</p>
+</div>
+</div>
+<div class="flex gap-4 p-4 rounded-lg bg-slate-50 dark:bg-[#1f1f14] border border-slate-100 dark:border-[#393928]">
+<span class="material-symbols-outlined text-primary">google_my_business</span>
+<div>
+<h4 class="text-slate-900 dark:text-white text-sm font-bold">SEO Friendly</h4>
+<p class="text-slate-500 dark:text-[#baba9c] text-xs leading-relaxed">Include flavor keywords in your description to improve search results.</p>
+</div>
+</div>
+<div class="flex gap-4 p-4 rounded-lg bg-slate-50 dark:bg-[#1f1f14] border border-slate-100 dark:border-[#393928]">
+<span class="material-symbols-outlined text-primary">sync</span>
+<div>
+<h4 class="text-slate-900 dark:text-white text-sm font-bold">Auto-Sync</h4>
+<p class="text-slate-500 dark:text-[#baba9c] text-xs leading-relaxed">Changes saved here will sync to the storefront and mobile app instantly.</p>
+</div>
+</div>
+</div>
+</div>
+<footer class="w-full py-10 mt-auto border-t border-slate-200 dark:border-[#393928] text-center">
+<p class="text-slate-400 dark:text-slate-600 text-xs">© 2024 LIQUIDO Management Systems. All rights reserved.</p>
+</footer>
+</main>
+</div>
+</div>
+</body></html>

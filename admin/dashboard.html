@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>LIQUIDO Admin Dashboard Overview</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f2f20d",
+                        "background-light": "#f8f8f5",
+                        "background-dark": "#181811",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .sidebar-active {
+            background-color: #393928;
+            border-left: 4px solid #f2f20d;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white font-display">
+<div class="flex min-h-screen">
+<!-- Sidebar Navigation -->
+<aside class="w-64 bg-background-light dark:bg-[#12120a] border-r border-slate-200 dark:border-[#393928] flex flex-col justify-between py-6 sticky top-0 h-screen">
+<div class="flex flex-col gap-8">
+<!-- Brand Identity -->
+<div class="px-6 flex items-center gap-3">
+<div class="bg-primary rounded-lg size-10 flex items-center justify-center text-background-dark">
+<span class="material-symbols-outlined font-bold">water_drop</span>
+</div>
+<div class="flex flex-col">
+<h1 class="text-lg font-bold leading-tight tracking-tight">LIQUIDO</h1>
+<p class="text-slate-500 dark:text-[#baba9c] text-xs font-medium uppercase tracking-widest">Admin Console</p>
+</div>
+</div>
+<!-- Navigation Links -->
+<nav class="flex flex-col gap-1 px-3">
+<a class="sidebar-active flex items-center gap-3 px-3 py-2.5 rounded-lg text-primary" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<p class="text-sm font-semibold">Dashboard</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-[#baba9c] hover:bg-slate-100 dark:hover:bg-[#2a2a1a] transition-colors" href="#">
+<span class="material-symbols-outlined">inventory_2</span>
+<p class="text-sm font-medium">Products</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-[#baba9c] hover:bg-slate-100 dark:hover:bg-[#2a2a1a] transition-colors" href="#">
+<span class="material-symbols-outlined">loyalty</span>
+<p class="text-sm font-medium">Brands</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-[#baba9c] hover:bg-slate-100 dark:hover:bg-[#2a2a1a] transition-colors" href="#">
+<span class="material-symbols-outlined">settings</span>
+<p class="text-sm font-medium">Store Settings</p>
+</a>
+</nav>
+</div>
+<!-- Logout Section -->
+<div class="px-4">
+<button class="flex w-full cursor-pointer items-center justify-center overflow-hidden rounded-lg h-11 bg-primary text-background-dark text-sm font-bold transition-transform hover:scale-[1.02] active:scale-95">
+<span class="material-symbols-outlined mr-2">logout</span>
+<span>Logout</span>
+</button>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 flex flex-col">
+<!-- Top Navigation Bar -->
+<header class="flex items-center justify-between border-b border-slate-200 dark:border-[#393928] px-8 py-4 bg-background-light/50 dark:bg-background-dark/50 backdrop-blur-md sticky top-0 z-10">
+<div class="flex items-center gap-4">
+<h2 class="text-xl font-bold tracking-tight">Overview</h2>
+</div>
+<div class="flex items-center gap-6">
+<!-- Search Bar -->
+<label class="relative flex items-center min-w-[240px]">
+<span class="material-symbols-outlined absolute left-3 text-slate-400 dark:text-[#baba9c]">search</span>
+<input class="w-full h-10 pl-10 pr-4 rounded-lg border-none bg-slate-100 dark:bg-[#393928] text-sm focus:ring-2 focus:ring-primary/50 dark:focus:ring-primary/30 placeholder-slate-400 dark:placeholder-[#baba9c]" placeholder="Search metrics..." type="text"/>
+</label>
+<!-- Utility Icons -->
+<div class="flex gap-2">
+<button class="relative flex items-center justify-center size-10 rounded-lg bg-slate-100 dark:bg-[#393928] text-slate-600 dark:text-white hover:bg-slate-200 dark:hover:bg-[#4a4a35] transition-colors">
+<span class="material-symbols-outlined text-[20px]">notifications</span>
+<span class="absolute top-2 right-2.5 size-2 bg-red-500 rounded-full border-2 border-background-light dark:border-background-dark"></span>
+</button>
+<button class="flex items-center justify-center size-10 rounded-lg bg-slate-100 dark:bg-[#393928] text-slate-600 dark:text-white hover:bg-slate-200 dark:hover:bg-[#4a4a35] transition-colors">
+<span class="material-symbols-outlined text-[20px]">account_circle</span>
+</button>
+</div>
+<!-- Profile Image -->
+<div class="size-10 rounded-full border-2 border-primary/20 bg-cover bg-center" data-alt="Admin user profile picture" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAoM1gbG9s8P54BFf8LmyY01xYk6iIJRfH01UQcO6F34PcpkIwztbyBE1oQ19nrrI-13mNTtQNeB5oySUqEOSVjhgOG6sS-BovRY3XyUekO6JTuYJxz1lPa7eJyiH3onAUgAFYsKMIUtHZZ_Wo6euwBWXj-n2ixio4o0VOA6jOpfUbo2Sylsu--UpwpLLR4t4tD-7RsbZk-H8Inl-Jd101pqXvpnvkRIOdBjWomPsxdpZV_B0TT8pj6UpX6Oz8IjO9tqUBsS91rA8w");'></div>
+</div>
+</header>
+<div class="p-8 max-w-7xl mx-auto w-full space-y-8">
+<!-- Summary Statistics -->
+<section>
+<div class="flex grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="flex flex-col gap-2 rounded-xl p-6 border border-slate-200 dark:border-[#54543b] bg-white dark:bg-transparent shadow-sm">
+<div class="flex justify-between items-start">
+<p class="text-slate-500 dark:text-[#baba9c] text-sm font-semibold uppercase tracking-wider">Total Products</p>
+<span class="material-symbols-outlined text-primary">inventory</span>
+</div>
+<div class="flex items-baseline gap-2">
+<p class="text-3xl font-bold leading-tight">1,240</p>
+<span class="text-emerald-500 text-sm font-bold flex items-center">
+<span class="material-symbols-outlined text-xs">trending_up</span> 12%
+                                </span>
+</div>
+<p class="text-slate-400 text-xs">Compared to last month</p>
+</div>
+<div class="flex flex-col gap-2 rounded-xl p-6 border border-slate-200 dark:border-[#54543b] bg-white dark:bg-transparent shadow-sm">
+<div class="flex justify-between items-start">
+<p class="text-slate-500 dark:text-[#baba9c] text-sm font-semibold uppercase tracking-wider">Active Brands</p>
+<span class="material-symbols-outlined text-primary">verified</span>
+</div>
+<div class="flex items-baseline gap-2">
+<p class="text-3xl font-bold leading-tight">48</p>
+<span class="text-emerald-500 text-sm font-bold flex items-center">
+<span class="material-symbols-outlined text-xs">trending_up</span> 2%
+                                </span>
+</div>
+<p class="text-slate-400 text-xs">3 new brands added this week</p>
+</div>
+<div class="flex flex-col gap-2 rounded-xl p-6 border border-slate-200 dark:border-[#54543b] bg-white dark:bg-transparent shadow-sm">
+<div class="flex justify-between items-start">
+<p class="text-slate-500 dark:text-[#baba9c] text-sm font-semibold uppercase tracking-wider">Store Visits</p>
+<span class="material-symbols-outlined text-primary">monitoring</span>
+</div>
+<div class="flex items-baseline gap-2">
+<p class="text-3xl font-bold leading-tight">12,850</p>
+<span class="text-emerald-500 text-sm font-bold flex items-center">
+<span class="material-symbols-outlined text-xs">trending_up</span> 25%
+                                </span>
+</div>
+<p class="text-slate-400 text-xs">Daily average peak at 2 PM</p>
+</div>
+</div>
+</section>
+<!-- Quick Actions Section -->
+<section class="bg-slate-50 dark:bg-[#1a1a0f] rounded-2xl p-6 border border-slate-200 dark:border-[#393928]">
+<h2 class="text-lg font-bold mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">bolt</span>
+                        Quick Actions
+                    </h2>
+<div class="flex flex-wrap gap-4">
+<button class="flex items-center gap-3 min-w-[180px] px-6 h-14 bg-primary text-background-dark rounded-xl font-bold shadow-lg shadow-primary/10 transition-all hover:brightness-110 active:scale-95">
+<span class="material-symbols-outlined">add_box</span>
+<span>Add New Product</span>
+</button>
+<button class="flex items-center gap-3 min-w-[180px] px-6 h-14 bg-slate-800 dark:bg-[#393928] text-white rounded-xl font-bold transition-all hover:bg-slate-700 dark:hover:bg-[#4a4a35] active:scale-95">
+<span class="material-symbols-outlined">add_circle</span>
+<span>Add New Brand</span>
+</button>
+<button class="flex items-center gap-3 min-w-[180px] px-6 h-14 border-2 border-slate-200 dark:border-[#393928] text-slate-600 dark:text-[#baba9c] rounded-xl font-bold transition-all hover:border-primary/50 hover:text-primary active:scale-95">
+<span class="material-symbols-outlined">download</span>
+<span>Export Reports</span>
+</button>
+</div>
+</section>
+<!-- Visual Content / Recent Activity Placeholder -->
+<section class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+<!-- Analytics Preview -->
+<div class="flex flex-col gap-4">
+<h3 class="text-md font-bold text-slate-500 dark:text-[#baba9c]">Inventory Growth</h3>
+<div class="h-64 w-full rounded-2xl bg-gradient-to-br from-slate-200 to-slate-100 dark:from-[#2a2a1a] dark:to-[#12120a] relative overflow-hidden border border-slate-200 dark:border-[#393928]">
+<div class="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_50%_50%,#f2f20d_0,transparent_50%)]"></div>
+<div class="p-8 h-full flex items-center justify-center text-center">
+<div class="space-y-2">
+<span class="material-symbols-outlined text-4xl text-primary">bar_chart</span>
+<p class="text-sm font-medium text-slate-500 dark:text-[#baba9c]">Real-time visual data mapping will appear here.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Recent Updates List -->
+<div class="flex flex-col gap-4">
+<h3 class="text-md font-bold text-slate-500 dark:text-[#baba9c]">Recent Store Activity</h3>
+<div class="flex flex-col divide-y divide-slate-100 dark:divide-[#393928]">
+<div class="py-4 flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="size-10 rounded-lg bg-primary/10 text-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</div>
+<div>
+<p class="text-sm font-bold">Vape Mod Pro X2</p>
+<p class="text-xs text-slate-400">Inventory updated by Alex</p>
+</div>
+</div>
+<p class="text-xs font-mono text-slate-400">2 mins ago</p>
+</div>
+<div class="py-4 flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="size-10 rounded-lg bg-emerald-500/10 text-emerald-500 flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px]">add</span>
+</div>
+<div>
+<p class="text-sm font-bold">CloudKings E-Liquid</p>
+<p class="text-xs text-slate-400">New brand registered</p>
+</div>
+</div>
+<p class="text-xs font-mono text-slate-400">1 hour ago</p>
+</div>
+<div class="py-4 flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="size-10 rounded-lg bg-blue-500/10 text-blue-500 flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px]">sync</span>
+</div>
+<div>
+<p class="text-sm font-bold">Price Sync Task</p>
+<p class="text-xs text-slate-400">Automated update completed</p>
+</div>
+</div>
+<p class="text-xs font-mono text-slate-400">4 hours ago</p>
+</div>
+</div>
+</div>
+</section>
+</div>
+</main>
+</div>
+</body></html>

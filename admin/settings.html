@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>LIQUIDO Admin - Store Settings</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f2f20d",
+                        "background-light": "#f8f8f5",
+                        "background-dark": "#121212",
+                        "card-dark": "#1e1e10",
+                    },
+                    fontFamily: {
+                        "display": ["Plus Jakarta Sans", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .active-nav {
+            background-color: rgba(242, 242, 13, 0.15);
+            border-right: 3px solid #f2f20d;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 min-h-screen">
+<div class="flex h-screen overflow-hidden">
+<!-- Sidebar Navigation -->
+<aside class="w-72 flex-shrink-0 border-r border-slate-200 dark:border-slate-800 bg-white dark:bg-[#181811] flex flex-col">
+<div class="p-6 flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-black font-bold">water_drop</span>
+</div>
+<div class="flex flex-col">
+<h1 class="text-lg font-bold leading-none tracking-tight">LIQUIDO Admin</h1>
+<p class="text-xs text-slate-500 dark:text-[#baba9c]">Vape Store Management</p>
+</div>
+</div>
+<nav class="flex-1 px-4 py-4 space-y-1">
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-600 dark:text-[#baba9c] hover:bg-slate-100 dark:hover:bg-white/5 transition-colors" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-sm font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-600 dark:text-[#baba9c] hover:bg-slate-100 dark:hover:bg-white/5 transition-colors" href="#">
+<span class="material-symbols-outlined">inventory_2</span>
+<span class="text-sm font-medium">Products</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-600 dark:text-[#baba9c] hover:bg-slate-100 dark:hover:bg-white/5 transition-colors" href="#">
+<span class="material-symbols-outlined">sell</span>
+<span class="text-sm font-medium">Brands</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-primary bg-primary/10 active-nav" href="#">
+<span class="material-symbols-outlined">storefront</span>
+<span class="text-sm font-medium">Store Settings</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-600 dark:text-[#baba9c] hover:bg-slate-100 dark:hover:bg-white/5 transition-colors" href="#">
+<span class="material-symbols-outlined">admin_panel_settings</span>
+<span class="text-sm font-medium">Security</span>
+</a>
+</nav>
+<div class="p-4 border-t border-slate-200 dark:border-slate-800">
+<div class="flex items-center gap-3 p-2">
+<div class="w-9 h-9 rounded-full bg-slate-200 dark:bg-slate-700 overflow-hidden">
+<img alt="Admin Profile" data-alt="Admin user profile avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD14WJHL2GV-rqnbrhBIu1459KRN9L51ZZhDoDG143mBGNUxYIeliofRUbSGpb-6fFWvLAD_WFlrLz513JQMQnYgj_cEKnOCkOjq1dPjYRIbTqnXIPNiS-r6_jtpRfpv3_yhyb56Mfz_NxHubAnoekgAFDXrfmlS34M_mSuzuRen5auixdW9_puIBfYdAjw-snaadC6YgmqjRBkXw_VPBzqRhRctB2XxQGgmQUusv2BqdSeHCzEqkjIT0JMftqj9laO1uPMnwUoo34"/>
+</div>
+<div class="flex flex-col overflow-hidden">
+<p class="text-sm font-semibold truncate">Alex Johnson</p>
+<p class="text-xs text-slate-500 dark:text-[#baba9c] truncate">alex@liquido.shop</p>
+</div>
+<span class="material-symbols-outlined text-slate-400 ml-auto cursor-pointer">logout</span>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 overflow-y-auto bg-background-light dark:bg-background-dark">
+<div class="max-w-5xl mx-auto px-8 py-8">
+<!-- Breadcrumbs -->
+<div class="flex items-center gap-2 text-sm text-slate-500 dark:text-[#baba9c] mb-6">
+<a class="hover:text-primary transition-colors" href="#">Dashboard</a>
+<span class="material-symbols-outlined text-xs">chevron_right</span>
+<span class="text-slate-900 dark:text-white font-medium">Store Settings</span>
+</div>
+<!-- Page Heading -->
+<div class="mb-10">
+<h2 class="text-4xl font-extrabold tracking-tight dark:text-white">Store Settings</h2>
+<p class="mt-2 text-slate-600 dark:text-[#baba9c]">Manage your shop details, location, and administrative credentials.</p>
+</div>
+<!-- Settings Sections -->
+<div class="space-y-12">
+<!-- General Shop Information -->
+<section class="bg-white dark:bg-card-dark rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden">
+<div class="px-6 py-5 border-b border-slate-200 dark:border-slate-800 flex justify-between items-center">
+<h3 class="text-lg font-bold flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">info</span>
+                                General Shop Information
+                            </h3>
+<button class="bg-primary hover:bg-primary/90 text-black px-6 py-2 rounded-lg text-sm font-bold transition-all">Save Changes</button>
+</div>
+<div class="p-6">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="space-y-2">
+<label class="text-sm font-semibold dark:text-white">Shop Name</label>
+<input class="w-full bg-slate-50 dark:bg-[#27271b] border border-slate-200 dark:border-[#54543b] rounded-lg px-4 py-3 text-slate-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all" placeholder="Enter shop name" type="text" value="LIQUIDO Premium Vape"/>
+</div>
+<div class="space-y-2">
+<label class="text-sm font-semibold dark:text-white">Contact Phone</label>
+<input class="w-full bg-slate-50 dark:bg-[#27271b] border border-slate-200 dark:border-[#54543b] rounded-lg px-4 py-3 text-slate-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all" placeholder="+1 000 000 000" type="tel" value="+1 (555) 012-3456"/>
+</div>
+<div class="space-y-2">
+<label class="text-sm font-semibold dark:text-white">Email Address</label>
+<input class="w-full bg-slate-50 dark:bg-[#27271b] border border-slate-200 dark:border-[#54543b] rounded-lg px-4 py-3 text-slate-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all" placeholder="shop@email.com" type="email" value="contact@liquido.shop"/>
+</div>
+<div class="space-y-2">
+<label class="text-sm font-semibold dark:text-white">Street Address</label>
+<input class="w-full bg-slate-50 dark:bg-[#27271b] border border-slate-200 dark:border-[#54543b] rounded-lg px-4 py-3 text-slate-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all" placeholder="Enter full address" type="text" value="123 Vapor Way, Suite 400"/>
+</div>
+</div>
+<div class="mt-8">
+<h4 class="text-sm font-bold uppercase tracking-wider text-slate-500 dark:text-[#baba9c] mb-4">Opening Hours</h4>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+<div class="p-4 bg-slate-50 dark:bg-white/5 rounded-lg border border-slate-100 dark:border-white/5">
+<p class="text-xs font-bold mb-2">Mon - Fri</p>
+<div class="flex gap-2">
+<input class="w-full bg-transparent border-b border-slate-300 dark:border-slate-600 text-sm py-1 outline-none focus:border-primary" type="text" value="09:00"/>
+<span class="text-slate-400">-</span>
+<input class="w-full bg-transparent border-b border-slate-300 dark:border-slate-600 text-sm py-1 outline-none focus:border-primary" type="text" value="21:00"/>
+</div>
+</div>
+<div class="p-4 bg-slate-50 dark:bg-white/5 rounded-lg border border-slate-100 dark:border-white/5">
+<p class="text-xs font-bold mb-2">Saturday</p>
+<div class="flex gap-2">
+<input class="w-full bg-transparent border-b border-slate-300 dark:border-slate-600 text-sm py-1 outline-none focus:border-primary" type="text" value="10:00"/>
+<span class="text-slate-400">-</span>
+<input class="w-full bg-transparent border-b border-slate-300 dark:border-slate-600 text-sm py-1 outline-none focus:border-primary" type="text" value="19:00"/>
+</div>
+</div>
+<div class="p-4 bg-slate-50 dark:bg-white/5 rounded-lg border border-slate-100 dark:border-white/5">
+<p class="text-xs font-bold mb-2">Sunday</p>
+<div class="flex items-center text-primary text-xs font-bold py-1">
+<span class="material-symbols-outlined text-sm mr-1">block</span> CLOSED
+                                        </div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Location & GPS -->
+<section class="bg-white dark:bg-card-dark rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden">
+<div class="px-6 py-5 border-b border-slate-200 dark:border-slate-800">
+<h3 class="text-lg font-bold flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">location_on</span>
+                                Location &amp; GPS Mapping
+                            </h3>
+</div>
+<div class="p-6 grid grid-cols-1 lg:grid-cols-3 gap-6">
+<div class="lg:col-span-1 space-y-4">
+<p class="text-sm text-slate-500 dark:text-[#baba9c]">Update your store's precise location for the customer-facing store locator map.</p>
+<div class="space-y-2">
+<label class="text-xs font-bold uppercase text-slate-400">Latitude</label>
+<input class="w-full bg-slate-50 dark:bg-[#27271b] border border-slate-200 dark:border-[#54543b] rounded-lg px-4 py-3 text-sm focus:ring-primary outline-none" type="text" value="34.0522"/>
+</div>
+<div class="space-y-2">
+<label class="text-xs font-bold uppercase text-slate-400">Longitude</label>
+<input class="w-full bg-slate-50 dark:bg-[#27271b] border border-slate-200 dark:border-[#54543b] rounded-lg px-4 py-3 text-sm focus:ring-primary outline-none" type="text" value="-118.2437"/>
+</div>
+<button class="w-full border border-primary text-primary hover:bg-primary/10 px-4 py-3 rounded-lg text-sm font-bold transition-all flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-sm">my_location</span>
+                                    Detect My Location
+                                </button>
+</div>
+<div class="lg:col-span-2 min-h-[300px] bg-slate-100 dark:bg-slate-800 rounded-xl relative overflow-hidden group">
+<div class="absolute inset-0 bg-[url('https://placeholder.pics/svg/800x400')] bg-cover bg-center opacity-50 dark:opacity-30" data-alt="Map view showing store location" data-location="Los Angeles, USA" style="https://lh3.googleusercontent.com/aida-public/AB6AXuDdzc0XXwaqKKPRT-a1T3mpB-FV1i2iDESDd94KU9aurRvLYaRmE7Io6zjHX-9i0U-LWSVpp2o0JWEdIajhOM3HpgncZPmklQS5B6Dh_uk9uM-yHNOJ4RIM2Nt61M-i1MGeTWXQ9xjsxREBMuyOk4gLO3zNdskFYyWyusqdFtQIDuEQEVTWQ6AhmJ8K8H2y3IAFbNO-xDeXjElAE9-Rgr80kXRUn5brKThtOCJaKjmeNTeQB0rXDZoN4z1OSY8Ykmrr8G4ztNPw38o"></div>
+<div class="absolute inset-0 flex items-center justify-center">
+<div class="bg-primary p-2 rounded-full shadow-lg shadow-primary/20 animate-pulse">
+<span class="material-symbols-outlined text-black">location_on</span>
+</div>
+</div>
+<div class="absolute bottom-4 left-4 bg-white dark:bg-black/80 backdrop-blur-sm px-3 py-2 rounded text-xs font-medium border border-slate-200 dark:border-white/10">
+                                    Preview: Los Angeles Central District
+                                </div>
+</div>
+</div>
+</section>
+<!-- Profile & Security -->
+<section class="bg-white dark:bg-card-dark rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden">
+<div class="px-6 py-5 border-b border-slate-200 dark:border-slate-800">
+<h3 class="text-lg font-bold flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">security</span>
+                                Admin Profile &amp; Security
+                            </h3>
+</div>
+<div class="p-6">
+<div class="flex items-center gap-6 mb-8 p-4 bg-slate-50 dark:bg-white/5 rounded-xl">
+<div class="relative group cursor-pointer">
+<img alt="User Profile" class="w-20 h-20 rounded-full border-4 border-primary/20" data-alt="User avatar for administrative profile" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD6U3SE9-Z4EHvHgy2mC0YmX5koOV2pPhottKqVmTrhyC0uLDwBmh_IeIwg7TNutUh1tzBuFSeE0d8GDJPgheRYsuB-KLvOJ8oiyzQDnEBxpoOW6VhYQanqhJHBuoPmj_AC7w5ggVdDbHA8qDx8HBVnN2oLMjOas6_ud1lzPgCxeb7XbOIadFDl7nxsVGMA8h_2GChDHtQ1d7CM676MOLtoOxO49tVym4fPGzCm1NpG_QMUkjLJ0fJfL74XzayAKZaqmhaA_U1Ttr0"/>
+<div class="absolute inset-0 bg-black/40 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-white">photo_camera</span>
+</div>
+</div>
+<div>
+<h4 class="text-xl font-bold">Alex Johnson</h4>
+<p class="text-slate-500 dark:text-[#baba9c]">System Administrator • Since Oct 2023</p>
+<button class="mt-2 text-primary text-xs font-bold hover:underline">Change Profile Picture</button>
+</div>
+</div>
+<div class="max-w-2xl space-y-6">
+<h4 class="text-sm font-bold uppercase tracking-wider text-slate-500 dark:text-[#baba9c]">Change Password</h4>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div class="space-y-2 md:col-span-2">
+<label class="text-xs font-bold uppercase text-slate-400">Current Password</label>
+<input class="w-full bg-slate-50 dark:bg-[#27271b] border border-slate-200 dark:border-[#54543b] rounded-lg px-4 py-3 text-sm focus:ring-primary outline-none" placeholder="••••••••••••" type="password"/>
+</div>
+<div class="space-y-2">
+<label class="text-xs font-bold uppercase text-slate-400">New Password</label>
+<input class="w-full bg-slate-50 dark:bg-[#27271b] border border-slate-200 dark:border-[#54543b] rounded-lg px-4 py-3 text-sm focus:ring-primary outline-none" placeholder="Min 8 characters" type="password"/>
+</div>
+<div class="space-y-2">
+<label class="text-xs font-bold uppercase text-slate-400">Confirm New Password</label>
+<input class="w-full bg-slate-50 dark:bg-[#27271b] border border-slate-200 dark:border-[#54543b] rounded-lg px-4 py-3 text-sm focus:ring-primary outline-none" placeholder="Repeat new password" type="password"/>
+</div>
+</div>
+<div class="flex justify-end pt-4">
+<button class="bg-primary hover:bg-primary/90 text-black px-8 py-3 rounded-lg text-sm font-bold shadow-lg shadow-primary/10 transition-all">Update Password</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Footer Warning -->
+<div class="flex items-center gap-4 p-4 rounded-xl bg-yellow-500/10 border border-yellow-500/20 mb-10">
+<span class="material-symbols-outlined text-yellow-500">warning</span>
+<p class="text-sm text-yellow-500/90 font-medium">Changes to Store Settings affect all user-facing platforms immediately. Please verify all information before saving.</p>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

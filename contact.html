@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Contact &amp; Location | LIQUIDO</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f2f20d",
+                        "background-light": "#f8f8f5",
+                        "background-dark": "#181811",
+                    },
+                    fontFamily: {
+                        "display": ["Plus Jakarta Sans", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            font-family: "Plus Jakarta Sans", sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-white min-h-screen flex flex-col">
+<header class="border-b border-solid border-[#393928] bg-background-light dark:bg-background-dark px-4 md:px-20 lg:px-40 py-3 sticky top-0 z-50">
+<div class="flex items-center justify-between max-w-[1280px] mx-auto">
+<div class="flex items-center gap-4">
+<div class="size-6 text-primary">
+<svg fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path clip-rule="evenodd" d="M24 4H6V17.3333V30.6667H24V44H42V30.6667V17.3333H24V4Z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+</div>
+<h2 class="text-white text-xl font-extrabold tracking-tighter">LIQUIDO</h2>
+</div>
+<nav class="hidden md:flex items-center gap-9">
+<a class="text-white hover:text-primary transition-colors text-sm font-medium" href="#">Brands</a>
+<a class="text-white hover:text-primary transition-colors text-sm font-medium" href="#">Catalog</a>
+<a class="text-white hover:text-primary transition-colors text-sm font-medium" href="#">Locations</a>
+<a class="text-white hover:text-primary transition-colors text-sm font-medium" href="#">Contact</a>
+</nav>
+<div class="flex items-center gap-4">
+<button class="hidden sm:flex min-w-[100px] cursor-pointer items-center justify-center rounded-lg h-10 px-5 bg-primary text-[#181811] text-sm font-bold tracking-tight hover:brightness-110 transition-all">
+                    Shop Now
+                </button>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 border border-[#393928]" data-alt="User profile avatar placeholder" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCXVM1uTk-TrkIFz85rbbDH-aij1F5y6B0tck_Nlid6yqFyUUvgevUqXEXJMcY-bOoIpe_SIzGFBke_bBa3KsLBu210HD8yXlSMHyQ4sjTg5XkC7namSSfGDe_PyttLvaXXvDFdwBEJPFeZWBB1r6BVOKvXBhtMl6eKOv9ba17ArrxZ395pfw-BQmPROoN845BQAe6mmt2NY2FQvVXtBM1VEC0-jInfkRD4y75_8o-JVGUdeRkzO5dqxZ8jvt_Q1SUjxT14Kh3zpKA");'></div>
+</div>
+</div>
+</header>
+<main class="flex-grow max-w-[1280px] mx-auto w-full px-4 md:px-20 lg:px-40 py-10">
+<div class="mb-12 text-center lg:text-left">
+<h1 class="text-white text-5xl font-black leading-tight tracking-[-0.033em] mb-4">Contact &amp; Location</h1>
+<p class="text-[#baba9c] text-lg max-w-2xl mx-auto lg:mx-0">Experience the essence of LIQUIDO. Visit our flagship store for a personalized consultation or reach out to our premium support team.</p>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+<div class="flex flex-col gap-10">
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+<div class="flex flex-col gap-4 rounded-xl border border-[#54543b] bg-[#27271b] p-6 hover:border-primary transition-colors">
+<span class="material-symbols-outlined text-primary text-3xl">call</span>
+<div>
+<h3 class="text-white text-lg font-bold">Call Us</h3>
+<p class="text-[#baba9c] text-sm">+1 (555) 123-4567</p>
+</div>
+</div>
+<div class="flex flex-col gap-4 rounded-xl border border-[#54543b] bg-[#27271b] p-6 hover:border-primary transition-colors">
+<span class="material-symbols-outlined text-primary text-3xl">mail</span>
+<div>
+<h3 class="text-white text-lg font-bold">Email</h3>
+<p class="text-[#baba9c] text-sm">concierge@liquido.vape</p>
+</div>
+</div>
+</div>
+<div class="bg-[#27271b] border border-[#54543b] rounded-xl p-8">
+<h2 class="text-white text-2xl font-bold mb-6">Send us a message</h2>
+<form class="flex flex-col gap-5">
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+<div class="flex flex-col gap-2">
+<label class="text-sm font-semibold text-[#baba9c]">Full Name</label>
+<input class="bg-[#181811] border border-[#393928] rounded-lg p-3 text-white focus:outline-none focus:border-primary" placeholder="John Doe" type="text"/>
+</div>
+<div class="flex flex-col gap-2">
+<label class="text-sm font-semibold text-[#baba9c]">Email Address</label>
+<input class="bg-[#181811] border border-[#393928] rounded-lg p-3 text-white focus:outline-none focus:border-primary" placeholder="john@example.com" type="email"/>
+</div>
+</div>
+<div class="flex flex-col gap-2">
+<label class="text-sm font-semibold text-[#baba9c]">Subject</label>
+<input class="bg-[#181811] border border-[#393928] rounded-lg p-3 text-white focus:outline-none focus:border-primary" placeholder="Inquiry about custom blends" type="text"/>
+</div>
+<div class="flex flex-col gap-2">
+<label class="text-sm font-semibold text-[#baba9c]">Message</label>
+<textarea class="bg-[#181811] border border-[#393928] rounded-lg p-3 text-white focus:outline-none focus:border-primary" placeholder="How can we help you today?" rows="4"></textarea>
+</div>
+<button class="bg-primary text-[#181811] font-bold py-4 rounded-lg mt-2 hover:brightness-110 transition-all text-lg">
+                            Send Message
+                        </button>
+</form>
+</div>
+<div class="flex flex-col gap-4">
+<h2 class="text-white text-xl font-bold px-1">Opening Hours</h2>
+<div class="bg-[#27271b]/50 rounded-xl overflow-hidden border border-[#54543b]">
+<div class="flex justify-between p-4 border-b border-[#393928]">
+<span class="text-[#baba9c]">Mon - Fri</span>
+<span class="text-white font-medium">10:00 AM - 09:00 PM</span>
+</div>
+<div class="flex justify-between p-4 border-b border-[#393928]">
+<span class="text-[#baba9c]">Saturday</span>
+<span class="text-white font-medium">11:00 AM - 10:00 PM</span>
+</div>
+<div class="flex justify-between p-4 bg-primary/10">
+<span class="text-primary font-bold">Sunday</span>
+<span class="text-primary font-bold">12:00 PM - 06:00 PM (Open Now)</span>
+</div>
+</div>
+</div>
+</div>
+<div class="flex flex-col gap-6 lg:sticky lg:top-24">
+<div class="relative w-full h-[600px] rounded-2xl overflow-hidden border border-[#54543b] group shadow-2xl">
+<div class="absolute inset-0 bg-center bg-cover grayscale contrast-125 brightness-50 transition-all duration-700 group-hover:grayscale-0 group-hover:brightness-75" data-alt="Detailed charcoal dark mode city map" data-location="New York" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBrHPuKTL9G4FNmxVAjRe4b0VcwRdL1EAQ3c8X7iWgkKQfkI869nLb82JJ8mNKIj7w4ZMcxGrSfdJCd-Yq7P-s3e4HZJHImJCp2oJEYoenIQgBvaKuv8JTR7JLnXWXey1WT_VE131JsD4Kwy6SvlEHBKmQrL0rSEqkWQc2qQctSFIjNOBPDIGff9M8VEeT49V6RFiyaI68pOzyY6-jmk0IpbpLkG0mOWDGsKCvhn2-Fj2LH-gaiTxJ_kdjxblz0KGozMD5OjQgD3xQ");'>
+</div>
+<div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+<div class="relative flex flex-col items-center">
+<div class="bg-primary text-black p-3 rounded-full shadow-[0_0_30px_rgba(242,242,13,0.5)] animate-pulse">
+<span class="material-symbols-outlined text-3xl font-bold">location_on</span>
+</div>
+<div class="mt-2 bg-[#181811] border border-primary px-4 py-2 rounded-lg shadow-xl">
+<p class="text-white font-bold text-sm">LIQUIDO Flagship</p>
+</div>
+</div>
+</div>
+<div class="absolute bottom-6 left-6 flex flex-col gap-2">
+<button class="bg-[#27271b] text-white p-2 rounded-lg border border-[#54543b] hover:bg-primary hover:text-black transition-colors">
+<span class="material-symbols-outlined">add</span>
+</button>
+<button class="bg-[#27271b] text-white p-2 rounded-lg border border-[#54543b] hover:bg-primary hover:text-black transition-colors">
+<span class="material-symbols-outlined">remove</span>
+</button>
+</div>
+<div class="absolute top-6 right-6">
+<button class="bg-primary text-black px-4 py-2 rounded-full font-bold text-xs flex items-center gap-2 shadow-lg hover:scale-105 transition-transform">
+<span class="material-symbols-outlined text-sm">directions</span>
+                            GET DIRECTIONS
+                        </button>
+</div>
+</div>
+<div class="bg-[#27271b] border border-[#54543b] rounded-xl p-6 flex flex-col gap-2">
+<div class="flex items-center gap-3 text-primary mb-2">
+<span class="material-symbols-outlined">home_pin</span>
+<h3 class="font-bold text-lg uppercase tracking-wider">Main Headquarters</h3>
+</div>
+<p class="text-white text-xl font-bold">123 Smoke Street, Vapor City</p>
+<p class="text-[#baba9c]">District 9, Metropolitan Area, VC 10293</p>
+</div>
+</div>
+</div>
+</main>
+<footer class="mt-20 border-t border-[#393928] bg-[#121210] pt-16 pb-8 px-4 md:px-20 lg:px-40">
+<div class="max-w-[1280px] mx-auto">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+<div class="flex flex-col gap-6">
+<div class="flex items-center gap-2">
+<div class="size-7 text-primary">
+<svg fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path clip-rule="evenodd" d="M24 4H6V17.3333V30.6667H24V44H42V30.6667V17.3333H24V4Z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+</div>
+<span class="text-white text-2xl font-black tracking-tighter uppercase">LIQUIDO</span>
+</div>
+<p class="text-[#baba9c] text-sm leading-relaxed max-w-xs">
+                        Premium vaping experience curated for enthusiasts. Explore our exclusive range of boutique e-liquids and high-end hardware.
+                    </p>
+<div class="flex gap-4">
+<a class="w-10 h-10 rounded-lg bg-[#27271b] border border-[#393928] flex items-center justify-center text-white hover:bg-primary hover:text-black hover:border-primary transition-all" href="#">
+<svg class="size-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.947.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c.796 0 1.441.645 1.441 1.44s-.645 1.44-1.441 1.44c-.795 0-1.439-.645-1.439-1.44s.644-1.44 1.439-1.44z"></path></svg>
+</a>
+<a class="w-10 h-10 rounded-lg bg-[#27271b] border border-[#393928] flex items-center justify-center text-white hover:bg-primary hover:text-black hover:border-primary transition-all" href="#">
+<svg class="size-5" fill="currentColor" viewBox="0 0 24 24"><path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.84 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"></path></svg>
+</a>
+<a class="w-10 h-10 rounded-lg bg-[#27271b] border border-[#393928] flex items-center justify-center text-white hover:bg-primary hover:text-black hover:border-primary transition-all" href="#">
+<svg class="size-5" fill="currentColor" viewBox="0 0 24 24"><path d="M22.675 0h-21.35c-.732 0-1.325.593-1.325 1.325v21.351c0 .731.593 1.324 1.325 1.324h11.495v-9.294h-3.128v-3.622h3.128v-2.671c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12v9.293h6.116c.73 0 1.323-.593 1.323-1.324v-21.35c0-.732-.593-1.325-1.325-1.325z"></path></svg>
+</a>
+</div>
+</div>
+<div class="flex flex-col gap-6">
+<h4 class="text-white font-bold uppercase tracking-widest text-xs">Navigation</h4>
+<ul class="flex flex-col gap-3">
+<li><a class="text-[#baba9c] hover:text-primary text-sm transition-colors" href="#">Catalog</a></li>
+<li><a class="text-[#baba9c] hover:text-primary text-sm transition-colors" href="#">Brand Collections</a></li>
+<li><a class="text-[#baba9c] hover:text-primary text-sm transition-colors" href="#">Bestsellers</a></li>
+<li><a class="text-[#baba9c] hover:text-primary text-sm transition-colors" href="#">New Arrivals</a></li>
+<li><a class="text-[#baba9c] hover:text-primary text-sm transition-colors" href="#">Store Locations</a></li>
+</ul>
+</div>
+<div class="flex flex-col gap-6">
+<h4 class="text-white font-bold uppercase tracking-widest text-xs">Get in Touch</h4>
+<div class="flex flex-col gap-4">
+<div class="flex items-start gap-3">
+<span class="material-symbols-outlined text-primary text-xl">location_on</span>
+<span class="text-[#baba9c] text-sm">123 Smoke Street, Vapor City, VC 10293</span>
+</div>
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-xl">call</span>
+<span class="text-[#baba9c] text-sm">+1 (555) 123-4567</span>
+</div>
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-xl">mail</span>
+<span class="text-[#baba9c] text-sm">concierge@liquido.vape</span>
+</div>
+</div>
+</div>
+<div class="flex flex-col gap-6">
+<h4 class="text-white font-bold uppercase tracking-widest text-xs">Newsletter</h4>
+<p class="text-[#baba9c] text-sm">Subscribe to receive updates on limited drops.</p>
+<div class="flex gap-2">
+<input class="bg-[#181811] border border-[#393928] rounded-lg px-4 py-2 text-sm text-white w-full focus:outline-none focus:border-primary" placeholder="Email" type="email"/>
+<button class="bg-primary text-black font-bold px-4 py-2 rounded-lg text-sm hover:brightness-110 transition-all">Join</button>
+</div>
+</div>
+</div>
+<div class="border-t border-[#393928] pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+<p class="text-[#baba9c] text-xs">© 2024 LIQUIDO Vape Store. Crafted for the connoisseur.</p>
+<div class="flex gap-6 text-xs text-[#baba9c]">
+<a class="hover:text-primary transition-colors underline" href="#">Privacy Policy</a>
+<a class="hover:text-primary transition-colors underline" href="#">Terms of Service</a>
+<a class="hover:text-primary transition-colors underline" href="#">Cookie Settings</a>
+</div>
+</div>
+</div>
+</footer>
+
+</body></html>

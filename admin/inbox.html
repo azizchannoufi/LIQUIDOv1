@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>LIQUIDO Admin - Contact Inbox</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f2f20d",
+                        "background-light": "#f8f8f5",
+                        "background-dark": "#181811",
+                        "surface-dark": "#27271b",
+                        "border-dark": "#393928",
+                    },
+                    fontFamily: {
+                        "display": ["Plus Jakarta Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            font-family: "Plus Jakarta Sans", sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white min-h-screen">
+<div class="flex h-screen overflow-hidden">
+<!-- Sidebar Navigation -->
+<aside class="w-72 flex-shrink-0 border-r border-border-dark bg-background-dark flex flex-col justify-between p-6">
+<div class="flex flex-col gap-8">
+<div class="flex items-center gap-3">
+<div class="bg-primary rounded-lg size-10 flex items-center justify-center text-black">
+<span class="material-symbols-outlined font-bold">water_drop</span>
+</div>
+<div class="flex flex-col">
+<h1 class="text-white text-lg font-bold leading-none tracking-tight">LIQUIDO Admin</h1>
+<p class="text-[#baba9c] text-xs font-medium uppercase tracking-wider mt-1">Vape Management</p>
+</div>
+</div>
+<nav class="flex flex-col gap-2">
+<a class="flex items-center gap-3 px-4 py-3 text-[#baba9c] hover:text-white transition-colors" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-sm font-semibold">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-[#baba9c] hover:text-white transition-colors" href="#">
+<span class="material-symbols-outlined">shopping_bag</span>
+<span class="text-sm font-semibold">Orders</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-[#baba9c] hover:text-white transition-colors" href="#">
+<span class="material-symbols-outlined">inventory_2</span>
+<span class="text-sm font-semibold">Inventory</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl bg-primary text-black font-bold shadow-[0_0_20px_rgba(242,242,13,0.2)]" href="#">
+<span class="material-symbols-outlined">mail</span>
+<span class="text-sm">Inbox</span>
+<span class="ml-auto bg-black text-primary text-[10px] px-1.5 py-0.5 rounded-full">12</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-[#baba9c] hover:text-white transition-colors" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-sm font-semibold">Settings</span>
+</a>
+</nav>
+</div>
+<div class="flex flex-col gap-2 pt-6 border-t border-border-dark">
+<div class="flex items-center gap-3 px-4 py-3 mb-2">
+<div class="size-8 rounded-full bg-surface-dark bg-cover bg-center" data-alt="Admin user avatar" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuA3S-VNH6dMWAgV-VUMHKBfbEbOTLvTK3SAF2ylF1QppfhmGGPtnOYhr3xxfoEkciIeDfa96Ok5tkSsJbn9zGxNwHWTAHR2X-THEf5ouptvyZnO4OvmfEIynCj8jXH-qVE1-pQpINLHL10TLeGbtj3i3m92TbVv2chdidr77c82DIVpOblRjetuJB_cc_tkntym7Kuvqn1i83d-hu6kJ4tJgtyRV8lMf9qskLG2aFqIy5_JjTy9IQthapFLdHNTU40KwxyhoMR3pKU');"></div>
+<div class="flex flex-col">
+<span class="text-sm font-bold text-white leading-none">Alex Rivera</span>
+<span class="text-xs text-[#baba9c]">Store Manager</span>
+</div>
+</div>
+<a class="flex items-center gap-3 px-4 py-3 text-red-400 hover:text-red-300 transition-colors" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span class="text-sm font-semibold">Logout</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col overflow-hidden bg-background-light dark:bg-background-dark">
+<!-- Header Section -->
+<header class="flex flex-col border-b border-border-dark px-8 py-6 gap-6 bg-background-dark/50 backdrop-blur-md">
+<div class="flex justify-between items-end">
+<div class="flex flex-col gap-1">
+<h2 class="text-white text-3xl font-black tracking-tight">Contact Inbox</h2>
+<p class="text-[#baba9c] text-sm font-medium">Manage customer inquiries and support tickets.</p>
+</div>
+<button class="bg-primary hover:bg-primary/90 text-black px-6 py-2.5 rounded-lg font-bold text-sm flex items-center gap-2 transition-transform active:scale-95 shadow-lg shadow-primary/10">
+<span class="material-symbols-outlined text-[20px]">add</span>
+                        New Message
+                    </button>
+</div>
+<!-- Filters & Search Bar -->
+<div class="flex flex-wrap items-center gap-4">
+<div class="flex-1 min-w-[300px]">
+<label class="relative flex items-center group">
+<span class="material-symbols-outlined absolute left-4 text-[#baba9c] group-focus-within:text-primary transition-colors">search</span>
+<input class="w-full bg-surface-dark border-none focus:ring-1 focus:ring-primary rounded-xl py-3 pl-12 pr-4 text-white placeholder:text-[#baba9c] transition-all text-sm shadow-inner" placeholder="Search by sender, email, or subject..." type="text"/>
+</label>
+</div>
+<div class="flex items-center gap-2">
+<button class="flex items-center gap-2 rounded-lg bg-surface-dark px-4 py-2.5 text-white hover:bg-border-dark border border-transparent hover:border-border-dark transition-all text-sm font-semibold">
+<span>All Messages</span>
+<span class="material-symbols-outlined text-[18px]">expand_more</span>
+</button>
+<button class="flex items-center gap-2 rounded-lg bg-surface-dark px-4 py-2.5 text-white hover:bg-border-dark border border-transparent hover:border-border-dark transition-all text-sm font-semibold">
+<span>Newest First</span>
+<span class="material-symbols-outlined text-[18px]">sort</span>
+</button>
+<button class="flex items-center justify-center size-10 rounded-lg bg-surface-dark text-white hover:bg-border-dark transition-all">
+<span class="material-symbols-outlined">filter_list</span>
+</button>
+</div>
+</div>
+<!-- Chips -->
+<div class="flex gap-2">
+<button class="px-4 py-1.5 rounded-full text-xs font-bold transition-all bg-primary text-black">All (128)</button>
+<button class="px-4 py-1.5 rounded-full text-xs font-bold transition-all bg-surface-dark text-[#baba9c] hover:text-white border border-border-dark">New (12)</button>
+<button class="px-4 py-1.5 rounded-full text-xs font-bold transition-all bg-surface-dark text-[#baba9c] hover:text-white border border-border-dark">Replied (84)</button>
+<button class="px-4 py-1.5 rounded-full text-xs font-bold transition-all bg-surface-dark text-[#baba9c] hover:text-white border border-border-dark">Archived (32)</button>
+</div>
+</header>
+<!-- Table Section -->
+<div class="flex-1 overflow-auto px-8 py-6">
+<div class="bg-surface-dark/30 rounded-2xl border border-border-dark overflow-hidden">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-primary"></div><div class="absolute left-0 top-0 bottom-0 w-1 bg-primary"></div><table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-dark/50 border-b border-border-dark">
+<th class="px-6 py-4 text-xs font-bold uppercase tracking-widest text-[#baba9c] w-12">
+<input class="rounded border-border-dark bg-background-dark text-primary focus:ring-primary focus:ring-offset-background-dark" type="checkbox"/>
+</th>
+<th class="px-6 py-4 text-xs font-bold uppercase tracking-widest text-[#baba9c]">Sender</th>
+<th class="px-6 py-4 text-xs font-bold uppercase tracking-widest text-[#baba9c]">Subject</th>
+<th class="px-6 py-4 text-xs font-bold uppercase tracking-widest text-[#baba9c]">Date Received</th>
+<th class="px-6 py-4 text-xs font-bold uppercase tracking-widest text-[#baba9c]">Status</th>
+<th class="px-6 py-4 text-xs font-bold uppercase tracking-widest text-[#baba9c] text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-border-dark">
+<!-- Row 1: New -->
+<tr class="group hover:bg-white/5 transition-colors cursor-pointer relative overflow-hidden">
+<td class="px-6 py-4">
+<input class="rounded border-border-dark bg-background-dark text-primary focus:ring-primary focus:ring-offset-background-dark" type="checkbox"/>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="size-9 rounded-full bg-primary/20 flex items-center justify-center text-primary font-bold text-xs">JD</div>
+<div class="flex flex-col">
+<span class="text-white font-bold text-sm">John Doe</span>
+<span class="text-[#baba9c] text-xs">john@example.com</span>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<p class="text-white font-semibold text-sm truncate max-w-[300px]">Product Inquiry - XL Vape Device</p>
+<p class="text-[#baba9c] text-xs truncate max-w-[300px]">Hey team, I'm interested in buying 10 units of...</p>
+</td>
+<td class="px-6 py-4">
+<span class="text-[#baba9c] text-sm">2 hours ago</span>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary/10 text-primary text-[10px] font-bold uppercase tracking-wider border border-primary/20">
+<span class="size-1.5 rounded-full bg-primary animate-pulse"></span>
+                                        New
+                                    </span>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="size-8 rounded-lg bg-surface-dark text-white hover:text-primary transition-colors flex items-center justify-center border border-border-dark" title="Reply">
+<span class="material-symbols-outlined text-lg">reply</span>
+</button>
+<button class="size-8 rounded-lg bg-surface-dark text-white hover:text-blue-400 transition-colors flex items-center justify-center border border-border-dark" title="Archive">
+<span class="material-symbols-outlined text-lg">archive</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 2: Replied -->
+<tr class="group hover:bg-white/5 transition-colors cursor-pointer">
+<td class="px-6 py-4">
+<input class="rounded border-border-dark bg-background-dark text-primary focus:ring-primary focus:ring-offset-background-dark" type="checkbox"/>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="size-9 rounded-full bg-surface-dark flex items-center justify-center text-white font-bold text-xs">SS</div>
+<div class="flex flex-col">
+<span class="text-white font-medium text-sm">Sarah Smith</span>
+<span class="text-[#baba9c] text-xs">sarah.s@mail.com</span>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<p class="text-[#baba9c] font-medium text-sm truncate max-w-[300px]">Shipping Delay Question</p>
+<p class="text-[#baba9c]/50 text-xs truncate max-w-[300px]">I haven't received my tracking number for order...</p>
+</td>
+<td class="px-6 py-4">
+<span class="text-[#baba9c] text-sm">5 hours ago</span>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-500/10 text-blue-400 text-[10px] font-bold uppercase tracking-wider border border-blue-500/20">
+                                        Replied
+                                    </span>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="size-8 rounded-lg bg-surface-dark text-white hover:text-primary transition-colors flex items-center justify-center border border-border-dark">
+<span class="material-symbols-outlined text-lg">visibility</span>
+</button>
+<button class="size-8 rounded-lg bg-surface-dark text-white hover:text-blue-400 transition-colors flex items-center justify-center border border-border-dark">
+<span class="material-symbols-outlined text-lg">archive</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 3: New -->
+<tr class="group hover:bg-white/5 transition-colors cursor-pointer relative overflow-hidden">
+<td class="px-6 py-4">
+<input class="rounded border-border-dark bg-background-dark text-primary focus:ring-primary focus:ring-offset-background-dark" type="checkbox"/>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="size-9 rounded-full bg-primary/20 flex items-center justify-center text-primary font-bold text-xs">MR</div>
+<div class="flex flex-col">
+<span class="text-white font-bold text-sm">Mike Ross</span>
+<span class="text-[#baba9c] text-xs">mike@pearson.law</span>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<p class="text-white font-semibold text-sm truncate max-w-[300px]">Wholesale Inquiry</p>
+<p class="text-[#baba9c] text-xs truncate max-w-[300px]">Looking to stock Liquid Juice in our 50 locations...</p>
+</td>
+<td class="px-6 py-4">
+<span class="text-[#baba9c] text-sm">Yesterday</span>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary/10 text-primary text-[10px] font-bold uppercase tracking-wider border border-primary/20">
+<span class="size-1.5 rounded-full bg-primary animate-pulse"></span>
+                                        New
+                                    </span>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="size-8 rounded-lg bg-surface-dark text-white hover:text-primary transition-colors flex items-center justify-center border border-border-dark">
+<span class="material-symbols-outlined text-lg">reply</span>
+</button>
+<button class="size-8 rounded-lg bg-surface-dark text-white hover:text-blue-400 transition-colors flex items-center justify-center border border-border-dark">
+<span class="material-symbols-outlined text-lg">archive</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 4: Archived -->
+<tr class="group hover:bg-white/5 transition-colors cursor-pointer opacity-60">
+<td class="px-6 py-4">
+<input class="rounded border-border-dark bg-background-dark text-primary focus:ring-primary focus:ring-offset-background-dark" type="checkbox"/>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="size-9 rounded-full bg-surface-dark flex items-center justify-center text-white font-bold text-xs">EW</div>
+<div class="flex flex-col">
+<span class="text-white font-medium text-sm">Emma Wilson</span>
+<span class="text-[#baba9c] text-xs">emma@wilson.com</span>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<p class="text-[#baba9c] font-medium text-sm truncate max-w-[300px]">Return Request #1029</p>
+<p class="text-[#baba9c]/50 text-xs truncate max-w-[300px]">The flavor wasn't what I expected, can I return...</p>
+</td>
+<td class="px-6 py-4">
+<span class="text-[#baba9c] text-sm">2 days ago</span>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-500/10 text-slate-400 text-[10px] font-bold uppercase tracking-wider border border-slate-500/20">
+                                        Archived
+                                    </span>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="size-8 rounded-lg bg-surface-dark text-white hover:text-primary transition-colors flex items-center justify-center border border-border-dark">
+<span class="material-symbols-outlined text-lg">unarchive</span>
+</button>
+<button class="size-8 rounded-lg bg-surface-dark text-white hover:text-red-400 transition-colors flex items-center justify-center border border-border-dark">
+<span class="material-symbols-outlined text-lg">delete</span>
+</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination Footer -->
+<div class="flex items-center justify-between mt-6">
+<p class="text-sm text-[#baba9c]">Showing <span class="text-white font-bold">1-10</span> of <span class="text-white font-bold">128</span> messages</p>
+<div class="flex items-center gap-2">
+<button class="size-9 flex items-center justify-center rounded-lg bg-surface-dark text-[#baba9c] border border-border-dark hover:text-white transition-colors disabled:opacity-30" disabled="">
+<span class="material-symbols-outlined">chevron_left</span>
+</button>
+<button class="size-9 flex items-center justify-center rounded-lg bg-primary text-black font-bold text-sm">1</button>
+<button class="size-9 flex items-center justify-center rounded-lg bg-surface-dark text-[#baba9c] border border-border-dark hover:text-white transition-colors">2</button>
+<button class="size-9 flex items-center justify-center rounded-lg bg-surface-dark text-[#baba9c] border border-border-dark hover:text-white transition-colors">3</button>
+<span class="text-[#baba9c] px-1">...</span>
+<button class="size-9 flex items-center justify-center rounded-lg bg-surface-dark text-[#baba9c] border border-border-dark hover:text-white transition-colors">13</button>
+<button class="size-9 flex items-center justify-center rounded-lg bg-surface-dark text-[#baba9c] border border-border-dark hover:text-white transition-colors">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>
