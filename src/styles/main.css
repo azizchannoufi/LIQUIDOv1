@@ -1,0 +1,197 @@
+/**
+ * LIQUIDO Main Stylesheet
+ * Central import file for all styles
+ */
+
+/* Base Styles */
+@import './base/reset.css';
+@import './base/variables.css';
+@import './base/typography.css';
+
+/* Component Styles */
+@import './components/buttons.css';
+@import './components/cards.css';
+
+/* Layout Styles */
+/* @import './layouts/public.css'; */
+/* @import './layouts/admin.css'; */
+
+/* Page-specific Styles */
+/* @import './pages/home.css'; */
+/* @import './pages/products.css'; */
+
+/* Utility Classes */
+.container {
+    width: 100%;
+    max-width: var(--container-max-width);
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: var(--spacing-lg);
+    padding-right: var(--spacing-lg);
+}
+
+.section {
+    padding-top: var(--spacing-4xl);
+    padding-bottom: var(--spacing-4xl);
+}
+
+.section-sm {
+    padding-top: var(--spacing-2xl);
+    padding-bottom: var(--spacing-2xl);
+}
+
+.section-lg {
+    padding-top: 8rem;
+    padding-bottom: 8rem;
+}
+
+/* Flexbox Utilities */
+.flex {
+    display: flex;
+}
+
+.flex-col {
+    flex-direction: column;
+}
+
+.items-center {
+    align-items: center;
+}
+
+.justify-center {
+    justify-content: center;
+}
+
+.justify-between {
+    justify-content: space-between;
+}
+
+.gap-sm {
+    gap: var(--spacing-sm);
+}
+
+.gap-md {
+    gap: var(--spacing-md);
+}
+
+.gap-lg {
+    gap: var(--spacing-lg);
+}
+
+/* Grid Utilities */
+.grid {
+    display: grid;
+}
+
+.grid-cols-2 {
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.grid-cols-3 {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.grid-cols-4 {
+    grid-template-columns: repeat(4, 1fr);
+}
+
+/* Spacing Utilities */
+.mt-auto {
+    margin-top: auto;
+}
+
+.mb-auto {
+    margin-bottom: auto;
+}
+
+/* Background Utilities */
+.bg-dark {
+    background-color: var(--color-background-dark);
+}
+
+.bg-charcoal {
+    background-color: var(--color-charcoal);
+}
+
+.bg-primary {
+    background-color: var(--color-primary);
+}
+
+/* Border Utilities */
+.border {
+    border: 1px solid var(--color-border);
+}
+
+.border-t {
+    border-top: 1px solid var(--color-border);
+}
+
+.border-b {
+    border-bottom: 1px solid var(--color-border);
+}
+
+.rounded {
+    border-radius: var(--radius-md);
+}
+
+.rounded-sm {
+    border-radius: var(--radius-sm);
+}
+
+.rounded-lg {
+    border-radius: var(--radius-lg);
+}
+
+/* Effects */
+.glass-effect {
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.accent-glow {
+    box-shadow: var(--shadow-glow);
+}
+
+.accent-glow-strong {
+    box-shadow: var(--shadow-glow-strong);
+}
+
+/* Transitions */
+.transition {
+    transition: all var(--transition-base);
+}
+
+.transition-fast {
+    transition: all var(--transition-fast);
+}
+
+.transition-slow {
+    transition: all var(--transition-slow);
+}
+
+/* Responsive Utilities */
+@media (max-width: 768px) {
+    .container {
+        padding-left: var(--spacing-md);
+        padding-right: var(--spacing-md);
+    }
+
+    .section {
+        padding-top: var(--spacing-3xl);
+        padding-bottom: var(--spacing-3xl);
+    }
+
+    .grid-cols-2,
+    .grid-cols-3,
+    .grid-cols-4 {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+
+    .grid-cols-3,
+    .grid-cols-4 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}

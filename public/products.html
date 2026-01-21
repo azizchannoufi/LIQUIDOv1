@@ -12,30 +12,40 @@
             theme: {
                 extend: {
                     colors: {
-                        "primary": "#f2f20d",
-                        "background-light": "#f8f8f5",
-                        "background-dark": "#121212",
+                        "primary": "#F2EA7E",
+                        "background-light": "#1a1a1a",
+                        "background-dark": "#0A0A0A",
+                        "charcoal": "#121212",
                     },
                     fontFamily: {
                         "display": ["Plus Jakarta Sans", "sans-serif"]
                     },
-                    borderRadius: {
-                        "DEFAULT": "0.25rem",
-                        "lg": "0.5rem",
-                        "xl": "0.75rem",
-                        "full": "9999px"
-                    },
+                    borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "9999px"},
                 },
             },
         }
     </script>
-<style type="text/tailwindcss">
-        body {
-            font-family: "Plus Jakarta Sans", sans-serif;
+    <style type="text/tailwindcss">
+        :root {
+            --primary-color: #F2EA7E;
+            --bg-dark: #0A0A0A;
+        }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .glass-effect {
+            background: rgba(10, 10, 10, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+        }
+        .text-bold-modern {
+            font-weight: 800;
+            letter-spacing: -0.02em;
+        }
+        .accent-glow {
+            box-shadow: 0 0 20px rgba(242, 234, 126, 0.2);
         }
         .product-card:hover .details-btn {
-            background-color: #f2f20d;
-            color: #121212;
+            background-color: #F2EA7E;
+            color: #0A0A0A;
         }
         .material-symbols-outlined {
             font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
@@ -49,41 +59,37 @@
         }
     </style>
 </head>
-<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white min-h-screen">
-<header class="sticky top-0 z-50 w-full border-b border-zinc-200 dark:border-zinc-800 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md">
-<div class="max-w-[1400px] mx-auto px-6 h-16 flex items-center justify-between">
+<body class="bg-background-dark text-white transition-colors duration-300">
+<header class="fixed top-0 w-full z-50 border-b border-white/5 glass-effect">
+<div class="max-w-[1440px] mx-auto px-6 lg:px-20 h-20 flex items-center justify-between">
 <div class="flex items-center gap-12">
-<div class="flex items-center gap-3">
-<div class="size-8 bg-primary rounded flex items-center justify-center text-black">
-<span class="material-symbols-outlined font-bold">bolt</span>
-</div>
-<h2 class="text-xl font-extrabold tracking-tighter uppercase italic">LIQUIDO</h2>
-</div>
+            <a href="index.html" class="flex items-center gap-3 cursor-pointer hover:opacity-80 transition-opacity">
+                <div class="size-10 bg-primary rounded-sm flex items-center justify-center text-background-dark">
+                    <span class="material-symbols-outlined font-bold">water_drop</span>
+                </div>
+                <h2 class="text-2xl text-bold-modern tracking-tighter uppercase">LIQUIDO <span class="text-primary/80 font-normal">VAPE SHOP</span></h2>
+            </a>
 <nav class="hidden md:flex items-center gap-8">
-<a class="text-primary text-sm font-bold border-b-2 border-primary pb-1" href="#">Catalog</a>
-<a class="text-zinc-500 dark:text-zinc-400 hover:text-primary transition-colors text-sm font-medium" href="#">New Arrivals</a>
-<a class="text-zinc-500 dark:text-zinc-400 hover:text-primary transition-colors text-sm font-medium" href="#">Brands</a>
-<a class="text-zinc-500 dark:text-zinc-400 hover:text-primary transition-colors text-sm font-medium" href="#">Support</a>
+<a class="text-xs font-bold uppercase tracking-widest hover:text-primary transition-colors" href="index.html">Home</a>
+<a class="text-xs font-bold uppercase tracking-widest hover:text-primary transition-colors" href="brands.html">Brands</a>
+<a class="text-xs font-bold uppercase tracking-widest hover:text-primary transition-colors text-primary" href="products.html">Products</a>
+<a class="text-xs font-bold uppercase tracking-widest hover:text-primary transition-colors" href="about.html">About</a>
+<a class="text-xs font-bold uppercase tracking-widest hover:text-primary transition-colors" href="contact.html">Contact</a>
 </nav>
 </div>
-<div class="flex items-center gap-4 flex-1 justify-end max-w-md">
-<div class="relative w-full group">
-<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-zinc-500 text-sm">search</span>
-<input class="w-full bg-zinc-100 dark:bg-zinc-900 border-none rounded-lg pl-10 pr-4 py-2 text-sm focus:ring-1 focus:ring-primary" placeholder="Search premium liquids..." type="text"/>
+<div class="flex items-center gap-6">
+<div class="hidden lg:flex items-center bg-white/5 border border-white/10 rounded-sm px-4 py-2 w-64">
+<span class="material-symbols-outlined text-white/40 text-sm">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-sm placeholder:text-white/30 w-full" placeholder="Search products..." type="text"/>
 </div>
-<div class="flex items-center gap-2">
-<button class="p-2 hover:bg-zinc-200 dark:hover:bg-zinc-800 rounded-lg relative">
-<span class="material-symbols-outlined">shopping_cart</span>
-<span class="absolute top-1 right-1 size-2 bg-primary rounded-full"></span>
-</button>
-<button class="p-2 hover:bg-zinc-200 dark:hover:bg-zinc-800 rounded-lg">
-<span class="material-symbols-outlined">person</span>
-</button>
-</div>
+<button class="bg-primary hover:bg-white text-background-dark px-6 py-2.5 rounded-sm font-black text-xs uppercase tracking-widest transition-all flex items-center gap-2 accent-glow">
+<span class="material-symbols-outlined text-lg">location_on</span>
+                Find a Store
+            </button>
 </div>
 </div>
 </header>
-<main class="max-w-[1400px] mx-auto px-6 py-8">
+<main class="pt-20 max-w-[1440px] mx-auto px-6 lg:px-20 py-8">
 <section class="relative mb-12 rounded-xl overflow-hidden bg-zinc-900 aspect-[21/6] md:aspect-[21/4]">
 <div class="absolute inset-0 bg-cover bg-center opacity-40 mix-blend-overlay" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBycC22A41nv487b-pbrpi_Mpc__edHvYlTRBwS8OI2iqQWCPqAmYIt9iY_SL5PuquMROCzMLcGViCxLMuwLCQcw9pvUWiAg7T_50QIxGWiemaZuo-lkDCUF2v79svV_JqMQBlzReqFmGlLfufRLdjfZmRoScWuWM7ak853Wv0FzoJmUuLI1lsCPPWa0dYQ7BZLhjDypJDTdyEhSkrhSsfHM3b-T1Rmyqp5gEMTsHLUuC5hkXxxAuwKdWysokAVcQE1MbNCwljj8Ho');"></div>
 <div class="absolute inset-0 bg-gradient-to-r from-black via-black/40 to-transparent"></div>
@@ -167,7 +173,7 @@
 </button>
 </div>
 <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-<div class="group product-card bg-zinc-100 dark:bg-zinc-900 rounded-xl overflow-hidden border border-transparent hover:border-primary/50 transition-all duration-300">
+<a href="product-detail.html?id=1" class="group product-card bg-zinc-100 dark:bg-zinc-900 rounded-xl overflow-hidden border border-transparent hover:border-primary/50 transition-all duration-300 block cursor-pointer">
 <div class="aspect-square bg-white dark:bg-zinc-800 relative overflow-hidden flex items-center justify-center">
 <div class="absolute top-4 left-4 z-10">
 <span class="px-2 py-1 bg-primary text-black text-[10px] font-black uppercase tracking-tighter rounded">Best Seller</span>
@@ -181,12 +187,12 @@
 </div>
 <p class="text-zinc-500 text-xs font-bold uppercase tracking-widest mb-4">70VG/30PG | 60ml | 3mg</p>
 <p class="text-sm text-zinc-400 mb-6 line-clamp-2">A rich, velvety vanilla custard infused with notes of toasted almond and honey.</p>
-<button class="details-btn w-full py-3 rounded-lg border-2 border-primary text-primary font-bold text-sm tracking-wide transition-all uppercase flex items-center justify-center gap-2">
+<div class="details-btn w-full py-3 rounded-lg border-2 border-primary text-primary font-bold text-sm tracking-wide transition-all uppercase flex items-center justify-center gap-2">
                             Details <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
-</button>
 </div>
 </div>
-<div class="group product-card bg-zinc-100 dark:bg-zinc-900 rounded-xl overflow-hidden border border-transparent hover:border-primary/50 transition-all duration-300">
+</a>
+<a href="product-detail.html?id=2" class="group product-card bg-zinc-100 dark:bg-zinc-900 rounded-xl overflow-hidden border border-transparent hover:border-primary/50 transition-all duration-300 block cursor-pointer">
 <div class="aspect-square bg-white dark:bg-zinc-800 relative overflow-hidden flex items-center justify-center">
 <img class="w-3/4 h-3/4 object-contain group-hover:scale-110 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA-Ve4akdMtUW9AR69k_-atRrQSlBUgzP5yBv5dKVte5z5S-X01pj94qgnIpypDwsM3O2BthXChB7H873568qFFaSSwdvZaDHqWN231gUTL-gTTnjXSY8jojuYbWIGkF_FHE83MHp1eZAJlX85xORWWBoEmERulAVtDxP8V6ja8wGm4RlCwLbYRicBnxJf1vmBFF0_1ftmAlPQI_ErC4-LPh7DEr5yugbW64S-cVLkYV5raVuDEGJ4SDOWvzgNbDjbou2OJT96YJ60"/>
 </div>
@@ -197,12 +203,12 @@
 </div>
 <p class="text-zinc-500 text-xs font-bold uppercase tracking-widest mb-4">50VG/50PG | 30ml | 3mg</p>
 <p class="text-sm text-zinc-400 mb-6 line-clamp-2">Deep forest berries paired with an arctic blast for a clean, refreshing exhale.</p>
-<button class="details-btn w-full py-3 rounded-lg border-2 border-primary text-primary font-bold text-sm tracking-wide transition-all uppercase flex items-center justify-center gap-2">
+<div class="details-btn w-full py-3 rounded-lg border-2 border-primary text-primary font-bold text-sm tracking-wide transition-all uppercase flex items-center justify-center gap-2">
                             Details <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
-</button>
 </div>
 </div>
-<div class="group product-card bg-zinc-100 dark:bg-zinc-900 rounded-xl overflow-hidden border border-transparent hover:border-primary/50 transition-all duration-300">
+</a>
+<a href="product-detail.html?id=3" class="group product-card bg-zinc-100 dark:bg-zinc-900 rounded-xl overflow-hidden border border-transparent hover:border-primary/50 transition-all duration-300 block cursor-pointer">
 <div class="aspect-square bg-white dark:bg-zinc-800 relative overflow-hidden flex items-center justify-center">
 <div class="absolute top-4 left-4 z-10">
 <span class="px-2 py-1 bg-zinc-200 text-zinc-800 text-[10px] font-black uppercase tracking-tighter rounded">Limited</span>
@@ -216,11 +222,11 @@
 </div>
 <p class="text-zinc-500 text-xs font-bold uppercase tracking-widest mb-4">80W | Dual 18650 | OLED Display</p>
 <p class="text-sm text-zinc-400 mb-6 line-clamp-2">Military-grade construction meets surgical precision. The ultimate hardware choice.</p>
-<button class="details-btn w-full py-3 rounded-lg border-2 border-primary text-primary font-bold text-sm tracking-wide transition-all uppercase flex items-center justify-center gap-2">
+<div class="details-btn w-full py-3 rounded-lg border-2 border-primary text-primary font-bold text-sm tracking-wide transition-all uppercase flex items-center justify-center gap-2">
                             Details <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
-</button>
 </div>
 </div>
+</a>
 </div>
 <div class="mt-12 flex justify-center items-center gap-2">
 <button class="size-10 flex items-center justify-center rounded-lg bg-zinc-100 dark:bg-zinc-800 text-zinc-500 hover:text-white transition-colors">

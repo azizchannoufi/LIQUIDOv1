@@ -18,9 +18,9 @@
                 extend: {
                     colors: {
                         "primary": "#F2EA7E",
-                        "dark-gray": "#2D2D2D",
-                        "background-dark": "#121212",
-                        "charcoal": "#1A1A1A",
+                        "background-light": "#1a1a1a",
+                        "background-dark": "#0A0A0A",
+                        "charcoal": "#121212",
                     },
                     fontFamily: {
                         "display": ["Plus Jakarta Sans", "sans-serif"]
@@ -33,11 +33,20 @@
     <style type="text/tailwindcss">
         :root {
             --primary-color: #F2EA7E;
-            --dark-gray: #2D2D2D;
-            --background-dark: #121212;
+            --bg-dark: #0A0A0A;
         }
-        body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .glass-effect {
+            background: rgba(10, 10, 10, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+        }
+        .text-bold-modern {
+            font-weight: 800;
+            letter-spacing: -0.02em;
+        }
+        .accent-glow {
+            box-shadow: 0 0 20px rgba(242, 234, 126, 0.2);
         }
         .brand-card-hover {
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
@@ -53,41 +62,37 @@
     </style>
 </head>
 
-<body class="bg-background-dark text-white min-h-screen">
-    <header class="sticky top-0 z-50 w-full border-b border-white/5 bg-background-dark/90 backdrop-blur-xl">
-        <div class="max-w-[1280px] mx-auto px-6 md:px-10 py-5 flex items-center justify-between">
-            <div class="flex items-center gap-12">
-                <div class="flex items-center gap-2">
-                    <div class="flex items-baseline">
-                        <span class="text-2xl font-black tracking-tighter text-white">LIQUIDO</span>
-                        <div class="ml-1 flex items-center">
-                            <div class="w-2.5 h-3.5 bg-primary rounded-full mb-0.5"></div>
-                        </div>
-                    </div>
+<body class="bg-background-dark text-white transition-colors duration-300">
+<header class="fixed top-0 w-full z-50 border-b border-white/5 glass-effect">
+<div class="max-w-[1440px] mx-auto px-6 lg:px-20 h-20 flex items-center justify-between">
+<div class="flex items-center gap-12">
+            <a href="index.html" class="flex items-center gap-3 cursor-pointer hover:opacity-80 transition-opacity">
+                <div class="size-10 bg-primary rounded-sm flex items-center justify-center text-background-dark">
+                    <span class="material-symbols-outlined font-bold">water_drop</span>
                 </div>
-                <nav class="hidden lg:flex items-center gap-10">
-                    <a class="hover:text-primary transition-colors text-[11px] font-bold uppercase tracking-[0.2em]"
-                        href="index.html">Home</a>
-                    <a class="text-primary transition-colors text-[11px] font-bold uppercase tracking-[0.2em] relative after:content-[''] after:absolute after:-bottom-2 after:left-0 after:w-full after:h-0.5 after:bg-primary"
-                        href="brands.html">Brands</a>
-                    <a class="hover:text-primary transition-colors text-[11px] font-bold uppercase tracking-[0.2em]"
-                        href="products.html">Catalog</a>
-                    <a class="hover:text-primary transition-colors text-[11px] font-bold uppercase tracking-[0.2em]"
-                        href="about.html">About</a>
-                </nav>
-            </div>
-            <div class="flex items-center gap-6">
-                <button class="flex items-center justify-center p-2 rounded-lg hover:bg-white/5 transition-colors">
-                    <span class="material-symbols-outlined text-white/70">search</span>
-                </button>
-                <button
-                    class="bg-primary text-black px-6 py-2.5 rounded-none font-extrabold text-[11px] uppercase tracking-widest hover:brightness-110 transition-all">
-                    Wholesale Inquiry
-                </button>
-            </div>
-        </div>
-    </header>
-    <main class="max-w-[1280px] mx-auto pb-24">
+                <h2 class="text-2xl text-bold-modern tracking-tighter uppercase">LIQUIDO <span class="text-primary/80 font-normal">VAPE SHOP</span></h2>
+            </a>
+<nav class="hidden md:flex items-center gap-8">
+<a class="text-xs font-bold uppercase tracking-widest hover:text-primary transition-colors" href="index.html">Home</a>
+<a class="text-xs font-bold uppercase tracking-widest hover:text-primary transition-colors text-primary" href="brands.html">Brands</a>
+<a class="text-xs font-bold uppercase tracking-widest hover:text-primary transition-colors" href="products.html">Products</a>
+<a class="text-xs font-bold uppercase tracking-widest hover:text-primary transition-colors" href="about.html">About</a>
+<a class="text-xs font-bold uppercase tracking-widest hover:text-primary transition-colors" href="contact.html">Contact</a>
+</nav>
+</div>
+<div class="flex items-center gap-6">
+<div class="hidden lg:flex items-center bg-white/5 border border-white/10 rounded-sm px-4 py-2 w-64">
+<span class="material-symbols-outlined text-white/40 text-sm">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-sm placeholder:text-white/30 w-full" placeholder="Search products..." type="text"/>
+</div>
+<button class="bg-primary hover:bg-white text-background-dark px-6 py-2.5 rounded-sm font-black text-xs uppercase tracking-widest transition-all flex items-center gap-2 accent-glow">
+<span class="material-symbols-outlined text-lg">location_on</span>
+                Find a Store
+            </button>
+</div>
+</div>
+</header>
+<main class="pt-20 max-w-[1440px] mx-auto px-6 lg:px-20 pb-24">
         <section class="relative px-6 py-20 md:py-32 text-center overflow-hidden">
             <div class="absolute inset-0 z-0">
                 <div

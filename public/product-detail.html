@@ -12,66 +12,71 @@
             theme: {
                 extend: {
                     colors: {
-                        "primary": "#f2f20d",
-                        "background-light": "#f8f8f5",
-                        "background-dark": "#181811",
+                        "primary": "#F2EA7E",
+                        "background-light": "#1a1a1a",
+                        "background-dark": "#0A0A0A",
+                        "charcoal": "#121212",
                         "surface-dark": "#26261a",
                     },
                     fontFamily: {
                         "display": ["Plus Jakarta Sans", "sans-serif"]
                     },
-                    borderRadius: {
-                        "DEFAULT": "0.25rem",
-                        "lg": "0.5rem",
-                        "xl": "0.75rem",
-                        "full": "9999px"
-                    },
+                    borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "9999px"},
                 },
             },
         }
     </script>
-<style>
-        body {
-            font-family: "Plus Jakarta Sans", sans-serif;
+<style type="text/tailwindcss">
+        :root {
+            --primary-color: #F2EA7E;
+            --bg-dark: #0A0A0A;
+        }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .glass-effect {
+            background: rgba(10, 10, 10, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+        }
+        .text-bold-modern {
+            font-weight: 800;
+            letter-spacing: -0.02em;
+        }
+        .accent-glow {
+            box-shadow: 0 0 20px rgba(242, 234, 126, 0.2);
         }
     </style>
 </head>
-<body class="bg-background-light dark:bg-background-dark text-white min-h-screen">
-<div class="layout-container flex h-full grow flex-col">
-<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-surface-dark px-10 py-3 bg-background-light dark:bg-background-dark">
-<div class="flex items-center gap-8">
-<div class="flex items-center gap-4 text-white">
-<div class="size-6 text-primary">
-<svg fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
-<path clip-rule="evenodd" d="M24 4H6V17.3333V30.6667H24V44H42V30.6667V17.3333H24V44Z" fill="currentColor" fill-rule="evenodd"></path>
-</svg>
+<body class="bg-background-dark text-white transition-colors duration-300">
+<header class="fixed top-0 w-full z-50 border-b border-white/5 glass-effect">
+<div class="max-w-[1440px] mx-auto px-6 lg:px-20 h-20 flex items-center justify-between">
+<div class="flex items-center gap-12">
+            <a href="index.html" class="flex items-center gap-3 cursor-pointer hover:opacity-80 transition-opacity">
+                <div class="size-10 bg-primary rounded-sm flex items-center justify-center text-background-dark">
+                    <span class="material-symbols-outlined font-bold">water_drop</span>
+                </div>
+                <h2 class="text-2xl text-bold-modern tracking-tighter uppercase">LIQUIDO <span class="text-primary/80 font-normal">VAPE SHOP</span></h2>
+            </a>
+<nav class="hidden md:flex items-center gap-8">
+<a class="text-xs font-bold uppercase tracking-widest hover:text-primary transition-colors" href="index.html">Home</a>
+<a class="text-xs font-bold uppercase tracking-widest hover:text-primary transition-colors" href="brands.html">Brands</a>
+<a class="text-xs font-bold uppercase tracking-widest hover:text-primary transition-colors" href="products.html">Products</a>
+<a class="text-xs font-bold uppercase tracking-widest hover:text-primary transition-colors" href="about.html">About</a>
+<a class="text-xs font-bold uppercase tracking-widest hover:text-primary transition-colors" href="contact.html">Contact</a>
+</nav>
 </div>
-<h2 class="text-white text-lg font-bold leading-tight tracking-[-0.015em]">LIQUIDO</h2>
+<div class="flex items-center gap-6">
+<div class="hidden lg:flex items-center bg-white/5 border border-white/10 rounded-sm px-4 py-2 w-64">
+<span class="material-symbols-outlined text-white/40 text-sm">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-sm placeholder:text-white/30 w-full" placeholder="Search products..." type="text"/>
 </div>
-<div class="hidden md:flex items-center gap-9">
-<a class="text-white/70 hover:text-primary text-sm font-medium transition-colors" href="#">Brands</a>
-<a class="text-white/70 hover:text-primary text-sm font-medium transition-colors" href="#">E-Liquids</a>
-<a class="text-white/70 hover:text-primary text-sm font-medium transition-colors" href="#">Devices</a>
-<a class="text-white/70 hover:text-primary text-sm font-medium transition-colors" href="#">Accessories</a>
-<a class="text-white/70 hover:text-primary text-sm font-medium transition-colors" href="#">Store Locator</a>
+<button class="bg-primary hover:bg-white text-background-dark px-6 py-2.5 rounded-sm font-black text-xs uppercase tracking-widest transition-all flex items-center gap-2 accent-glow">
+<span class="material-symbols-outlined text-lg">location_on</span>
+                Find a Store
+            </button>
 </div>
-</div>
-<div class="flex flex-1 justify-end gap-6 items-center">
-<label class="hidden lg:flex flex-col min-w-40 !h-10 max-w-64">
-<div class="flex w-full flex-1 items-stretch rounded-lg h-full">
-<div class="text-[#baba9c] flex border-none bg-surface-dark items-center justify-center pl-4 rounded-l-lg">
-<span class="material-symbols-outlined text-xl">search</span>
-</div>
-<input class="form-input flex w-full min-w-0 flex-1 border-none bg-surface-dark text-white focus:ring-0 h-full placeholder:text-[#baba9c] px-4 rounded-r-lg text-sm" placeholder="Search brands..." value=""/>
-</div>
-</label>
-<button class="flex min-w-[100px] cursor-pointer items-center justify-center rounded-lg h-10 px-5 bg-primary text-black text-sm font-bold tracking-tight">
-<span>Inquire</span>
-</button>
-<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 border-2 border-primary/20" data-alt="User profile avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuChKGaD-3GpkEtdqL7y9UvOtfhpoc0lwTE1ebXmcb39G1fZslJNl2jF7-S042vGmwhUij4VmJ4wB38Cz-X4IX5wIA0RPMX998VO2iBzH38eshOvNbomUq0VJUkFeFKaealJUF7M9BCdXWN3SDYsZzU-nGrA3A0jtPitEgVgEw2kIb5SQjGPPS510o8p80sACmZll_2b9yF_ck2JE5vQLjV5pKX6H2Sp9zq3MOKFBov1pO8_oBdZWfBJxOThuzvkRGevz9ZAwQ-z7Xg");'></div>
 </div>
 </header>
-<main class="max-w-[1200px] mx-auto w-full px-6 py-8">
+<main class="pt-20 max-w-[1440px] mx-auto px-6 lg:px-20 py-8">
 <div class="flex flex-wrap gap-2 py-4 mb-4">
 <a class="text-[#baba9c] text-sm font-medium hover:text-primary transition-colors" href="#">Home</a>
 <span class="text-[#baba9c] text-sm">/</span>
@@ -141,10 +146,10 @@
 <span class="material-symbols-outlined">location_on</span>
 <span>Find in Store</span>
 </button>
-<button class="flex-1 flex min-w-[200px] items-center justify-center gap-2 rounded-xl h-14 px-8 bg-surface-dark border border-white/10 text-white text-base font-bold hover:bg-white/5 transition-colors">
-<span class="material-symbols-outlined">mail</span>
+<a href="https://wa.me/1234567890?text=Hello%2C%20I%20would%20like%20to%20inquire%20about%20bulk%20orders" target="_blank" class="flex-1 flex min-w-[200px] items-center justify-center gap-2 rounded-xl h-14 px-8 bg-surface-dark border border-white/10 text-white text-base font-bold hover:bg-white/5 transition-colors cursor-pointer">
+<span class="material-symbols-outlined">chat</span>
 <span>Inquire for Bulk</span>
-</button>
+</a>
 </div>
 <div class="flex flex-col gap-4">
 <h3 class="text-white text-sm font-bold uppercase tracking-wider">Sensory Notes</h3>

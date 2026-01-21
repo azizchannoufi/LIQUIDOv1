@@ -12,53 +12,73 @@
             theme: {
                 extend: {
                     colors: {
-                        "primary": "#f2f20d",
-                        "background-light": "#f8f8f5",
-                        "background-dark": "#181811",
+                        "primary": "#F2EA7E",
+                        "background-light": "#1a1a1a",
+                        "background-dark": "#0A0A0A",
+                        "charcoal": "#121212",
                     },
                     fontFamily: {
                         "display": ["Plus Jakarta Sans", "sans-serif"]
                     },
-                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                    borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "9999px"},
                 },
             },
         }
     </script>
-<style>
+<style type="text/tailwindcss">
+        :root {
+            --primary-color: #F2EA7E;
+            --bg-dark: #0A0A0A;
+        }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .glass-effect {
+            background: rgba(10, 10, 10, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+        }
+        .text-bold-modern {
+            font-weight: 800;
+            letter-spacing: -0.02em;
+        }
+        .accent-glow {
+            box-shadow: 0 0 20px rgba(242, 234, 126, 0.2);
+        }
         .material-symbols-outlined {
             font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
         }
-        body {
-            font-family: "Plus Jakarta Sans", sans-serif;
-        }
     </style>
 </head>
-<body class="bg-background-light dark:bg-background-dark text-white min-h-screen flex flex-col">
-<header class="border-b border-solid border-[#393928] bg-background-light dark:bg-background-dark px-4 md:px-20 lg:px-40 py-3 sticky top-0 z-50">
-<div class="flex items-center justify-between max-w-[1280px] mx-auto">
-<div class="flex items-center gap-4">
-<div class="size-6 text-primary">
-<svg fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
-<path clip-rule="evenodd" d="M24 4H6V17.3333V30.6667H24V44H42V30.6667V17.3333H24V4Z" fill="currentColor" fill-rule="evenodd"></path>
-</svg>
-</div>
-<h2 class="text-white text-xl font-extrabold tracking-tighter">LIQUIDO</h2>
-</div>
-<nav class="hidden md:flex items-center gap-9">
-<a class="text-white hover:text-primary transition-colors text-sm font-medium" href="#">Brands</a>
-<a class="text-white hover:text-primary transition-colors text-sm font-medium" href="#">Catalog</a>
-<a class="text-white hover:text-primary transition-colors text-sm font-medium" href="#">Locations</a>
-<a class="text-white hover:text-primary transition-colors text-sm font-medium" href="#">Contact</a>
+<body class="bg-background-dark text-white transition-colors duration-300">
+<header class="fixed top-0 w-full z-50 border-b border-white/5 glass-effect">
+<div class="max-w-[1440px] mx-auto px-6 lg:px-20 h-20 flex items-center justify-between">
+<div class="flex items-center gap-12">
+            <a href="index.html" class="flex items-center gap-3 cursor-pointer hover:opacity-80 transition-opacity">
+                <div class="size-10 bg-primary rounded-sm flex items-center justify-center text-background-dark">
+                    <span class="material-symbols-outlined font-bold">water_drop</span>
+                </div>
+                <h2 class="text-2xl text-bold-modern tracking-tighter uppercase">LIQUIDO <span class="text-primary/80 font-normal">VAPE SHOP</span></h2>
+            </a>
+<nav class="hidden md:flex items-center gap-8">
+<a class="text-xs font-bold uppercase tracking-widest hover:text-primary transition-colors" href="index.html">Home</a>
+<a class="text-xs font-bold uppercase tracking-widest hover:text-primary transition-colors" href="brands.html">Brands</a>
+<a class="text-xs font-bold uppercase tracking-widest hover:text-primary transition-colors" href="products.html">Products</a>
+<a class="text-xs font-bold uppercase tracking-widest hover:text-primary transition-colors" href="about.html">About</a>
+<a class="text-xs font-bold uppercase tracking-widest hover:text-primary transition-colors text-primary" href="contact.html">Contact</a>
 </nav>
-<div class="flex items-center gap-4">
-<button class="hidden sm:flex min-w-[100px] cursor-pointer items-center justify-center rounded-lg h-10 px-5 bg-primary text-[#181811] text-sm font-bold tracking-tight hover:brightness-110 transition-all">
-                    Shop Now
-                </button>
-<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 border border-[#393928]" data-alt="User profile avatar placeholder" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCXVM1uTk-TrkIFz85rbbDH-aij1F5y6B0tck_Nlid6yqFyUUvgevUqXEXJMcY-bOoIpe_SIzGFBke_bBa3KsLBu210HD8yXlSMHyQ4sjTg5XkC7namSSfGDe_PyttLvaXXvDFdwBEJPFeZWBB1r6BVOKvXBhtMl6eKOv9ba17ArrxZ395pfw-BQmPROoN845BQAe6mmt2NY2FQvVXtBM1VEC0-jInfkRD4y75_8o-JVGUdeRkzO5dqxZ8jvt_Q1SUjxT14Kh3zpKA");'></div>
+</div>
+<div class="flex items-center gap-6">
+<div class="hidden lg:flex items-center bg-white/5 border border-white/10 rounded-sm px-4 py-2 w-64">
+<span class="material-symbols-outlined text-white/40 text-sm">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-sm placeholder:text-white/30 w-full" placeholder="Search products..." type="text"/>
+</div>
+<button class="bg-primary hover:bg-white text-background-dark px-6 py-2.5 rounded-sm font-black text-xs uppercase tracking-widest transition-all flex items-center gap-2 accent-glow">
+<span class="material-symbols-outlined text-lg">location_on</span>
+                Find a Store
+            </button>
 </div>
 </div>
 </header>
-<main class="flex-grow max-w-[1280px] mx-auto w-full px-4 md:px-20 lg:px-40 py-10">
+<main class="pt-20 max-w-[1440px] mx-auto px-6 lg:px-20 py-10">
 <div class="mb-12 text-center lg:text-left">
 <h1 class="text-white text-5xl font-black leading-tight tracking-[-0.033em] mb-4">Contact &amp; Location</h1>
 <p class="text-[#baba9c] text-lg max-w-2xl mx-auto lg:mx-0">Experience the essence of LIQUIDO. Visit our flagship store for a personalized consultation or reach out to our premium support team.</p>

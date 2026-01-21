@@ -45,8 +45,62 @@
             background-size: 30px 30px;
         }
     </style>
+    <script>
+        // #region agent log
+        fetch('http://127.0.0.1:7244/ingest/e96e640b-d19c-44c4-9856-820574d81324',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'admin/index.html:49',message:'Page admin - Script execution started',data:{url:window.location.href,readyState:document.readyState},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'A'})}).catch(()=>{});
+        // #endregion
+    </script>
 </head>
 <body class="bg-background-light dark:bg-background-dark min-h-screen flex flex-col font-display">
+    <script>
+        // #region agent log
+        fetch('http://127.0.0.1:7244/ingest/e96e640b-d19c-44c4-9856-820574d81324',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'admin/index.html:50',message:'Body element loaded',data:{bodyExists:!!document.body,classes:document.body.className},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'C'})}).catch(()=>{});
+        // #endregion
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            // #region agent log
+            fetch('http://127.0.0.1:7244/ingest/e96e640b-d19c-44c4-9856-820574d81324',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'admin/index.html:DOMContentLoaded',message:'DOM fully loaded',data:{formExists:!!document.querySelector('form'),headerExists:!!document.querySelector('header'),mainExists:!!document.querySelector('main')},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'C'})}).catch(()=>{});
+            // #endregion
+            
+            const form = document.querySelector('form');
+            if (form) {
+                // #region agent log
+                fetch('http://127.0.0.1:7244/ingest/e96e640b-d19c-44c4-9856-820574d81324',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'admin/index.html:form-found',message:'Login form found',data:{formAction:form.action,formMethod:form.method},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'F'})}).catch(()=>{});
+                // #endregion
+                
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    // #region agent log
+                    fetch('http://127.0.0.1:7244/ingest/e96e640b-d19c-44c4-9856-820574d81324',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'admin/index.html:form-submit',message:'Form submit triggered',data:{prevented:true},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'F'})}).catch(()=>{});
+                    // #endregion
+                    window.location.href = 'dashboard.html';
+                });
+            } else {
+                // #region agent log
+                fetch('http://127.0.0.1:7244/ingest/e96e640b-d19c-44c4-9856-820574d81324',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'admin/index.html:form-not-found',message:'Login form NOT found',data:{},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'C'})}).catch(()=>{});
+                // #endregion
+            }
+            
+            // Check external resources
+            const tailwindScript = document.querySelector('script[src*="tailwindcss"]');
+            const fontLink = document.querySelector('link[href*="fonts.googleapis"]');
+            // #region agent log
+            fetch('http://127.0.0.1:7244/ingest/e96e640b-d19c-44c4-9856-820574d81324',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'admin/index.html:resources-check',message:'External resources check',data:{tailwindExists:!!tailwindScript,fontLinkExists:!!fontLink},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'D'})}).catch(()=>{});
+            // #endregion
+        });
+        
+        window.addEventListener('error', function(e) {
+            // #region agent log
+            fetch('http://127.0.0.1:7244/ingest/e96e640b-d19c-44c4-9856-820574d81324',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'admin/index.html:error-handler',message:'JavaScript error detected',data:{message:e.message,filename:e.filename,lineno:e.lineno},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'E'})}).catch(()=>{});
+            // #endregion
+        });
+        
+        window.addEventListener('load', function() {
+            // #region agent log
+            fetch('http://127.0.0.1:7244/ingest/e96e640b-d19c-44c4-9856-820574d81324',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'admin/index.html:window-load',message:'All resources loaded',data:{documentReady:document.readyState},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'D'})}).catch(()=>{});
+            // #endregion
+        });
+    </script>
 <!-- Top Navigation Bar -->
 <header class="w-full px-6 lg:px-40 py-5 flex items-center justify-between border-b border-solid border-gray-200 dark:border-border-dark bg-background-light/50 dark:bg-background-dark/50 backdrop-blur-md sticky top-0 z-50">
 <div class="flex items-center gap-3 text-gray-900 dark:text-white">

@@ -1,0 +1,225 @@
+/**
+ * LIQUIDO Card Styles
+ * Reusable card component styles
+ */
+
+/* Base Card */
+.card {
+    background-color: var(--color-charcoal);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    transition: all var(--transition-base);
+}
+
+.card:hover {
+    border-color: rgba(242, 234, 126, 0.4);
+}
+
+/* Card Header */
+.card-header {
+    padding: var(--spacing-lg);
+    border-bottom: 1px solid var(--color-border);
+}
+
+/* Card Body */
+.card-body {
+    padding: var(--spacing-lg);
+}
+
+/* Card Footer */
+.card-footer {
+    padding: var(--spacing-lg);
+    border-top: 1px solid var(--color-border);
+}
+
+/* Product Card */
+.product-card {
+    background-color: var(--color-charcoal);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    transition: all 500ms ease;
+}
+
+.product-card:hover {
+    border-color: rgba(242, 234, 126, 0.4);
+}
+
+.product-card-image {
+    aspect-ratio: 4 / 5;
+    overflow: hidden;
+    background-color: var(--color-black);
+    position: relative;
+}
+
+.product-card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.8;
+    transition: all 700ms ease;
+}
+
+.product-card:hover .product-card-image img {
+    transform: scale(1.1);
+    opacity: 1;
+}
+
+.product-card-badge {
+    position: absolute;
+    top: var(--spacing-md);
+    left: var(--spacing-md);
+    background-color: var(--color-primary);
+    color: var(--color-background-dark);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-black);
+    padding: var(--spacing-xs) var(--spacing-md);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.product-card-content {
+    padding: var(--spacing-xl);
+}
+
+.product-card-title {
+    font-weight: var(--font-weight-black);
+    font-size: var(--font-size-xl);
+    text-transform: uppercase;
+    transition: color var(--transition-base);
+}
+
+.product-card:hover .product-card-title {
+    color: var(--color-primary);
+}
+
+.product-card-category {
+    color: rgba(255, 255, 255, 0.2);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-black);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.product-card-description {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+    line-height: var(--line-height-relaxed);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.product-card-footer {
+    padding-top: var(--spacing-lg);
+    border-top: 1px solid var(--color-border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.product-card-price {
+    font-weight: var(--font-weight-black);
+    font-size: var(--font-size-xl);
+    color: var(--color-primary);
+}
+
+/* Brand Card */
+.brand-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-md);
+    padding: var(--spacing-lg);
+    transition: all var(--transition-base);
+    cursor: pointer;
+}
+
+.brand-card:hover {
+    opacity: 1 !important;
+}
+
+.brand-card-logo {
+    height: 32px;
+    object-fit: contain;
+    filter: grayscale(100%);
+    transition: filter var(--transition-base);
+}
+
+.brand-card:hover .brand-card-logo {
+    filter: grayscale(0%);
+}
+
+.brand-card-name {
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-black);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.4);
+    transition: color var(--transition-base);
+}
+
+.brand-card:hover .brand-card-name {
+    color: var(--color-primary);
+}
+
+/* Stats Card */
+.stats-card {
+    background: linear-gradient(135deg, var(--color-charcoal) 0%, var(--color-background-light) 100%);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    padding: var(--spacing-xl);
+}
+
+.stats-card-value {
+    font-size: var(--font-size-4xl);
+    font-weight: var(--font-weight-black);
+    color: var(--color-primary);
+}
+
+.stats-card-label {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-top: var(--spacing-sm);
+}
+
+.stats-card-change {
+    font-size: var(--font-size-sm);
+    margin-top: var(--spacing-md);
+}
+
+.stats-card-change.positive {
+    color: #10b981;
+}
+
+.stats-card-change.negative {
+    color: #ef4444;
+}
+
+/* Card Grid */
+.card-grid {
+    display: grid;
+    gap: var(--spacing-xl);
+}
+
+.card-grid-2 {
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+}
+
+.card-grid-3 {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+}
+
+.card-grid-4 {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+}
+
+@media (max-width: 768px) {
+    .card-grid {
+        grid-template-columns: 1fr;
+    }
+}

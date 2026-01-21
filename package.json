@@ -1,0 +1,24 @@
+{
+  "name": "liquido-vape-shop",
+  "version": "2.0.0",
+  "description": "LIQUIDO - Premium Vaping Experience Website",
+  "main": "index.html",
+  "scripts": {
+    "dev": "node server.js",
+    "start": "npm run dev",
+    "serve": "node server.js",
+    "lint:html": "echo 'HTML linting not configured yet'",
+    "lint:css": "echo 'CSS linting not configured yet'",
+    "lint:js": "echo 'JS linting not configured yet'"
+  },
+  "keywords": [
+    "vape",
+    "e-commerce",
+    "liquido",
+    "vaping"
+  ],
+  "author": "LIQUIDO Team",
+  "license": "MIT",
+  "devDependencies": {},
+  "dependencies": {}
+}
