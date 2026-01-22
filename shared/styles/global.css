@@ -2,10 +2,10 @@
 
 /* CSS Variables */
 :root {
-    --primary-color: #F2EA7E;
-    --bg-dark: #0A0A0A;
-    --bg-light: #1a1a1a;
-    --charcoal: #121212;
+    --primary-color: #F8ED70;
+    --bg-dark: #000000;
+    --bg-light: #333333;
+    --charcoal: #333333;
 }
 
 /* Base Styles */
@@ -20,7 +20,7 @@ body {
 
 /* Glass Effect */
 .glass-effect {
-    background: rgba(10, 10, 10, 0.85);
+    background: rgba(0, 0, 0, 0.85);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
 }
@@ -33,15 +33,15 @@ body {
 
 /* Glow Effects */
 .accent-glow {
-    box-shadow: 0 0 20px rgba(242, 234, 126, 0.2);
+    box-shadow: 0 0 20px rgba(248, 237, 112, 0.2);
 }
 
 .accent-glow-strong:hover {
-    box-shadow: 0 0 30px rgba(242, 234, 126, 0.4);
+    box-shadow: 0 0 30px rgba(248, 237, 112, 0.4);
 }
 
 .text-glow:hover {
-    text-shadow: 0 0 15px rgba(242, 234, 126, 0.4);
+    text-shadow: 0 0 15px rgba(248, 237, 112, 0.4);
 }
 
 /* Brand Card Hover Effect */
@@ -58,5 +58,5 @@ body {
 /* Admin Sidebar Active State */
 .sidebar-active {
     background-color: #393928;
-    border-left: 4px solid #f2ea7e;
+    border-left: 4px solid #F8ED70;
 }

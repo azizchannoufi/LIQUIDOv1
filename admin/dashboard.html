@@ -174,6 +174,10 @@
 <span class="material-symbols-outlined">add_circle</span>
 <span>Add New Brand</span>
 </a>
+<a href="init-firebase.html" class="flex items-center gap-3 min-w-[180px] px-6 h-14 bg-primary text-black rounded-xl font-bold transition-all hover:bg-primary/90 active:scale-95">
+<span class="material-symbols-outlined">cloud_upload</span>
+<span>Init Firebase</span>
+</a>
 <button class="flex items-center gap-3 min-w-[180px] px-6 h-14 border-2 border-slate-200 dark:border-[#393928] text-slate-600 dark:text-[#baba9c] rounded-xl font-bold transition-all hover:border-primary/50 hover:text-primary active:scale-95">
 <span class="material-symbols-outlined">download</span>
 <span>Export Reports</span>
@@ -198,42 +202,10 @@
 <!-- Recent Updates List -->
 <div class="flex flex-col gap-4">
 <h3 class="text-md font-bold text-slate-500 dark:text-[#baba9c]">Recent Store Activity</h3>
-<div class="flex flex-col divide-y divide-slate-100 dark:divide-[#393928]">
-<div class="py-4 flex items-center justify-between">
-<div class="flex items-center gap-3">
-<div class="size-10 rounded-lg bg-primary/10 text-primary flex items-center justify-center">
-<span class="material-symbols-outlined text-[20px]">edit</span>
-</div>
-<div>
-<p class="text-sm font-bold">Vape Mod Pro X2</p>
-<p class="text-xs text-slate-400">Inventory updated by Alex</p>
-</div>
-</div>
-<p class="text-xs font-mono text-slate-400">2 mins ago</p>
-</div>
-<div class="py-4 flex items-center justify-between">
-<div class="flex items-center gap-3">
-<div class="size-10 rounded-lg bg-emerald-500/10 text-emerald-500 flex items-center justify-center">
-<span class="material-symbols-outlined text-[20px]">add</span>
-</div>
-<div>
-<p class="text-sm font-bold">CloudKings E-Liquid</p>
-<p class="text-xs text-slate-400">New brand registered</p>
-</div>
-</div>
-<p class="text-xs font-mono text-slate-400">1 hour ago</p>
-</div>
-<div class="py-4 flex items-center justify-between">
-<div class="flex items-center gap-3">
-<div class="size-10 rounded-lg bg-blue-500/10 text-blue-500 flex items-center justify-center">
-<span class="material-symbols-outlined text-[20px]">sync</span>
-</div>
-<div>
-<p class="text-sm font-bold">Price Sync Task</p>
-<p class="text-xs text-slate-400">Automated update completed</p>
-</div>
-</div>
-<p class="text-xs font-mono text-slate-400">4 hours ago</p>
+<div id="recent-activity" class="flex flex-col divide-y divide-slate-100 dark:divide-[#393928]">
+<div class="py-8 text-center">
+<p class="text-sm text-slate-400 dark:text-[#baba9c]">No recent activity</p>
+<p class="text-xs text-slate-500 dark:text-slate-600 mt-2">Activity will appear here as you manage your catalog</p>
 </div>
 </div>
 </div>
@@ -241,4 +213,5 @@
 </div>
 </main>
 </div>
+</body></html>
 </body></html>

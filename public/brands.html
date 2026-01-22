@@ -17,10 +17,10 @@
             theme: {
                 extend: {
                     colors: {
-                        "primary": "#F2EA7E",
-                        "background-light": "#1a1a1a",
-                        "background-dark": "#0A0A0A",
-                        "charcoal": "#121212",
+                        "primary": "#F8ED70",
+                        "background-light": "#333333",
+                        "background-dark": "#000000",
+                        "charcoal": "#333333",
                     },
                     fontFamily: {
                         "display": ["Plus Jakarta Sans", "sans-serif"]
@@ -32,12 +32,12 @@
     </script>
     <style type="text/tailwindcss">
         :root {
-            --primary-color: #F2EA7E;
-            --bg-dark: #0A0A0A;
+            --primary-color: #F8ED70;
+            --bg-dark: #000000;
         }
         body { font-family: 'Plus Jakarta Sans', sans-serif; }
         .glass-effect {
-            background: rgba(10, 10, 10, 0.85);
+            background: rgba(0, 0, 0, 0.85);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
         }
@@ -46,7 +46,7 @@
             letter-spacing: -0.02em;
         }
         .accent-glow {
-            box-shadow: 0 0 20px rgba(242, 234, 126, 0.2);
+            box-shadow: 0 0 20px rgba(248, 237, 112, 0.2);
         }
         .brand-card-hover {
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
@@ -57,19 +57,26 @@
             box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
         }
         .text-glow:hover {
-            text-shadow: 0 0 15px rgba(242, 234, 126, 0.4);
+            text-shadow: 0 0 15px rgba(248, 237, 112, 0.4);
         }
     </style>
 </head>
 
 <body class="bg-background-dark text-white transition-colors duration-300">
-<header class="fixed top-0 w-full z-50 border-b border-white/5 glass-effect">
+<!-- Barre de message pour les visiteurs -->
+<nav class="fixed top-0 w-full z-[60] bg-primary/10 border-b border-primary/20 backdrop-blur-sm">
+    <div class="max-w-[1440px] mx-auto px-6 lg:px-20 py-2.5">
+        <div class="flex items-center justify-center gap-2 text-xs font-bold uppercase tracking-widest text-primary">
+            <span class="material-symbols-outlined text-sm">info</span>
+            <p class="text-center">Benvenuto su LIQUIDO - Scopri la nostra selezione premium di prodotti per il vaping</p>
+        </div>
+    </div>
+</nav>
+<header class="fixed top-[40px] w-full z-50 border-b border-white/5 glass-effect">
 <div class="max-w-[1440px] mx-auto px-6 lg:px-20 h-20 flex items-center justify-between">
 <div class="flex items-center gap-12">
             <a href="index.html" class="flex items-center gap-3 cursor-pointer hover:opacity-80 transition-opacity">
-                <div class="size-10 bg-primary rounded-sm flex items-center justify-center text-background-dark">
-                    <span class="material-symbols-outlined font-bold">water_drop</span>
-                </div>
+                <img src="../assets/images/Goccia LIQUIDO/GOCCIA Y_W.png" alt="LIQUIDO Logo" class="h-10 object-contain"/>
                 <h2 class="text-2xl text-bold-modern tracking-tighter uppercase">LIQUIDO <span class="text-primary/80 font-normal">VAPE SHOP</span></h2>
             </a>
 <nav class="hidden md:flex items-center gap-8">
@@ -92,7 +99,7 @@
 </div>
 </div>
 </header>
-<main class="pt-20 max-w-[1440px] mx-auto px-6 lg:px-20 pb-24">
+<main class="pt-[120px] max-w-[1440px] mx-auto px-6 lg:px-20 pb-24">
         <section class="relative px-6 py-20 md:py-32 text-center overflow-hidden">
             <div class="absolute inset-0 z-0">
                 <div
@@ -134,161 +141,8 @@
             </div>
         </section>
         <section class="px-6">
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
-                <div
-                    class="brand-card-hover group bg-white/[0.02] border border-white/5 p-10 flex flex-col items-center text-center">
-                    <div
-                        class="w-full aspect-square mb-10 bg-black/40 border border-white/5 flex items-center justify-center p-8 grayscale group-hover:grayscale-0 transition-all duration-700">
-                        <div class="w-full h-full bg-center bg-contain bg-no-repeat"
-                            style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBScVXLGltvDm4uJuSMXRHCnvdvPOY97Ll5B8Retu_ljvIE2Rza8_aciudo3je8TfTmvbTpaMtYdGi6hCtdbBH5j1uTcKSSq48vXyscCUmOrzlx5xdSCR0nm73T0XEh8_zMgR2mtkaPrBqHkyS21GQgY4mJZg7Hm5rBWfjXtSC1c09OvLC1xEMxFxS8zRVcJRKbqi90U_OHvTOg1po4fUgFE-BH7WwGqHTW7D11GSVpkMzHt73kSo4UnnDQ_T0AO5zj3XOLuFfHmlU");'>
-                        </div>
-                    </div>
-                    <div class="space-y-4 flex-grow">
-                        <span class="text-primary text-[9px] font-black uppercase tracking-[0.25em]">High-end
-                            Mods</span>
-                        <h3 class="text-3xl font-black italic uppercase group-hover:text-primary transition-colors">
-                            Vaporesso</h3>
-                        <p class="text-white/40 text-sm leading-relaxed px-2 font-medium">
-                            Pioneering hardware technology with industry-leading AXON chipsets and ultra-durable design.
-                        </p>
-                    </div>
-                    <div class="mt-10 w-full">
-                        <button
-                            class="w-full py-4 border border-white/10 text-white group-hover:bg-primary group-hover:border-primary group-hover:text-black font-black text-[11px] uppercase tracking-[0.2em] transition-all flex items-center justify-center gap-3">
-                            View Catalog
-                            <span class="material-symbols-outlined text-sm">arrow_right_alt</span>
-                        </button>
-                    </div>
-                </div>
-                <div
-                    class="brand-card-hover group bg-white/[0.02] border border-white/5 p-10 flex flex-col items-center text-center">
-                    <div
-                        class="w-full aspect-square mb-10 bg-black/40 border border-white/5 flex items-center justify-center p-8 grayscale group-hover:grayscale-0 transition-all duration-700">
-                        <div class="w-full h-full bg-center bg-contain bg-no-repeat"
-                            style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBQfpramAoFRw8DwS9Lg-x7A33ol_rpU63k106HV9pEDzDePSjEsk5pAlfN7CuE2ispc5kEeDe_DOrhJOZdxhE9Ki52R5Ef8Bh1sBzN9T6i_FX4KrmE6IYD9IPzB6yZwra-EUI0invvHpniMpA4dojBnVMoN_u03WL5bxCoQMWBWYXF3mV8yIMVW0vNAcXb6RQW_9XnZlwvzpc3I36evm3A9GnozrVOFa7KD0nbf3xWZyRcFQQZMliLniiqBkhsNI7Xpdq3nL89jd8");'>
-                        </div>
-                    </div>
-                    <div class="space-y-4 flex-grow">
-                        <span class="text-primary text-[9px] font-black uppercase tracking-[0.25em]">Premium
-                            E-liquids</span>
-                        <h3 class="text-3xl font-black italic uppercase group-hover:text-primary transition-colors">
-                            Pachamama</h3>
-                        <p class="text-white/40 text-sm leading-relaxed px-2 font-medium">
-                            Award-winning fruit profiles crafted with the highest quality ingredients from Southern
-                            California.
-                        </p>
-                    </div>
-                    <div class="mt-10 w-full">
-                        <button
-                            class="w-full py-4 border border-white/10 text-white group-hover:bg-primary group-hover:border-primary group-hover:text-black font-black text-[11px] uppercase tracking-[0.2em] transition-all flex items-center justify-center gap-3">
-                            View Catalog
-                            <span class="material-symbols-outlined text-sm">arrow_right_alt</span>
-                        </button>
-                    </div>
-                </div>
-                <div
-                    class="brand-card-hover group bg-white/[0.02] border border-white/5 p-10 flex flex-col items-center text-center">
-                    <div
-                        class="w-full aspect-square mb-10 bg-black/40 border border-white/5 flex items-center justify-center p-8 grayscale group-hover:grayscale-0 transition-all duration-700">
-                        <div class="w-full h-full bg-center bg-contain bg-no-repeat"
-                            style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBDsOeoZg4UGYYOs7B5SwXvKHYpZDGtx3s9ExSTx4wVwanK__a2EyemLakZCtUi3VvfWiXNmcJt-O1cyHlHWj8MM7eoz4HH3wI3E9yUEmnhzO-Z-bWsdHCqKsxWWLvoNxDC8vsjIolasMUUG1FTIk0_Mui6Y38x4yWWbzj7ceccVWwRfnX3PUbx3_owwMpPw5juI08DAL3Kl0YFiYAukVrEq6sbGMvZbFp0uWzw1B6dD1DO13w7H2YVOwGdcXjAADJNhQHRUOkHA6o");'>
-                        </div>
-                    </div>
-                    <div class="space-y-4 flex-grow">
-                        <span class="text-primary text-[9px] font-black uppercase tracking-[0.25em]">Durable
-                            Hardware</span>
-                        <h3 class="text-3xl font-black italic uppercase group-hover:text-primary transition-colors">
-                            GeekVape</h3>
-                        <p class="text-white/40 text-sm leading-relaxed px-2 font-medium">
-                            Renowned for the Aegis series, setting the global standard for water-resistant and
-                            shock-proof devices.
-                        </p>
-                    </div>
-                    <div class="mt-10 w-full">
-                        <button
-                            class="w-full py-4 border border-white/10 text-white group-hover:bg-primary group-hover:border-primary group-hover:text-black font-black text-[11px] uppercase tracking-[0.2em] transition-all flex items-center justify-center gap-3">
-                            View Catalog
-                            <span class="material-symbols-outlined text-sm">arrow_right_alt</span>
-                        </button>
-                    </div>
-                </div>
-                <div
-                    class="brand-card-hover group bg-white/[0.02] border border-white/5 p-10 flex flex-col items-center text-center">
-                    <div
-                        class="w-full aspect-square mb-10 bg-black/40 border border-white/5 flex items-center justify-center p-8 grayscale group-hover:grayscale-0 transition-all duration-700">
-                        <div class="w-full h-full bg-center bg-contain bg-no-repeat"
-                            style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCQ3feUbOqRF1Ov1fhY7oKx16pYwFH5a0qqGWVWiIp4458HpMkLk_O0JkEiV3MsSAmjtjOPuTWezJ2-qgP2rfkG3OwZJMs6ruD17sr01HZJHo47TsdWZwIf8JB9oJPM3OQ-PUN30l-Q9CvI1n5N-TEfMfkPVm9l3EZj3YOzN0tPshvilUDyKPwv46LYZY69TVe9_m2Bs9NpD_7o-VrQFTBzNJn4bachhLmSntyKvdq3tgmYZEUXkRU66p1_8bQl3hndeeyYSr7jz4w");'>
-                        </div>
-                    </div>
-                    <div class="space-y-4 flex-grow">
-                        <span class="text-primary text-[9px] font-black uppercase tracking-[0.25em]">Artisan
-                            Flavors</span>
-                        <h3 class="text-3xl font-black italic uppercase group-hover:text-primary transition-colors">
-                            Dinner Lady</h3>
-                        <p class="text-white/40 text-sm leading-relaxed px-2 font-medium">
-                            Classic British dessert inspirations that have become global icons in the vaping community.
-                        </p>
-                    </div>
-                    <div class="mt-10 w-full">
-                        <button
-                            class="w-full py-4 border border-white/10 text-white group-hover:bg-primary group-hover:border-primary group-hover:text-black font-black text-[11px] uppercase tracking-[0.2em] transition-all flex items-center justify-center gap-3">
-                            View Catalog
-                            <span class="material-symbols-outlined text-sm">arrow_right_alt</span>
-                        </button>
-                    </div>
-                </div>
-                <div
-                    class="brand-card-hover group bg-white/[0.02] border border-white/5 p-10 flex flex-col items-center text-center">
-                    <div
-                        class="w-full aspect-square mb-10 bg-black/40 border border-white/5 flex items-center justify-center p-8 grayscale group-hover:grayscale-0 transition-all duration-700">
-                        <div class="w-full h-full bg-center bg-contain bg-no-repeat"
-                            style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAJuHehtz7OSgPpnqdK3_r94zFzIh8t6jJuZjP2Buj7kk5VJEbXEgatNI471NSm469acyNFuS25dlyms1WtD9rHnd5mxDNHym4BMkxOSRlB8OQQVPIZtzCACrdU1UqZt8oDENgTFKSZ6J2B4UB-pngEgIGE9Kjo7fwhwpAOlBtz9cTvH4Ky1eojDErr2NXxM8Wjzcsuur05y3hVf9-7ZUe9uQTIgoYrImVpvojSwqjvSDyzqkGSi7Z7ZCUpXSI72CQaJmldijZpxoA");'>
-                        </div>
-                    </div>
-                    <div class="space-y-4 flex-grow">
-                        <span class="text-primary text-[9px] font-black uppercase tracking-[0.25em]">Luxury
-                            Devices</span>
-                        <h3 class="text-3xl font-black italic uppercase group-hover:text-primary transition-colors">Lost
-                            Vape</h3>
-                        <p class="text-white/40 text-sm leading-relaxed px-2 font-medium">
-                            The pinnacle of vape luxury, integrating high-end materials with the world-famous DNA
-                            chipset.
-                        </p>
-                    </div>
-                    <div class="mt-10 w-full">
-                        <button
-                            class="w-full py-4 border border-white/10 text-white group-hover:bg-primary group-hover:border-primary group-hover:text-black font-black text-[11px] uppercase tracking-[0.2em] transition-all flex items-center justify-center gap-3">
-                            View Catalog
-                            <span class="material-symbols-outlined text-sm">arrow_right_alt</span>
-                        </button>
-                    </div>
-                </div>
-                <div
-                    class="brand-card-hover group bg-white/[0.02] border border-white/5 p-10 flex flex-col items-center text-center">
-                    <div
-                        class="w-full aspect-square mb-10 bg-black/40 border border-white/5 flex items-center justify-center p-8 grayscale group-hover:grayscale-0 transition-all duration-700">
-                        <div class="w-full h-full bg-center bg-contain bg-no-repeat"
-                            style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDy0Lm-9K4z_6hWoeKB3oBUyPm7vqDgVPuUJQFtQ4aWFue_-w5iFdAdcw5H5LQBVhwINpHIId4Ete069xbcGla3E-7eUCoQ1FUrMOxcQwgPUnmqfv5DWB6ZM9r5sZq8aPa50Z1rfRaVljLmnM-dQvLOOB62xtaxmnwq-TQQ-7JrHiMFeT3UkBc_-QfCDPIgSmYpVZWPZw8QSG_obJDmkwVBKRdsbekmpCz48NquAZcgVZ5f4OfM5O3wBc1DcsP69f3Kd_Vt7bNMYg");'>
-                        </div>
-                    </div>
-                    <div class="space-y-4 flex-grow">
-                        <span class="text-primary text-[9px] font-black uppercase tracking-[0.25em]">Fruit
-                            Specialists</span>
-                        <h3 class="text-3xl font-black italic uppercase group-hover:text-primary transition-colors">
-                            Naked 100</h3>
-                        <p class="text-white/40 text-sm leading-relaxed px-2 font-medium">
-                            Setting the benchmark for purity and natural flavor profiles in the e-liquid industry since
-                            2016.
-                        </p>
-                    </div>
-                    <div class="mt-10 w-full">
-                        <button
-                            class="w-full py-4 border border-white/10 text-white group-hover:bg-primary group-hover:border-primary group-hover:text-black font-black text-[11px] uppercase tracking-[0.2em] transition-all flex items-center justify-center gap-3">
-                            View Catalog
-                            <span class="material-symbols-outlined text-sm">arrow_right_alt</span>
-                        </button>
-                    </div>
-                </div>
+            <div id="brands-grid-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+                <!-- Brands will be loaded dynamically from Firebase -->
             </div>
         </section>
         <section class="mt-32 px-6">
@@ -403,23 +257,8 @@
                     </div>
                 </div>
             </div>
-            <div
-                class="border-y border-white/5 py-12 mb-12 flex flex-wrap justify-center md:justify-between items-center gap-12 opacity-30 grayscale hover:grayscale-0 hover:opacity-100 transition-all">
-                <div class="h-6 w-32 bg-center bg-contain bg-no-repeat"
-                    style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBScVXLGltvDm4uJuSMXRHCnvdvPOY97Ll5B8Retu_ljvIE2Rza8_aciudo3je8TfTmvbTpaMtYdGi6hCtdhBH5j1uTcKSSq48vXyscCUmOrzlx5xdSCR0nm73T0XEh8_zMgR2mtkaPrBqHkyS21GQgY4mJZg7Hm5rBWfjXtSC1c09OvLC1xEMxFxS8zRVcJRKbqi90U_OHvTOg1po4fUgFE-BH7WwGqHTW7D11GSVpkMzHt73kSo4UnnDQ_T0AO5zj3XOLuFfHmlU"); filter: brightness(0) invert(1);'>
-                </div>
-                <div class="h-6 w-32 bg-center bg-contain bg-no-repeat"
-                    style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBQfpramAoFRw8DwS9Lg-x7A33ol_rpU63k106HV9pEDzDePSjEsk5pAlfN7CuE2ispc5kEeDe_DOrhJOZdxhE9Ki52R5Ef8Bh1sBzN9T6i_FX4KrmE6IYD9IPzB6yZwra-EUI0invvHpniMpA4dojBnVMoN_u03WL5bxCoQMWBWYXF3mV8yIMVW0vNAcXb6RQW_9XnZlwvzpc3I36evm3A9GnozrVOFa7KD0nbf3xWZyRcFQQZMliLniiqBkhsNI7Xpdq3nL89jd8"); filter: brightness(0) invert(1);'>
-                </div>
-                <div class="h-6 w-32 bg-center bg-contain bg-no-repeat"
-                    style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBDsOeoZg4UGYYOs7B5SwXvKHYpZDGtx3s9ExSTx4wVwanK__a2EyemLakZCtUi3VvfWiXNmcJt-O1cyHlHWj8MM7eoz4HH3wI3E9yUEmnhzO-Z-bWsdHCqKsxWWLvoNxDC8vsjIolasMUUG1FTIk0_Mui6Y38x4yWWbzj7ceccVWwRfnX3PUbx3_owwMpPw5juI08DAL3Kl0YFiYAukVrEq6sbGMvZbFp0uWzw1B6dD1DO13w7H2YVOwGdcXjAADJNhQHRUOkHA6o"); filter: brightness(0) invert(1);'>
-                </div>
-                <div class="h-6 w-32 bg-center bg-contain bg-no-repeat"
-                    style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCQ3feUbOqRF1Ov1fhY7oKx16pYwFH5a0qqGWVWiIp4458HpMkLk_O0JkEiV3MsSAmjtjOPuTWezJ2-qgP2rfkG3OwZJMs6ruD17sr01HZJHo47TsdWZwIf8JB9oJPM3OQ-PUN30l-Q9CvI1n5N-TEfMfkPVm9l3EZj3YOzN0tPshvilUDyKPwv46LYZY69TVe9_m2Bs9NpD_7o-VrQFTBzNJn4bachhLmSntyKvdq3tgmYZEUXkRU66p1_8bQl3hndeeyYSr7jz4w"); filter: brightness(0) invert(1);'>
-                </div>
-                <div class="h-6 w-32 bg-center bg-contain bg-no-repeat"
-                    style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDy0Lm-9K4z_6hWoeKB3oBUyPm7vqDgVPuUJQFtQ4aWFue_-w5iFdAdcw5H5LQBVhwINpHIId4Ete069xbcGla3E-7eUCoQ1FUrMOxcQwgPUnmqfv5DWB6ZM9r5sZq8aPa50Z1rfRaVljLmnM-dQvLOOB62xtaxmnwq-qTQQ-7JrHiMFeT3UkBc_-QfCDPIgSmYpVZWPZw8QSG_obJDmkwVBKRdsbekmpCz48NquAZcgVZ5f4OfM5O3wBc1DcsP69f3Kd_Vt8bNMYg"); filter: brightness(0) invert(1);'>
-                </div>
+            <div id="partner-brands-footer" class="border-y border-white/5 py-12 mb-12 flex flex-wrap justify-center md:justify-between items-center gap-12 opacity-30 grayscale hover:grayscale-0 hover:opacity-100 transition-all">
+                <!-- Partner brand logos will be loaded dynamically -->
             </div>
             <div
                 class="flex flex-col md:flex-row justify-between items-center gap-8 text-[10px] font-bold uppercase tracking-[0.3em] text-white/20">
@@ -434,7 +273,20 @@
             </div>
         </div>
     </footer>
-
+    <!-- Firebase SDK (Legacy for Realtime Database) -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-analytics-compat.js"></script>
+    
+    <!-- Catalog Services -->
+    <script src="../src/js/modules/age-verification.js"></script>
+    <script src="../src/js/services/firebase-config.js"></script>
+    <script src="../src/js/services/firebase-catalog-service.js"></script>
+    <script src="../src/js/services/catalog-service.js"></script>
+    <script src="../src/js/modules/brands-renderer.js"></script>
+    <script src="../src/js/modules/products-renderer.js"></script>
+    <script src="../src/js/modules/catalog-init.js"></script>
+    <script src="../src/js/pages/brands-page.js"></script>
 </body>
 
 </html>

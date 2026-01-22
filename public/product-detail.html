@@ -12,10 +12,10 @@
             theme: {
                 extend: {
                     colors: {
-                        "primary": "#F2EA7E",
-                        "background-light": "#1a1a1a",
-                        "background-dark": "#0A0A0A",
-                        "charcoal": "#121212",
+                        "primary": "#F8ED70",
+                        "background-light": "#333333",
+                        "background-dark": "#000000",
+                        "charcoal": "#333333",
                         "surface-dark": "#26261a",
                     },
                     fontFamily: {
@@ -28,12 +28,12 @@
     </script>
 <style type="text/tailwindcss">
         :root {
-            --primary-color: #F2EA7E;
-            --bg-dark: #0A0A0A;
+            --primary-color: #F8ED70;
+            --bg-dark: #000000;
         }
         body { font-family: 'Plus Jakarta Sans', sans-serif; }
         .glass-effect {
-            background: rgba(10, 10, 10, 0.85);
+            background: rgba(0, 0, 0, 0.85);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
         }
@@ -42,18 +42,25 @@
             letter-spacing: -0.02em;
         }
         .accent-glow {
-            box-shadow: 0 0 20px rgba(242, 234, 126, 0.2);
+            box-shadow: 0 0 20px rgba(248, 237, 112, 0.2);
         }
     </style>
 </head>
 <body class="bg-background-dark text-white transition-colors duration-300">
-<header class="fixed top-0 w-full z-50 border-b border-white/5 glass-effect">
+<!-- Barre de message pour les visiteurs -->
+<nav class="fixed top-0 w-full z-[60] bg-primary/10 border-b border-primary/20 backdrop-blur-sm">
+    <div class="max-w-[1440px] mx-auto px-6 lg:px-20 py-2.5">
+        <div class="flex items-center justify-center gap-2 text-xs font-bold uppercase tracking-widest text-primary">
+            <span class="material-symbols-outlined text-sm">info</span>
+            <p class="text-center">Benvenuto su LIQUIDO - Scopri la nostra selezione premium di prodotti per il vaping</p>
+        </div>
+    </div>
+</nav>
+<header class="fixed top-[40px] w-full z-50 border-b border-white/5 glass-effect">
 <div class="max-w-[1440px] mx-auto px-6 lg:px-20 h-20 flex items-center justify-between">
 <div class="flex items-center gap-12">
             <a href="index.html" class="flex items-center gap-3 cursor-pointer hover:opacity-80 transition-opacity">
-                <div class="size-10 bg-primary rounded-sm flex items-center justify-center text-background-dark">
-                    <span class="material-symbols-outlined font-bold">water_drop</span>
-                </div>
+                <img src="../assets/images/Goccia LIQUIDO/GOCCIA Y_W.png" alt="LIQUIDO Logo" class="h-10 object-contain"/>
                 <h2 class="text-2xl text-bold-modern tracking-tighter uppercase">LIQUIDO <span class="text-primary/80 font-normal">VAPE SHOP</span></h2>
             </a>
 <nav class="hidden md:flex items-center gap-8">
@@ -76,7 +83,7 @@
 </div>
 </div>
 </header>
-<main class="pt-20 max-w-[1440px] mx-auto px-6 lg:px-20 py-8">
+<main class="pt-[120px] max-w-[1440px] mx-auto px-6 lg:px-20 py-8">
 <div class="flex flex-wrap gap-2 py-4 mb-4">
 <a class="text-[#baba9c] text-sm font-medium hover:text-primary transition-colors" href="#">Home</a>
 <span class="text-[#baba9c] text-sm">/</span>
@@ -88,20 +95,20 @@
 <div class="flex flex-col gap-4">
 <div class="relative group aspect-[4/5] w-full rounded-xl overflow-hidden bg-surface-dark border border-white/5 flex items-center justify-center p-8">
 <div class="absolute inset-0 bg-primary/5 blur-3xl rounded-full scale-75"></div>
-<div class="w-full h-full bg-center bg-no-repeat bg-contain relative z-10" data-alt="Premium e-liquid bottle mockup" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuA4H7ux5uT4pQfZZCnaEQH_RfdRvhquxC1UqO0HiA7Tf2Iw1dHVldJrdhreSPdcmhg-S6rP21rkMcS5qQWU8UHNXhsZkshnB0oHRRqdxrr2RDK6_lGPVwwEMDnAaw9fMyLbthQhcZ9KjKfur95CZJbIdQxIjP7bThg4zEcEYpQABjNH0MwqVGJXoTxFRT6Z8S5YlfPSpyHfJBKp3owsge-fHTQq3H-fB89287Fn6KCVdb4nHub93zJoARhBF00vx1cARzofW7mzPtU");'></div>
+<img src="../assets/images/Goccia LIQUIDO/GOCCIA Y_W.png" alt="LIQUIDO Goccia" class="w-full h-full object-contain relative z-10"/>
 </div>
 <div class="grid grid-cols-4 gap-4">
 <div class="aspect-square rounded-lg bg-surface-dark border border-primary/20 p-2 cursor-pointer hover:border-primary transition-all overflow-hidden" data-alt="Alternate product view front">
-<div class="w-full h-full bg-center bg-no-repeat bg-contain" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDLfBNxmRRQHifSVxHWS8nj6HpTXvXVzVbBQJX4IEJatRtWqbUNWnSPTVhQ3L1ehHPEEdQz4_Zz5zmpxXIURjJWKhkrz0Z64GOcSMDQV6e3IlliGLaSiE6VQ2aGJQ3bNrSAVBGha3ygvfjA3xZz-y6ZPHFepabC9ufZEO_dHCybGIO_sJ8cWdLaR6dLQjubQPbPBvFC0o-UrLOzUYNNoryecKfLni0h6jmuQYJB1siquwANhmaPao-lkOFtqHvOwOfmuiFw4AElkiE");'></div>
+<img src="../assets/images/Goccia LIQUIDO/GOCCIA B_Y.png" alt="LIQUIDO Goccia" class="w-full h-full object-contain"/>
 </div>
 <div class="aspect-square rounded-lg bg-surface-dark border border-white/5 p-2 cursor-pointer hover:border-primary transition-all overflow-hidden" data-alt="Alternate product view side">
-<div class="w-full h-full bg-center bg-no-repeat bg-contain" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCIRQg7fMRfavCJg-1IxyxJtslJkg4aXTSbSvLxVY2huw39Cqd0At28GQDibQZmsX8iE9tVKEwRO1g32inseoFe0SOsQplJ0v8lCu-7O8gYwqrLI_z8CdZbSrs_rFm5lpmMiFkqa52D2x-Xt4gO201zexcClSI5ze1AIcOJ8m506UdEHKLlcewUDw4aCwlARkmmu5LI5eecGTZiyLt9noWvblUXM4dsYAzz1863XvF-71r1t3p8ZWq9wFkqL1yuKQNUymO1rc3XW2Y");'></div>
+<img src="../assets/images/Goccia LIQUIDO/GOCCIA B_W.png" alt="LIQUIDO Goccia" class="w-full h-full object-contain"/>
 </div>
 <div class="aspect-square rounded-lg bg-surface-dark border border-white/5 p-2 cursor-pointer hover:border-primary transition-all overflow-hidden" data-alt="Packaging view">
-<div class="w-full h-full bg-center bg-no-repeat bg-contain" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuB76fGQ-DC71EEbjl3hlEi2muzEHKjw2FIRXqNGwJbKbSAwi1ldT4gR3j0t09HTPhW5Ks1sHC2IIEgwk_sahu33wwsJlGnP3TV9aELqbOBJZryFV4hggiSZYx40xLBs9xD-7jgrghX6Agf_6-vclU3YZ3ZhPBLDTxntq3X1pu_jPA7D-9A6dPlK6_JfM0UkNS5JpzE3OfioOSzJzxjOVOsdI5HFuS3XByEdfI9OaBD_5XHr2Ul3VxkkUq5LIsNZYI_Sj8WZZ7UQ_8o");'></div>
+<img src="../assets/images/Goccia LIQUIDO/GOCCIA Y_W.png" alt="LIQUIDO Goccia" class="w-full h-full object-contain"/>
 </div>
 <div class="aspect-square rounded-lg bg-surface-dark border border-white/5 p-2 cursor-pointer hover:border-primary transition-all overflow-hidden" data-alt="Flavor ingredients visualization">
-<div class="w-full h-full bg-center bg-no-repeat bg-contain" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuB8mO3lf5r8fi9iv1mQ_N3L2MFKf1mm2rCwMzsqHSc3rRwmnzg0bQJEGQA8BUEwpkE5dmb54u0rz0_NcTtxTiAaPctOWuUEMbJmiyBE1HsXhnVChePu0IYkkngclEt76BRAF0ngBHTz8enlU3q3dR1JtxbTsNpScvBBmBF79CL2vQWh4NqJQjMPgefSViE_fvcaHqpbkzPa88LxWqhPYVTBJwhNWRnh4pvGPZN96XS2cFBmYTK3LbdQaGuixApmf3_VSzRa4VQwPzw");'></div>
+<img src="../assets/images/Goccia LIQUIDO/GOCCIA RGB.jpg" alt="LIQUIDO Goccia" class="w-full h-full object-contain"/>
 </div>
 </div>
 </div>
@@ -294,5 +301,5 @@
 </div>
 </footer>
 </div>
-
+    <script src="../src/js/modules/age-verification.js"></script>
 </body></html>

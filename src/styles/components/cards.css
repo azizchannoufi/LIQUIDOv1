@@ -13,7 +13,7 @@
 }
 
 .card:hover {
-    border-color: rgba(242, 234, 126, 0.4);
+    border-color: rgba(248, 237, 112, 0.4);
 }
 
 /* Card Header */
@@ -43,7 +43,7 @@
 }
 
 .product-card:hover {
-    border-color: rgba(242, 234, 126, 0.4);
+    border-color: rgba(248, 237, 112, 0.4);
 }
 
 .product-card-image {

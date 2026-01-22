@@ -5,13 +5,13 @@
 
 :root {
     /* Colors */
-    --color-primary: #F2EA7E;
+    --color-primary: #F8ED70;
     --color-primary-dark: #E5DD6B;
     --color-primary-light: #F5EE9A;
 
-    --color-background-dark: #0A0A0A;
-    --color-background-light: #1a1a1a;
-    --color-charcoal: #121212;
+    --color-background-dark: #000000;
+    --color-background-light: #333333;
+    --color-charcoal: #333333;
 
     --color-white: #FFFFFF;
     --color-black: #000000;
@@ -93,8 +93,8 @@
     --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
     --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
     --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-    --shadow-glow: 0 0 20px rgba(242, 234, 126, 0.3);
-    --shadow-glow-strong: 0 0 40px rgba(242, 234, 126, 0.5);
+    --shadow-glow: 0 0 20px rgba(248, 237, 112, 0.3);
+    --shadow-glow-strong: 0 0 40px rgba(248, 237, 112, 0.5);
 
     /* Transitions */
     --transition-fast: 150ms ease-in-out;
@@ -137,7 +137,7 @@
 .light {
     --color-background: #FFFFFF;
     --color-surface: #F5F5F5;
-    --color-text-primary: #0A0A0A;
-    --color-text-secondary: rgba(10, 10, 10, 0.7);
+    --color-text-primary: #000000;
+    --color-text-secondary: rgba(0, 0, 0, 0.7);
     --color-border: rgba(0, 0, 0, 0.1);
 }

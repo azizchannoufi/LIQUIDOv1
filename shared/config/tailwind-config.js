@@ -4,10 +4,10 @@ tailwind.config = {
     theme: {
         extend: {
             colors: {
-                "primary": "#F2EA7E",
-                "background-light": "#1a1a1a",
-                "background-dark": "#0A0A0A",
-                "charcoal": "#121212",
+                "primary": "#F8ED70",
+                "background-light": "#333333",
+                "background-dark": "#000000",
+                "charcoal": "#333333",
                 "dark-gray": "#2D2D2D",
             },
             fontFamily: {

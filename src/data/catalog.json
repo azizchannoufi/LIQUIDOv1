@@ -1,0 +1,189 @@
+{
+  "catalog": {
+    "sections": [
+      {
+        "id": "cat_liquidi",
+        "name": "Liquidi",
+        "description": "E-liquides et arômes",
+        "brands": [
+          {
+            "name": "Suprem-e",
+            "logo_url": "/images/brands/suprem-e_logo.png",
+            "lines": [
+              { "name": "RE-BRAND", "image_url": "/images/products/suprem-e/re-brand.jpg" },
+              { "name": "FLAVOURBAR", "image_url": "/images/products/suprem-e/flavourbar.jpg" },
+              { "name": "FLAVOURBAR FIZZ", "image_url": "/images/products/suprem-e/flavourbar-fizz.jpg" },
+              { "name": "BOMB LINE", "image_url": "/images/products/suprem-e/bomb-line.jpg" },
+              { "name": "ONE", "image_url": "/images/products/suprem-e/one.jpg" },
+              { "name": "AND", "image_url": "/images/products/suprem-e/and.jpg" }
+            ]
+          },
+          {
+            "name": "Vaporart",
+            "logo_url": "/images/brands/vaporart_logo.png",
+            "lines": [
+              { "name": "SUPER FLAVOUR", "image_url": "/images/products/vaporart/super-flavour.jpg" },
+              { "name": "SEVEN WONDERS", "image_url": "/images/products/vaporart/seven-wonders.jpg" },
+              { "name": "ENJOYSVAPO", "image_url": "/images/products/vaporart/enjoysvapo.jpg" },
+              { "name": "VAPORART", "image_url": "/images/products/vaporart/vaporart-classic.jpg" },
+              { "name": "VAPORICE", "image_url": "/images/products/vaporart/vaporice.jpg" },
+              { "name": "THE CUP", "image_url": "/images/products/vaporart/the-cup.jpg" }
+            ]
+          },
+          {
+            "name": "Flavourart",
+            "logo_url": "/images/brands/flavourart_logo.png",
+            "lines": [
+              { "name": "LE CLUB TOBACCO", "image_url": "/images/products/flavourart/le-club.jpg" },
+              { "name": "CANDY ROCK", "image_url": "/images/products/flavourart/candy-rock.jpg" }
+            ]
+          },
+          {
+            "name": "Flavourage",
+            "logo_url": "/images/brands/flavourage_logo.png",
+            "lines": [
+              { "name": "THE SECRET BARREL", "image_url": "/images/products/flavourage/secret-barrel.jpg" },
+              { "name": "FREEZY", "image_url": "/images/products/flavourage/freezy.jpg" },
+              { "name": "BUBBLE GUM", "image_url": "/images/products/flavourage/bubble-gum.jpg" },
+              { "name": "TOBACCO", "image_url": "/images/products/flavourage/tobacco.jpg" },
+              { "name": "CREAM", "image_url": "/images/products/flavourage/cream.jpg" },
+              { "name": "FRUIT", "image_url": "/images/products/flavourage/fruit.jpg" },
+              { "name": "FRESH", "image_url": "/images/products/flavourage/fresh.jpg" }
+            ]
+          },
+          {
+            "name": "Goldwave",
+            "website": "goldwave.it/",
+            "logo_url": "/images/brands/goldwave_logo.png",
+            "lines": [
+              { "name": "CREAMY SELECTION", "image_url": "/images/products/goldwave/creamy.jpg" },
+              { "name": "FRESH SELECTION", "image_url": "/images/products/goldwave/fresh.jpg" },
+              { "name": "PREMIUM SELECTION", "image_url": "/images/products/goldwave/premium.jpg" },
+              { "name": "CUORI", "image_url": "/images/products/goldwave/cuori.jpg" },
+              { "name": "GOLD SNACK", "image_url": "/images/products/goldwave/gold-snack.jpg" },
+              { "name": "TABACCO MIXOLOGY SERIES", "image_url": "/images/products/goldwave/mixology.jpg" },
+              { "name": "EXTRA ICE", "image_url": "/images/products/goldwave/extra-ice.jpg" }
+            ]
+          },
+          {
+            "name": "Blendfeel",
+            "website": "blendfeel.com/",
+            "logo_url": "/images/brands/blendfeel_logo.png",
+            "lines": [
+              { "name": "SOLO", "image_url": "/images/products/blendfeel/solo.jpg" },
+              { "name": "SOLOX60", "image_url": "/images/products/blendfeel/solox60.jpg" },
+              { "name": "PIANETA MENTA", "image_url": "/images/products/blendfeel/pianeta-menta.jpg" },
+              { "name": "LONGFILL", "image_url": "/images/products/blendfeel/longfill.jpg" },
+              { "name": "BLEND TASTE", "image_url": "/images/products/blendfeel/blend-taste.jpg" }
+            ]
+          },
+          {
+            "name": "Dreamods",
+            "logo_url": "/images/brands/dreamods_logo.png",
+            "lines": [
+              { "name": "MAREA", "image_url": "/images/products/dreamods/marea.jpg" },
+              { "name": "CLEAF", "image_url": "/images/products/dreamods/cleaf.jpg" }
+            ]
+          },
+          {
+            "name": "La Tabaccheria",
+            "website": "latabaccheria.net",
+            "logo_url": "/images/brands/latabaccheria_logo.png",
+            "lines": [
+              { "name": "BLEND LINE", "image_url": "/images/products/latabaccheria/blend-line.jpg" },
+              { "name": "SINGLE LINE", "image_url": "/images/products/latabaccheria/single-line.jpg" },
+              { "name": "I SIGARI", "image_url": "/images/products/latabaccheria/i-sigari.jpg" },
+              { "name": "ICE CLUB", "image_url": "/images/products/latabaccheria/ice-club.jpg" }
+            ]
+          },
+          {
+            "name": "TNT",
+            "website": "tnt-vape.com/",
+            "logo_url": "/images/brands/tnt_logo.png",
+            "lines": [
+              { "name": "BOOMS", "image_url": "/images/products/tnt/booms.jpg" },
+              { "name": "TWENTY NOTES", "image_url": "/images/products/tnt/twenty-notes.jpg" },
+              { "name": "TWENTY ONE", "image_url": "/images/products/tnt/twenty-one.jpg" },
+              { "name": "TABAC", "image_url": "/images/products/tnt/tabac.jpg" }
+            ]
+          },
+          {
+            "name": "Kiwi",
+            "website": "kiwivapor.com/it/",
+            "logo_url": "/images/brands/kiwi_logo.png",
+            "lines": []
+          },
+          {
+            "name": "Elfbar",
+            "website": "elfbar.it/",
+            "logo_url": "/images/brands/elfbar_logo.png",
+            "lines": [
+               { "name": "ELFLIQ", "image_url": "/images/products/elfbar/elfliq.jpg" }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "cat_dispositivi",
+        "name": "Dispositivi",
+        "description": "Cigarettes électroniques et matériel",
+        "brands": [
+          {
+            "name": "Aspire",
+            "website": "aspirecig.com/",
+            "logo_url": "/images/brands/aspire_logo.png",
+            "lines": []
+          },
+          {
+            "name": "Geekvape",
+            "website": "geekvape.com/",
+            "logo_url": "/images/brands/geekvape_logo.png",
+            "lines": []
+          },
+          {
+            "name": "Innokin",
+            "website": "it.innokin.com/",
+            "logo_url": "/images/brands/innokin_logo.png",
+            "lines": []
+          },
+          {
+            "name": "Justfog",
+            "website": "justfog.com/main.php",
+            "logo_url": "/images/brands/justfog_logo.png",
+            "lines": []
+          },
+           {
+            "name": "Vaporesso",
+            "website": "vaporesso.com",
+            "logo_url": "/images/brands/vaporesso_logo.png",
+            "lines": []
+          },
+           {
+            "name": "Voopoo",
+            "website": "voopoo.com/",
+            "logo_url": "/images/brands/voopoo_logo.png",
+            "lines": []
+          },
+          {
+            "name": "Kiwi",
+            "website": "kiwivapor.com/it/",
+            "logo_url": "/images/brands/kiwi_logo.png",
+            "lines": [
+              { "name": "KIWI GO+", "image_url": "/images/products/kiwi/kiwi-go-plus.jpg" },
+              { "name": "KIWI SPARK", "image_url": "/images/products/kiwi/kiwi-spark.jpg" }
+            ]
+          },
+          {
+            "name": "Elfbar",
+            "website": "elfbar.it/",
+            "logo_url": "/images/brands/elfbar_logo.png",
+            "lines": [
+              { "name": "ELFA", "image_url": "/images/products/elfbar/elfa.jpg" }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
+
