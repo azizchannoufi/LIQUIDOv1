@@ -274,6 +274,44 @@ class FirebaseCatalogService {
     }
 
     /**
+     * Delete a product line
+     * @param {string} sectionId - Section ID
+     * @param {string} brandName - Brand name
+     * @param {string} lineName - Product line name
+     * @returns {Promise<void>}
+     */
+    async deleteProductLine(sectionId, brandName, lineName) {
+        await this.initialize();
+        const sections = await this.getSections();
+        const sectionIndex = sections.findIndex(s => s.id === sectionId);
+        
+        if (sectionIndex === -1) {
+            throw new Error(`Section ${sectionId} not found`);
+        }
+
+        const section = sections[sectionIndex];
+        const brands = section.brands || [];
+        const brandIndex = brands.findIndex(b => b.name === brandName);
+        
+        if (brandIndex === -1) {
+            throw new Error(`Brand ${brandName} not found in section ${sectionId}`);
+        }
+
+        const brand = brands[brandIndex];
+        const lines = brand.lines || [];
+        brand.lines = lines.filter(l => l.name !== lineName);
+        brands[brandIndex] = brand;
+        section.brands = brands;
+
+        const catalogRef = this.getCatalogRef();
+        return new Promise((resolve, reject) => {
+            catalogRef.child('sections').child(sectionIndex.toString()).set(section)
+                .then(() => resolve())
+                .catch((error) => reject(error));
+        });
+    }
+
+    /**
      * Listen to catalog changes (real-time updates)
      * @param {Function} callback - Callback function
      * @returns {Function} Unsubscribe function

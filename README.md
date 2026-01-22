@@ -278,3 +278,4 @@ https://www.facebook.com/liquido.vapeshop/
 - Basic HTML/CSS structure
 - Tailwind CSS integration
 
+Recharger la page admin/init-firebase.html

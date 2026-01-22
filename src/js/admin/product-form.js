@@ -65,6 +65,65 @@
         await loadExistingData();
     }
     
+    async function loadExistingData() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const sectionId = urlParams.get('section');
+        const brandName = urlParams.get('brand');
+        const lineName = urlParams.get('line');
+        
+        if (sectionId && brandName && lineName) {
+            try {
+                // Set section
+                const sectionSelect = document.getElementById('product-section');
+                if (sectionSelect) {
+                    sectionSelect.value = sectionId;
+                    currentSection = sectionId;
+                    await loadBrandsForSection(sectionId);
+                }
+                
+                // Set brand
+                const brandSelect = document.getElementById('product-brand');
+                if (brandSelect) {
+                    brandSelect.value = brandName;
+                    currentBrand = brandName;
+                    await loadLinesForBrand(brandName, sectionId);
+                }
+                
+                // Set line and load data
+                const lineSelect = document.getElementById('product-line');
+                if (lineSelect) {
+                    lineSelect.value = lineName;
+                    
+                    // Load line data
+                    const lines = await catalogService.getBrandLines(brandName, sectionId);
+                    const line = lines.find(l => l.name === lineName);
+                    
+                    if (line) {
+                        // Populate form fields
+                        const imageUrlInput = document.getElementById('image-url');
+                        if (imageUrlInput) {
+                            imageUrlInput.value = line.image_url || '';
+                        }
+                        
+                        // Show new line toggle if needed
+                        const toggleBtn = document.getElementById('toggle-new-line');
+                        if (toggleBtn) {
+                            toggleBtn.textContent = 'Edit existing line';
+                        }
+                    }
+                }
+                
+                // Update page title
+                const pageTitle = document.querySelector('h1');
+                if (pageTitle) {
+                    pageTitle.textContent = `Edit Product: ${lineName}`;
+                }
+            } catch (error) {
+                console.error('Error loading product data:', error);
+            }
+        }
+    }
+    
     async function loadBrandsForSection(sectionId) {
         const brandSelect = document.getElementById('product-brand');
         const lineSelect = document.getElementById('product-line');

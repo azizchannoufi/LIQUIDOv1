@@ -309,6 +309,23 @@ class CatalogService {
         
         return await this.firebaseService.deleteBrand(sectionId, brandName);
     }
+
+    /**
+     * Delete product line from Firebase
+     * @param {string} sectionId - Section ID
+     * @param {string} brandName - Brand name
+     * @param {string} lineName - Product line name
+     * @returns {Promise<void>}
+     */
+    async deleteProductLine(sectionId, brandName, lineName) {
+        await this.initFirebase();
+        
+        if (!this.useFirebase || !this.firebaseService) {
+            throw new Error('Firebase not available. Cannot delete product line.');
+        }
+        
+        return await this.firebaseService.deleteProductLine(sectionId, brandName, lineName);
+    }
     
     /**
      * Get all brands from all sections

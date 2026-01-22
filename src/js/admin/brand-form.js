@@ -150,14 +150,89 @@
     }
     
     async function loadExistingData() {
-        // Check if we're editing (URL params or form data)
+        // Check if we're editing (URL params)
         const urlParams = new URLSearchParams(window.location.search);
-        const brandId = urlParams.get('id');
+        const brandName = urlParams.get('brand');
+        const sectionId = urlParams.get('section');
         
-        if (brandId) {
-            // Load existing brand data
-            // This would typically come from an API
-            // For now, we'll just ensure the form is ready
+        if (brandName && sectionId) {
+            try {
+                // Load existing brand data
+                const brand = await catalogService.getBrandByNameInSection(sectionId, brandName);
+                if (brand) {
+                    // Populate form
+                    document.getElementById('brand-name').value = brand.name || '';
+                    document.getElementById('website').value = brand.website || '';
+                    document.getElementById('description').value = brand.description || '';
+                    document.getElementById('logo-url').value = brand.logo_url || '';
+                    
+                    // Update logo preview
+                    const logoPreview = document.getElementById('logo-preview-img');
+                    if (logoPreview && brand.logo_url) {
+                        logoPreview.src = brand.logo_url;
+                        logoPreview.classList.remove('hidden');
+                        logoPreview.parentElement.querySelector('span').classList.add('hidden');
+                    }
+                    
+                    // Set primary section
+                    const primarySection = document.getElementById('primary-section');
+                    if (primarySection) {
+                        primarySection.value = sectionId;
+                        selectedSections.clear();
+                        selectedSections.add(sectionId);
+                        updateSelectedSectionsDisplay();
+                        updateAddSectionOptions();
+                    }
+                    
+                    // Load product lines
+                    if (brand.lines && brand.lines.length > 0) {
+                        const container = document.getElementById('product-lines-container');
+                        brand.lines.forEach((line, index) => {
+                            const lineDiv = document.createElement('div');
+                            lineDiv.className = 'flex flex-col md:flex-row gap-4 p-4 bg-background-dark/30 rounded-lg border border-border-dark';
+                            lineDiv.innerHTML = `
+                                <div class="flex-1">
+                                    <label class="text-white text-sm font-semibold mb-2 block">Line Name *</label>
+                                    <input type="text" 
+                                           name="lines[${index}][name]" 
+                                           class="form-input w-full rounded-lg text-white border border-border-dark bg-background-dark/50 focus:border-primary focus:ring-1 focus:ring-primary h-10 px-3 text-sm" 
+                                           placeholder="e.g. RE-BRAND, FLAVOURBAR" 
+                                           value="${line.name || ''}"
+                                           required/>
+                                </div>
+                                <div class="flex-1">
+                                    <label class="text-white text-sm font-semibold mb-2 block">Image URL</label>
+                                    <input type="text" 
+                                           name="lines[${index}][image_url]" 
+                                           class="form-input w-full rounded-lg text-white border border-border-dark bg-background-dark/50 focus:border-primary focus:ring-1 focus:ring-primary h-10 px-3 text-sm" 
+                                           placeholder="/images/products/brand/line.jpg"
+                                           value="${line.image_url || ''}"/>
+                                </div>
+                                <div class="flex items-end">
+                                    <button type="button" class="remove-line-btn px-4 py-2 bg-red-500/20 hover:bg-red-500/30 text-red-400 rounded-lg transition-all text-sm font-bold border border-red-500/30">
+                                        <span class="material-symbols-outlined text-sm">delete</span>
+                                    </button>
+                                </div>
+                            `;
+                            
+                            const removeBtn = lineDiv.querySelector('.remove-line-btn');
+                            removeBtn.addEventListener('click', () => {
+                                lineDiv.remove();
+                            });
+                            
+                            container.appendChild(lineDiv);
+                        });
+                    }
+                    
+                    // Update page title
+                    const pageTitle = document.getElementById('page-title');
+                    const breadcrumb = document.getElementById('breadcrumb-text');
+                    if (pageTitle) pageTitle.textContent = `Edit Brand: ${brand.name}`;
+                    if (breadcrumb) breadcrumb.textContent = `Edit Brand`;
+                }
+            } catch (error) {
+                console.error('Error loading brand data:', error);
+            }
         }
     }
     

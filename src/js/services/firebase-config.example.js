@@ -69,3 +69,4 @@ if (typeof module !== 'undefined' && module.exports) {
 // Make available globally
 window.firebaseConfig = { initializeFirebase, firebaseConfig };
 
+

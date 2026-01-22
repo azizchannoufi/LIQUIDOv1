@@ -91,3 +91,4 @@ Pour permettre l'écriture depuis l'admin, vous devrez :
 - `src/js/services/firebase-catalog-service.js` - Service pour gérer le catalogue dans Firebase
 - `src/js/services/catalog-service.js` - Service unifié (Firebase + JSON fallback)
 
+
