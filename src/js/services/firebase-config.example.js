@@ -1,18 +1,20 @@
 /**
  * Firebase Configuration and Initialization
  * Uses Firebase CDN (legacy SDK for Realtime Database)
+ * 
+ * COPY THIS FILE TO firebase-config.js AND ADD YOUR REAL CREDENTIALS
  */
 
 // Firebase configuration
 const firebaseConfig = {
-    apiKey: "AIzaSyCBN9mxhu4i7hEoMxeLy-6e7dBOWRV-K78",
-    authDomain: "liquidovapeshop.firebaseapp.com",
-    databaseURL: "https://liquidovapeshop-default-rtdb.europe-west1.firebasedatabase.app",
-    projectId: "liquidovapeshop",
-    storageBucket: "liquidovapeshop.firebasestorage.app",
-    messagingSenderId: "410966783440",
-    appId: "1:410966783440:web:ab8b96fdf4b81a790775d5",
-    measurementId: "G-9VDR2HHTYJ"
+    apiKey: "YOUR_API_KEY_HERE",
+    authDomain: "your-project.firebaseapp.com",
+    databaseURL: "https://your-project-default-rtdb.region.firebasedatabase.app",
+    projectId: "your-project-id",
+    storageBucket: "your-project.firebasestorage.app",
+    messagingSenderId: "123456789012",
+    appId: "1:123456789012:web:abcdef123456",
+    measurementId: "G-XXXXXXXXXX"
 };
 
 // Initialize Firebase (using CDN version for compatibility)
