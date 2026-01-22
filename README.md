@@ -134,9 +134,9 @@ Utils.storage.set('cart', data);
 ## 🎨 Design System
 
 ### Colors
-- **Primary**: #F2EA7E (Yellow)
-- **Background Dark**: #0A0A0A
-- **Charcoal**: #121212
+- **Primary (Giallo)**: #F8ED70 (Yellow)
+- **Background Dark (Bianco)**: #000000
+- **Charcoal (Nero)**: #333333
 - **White**: #FFFFFF
 
 ### Typography
@@ -240,7 +240,20 @@ MIT License - See LICENSE file for details
 
 ## 📧 Contact
 
-For questions or support, visit the contact page or email hello@liquido.vape
+**INDIRIZZO**  
+via Adige 43C, 00015 - Monterotondo (Rm)
+
+**MAIL**  
+info.vaporoom@gmail.com
+
+**WHATSAPP**  
++39 379 134 5367
+
+**INSTAGRAM**  
+https://www.instagram.com/liquido.vapeshop/
+
+**FACEBOOK**  
+https://www.facebook.com/liquido.vapeshop/
 
 ---
 
@@ -265,3 +278,4 @@ For questions or support, visit the contact page or email hello@liquido.vape
 - Basic HTML/CSS structure
 - Tailwind CSS integration
 
+Recharger la page admin/init-firebase.html

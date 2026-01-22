@@ -16,7 +16,7 @@
                     colors: {
                         "primary": "#f2f20d",
                         "background-light": "#f8f8f5",
-                        "background-dark": "#121212",
+                        "background-dark": "#000000",
                         "card-dark": "#1e1e10",
                     },
                     fontFamily: {
@@ -113,19 +113,19 @@
 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 <div class="space-y-2">
 <label class="text-sm font-semibold dark:text-white">Shop Name</label>
-<input class="w-full bg-slate-50 dark:bg-[#27271b] border border-slate-200 dark:border-[#54543b] rounded-lg px-4 py-3 text-slate-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all" placeholder="Enter shop name" type="text" value="LIQUIDO Premium Vape"/>
+<input class="w-full bg-slate-50 dark:bg-[#27271b] border border-slate-200 dark:border-[#54543b] rounded-lg px-4 py-3 text-slate-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all" placeholder="Enter shop name" type="text" value=""/>
 </div>
 <div class="space-y-2">
 <label class="text-sm font-semibold dark:text-white">Contact Phone</label>
-<input class="w-full bg-slate-50 dark:bg-[#27271b] border border-slate-200 dark:border-[#54543b] rounded-lg px-4 py-3 text-slate-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all" placeholder="+1 000 000 000" type="tel" value="+1 (555) 012-3456"/>
+                    <input class="w-full bg-slate-50 dark:bg-[#27271b] border border-slate-200 dark:border-[#54543b] rounded-lg px-4 py-3 text-slate-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all" placeholder="+1 000 000 000" type="tel" value=""/>
 </div>
 <div class="space-y-2">
 <label class="text-sm font-semibold dark:text-white">Email Address</label>
-<input class="w-full bg-slate-50 dark:bg-[#27271b] border border-slate-200 dark:border-[#54543b] rounded-lg px-4 py-3 text-slate-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all" placeholder="shop@email.com" type="email" value="contact@liquido.shop"/>
+                    <input class="w-full bg-slate-50 dark:bg-[#27271b] border border-slate-200 dark:border-[#54543b] rounded-lg px-4 py-3 text-slate-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all" placeholder="shop@email.com" type="email" value=""/>
 </div>
 <div class="space-y-2">
 <label class="text-sm font-semibold dark:text-white">Street Address</label>
-<input class="w-full bg-slate-50 dark:bg-[#27271b] border border-slate-200 dark:border-[#54543b] rounded-lg px-4 py-3 text-slate-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all" placeholder="Enter full address" type="text" value="123 Vapor Way, Suite 400"/>
+                    <input class="w-full bg-slate-50 dark:bg-[#27271b] border border-slate-200 dark:border-[#54543b] rounded-lg px-4 py-3 text-slate-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all" placeholder="Enter full address" type="text" value=""/>
 </div>
 </div>
 <div class="mt-8">
@@ -182,15 +182,14 @@
                                 </button>
 </div>
 <div class="lg:col-span-2 min-h-[300px] bg-slate-100 dark:bg-slate-800 rounded-xl relative overflow-hidden group">
-<div class="absolute inset-0 bg-[url('https://placeholder.pics/svg/800x400')] bg-cover bg-center opacity-50 dark:opacity-30" data-alt="Map view showing store location" data-location="Los Angeles, USA" style="https://lh3.googleusercontent.com/aida-public/AB6AXuDdzc0XXwaqKKPRT-a1T3mpB-FV1i2iDESDd94KU9aurRvLYaRmE7Io6zjHX-9i0U-LWSVpp2o0JWEdIajhOM3HpgncZPmklQS5B6Dh_uk9uM-yHNOJ4RIM2Nt61M-i1MGeTWXQ9xjsxREBMuyOk4gLO3zNdskFYyWyusqdFtQIDuEQEVTWQ6AhmJ8K8H2y3IAFbNO-xDeXjElAE9-Rgr80kXRUn5brKThtOCJaKjmeNTeQB0rXDZoN4z1OSY8Ykmrr8G4ztNPw38o"></div>
+<div class="absolute inset-0 bg-slate-200 dark:bg-slate-700 flex items-center justify-center">
+<span class="text-slate-400 dark:text-slate-500 text-sm">Carte à configurer</span>
+</div>
 <div class="absolute inset-0 flex items-center justify-center">
-<div class="bg-primary p-2 rounded-full shadow-lg shadow-primary/20 animate-pulse">
+<div class="bg-primary p-2 rounded-full shadow-lg shadow-primary/20">
 <span class="material-symbols-outlined text-black">location_on</span>
 </div>
 </div>
-<div class="absolute bottom-4 left-4 bg-white dark:bg-black/80 backdrop-blur-sm px-3 py-2 rounded text-xs font-medium border border-slate-200 dark:border-white/10">
-                                    Preview: Los Angeles Central District
-                                </div>
 </div>
 </div>
 </section>
@@ -205,7 +204,9 @@
 <div class="p-6">
 <div class="flex items-center gap-6 mb-8 p-4 bg-slate-50 dark:bg-white/5 rounded-xl">
 <div class="relative group cursor-pointer">
-<img alt="User Profile" class="w-20 h-20 rounded-full border-4 border-primary/20" data-alt="User avatar for administrative profile" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD6U3SE9-Z4EHvHgy2mC0YmX5koOV2pPhottKqVmTrhyC0uLDwBmh_IeIwg7TNutUh1tzBuFSeE0d8GDJPgheRYsuB-KLvOJ8oiyzQDnEBxpoOW6VhYQanqhJHBuoPmj_AC7w5ggVdDbHA8qDx8HBVnN2oLMjOas6_ud1lzPgCxeb7XbOIadFDl7nxsVGMA8h_2GChDHtQ1d7CM676MOLtoOxO49tVym4fPGzCm1NpG_QMUkjLJ0fJfL74XzayAKZaqmhaA_U1Ttr0"/>
+<div class="w-20 h-20 rounded-full border-4 border-primary/20 bg-slate-300 dark:bg-slate-700 flex items-center justify-center">
+<span class="material-symbols-outlined text-slate-500 dark:text-slate-400 text-3xl">account_circle</span>
+</div>
 <div class="absolute inset-0 bg-black/40 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
 <span class="material-symbols-outlined text-white">photo_camera</span>
 </div>

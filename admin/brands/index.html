@@ -92,31 +92,6 @@
 </aside>
 <!-- Main Content Area -->
 <main class="flex-1 flex flex-col overflow-y-auto bg-background-light dark:bg-background-dark">
-<!-- Top Navbar -->
-<header class="flex items-center justify-between border-b border-border-dark px-8 py-4 sticky top-0 bg-background-dark/80 backdrop-blur-md z-10">
-<div class="md:hidden flex items-center gap-3">
-<span class="material-symbols-outlined text-white">menu</span>
-<h2 class="text-white text-lg font-bold">LIQUIDO</h2>
-</div>
-<div class="hidden md:block">
-<!-- Spacer for desktop -->
-</div>
-<div class="flex items-center gap-4">
-<button class="flex items-center justify-center rounded-lg h-10 w-10 bg-surface-dark text-white hover:bg-border-dark transition-colors">
-<span class="material-symbols-outlined">notifications</span>
-</button>
-<button class="flex items-center justify-center rounded-lg h-10 w-10 bg-surface-dark text-white hover:bg-border-dark transition-colors">
-<span class="material-symbols-outlined">settings</span>
-</button>
-<div class="h-8 w-px bg-border-dark mx-2"></div>
-<button class="flex items-center gap-3 px-3 py-1.5 rounded-lg bg-primary text-background-dark hover:brightness-110 transition-all">
-<div class="size-7 rounded-full bg-background-dark/10 flex items-center justify-center overflow-hidden">
-<img alt="Admin" class="w-full h-full object-cover" data-alt="Admin user profile picture circular crop" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDkfvzYTWYyh_CLvrr_T3X7s-1mRG_IXRxamEJdzCP9tM_HOCpMe4CbzkgH-NglUS540C-0xqHnbOFkZm_AzsL0TmIpnYpm1nDTGMknN2BCUZqsQorYCYkSXQtuj6eA1Kf2Epc1pA2K536BDu6YFvZ8F98uF8IG_MmJn9l6BhdWkJtnAMx3xwfHmnqoKRjZaFSxtQ7k2LBRrWp3-0MpGbjRac9Bt3mX4uUASRMRgZhgnySbYBD8SUV61dwJ5n940JTy7VktTfe8a60"/>
-</div>
-<span class="text-sm font-bold">Admin Profile</span>
-</button>
-</div>
-</header>
 <!-- Content Container -->
 <div class="p-8 max-w-7xl mx-auto w-full">
 <!-- Page Heading -->
@@ -125,10 +100,10 @@
 <h1 class="text-white text-4xl font-black tracking-tight leading-none">Brand Management</h1>
 <p class="text-[#baba9c] text-lg font-normal">Manage and monitor your partner brand relationships across all regions.</p>
 </div>
-<button class="flex items-center justify-center gap-2 px-6 h-12 bg-primary text-background-dark rounded-xl font-bold shadow-lg shadow-primary/10 hover:scale-[1.02] active:scale-[0.98] transition-all">
+<a href="add.html" class="flex items-center justify-center gap-2 px-6 h-12 bg-primary text-background-dark rounded-xl font-bold shadow-lg shadow-primary/10 hover:scale-[1.02] active:scale-[0.98] transition-all">
 <span class="material-symbols-outlined font-bold">add</span>
 <span>Add New Brand</span>
-</button>
+</a>
 </div>
 <!-- Filters & View Switcher -->
 <div class="flex flex-col lg:flex-row gap-4 mb-8">
@@ -138,211 +113,49 @@
 <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-[#baba9c] group-focus-within:text-primary transition-colors">
 <span class="material-symbols-outlined">search</span>
 </div>
-<input class="w-full h-14 pl-12 pr-4 rounded-xl bg-surface-dark border-none text-white focus:ring-2 focus:ring-primary/50 placeholder:text-[#baba9c] text-base transition-all" placeholder="Search partner brands by name, category or ID..." type="text"/>
+<input id="brand-search-input" class="w-full h-14 pl-12 pr-4 rounded-xl bg-surface-dark border-none text-white focus:ring-2 focus:ring-primary/50 placeholder:text-[#baba9c] text-base transition-all" placeholder="Search partner brands by name, category or ID..." type="text"/>
 </div>
 </div>
 <!-- Action Bar / View Switcher -->
 <div class="flex items-center gap-2 bg-surface-dark p-1.5 rounded-xl border border-border-dark">
-<button class="flex items-center gap-2 px-4 py-2 rounded-lg bg-border-dark text-white text-sm font-semibold transition-all">
+<button id="grid-view-btn" class="flex items-center gap-2 px-4 py-2 rounded-lg bg-border-dark text-white text-sm font-semibold transition-all">
 <span class="material-symbols-outlined text-sm">grid_view</span>
 <span>Grid View</span>
 </button>
-<button class="flex items-center gap-2 px-4 py-2 rounded-lg text-[#baba9c] hover:text-white text-sm font-semibold transition-all">
+<button id="list-view-btn" class="flex items-center gap-2 px-4 py-2 rounded-lg text-[#baba9c] hover:text-white text-sm font-semibold transition-all">
 <span class="material-symbols-outlined text-sm">format_list_bulleted</span>
 <span>List View</span>
 </button>
 </div>
 </div>
+<!-- Loading State -->
+<div id="brands-loading" class="flex items-center justify-center py-20">
+<div class="flex flex-col items-center gap-4">
+<div class="size-12 border-4 border-primary/20 border-t-primary rounded-full animate-spin"></div>
+<p class="text-[#baba9c] text-sm font-medium">Chargement des marques...</p>
+</div>
+</div>
 <!-- Brands Grid -->
-<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-<!-- Brand Card 1 -->
-<div class="group relative flex flex-col bg-surface-dark border border-border-dark rounded-2xl overflow-hidden hover:border-primary/40 transition-all duration-300">
-<div class="absolute top-4 right-4 z-10">
-<button class="bg-background-dark/40 backdrop-blur-sm p-1.5 rounded-lg text-white hover:bg-primary hover:text-background-dark transition-colors">
-<span class="material-symbols-outlined text-[20px]">more_vert</span>
-</button>
+<div id="admin-brands-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 hidden">
+<!-- Brands will be loaded dynamically from Firebase -->
 </div>
-<div class="h-40 bg-gradient-to-br from-border-dark to-background-dark flex items-center justify-center p-8">
-<div class="w-full h-full rounded-xl bg-white/5 flex items-center justify-center border border-white/10 overflow-hidden">
-<img alt="Cloud Vapes" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="Abstract minimalist brand logo with blue accents" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDI8ZixlZ752mvNmeap3MvbsoKsTtJcSt2OaULYr0CiyIzoWePhHONKLBX_y_dppGMnZDk7AVjMZDKUsgXA-ms_F889kqtAHIgy4Ti3P1s6ROz_D4I7v3BKzCjMvKiv62xWLOF5K-pN3-NNDtmwsWjX2wh0O9S4zak5ZUBigZ1aJieXkm_W7mCV1QTWamtuCObKnMSsFC41tnR6Pr1z5FIGZGGQzsnb1HuCXphvZ4mai_LeC0OQu1eQ1MH3JDb1GDBb6TkbH9mlBDM"/>
-</div>
-</div>
-<div class="p-5 space-y-4">
-<div>
-<h3 class="text-white text-xl font-bold mb-1">Cloud Vapes</h3>
-<p class="text-[#baba9c] text-sm font-medium">Premium E-Liquids</p>
-</div>
-<div class="flex items-center justify-between">
-<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-400 text-xs font-bold uppercase tracking-wider border border-emerald-500/20">
-<span class="size-1.5 rounded-full bg-emerald-400"></span>
-                                    Active
-                                </span>
-<div class="flex gap-2">
-<button class="text-[#baba9c] hover:text-primary transition-colors">
-<span class="material-symbols-outlined text-[20px]">edit</span>
-</button>
-<button class="text-[#baba9c] hover:text-red-400 transition-colors">
-<span class="material-symbols-outlined text-[20px]">delete</span>
-</button>
-</div>
-</div>
-</div>
-</div>
-<!-- Brand Card 2 -->
-<div class="group relative flex flex-col bg-surface-dark border border-border-dark rounded-2xl overflow-hidden hover:border-primary/40 transition-all duration-300">
-<div class="absolute top-4 right-4 z-10">
-<button class="bg-background-dark/40 backdrop-blur-sm p-1.5 rounded-lg text-white hover:bg-primary hover:text-background-dark transition-colors">
-<span class="material-symbols-outlined text-[20px]">more_vert</span>
-</button>
-</div>
-<div class="h-40 bg-gradient-to-br from-border-dark to-background-dark flex items-center justify-center p-8">
-<div class="w-full h-full rounded-xl bg-white/5 flex items-center justify-center border border-white/10 overflow-hidden">
-<img alt="Neon Mist" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="Neon lighting style brand logo placeholder" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAgyn5jvhA1OhipeNayKH8PuxupJXevZaJUM9Gq-5LkGrRVOmmIQhNQKVenkNJHPPLxenEhfdIikLrDgr2zYiT1Mm9FGbFad63lxuyC4gYrgYbiB4cNL-rAWiE3JlFdyJOZHM6VryE86thnL_EtTsHwfyaSubyuso51b6KCyza6IeqRNOM-c2hoZ9Fs92drl07jjd5JOyeCJjPyxxmowi9Qg0Fomp4NUcYmyGwC_s82X5RBLHp2KD8sTpQ7g0GC6GchPsx8WBDg4yc"/>
-</div>
-</div>
-<div class="p-5 space-y-4">
-<div>
-<h3 class="text-white text-xl font-bold mb-1">Neon Mist</h3>
-<p class="text-[#baba9c] text-sm font-medium">Hardware &amp; Pods</p>
-</div>
-<div class="flex items-center justify-between">
-<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-400 text-xs font-bold uppercase tracking-wider border border-emerald-500/20">
-<span class="size-1.5 rounded-full bg-emerald-400"></span>
-                                    Active
-                                </span>
-<div class="flex gap-2">
-<button class="text-[#baba9c] hover:text-primary transition-colors">
-<span class="material-symbols-outlined text-[20px]">edit</span>
-</button>
-<button class="text-[#baba9c] hover:text-red-400 transition-colors">
-<span class="material-symbols-outlined text-[20px]">delete</span>
-</button>
-</div>
-</div>
-</div>
-</div>
-<!-- Brand Card 3 (Inactive) -->
-<div class="group relative flex flex-col bg-surface-dark border border-border-dark rounded-2xl overflow-hidden opacity-80 hover:opacity-100 hover:border-primary/40 transition-all duration-300">
-<div class="absolute top-4 right-4 z-10">
-<button class="bg-background-dark/40 backdrop-blur-sm p-1.5 rounded-lg text-white hover:bg-primary hover:text-background-dark transition-colors">
-<span class="material-symbols-outlined text-[20px]">more_vert</span>
-</button>
-</div>
-<div class="h-40 bg-gradient-to-br from-border-dark to-background-dark flex items-center justify-center p-8">
-<div class="w-full h-full rounded-xl bg-white/5 flex items-center justify-center border border-white/10 overflow-hidden grayscale">
-<img alt="Arctic Chill" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="Blue and white ice themed brand logo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBi4oiW8EfpFqu4eI1aP3aTpfvWpJRp_OfrCavxrsnGWpg2bdILiaJciJyAysLb9Z8k1JXllyF_UAeDGX21C9AO8wEDcjmmD5LcJfNn1FLsgWAbPwgeKNdH4uxsrTEw1ZWNSshvOCT_VE_zyXiIXo_9umgn2fphw2Yn6NEJ3745c07jPfIXRoc_xtuDwd9uFMRSnImVxo5KFfBi7S_iDG5nYsI52_BxA69DdYt9stjknxo3AEn0SED2PWOhISc_pkNXU5_ixxirPk8"/>
-</div>
-</div>
-<div class="p-5 space-y-4">
-<div>
-<h3 class="text-white text-xl font-bold mb-1">Arctic Chill</h3>
-<p class="text-[#baba9c] text-sm font-medium">Menthol Series</p>
-</div>
-<div class="flex items-center justify-between">
-<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-slate-500/10 text-slate-400 text-xs font-bold uppercase tracking-wider border border-slate-500/20">
-<span class="size-1.5 rounded-full bg-slate-400"></span>
-                                    Inactive
-                                </span>
-<div class="flex gap-2">
-<button class="text-[#baba9c] hover:text-primary transition-colors">
-<span class="material-symbols-outlined text-[20px]">edit</span>
-</button>
-<button class="text-[#baba9c] hover:text-red-400 transition-colors">
-<span class="material-symbols-outlined text-[20px]">delete</span>
-</button>
-</div>
-</div>
-</div>
-</div>
-<!-- Brand Card 4 -->
-<div class="group relative flex flex-col bg-surface-dark border border-border-dark rounded-2xl overflow-hidden hover:border-primary/40 transition-all duration-300">
-<div class="absolute top-4 right-4 z-10">
-<button class="bg-background-dark/40 backdrop-blur-sm p-1.5 rounded-lg text-white hover:bg-primary hover:text-background-dark transition-colors">
-<span class="material-symbols-outlined text-[20px]">more_vert</span>
-</button>
-</div>
-<div class="h-40 bg-gradient-to-br from-border-dark to-background-dark flex items-center justify-center p-8">
-<div class="w-full h-full rounded-xl bg-white/5 flex items-center justify-center border border-white/10 overflow-hidden">
-<img alt="Golden Leaf" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="Luxury gold leaf logo design on dark background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuANKf3Pf9fnRI6i40kKjVJmGIqfJNZKWQb64M-5wn7eIm9NWKoSmHGm1n6u839FWDCZop1P3Q4ZX-td2YT4Wk3_eLLyI4Ff4QWJLc0r636qe2je-DKwYeKD9G7yJ8oafxTixuyVW1RmIDQrvP9HJ1fFxmKHg26O6NU5AEdoueTkQvb-eEqakNkYFAK3uUIHSxpExQJYxdWvRNDt0CIhCaiBuVTJG6TjF3Hwm83UXDd8-THj0wRg2sIVd_NKNIreraqXNi5YNPmRybU"/>
-</div>
-</div>
-<div class="p-5 space-y-4">
-<div>
-<h3 class="text-white text-xl font-bold mb-1">Golden Leaf</h3>
-<p class="text-[#baba9c] text-sm font-medium">Tobacco Blends</p>
-</div>
-<div class="flex items-center justify-between">
-<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-400 text-xs font-bold uppercase tracking-wider border border-emerald-500/20">
-<span class="size-1.5 rounded-full bg-emerald-400"></span>
-                                    Active
-                                </span>
-<div class="flex gap-2">
-<button class="text-[#baba9c] hover:text-primary transition-colors">
-<span class="material-symbols-outlined text-[20px]">edit</span>
-</button>
-<button class="text-[#baba9c] hover:text-red-400 transition-colors">
-<span class="material-symbols-outlined text-[20px]">delete</span>
-</button>
-</div>
-</div>
-</div>
-</div>
-<!-- Brand Card 5 -->
-<div class="group relative flex flex-col bg-surface-dark border border-border-dark rounded-2xl overflow-hidden hover:border-primary/40 transition-all duration-300">
-<div class="absolute top-4 right-4 z-10">
-<button class="bg-background-dark/40 backdrop-blur-sm p-1.5 rounded-lg text-white hover:bg-primary hover:text-background-dark transition-colors">
-<span class="material-symbols-outlined text-[20px]">more_vert</span>
-</button>
-</div>
-<div class="h-40 bg-gradient-to-br from-border-dark to-background-dark flex items-center justify-center p-8">
-<div class="w-full h-full rounded-xl bg-white/5 flex items-center justify-center border border-white/10 overflow-hidden">
-<img alt="Storm Mods" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="Dynamic energetic brand logo with storm clouds" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDxnwjuWnnVw5w62YTb80Kippg2VUUNcuDhb-CuuyOmdcKa88SH2aOV8PUiHHc86YMGwsRJuqwzcznn1yCxDBJVD3fgdHlolMODiv_yWZhjhEgsNN4GHmKMgr32_YCqCf50wFIikXxO6pafEHUnywZPWY1pyYCeVRQ7_WRKk1k1sqRxRIY7yxo5QV3ZU5MdXWot26KNTKChhKmZMmae6D-aFPc4AumiwAbAxZqE4Gi4Ja-8MHYvll2BVo4OgvcO6LO_feYXOZMJ5F8"/>
-</div>
-</div>
-<div class="p-5 space-y-4">
-<div>
-<h3 class="text-white text-xl font-bold mb-1">Storm Mods</h3>
-<p class="text-[#baba9c] text-sm font-medium">High Performance Mods</p>
-</div>
-<div class="flex items-center justify-between">
-<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-400 text-xs font-bold uppercase tracking-wider border border-emerald-500/20">
-<span class="size-1.5 rounded-full bg-emerald-400"></span>
-                                    Active
-                                </span>
-<div class="flex gap-2">
-<button class="text-[#baba9c] hover:text-primary transition-colors">
-<span class="material-symbols-outlined text-[20px]">edit</span>
-</button>
-<button class="text-[#baba9c] hover:text-red-400 transition-colors">
-<span class="material-symbols-outlined text-[20px]">delete</span>
-</button>
-</div>
-</div>
-</div>
-</div>
-<!-- Add Brand Placeholder -->
-<button class="group flex flex-col items-center justify-center gap-4 bg-transparent border-2 border-dashed border-border-dark rounded-2xl p-8 hover:border-primary/50 hover:bg-primary/5 transition-all duration-300">
-<div class="size-16 rounded-full bg-surface-dark flex items-center justify-center text-[#baba9c] group-hover:text-primary group-hover:scale-110 transition-all">
-<span class="material-symbols-outlined text-3xl">add</span>
-</div>
-<div class="text-center">
-<p class="text-white font-bold">New Partner</p>
-<p class="text-[#baba9c] text-sm">Register brand profile</p>
-</div>
-</button>
-</div>
-<!-- Pagination (Optional but adds to the layout) -->
-<div class="mt-12 flex items-center justify-between border-t border-border-dark pt-6">
-<p class="text-[#baba9c] text-sm">Showing <span class="text-white font-bold">5</span> of <span class="text-white font-bold">24</span> brands</p>
-<div class="flex items-center gap-2">
-<button class="px-4 py-2 rounded-lg bg-surface-dark text-[#baba9c] hover:text-white disabled:opacity-50">Previous</button>
-<button class="size-10 rounded-lg bg-primary text-background-dark font-bold">1</button>
-<button class="size-10 rounded-lg bg-surface-dark text-[#baba9c] hover:text-white">2</button>
-<button class="size-10 rounded-lg bg-surface-dark text-[#baba9c] hover:text-white">3</button>
-<button class="px-4 py-2 rounded-lg bg-surface-dark text-[#baba9c] hover:text-white">Next</button>
+<!-- Pagination -->
+<div id="brands-pagination" class="mt-12 flex items-center justify-between border-t border-border-dark pt-6 hidden">
+<p class="text-[#baba9c] text-sm">Showing <span id="brands-count" class="text-white font-bold">0</span> brands</p>
+<div class="flex items-center gap-2" id="pagination-controls">
+<!-- Pagination will be added dynamically if needed -->
 </div>
 </div>
 </div>
 </main>
 </div>
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-analytics-compat.js"></script>
+<script src="../../src/js/services/firebase-config.js"></script>
+<script src="../../src/js/services/firebase-catalog-service.js"></script>
+<script src="../../src/js/services/catalog-service.js"></script>
+<script src="../../src/js/modules/catalog-init.js"></script>
+<script src="../../src/js/admin/brands-list.js"></script>
 </body></html>

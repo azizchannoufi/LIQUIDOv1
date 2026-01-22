@@ -12,10 +12,10 @@
             theme: {
                 extend: {
                     colors: {
-                        "primary": "#F2EA7E",
-                        "background-light": "#1a1a1a",
-                        "background-dark": "#0A0A0A",
-                        "charcoal": "#121212",
+                        "primary": "#F8ED70",
+                        "background-light": "#333333",
+                        "background-dark": "#000000",
+                        "charcoal": "#333333",
                     },
                     fontFamily: {
                         "display": ["Plus Jakarta Sans", "sans-serif"]
@@ -27,12 +27,12 @@
     </script>
 <style type="text/tailwindcss">
         :root {
-            --primary-color: #F2EA7E;
-            --bg-dark: #0A0A0A;
+            --primary-color: #F8ED70;
+            --bg-dark: #000000;
         }
         body { font-family: 'Plus Jakarta Sans', sans-serif; }
         .glass-effect {
-            background: rgba(10, 10, 10, 0.85);
+            background: rgba(0, 0, 0, 0.85);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
         }
@@ -41,7 +41,7 @@
             letter-spacing: -0.02em;
         }
         .accent-glow {
-            box-shadow: 0 0 20px rgba(242, 234, 126, 0.2);
+            box-shadow: 0 0 20px rgba(248, 237, 112, 0.2);
         }
         .material-symbols-outlined {
             font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
@@ -49,13 +49,20 @@
     </style>
 </head>
 <body class="bg-background-dark text-white transition-colors duration-300">
-<header class="fixed top-0 w-full z-50 border-b border-white/5 glass-effect">
+<!-- Barre de message pour les visiteurs -->
+<nav class="fixed top-0 w-full z-[60] bg-primary/10 border-b border-primary/20 backdrop-blur-sm">
+    <div class="max-w-[1440px] mx-auto px-6 lg:px-20 py-2.5">
+        <div class="flex items-center justify-center gap-2 text-xs font-bold uppercase tracking-widest text-primary">
+            <span class="material-symbols-outlined text-sm">info</span>
+            <p class="text-center">Benvenuto su LIQUIDO - Scopri la nostra selezione premium di prodotti per il vaping</p>
+        </div>
+    </div>
+</nav>
+<header class="fixed top-[40px] w-full z-50 border-b border-white/5 glass-effect">
 <div class="max-w-[1440px] mx-auto px-6 lg:px-20 h-20 flex items-center justify-between">
 <div class="flex items-center gap-12">
             <a href="index.html" class="flex items-center gap-3 cursor-pointer hover:opacity-80 transition-opacity">
-                <div class="size-10 bg-primary rounded-sm flex items-center justify-center text-background-dark">
-                    <span class="material-symbols-outlined font-bold">water_drop</span>
-                </div>
+                <img src="../assets/images/Goccia LIQUIDO/GOCCIA Y_W.png" alt="LIQUIDO Logo" class="h-10 object-contain"/>
                 <h2 class="text-2xl text-bold-modern tracking-tighter uppercase">LIQUIDO <span class="text-primary/80 font-normal">VAPE SHOP</span></h2>
             </a>
 <nav class="hidden md:flex items-center gap-8">
@@ -78,7 +85,7 @@
 </div>
 </div>
 </header>
-<main class="pt-20 max-w-[1440px] mx-auto px-6 lg:px-20 py-10">
+<main class="pt-[120px] max-w-[1440px] mx-auto px-6 lg:px-20 py-10">
 <div class="mb-12 text-center lg:text-left">
 <h1 class="text-white text-5xl font-black leading-tight tracking-[-0.033em] mb-4">Contatti &amp; Posizione</h1>
 <p class="text-[#baba9c] text-lg max-w-2xl mx-auto lg:mx-0">Vivi l'essenza di LIQUIDO. Visita il nostro negozio principale per una consulenza personalizzata o contatta il nostro team di supporto premium.</p>
@@ -89,15 +96,15 @@
 <div class="flex flex-col gap-4 rounded-xl border border-[#54543b] bg-[#27271b] p-6 hover:border-primary transition-colors">
 <span class="material-symbols-outlined text-primary text-3xl">call</span>
 <div>
-<h3 class="text-white text-lg font-bold">Call Us</h3>
-<p class="text-[#baba9c] text-sm">+1 (555) 123-4567</p>
+                    <h3 class="text-white text-lg font-bold">WhatsApp</h3>
+                    <p class="text-[#baba9c] text-sm">+39 379 134 5367</p>
 </div>
 </div>
 <div class="flex flex-col gap-4 rounded-xl border border-[#54543b] bg-[#27271b] p-6 hover:border-primary transition-colors">
 <span class="material-symbols-outlined text-primary text-3xl">mail</span>
 <div>
-<h3 class="text-white text-lg font-bold">Email</h3>
-<p class="text-[#baba9c] text-sm">concierge@liquido.vape</p>
+                    <h3 class="text-white text-lg font-bold">Email</h3>
+                    <p class="text-[#baba9c] text-sm">info.vaporoom@gmail.com</p>
 </div>
 </div>
 </div>
@@ -147,9 +154,8 @@
 </div>
 <div class="flex flex-col gap-6 lg:sticky lg:top-24">
 <div class="relative w-full h-[600px] rounded-2xl overflow-hidden border border-[#54543b] group shadow-2xl">
-<div class="absolute inset-0 bg-center bg-cover grayscale contrast-125 brightness-50 transition-all duration-700 group-hover:grayscale-0 group-hover:brightness-75" data-alt="Detailed charcoal dark mode city map" data-location="New York" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBrHPuKTL9G4FNmxVAjRe4b0VcwRdL1EAQ3c8X7iWgkKQfkI869nLb82JJ8mNKIj7w4ZMcxGrSfdJCd-Yq7P-s3e4HZJHImJCp2oJEYoenIQgBvaKuv8JTR7JLnXWXey1WT_VE131JsD4Kwy6SvlEHBKmQrL0rSEqkWQc2qQctSFIjNOBPDIGff9M8VEeT49V6RFiyaI68pOzyY6-jmk0IpbpLkG0mOWDGsKCvhn2-Fj2LH-gaiTxJ_kdjxblz0KGozMD5OjQgD3xQ");'>
-</div>
-<div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+<iframe class="absolute inset-0 w-full h-full border-0" src="https://maps.google.com/maps?q=Via+Adige+43C,+00015+Monterotondo+RM,+Italy&t=&z=15&ie=UTF8&iwloc=&output=embed" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+<div class="absolute inset-0 flex items-center justify-center pointer-events-none z-10">
 <div class="relative flex flex-col items-center">
 <div class="bg-primary text-black p-3 rounded-full shadow-[0_0_30px_rgba(242,242,13,0.5)] animate-pulse">
 <span class="material-symbols-outlined text-3xl font-bold">location_on</span>
@@ -159,19 +165,19 @@
 </div>
 </div>
 </div>
-<div class="absolute bottom-6 left-6 flex flex-col gap-2">
-<button class="bg-[#27271b] text-white p-2 rounded-lg border border-[#54543b] hover:bg-primary hover:text-black transition-colors">
+<div class="absolute bottom-6 left-6 flex flex-col gap-2 z-20 pointer-events-auto">
+<button class="bg-[#27271b] text-white p-2 rounded-lg border border-[#54543b] hover:bg-primary hover:text-black transition-colors pointer-events-auto">
 <span class="material-symbols-outlined">add</span>
 </button>
-<button class="bg-[#27271b] text-white p-2 rounded-lg border border-[#54543b] hover:bg-primary hover:text-black transition-colors">
+<button class="bg-[#27271b] text-white p-2 rounded-lg border border-[#54543b] hover:bg-primary hover:text-black transition-colors pointer-events-auto">
 <span class="material-symbols-outlined">remove</span>
 </button>
 </div>
-<div class="absolute top-6 right-6">
-<button class="bg-primary text-black px-4 py-2 rounded-full font-bold text-xs flex items-center gap-2 shadow-lg hover:scale-105 transition-transform">
+<div class="absolute top-6 right-6 z-20">
+<a href="https://www.google.com/maps/dir/?api=1&destination=via+Adige+43C,+00015+Monterotondo+RM,Italy" target="_blank" rel="noopener noreferrer" class="bg-primary text-black px-4 py-2 rounded-full font-bold text-xs flex items-center gap-2 shadow-lg hover:scale-105 transition-transform pointer-events-auto">
 <span class="material-symbols-outlined text-sm">directions</span>
                             GET DIRECTIONS
-                        </button>
+                        </a>
 </div>
 </div>
 <div class="bg-[#27271b] border border-[#54543b] rounded-xl p-6 flex flex-col gap-2">
@@ -179,8 +185,8 @@
 <span class="material-symbols-outlined">home_pin</span>
 <h3 class="font-bold text-lg uppercase tracking-wider">Main Headquarters</h3>
 </div>
-<p class="text-white text-xl font-bold">123 Smoke Street, Vapor City</p>
-<p class="text-[#baba9c]">District 9, Metropolitan Area, VC 10293</p>
+                <p class="text-white text-xl font-bold">via Adige 43C</p>
+                <p class="text-[#baba9c]">00015 - Monterotondo (RM)</p>
 </div>
 </div>
 </div>
@@ -201,15 +207,15 @@
                         Premium vaping experience curated for enthusiasts. Explore our exclusive range of boutique e-liquids and high-end hardware.
                     </p>
 <div class="flex gap-4">
-<a class="w-10 h-10 rounded-lg bg-[#27271b] border border-[#393928] flex items-center justify-center text-white hover:bg-primary hover:text-black hover:border-primary transition-all" href="#">
+<a class="w-10 h-10 rounded-lg bg-[#27271b] border border-[#393928] flex items-center justify-center text-white hover:bg-primary hover:text-black hover:border-primary transition-all" href="https://www.instagram.com/liquido.vapeshop/" target="_blank" rel="noopener noreferrer">
 <svg class="size-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.947.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c.796 0 1.441.645 1.441 1.44s-.645 1.44-1.441 1.44c-.795 0-1.439-.645-1.439-1.44s.644-1.44 1.439-1.44z"></path></svg>
 </a>
-<a class="w-10 h-10 rounded-lg bg-[#27271b] border border-[#393928] flex items-center justify-center text-white hover:bg-primary hover:text-black hover:border-primary transition-all" href="#">
-<svg class="size-5" fill="currentColor" viewBox="0 0 24 24"><path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.84 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"></path></svg>
+<a class="w-10 h-10 rounded-lg bg-[#27271b] border border-[#393928] flex items-center justify-center text-white hover:bg-primary hover:text-black hover:border-primary transition-all" href="https://wa.me/393791345367" target="_blank" rel="noopener noreferrer">
+<svg class="size-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.056-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"></path></svg>
 </a>
-<a class="w-10 h-10 rounded-lg bg-[#27271b] border border-[#393928] flex items-center justify-center text-white hover:bg-primary hover:text-black hover:border-primary transition-all" href="#">
-<svg class="size-5" fill="currentColor" viewBox="0 0 24 24"><path d="M22.675 0h-21.35c-.732 0-1.325.593-1.325 1.325v21.351c0 .731.593 1.324 1.325 1.324h11.495v-9.294h-3.128v-3.622h3.128v-2.671c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12v9.293h6.116c.73 0 1.323-.593 1.323-1.324v-21.35c0-.732-.593-1.325-1.325-1.325z"></path></svg>
-</a>
+                <a class="w-10 h-10 rounded-lg bg-[#27271b] border border-[#393928] flex items-center justify-center text-white hover:bg-primary hover:text-black hover:border-primary transition-all" href="https://www.facebook.com/liquido.vapeshop/" target="_blank" rel="noopener noreferrer">
+                    <svg class="size-5" fill="currentColor" viewBox="0 0 24 24"><path d="M22.675 0h-21.35c-.732 0-1.325.593-1.325 1.325v21.351c0 .731.593 1.324 1.325 1.324h11.495v-9.294h-3.128v-3.622h3.128v-2.671c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12v9.293h6.116c.73 0 1.323-.593 1.323-1.324v-21.35c0-.732-.593-1.325-1.325-1.325z"></path></svg>
+                </a>
 </div>
 </div>
 <div class="flex flex-col gap-6">
@@ -227,15 +233,15 @@
 <div class="flex flex-col gap-4">
 <div class="flex items-start gap-3">
 <span class="material-symbols-outlined text-primary text-xl">location_on</span>
-<span class="text-[#baba9c] text-sm">123 Smoke Street, Vapor City, VC 10293</span>
+                    <span class="text-[#baba9c] text-sm">via Adige 43C, 00015 - Monterotondo (Rm)</span>
 </div>
 <div class="flex items-center gap-3">
 <span class="material-symbols-outlined text-primary text-xl">call</span>
-<span class="text-[#baba9c] text-sm">+1 (555) 123-4567</span>
+                    <span class="text-[#baba9c] text-sm">+39 379 134 5367</span>
 </div>
 <div class="flex items-center gap-3">
 <span class="material-symbols-outlined text-primary text-xl">mail</span>
-<span class="text-[#baba9c] text-sm">concierge@liquido.vape</span>
+                    <span class="text-[#baba9c] text-sm">info.vaporoom@gmail.com</span>
 </div>
 </div>
 </div>
@@ -258,5 +264,5 @@
 </div>
 </div>
 </footer>
-
+    <script src="../src/js/modules/age-verification.js"></script>
 </body></html>

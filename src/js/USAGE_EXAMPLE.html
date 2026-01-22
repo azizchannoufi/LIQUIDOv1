@@ -1,0 +1,43 @@
+<!--
+USAGE EXAMPLE - How to integrate the catalog system in your pages
+
+1. For brands.html - Add these scripts before closing </body> tag:
+-->
+
+<!-- Example for brands.html -->
+<script src="../src/js/services/catalog-service.js"></script>
+<script src="../src/js/modules/brands-renderer.js"></script>
+<script src="../src/js/modules/catalog-init.js"></script>
+<script src="../src/js/pages/brands-page.js"></script>
+
+<!--
+2. Update the brands grid container in brands.html:
+   Replace the static brand cards with:
+   <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 brands-grid-container">
+   </div>
+
+3. For products.html - Add these scripts before closing </body> tag:
+-->
+
+<!-- Example for products.html -->
+<script src="../src/js/services/catalog-service.js"></script>
+<script src="../src/js/modules/products-renderer.js"></script>
+<script src="../src/js/modules/catalog-init.js"></script>
+<script src="../src/js/pages/products-page.js"></script>
+
+<!--
+4. Update the products grid container in products.html:
+   Replace the static product cards with:
+   <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 products-grid-container">
+   </div>
+
+5. For section filtering, add data attributes to filter buttons:
+   <button data-section-id="cat_liquidi" class="...">Liquidi</button>
+   <button data-section-id="cat_dispositivi" class="...">Dispositivi</button>
+
+6. For section tabs in products page:
+   <a data-section-tab="cat_liquidi" href="#" class="...">E-Liquid</a>
+   <a data-section-tab="cat_dispositivi" href="#" class="...">Dispositivi</a>
+-->
+
+

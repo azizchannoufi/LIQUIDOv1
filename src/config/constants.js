@@ -31,6 +31,9 @@ const CONFIG = {
             IMAGES: '../assets/images',
             ICONS: '../assets/icons',
             FONTS: '../assets/fonts'
+        },
+        DATA: {
+            CATALOG: '../src/data/catalog.json'
         }
     },
 
@@ -46,10 +49,10 @@ const CONFIG = {
 
     // Colors (matching Tailwind config)
     COLORS: {
-        PRIMARY: '#F2EA7E',
-        BACKGROUND_DARK: '#0A0A0A',
-        BACKGROUND_LIGHT: '#1a1a1a',
-        CHARCOAL: '#121212',
+        PRIMARY: '#F8ED70',
+        BACKGROUND_DARK: '#000000',
+        BACKGROUND_LIGHT: '#333333',
+        CHARCOAL: '#333333',
         WHITE: '#FFFFFF',
         TEXT_SECONDARY: 'rgba(255, 255, 255, 0.7)'
     },

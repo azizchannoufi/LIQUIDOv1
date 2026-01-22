@@ -150,57 +150,95 @@
 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 <div class="col-span-1 md:col-span-2">
 <label class="block mb-2">
-<span class="text-slate-900 dark:text-white text-sm font-bold uppercase tracking-wider">Product Name</span>
-<input class="form-input mt-2 block w-full rounded-lg border-slate-200 dark:border-[#54543b] bg-slate-50 dark:bg-[#27271b] text-slate-900 dark:text-white h-12 px-4 placeholder:text-slate-400 dark:placeholder:text-slate-600 focus:ring-primary" placeholder="e.g. Neon Grape Ice 5000" type="text"/>
+<span class="text-slate-900 dark:text-white text-sm font-bold uppercase tracking-wider">Product Name *</span>
+<input name="product-name" id="product-name" class="form-input mt-2 block w-full rounded-lg border-slate-200 dark:border-[#54543b] bg-slate-50 dark:bg-[#27271b] text-slate-900 dark:text-white h-12 px-4 placeholder:text-slate-400 dark:placeholder:text-slate-600 focus:ring-primary" placeholder="e.g. Neon Grape Ice 5000" type="text" required/>
 </label>
 </div>
 <div class="col-span-1">
 <label class="block mb-2">
-<span class="text-slate-900 dark:text-white text-sm font-bold uppercase tracking-wider">Brand</span>
-<select class="form-select mt-2 block w-full rounded-lg border-slate-200 dark:border-[#54543b] bg-slate-50 dark:bg-[#27271b] text-slate-900 dark:text-white h-12 px-4 focus:ring-primary">
-<option>Select Brand</option>
-<option>Elf Bar</option>
-<option>GeekVape</option>
-<option>Vaporesso</option>
-<option>Voopoo</option>
-<option>Smok</option>
+<span class="text-slate-900 dark:text-white text-sm font-bold uppercase tracking-wider">Catalog Section *</span>
+<select id="product-section" class="form-select mt-2 block w-full rounded-lg border-slate-200 dark:border-[#54543b] bg-slate-50 dark:bg-[#27271b] text-slate-900 dark:text-white h-12 px-4 focus:ring-primary" required>
+<option value="">Select Section...</option>
+<option value="cat_liquidi">Liquidi - E-liquides et arômes</option>
+<option value="cat_dispositivi">Dispositivi - Cigarettes électroniques et matériel</option>
 </select>
 </label>
 </div>
 <div class="col-span-1">
 <label class="block mb-2">
-<span class="text-slate-900 dark:text-white text-sm font-bold uppercase tracking-wider">Category</span>
-<select class="form-select mt-2 block w-full rounded-lg border-slate-200 dark:border-[#54543b] bg-slate-50 dark:bg-[#27271b] text-slate-900 dark:text-white h-12 px-4 focus:ring-primary">
-<option>Select Category</option>
-<option>Disposable</option>
-<option>Pod Systems</option>
-<option>Mods</option>
-<option>E-Liquids</option>
-<option>Accessories</option>
+<span class="text-slate-900 dark:text-white text-sm font-bold uppercase tracking-wider">Brand *</span>
+<select id="product-brand" name="brand" class="form-select mt-2 block w-full rounded-lg border-slate-200 dark:border-[#54543b] bg-slate-50 dark:bg-[#27271b] text-slate-900 dark:text-white h-12 px-4 focus:ring-primary" required disabled>
+<option value="">Select Section First</option>
 </select>
 </label>
+</div>
+<div class="col-span-1 md:col-span-2 hidden" id="new-brand-container">
+<div class="bg-slate-50 dark:bg-[#27271b] p-4 rounded-lg border border-slate-200 dark:border-[#393928]">
+<h4 class="text-slate-900 dark:text-white text-sm font-bold mb-4">Create New Brand</h4>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div>
+<label class="block mb-2 text-xs font-semibold text-slate-700 dark:text-slate-300">Brand Name *</label>
+<input type="text" id="new-brand-name" class="form-input w-full rounded-lg border-slate-200 dark:border-[#54543b] bg-white dark:bg-[#1f1f14] text-slate-900 dark:text-white h-10 px-3 text-sm" placeholder="e.g. New Brand"/>
+</div>
+<div>
+<label class="block mb-2 text-xs font-semibold text-slate-700 dark:text-slate-300">Logo URL</label>
+<input type="text" id="new-brand-logo" class="form-input w-full rounded-lg border-slate-200 dark:border-[#54543b] bg-white dark:bg-[#1f1f14] text-slate-900 dark:text-white h-10 px-3 text-sm" placeholder="/images/brands/brand_logo.png"/>
+</div>
+<div class="md:col-span-2">
+<label class="block mb-2 text-xs font-semibold text-slate-700 dark:text-slate-300">Website URL</label>
+<input type="url" id="new-brand-website" class="form-input w-full rounded-lg border-slate-200 dark:border-[#54543b] bg-white dark:bg-[#1f1f14] text-slate-900 dark:text-white h-10 px-3 text-sm" placeholder="https://brand-website.com"/>
+</div>
+</div>
+</div>
+</div>
+<div class="col-span-1 md:col-span-2">
+<label class="block mb-2">
+<span class="text-slate-900 dark:text-white text-sm font-bold uppercase tracking-wider">Product Line *</span>
+<select id="product-line" name="line" class="form-select mt-2 block w-full rounded-lg border-slate-200 dark:border-[#54543b] bg-slate-50 dark:bg-[#27271b] text-slate-900 dark:text-white h-12 px-4 focus:ring-primary" required disabled>
+<option value="">Select Brand First</option>
+</select>
+<small class="text-slate-500 dark:text-slate-600 text-xs mt-1 block">Or create a new line for this brand</small>
+</label>
+</div>
+<div class="col-span-1 md:col-span-2 hidden" id="new-line-container">
+<label class="block mb-2">
+<span class="text-slate-900 dark:text-white text-sm font-bold uppercase tracking-wider">New Line Name</span>
+<input type="text" id="new-line-name" name="new-line-name" class="form-input mt-2 block w-full rounded-lg border-slate-200 dark:border-[#54543b] bg-slate-50 dark:bg-[#27271b] text-slate-900 dark:text-white h-12 px-4 placeholder:text-slate-400 dark:placeholder:text-slate-600 focus:ring-primary" placeholder="e.g. RE-BRAND, FLAVOURBAR"/>
+</label>
+</div>
+<div class="col-span-1 md:col-span-2">
+<button type="button" id="toggle-new-line" class="text-primary hover:underline text-sm font-medium">
+<span id="toggle-text">Create New Line</span>
+</button>
 </div>
 <div class="col-span-1 md:col-span-2">
 <label class="block mb-2">
 <span class="text-slate-900 dark:text-white text-sm font-bold uppercase tracking-wider">Flavor Profile</span>
-<input class="form-input mt-2 block w-full rounded-lg border-slate-200 dark:border-[#54543b] bg-slate-50 dark:bg-[#27271b] text-slate-900 dark:text-white h-12 px-4 placeholder:text-slate-400 dark:placeholder:text-slate-600 focus:ring-primary" placeholder="e.g. Sweet, Menthol, Fruity" type="text"/>
+<input name="flavor-profile" id="flavor-profile" class="form-input mt-2 block w-full rounded-lg border-slate-200 dark:border-[#54543b] bg-slate-50 dark:bg-[#27271b] text-slate-900 dark:text-white h-12 px-4 placeholder:text-slate-400 dark:placeholder:text-slate-600 focus:ring-primary" placeholder="e.g. Sweet, Menthol, Fruity" type="text"/>
 </label>
 </div>
 <div class="col-span-1 md:col-span-2">
 <label class="block mb-2">
 <span class="text-slate-900 dark:text-white text-sm font-bold uppercase tracking-wider">Product Description</span>
-<textarea class="form-textarea mt-2 block w-full rounded-lg border-slate-200 dark:border-[#54543b] bg-slate-50 dark:bg-[#27271b] text-slate-900 dark:text-white px-4 py-3 placeholder:text-slate-400 dark:placeholder:text-slate-600 focus:ring-primary" placeholder="Enter full product details and marketing copy..." rows="4"></textarea>
+<textarea name="description" id="description" class="form-textarea mt-2 block w-full rounded-lg border-slate-200 dark:border-[#54543b] bg-slate-50 dark:bg-[#27271b] text-slate-900 dark:text-white px-4 py-3 placeholder:text-slate-400 dark:placeholder:text-slate-600 focus:ring-primary" placeholder="Enter full product details and marketing copy..." rows="4"></textarea>
 </label>
 </div>
 </div>
 <!-- Section: Media & Settings -->
 <div class="grid grid-cols-1 md:grid-cols-2 gap-8 pt-6 border-t border-slate-100 dark:border-[#393928]">
 <div class="col-span-1">
-<p class="text-slate-900 dark:text-white text-sm font-bold uppercase tracking-wider mb-4">Product Image</p>
+<label class="block mb-2">
+<span class="text-slate-900 dark:text-white text-sm font-bold uppercase tracking-wider">Product Image URL</span>
+<input type="text" name="image-url" id="image-url" class="form-input mt-2 block w-full rounded-lg border-slate-200 dark:border-[#54543b] bg-slate-50 dark:bg-[#27271b] text-slate-900 dark:text-white h-12 px-4 placeholder:text-slate-400 dark:placeholder:text-slate-600 focus:ring-primary mb-4" placeholder="/images/products/brand/line.jpg"/>
+</label>
+<p class="text-slate-500 dark:text-slate-600 text-xs mb-4">Or upload a file:</p>
 <div class="border-2 border-dashed border-slate-200 dark:border-[#393928] rounded-xl p-8 flex flex-col items-center justify-center bg-slate-50/50 dark:bg-[#27271b]/30 group hover:border-primary transition-colors cursor-pointer">
+<input type="file" id="image-upload" accept="image/*" class="hidden"/>
+<label for="image-upload" class="cursor-pointer text-center">
 <span class="material-symbols-outlined text-4xl text-slate-400 dark:text-[#54543b] group-hover:text-primary transition-colors">cloud_upload</span>
 <p class="mt-4 text-slate-600 dark:text-[#baba9c] text-sm font-medium">Drag and drop or <span class="text-primary font-bold">browse</span></p>
 <p class="mt-1 text-slate-400 dark:text-slate-600 text-xs text-center">PNG, JPG or WebP (Max. 5MB)<br/>Recommended 1000x1000px</p>
+</label>
 </div>
 </div>
 <div class="col-span-1 flex flex-col justify-start">
@@ -231,15 +269,26 @@
 </div>
 <!-- Section: Actions -->
 <div class="flex flex-col-reverse sm:flex-row items-center justify-end gap-4 pt-8 border-t border-slate-100 dark:border-[#393928]">
-<button class="w-full sm:w-auto px-8 h-12 flex items-center justify-center rounded-lg text-slate-600 dark:text-white font-bold hover:bg-slate-100 dark:hover:bg-[#393928] transition-all" type="button">
+<button type="button" class="w-full sm:w-auto px-8 h-12 flex items-center justify-center rounded-lg text-slate-600 dark:text-white font-bold hover:bg-slate-100 dark:hover:bg-[#393928] transition-all">
                                     Cancel
                                 </button>
-<button class="w-full sm:w-auto px-10 h-12 flex items-center justify-center rounded-lg bg-primary text-black font-extrabold shadow-lg shadow-primary/20 hover:scale-105 active:scale-95 transition-all" type="submit">
+<button type="submit" class="w-full sm:w-auto px-10 h-12 flex items-center justify-center rounded-lg bg-primary text-black font-extrabold shadow-lg shadow-primary/20 hover:scale-105 active:scale-95 transition-all">
                                     Save Product
                                 </button>
 </div>
 </form>
 </div>
+<!-- Firebase SDK (Legacy for Realtime Database) -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-analytics-compat.js"></script>
+
+<!-- Catalog Services -->
+<script src="../../src/js/services/firebase-config.js"></script>
+<script src="../../src/js/services/firebase-catalog-service.js"></script>
+<script src="../../src/js/services/catalog-service.js"></script>
+<script src="../../src/js/modules/catalog-init.js"></script>
+<script src="../../src/js/admin/product-form.js"></script>
 <!-- Form Tips Footer -->
 <div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
 <div class="flex gap-4 p-4 rounded-lg bg-slate-50 dark:bg-[#1f1f14] border border-slate-100 dark:border-[#393928]">

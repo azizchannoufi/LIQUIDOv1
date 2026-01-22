@@ -37,3 +37,9 @@ desktop.ini
 .env
 .env.local
 .env.*.local
+
+# Firebase Configuration (contains API keys)
+src/js/services/firebase-config.js
+firebase-config.js
+*.firebase.json
+firebase-service-account.json

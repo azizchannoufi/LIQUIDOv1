@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Initialiser Firebase - LIQUIDO</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <style>
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-slate-900 text-white min-h-screen flex items-center justify-center p-4">
+    <div class="max-w-2xl w-full bg-slate-800 rounded-2xl p-8 shadow-2xl">
+        <div class="text-center mb-8">
+            <h1 class="text-3xl font-bold mb-2">Initialisation Firebase</h1>
+            <p class="text-slate-400">Charger les données du catalogue dans Firebase Realtime Database</p>
+        </div>
+
+        <div id="status" class="mb-6 p-4 rounded-lg bg-slate-700/50 hidden">
+            <p id="status-text" class="text-sm"></p>
+        </div>
+
+        <div class="space-y-4">
+            <div>
+                <label class="block text-sm font-semibold mb-2 text-slate-300">Données à charger</label>
+                <div class="bg-slate-900 rounded-lg p-4 border border-slate-700">
+                    <p class="text-sm text-slate-400">
+                        <span class="material-symbols-outlined text-primary align-middle text-lg">info</span>
+                        <span class="ml-2">2 sections, 20 marques, 50+ lignes de produits</span>
+                    </p>
+                </div>
+            </div>
+
+            <button id="init-btn" class="w-full bg-primary hover:bg-primary/90 text-black font-bold py-4 px-6 rounded-lg transition-all flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed">
+                <span class="material-symbols-outlined">cloud_upload</span>
+                <span>Initialiser Firebase avec les données</span>
+            </button>
+
+            <div id="progress" class="hidden">
+                <div class="bg-slate-700 rounded-full h-2 mb-2">
+                    <div id="progress-bar" class="bg-primary h-2 rounded-full transition-all duration-300" style="width: 0%"></div>
+                </div>
+                <p id="progress-text" class="text-xs text-slate-400 text-center"></p>
+            </div>
+
+            <div id="result" class="hidden mt-6 p-4 rounded-lg"></div>
+        </div>
+
+        <div class="mt-8 pt-6 border-t border-slate-700">
+            <p class="text-xs text-slate-500 text-center">
+                ⚠️ Cette opération remplacera toutes les données existantes dans Firebase
+            </p>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-analytics-compat.js"></script>
+    <script src="../src/js/services/firebase-config.js"></script>
+    
+    <script>
+        // Wait for Firebase to be loaded
+        function waitForFirebase() {
+            return new Promise((resolve, reject) => {
+                if (typeof firebase !== 'undefined' && window.firebaseConfig) {
+                    resolve();
+                } else {
+                    let attempts = 0;
+                    const checkInterval = setInterval(() => {
+                        attempts++;
+                        if (typeof firebase !== 'undefined' && window.firebaseConfig) {
+                            clearInterval(checkInterval);
+                            resolve();
+                        } else if (attempts > 50) {
+                            clearInterval(checkInterval);
+                            reject(new Error('Firebase SDK n\'a pas pu être chargé. Veuillez recharger la page.'));
+                        }
+                    }, 100);
+                }
+            });
+        }
+    </script>
+    
+    <script>
+        const catalogData = {
+            "sections": [
+                {
+                    "id": "cat_liquidi",
+                    "name": "Liquidi",
+                    "description": "E-liquides et arômes",
+                    "brands": [
+                        {
+                            "name": "Suprem-e",
+                            "logo_url": "/images/brands/suprem-e_logo.png",
+                            "lines": [
+                                { "name": "RE-BRAND", "image_url": "/images/products/suprem-e/re-brand.jpg" },
+                                { "name": "FLAVOURBAR", "image_url": "/images/products/suprem-e/flavourbar.jpg" },
+                                { "name": "FLAVOURBAR FIZZ", "image_url": "/images/products/suprem-e/flavourbar-fizz.jpg" },
+                                { "name": "BOMB LINE", "image_url": "/images/products/suprem-e/bomb-line.jpg" },
+                                { "name": "ONE", "image_url": "/images/products/suprem-e/one.jpg" },
+                                { "name": "AND", "image_url": "/images/products/suprem-e/and.jpg" }
+                            ]
+                        },
+                        {
+                            "name": "Vaporart",
+                            "logo_url": "/images/brands/vaporart_logo.png",
+                            "lines": [
+                                { "name": "SUPER FLAVOUR", "image_url": "/images/products/vaporart/super-flavour.jpg" },
+                                { "name": "SEVEN WONDERS", "image_url": "/images/products/vaporart/seven-wonders.jpg" },
+                                { "name": "ENJOYSVAPO", "image_url": "/images/products/vaporart/enjoysvapo.jpg" },
+                                { "name": "VAPORART", "image_url": "/images/products/vaporart/vaporart-classic.jpg" },
+                                { "name": "VAPORICE", "image_url": "/images/products/vaporart/vaporice.jpg" },
+                                { "name": "THE CUP", "image_url": "/images/products/vaporart/the-cup.jpg" }
+                            ]
+                        },
+                        {
+                            "name": "Flavourart",
+                            "logo_url": "/images/brands/flavourart_logo.png",
+                            "lines": [
+                                { "name": "LE CLUB TOBACCO", "image_url": "/images/products/flavourart/le-club.jpg" },
+                                { "name": "CANDY ROCK", "image_url": "/images/products/flavourart/candy-rock.jpg" }
+                            ]
+                        },
+                        {
+                            "name": "Flavourage",
+                            "logo_url": "/images/brands/flavourage_logo.png",
+                            "lines": [
+                                { "name": "THE SECRET BARREL", "image_url": "/images/products/flavourage/secret-barrel.jpg" },
+                                { "name": "FREEZY", "image_url": "/images/products/flavourage/freezy.jpg" },
+                                { "name": "BUBBLE GUM", "image_url": "/images/products/flavourage/bubble-gum.jpg" },
+                                { "name": "TOBACCO", "image_url": "/images/products/flavourage/tobacco.jpg" },
+                                { "name": "CREAM", "image_url": "/images/products/flavourage/cream.jpg" },
+                                { "name": "FRUIT", "image_url": "/images/products/flavourage/fruit.jpg" },
+                                { "name": "FRESH", "image_url": "/images/products/flavourage/fresh.jpg" }
+                            ]
+                        },
+                        {
+                            "name": "Goldwave",
+                            "website": "goldwave.it/",
+                            "logo_url": "/images/brands/goldwave_logo.png",
+                            "lines": [
+                                { "name": "CREAMY SELECTION", "image_url": "/images/products/goldwave/creamy.jpg" },
+                                { "name": "FRESH SELECTION", "image_url": "/images/products/goldwave/fresh.jpg" },
+                                { "name": "PREMIUM SELECTION", "image_url": "/images/products/goldwave/premium.jpg" },
+                                { "name": "CUORI", "image_url": "/images/products/goldwave/cuori.jpg" },
+                                { "name": "GOLD SNACK", "image_url": "/images/products/goldwave/gold-snack.jpg" },
+                                { "name": "TABACCO MIXOLOGY SERIES", "image_url": "/images/products/goldwave/mixology.jpg" },
+                                { "name": "EXTRA ICE", "image_url": "/images/products/goldwave/extra-ice.jpg" }
+                            ]
+                        },
+                        {
+                            "name": "Blendfeel",
+                            "website": "blendfeel.com/",
+                            "logo_url": "/images/brands/blendfeel_logo.png",
+                            "lines": [
+                                { "name": "SOLO", "image_url": "/images/products/blendfeel/solo.jpg" },
+                                { "name": "SOLOX60", "image_url": "/images/products/blendfeel/solox60.jpg" },
+                                { "name": "PIANETA MENTA", "image_url": "/images/products/blendfeel/pianeta-menta.jpg" },
+                                { "name": "LONGFILL", "image_url": "/images/products/blendfeel/longfill.jpg" },
+                                { "name": "BLEND TASTE", "image_url": "/images/products/blendfeel/blend-taste.jpg" }
+                            ]
+                        },
+                        {
+                            "name": "Dreamods",
+                            "logo_url": "/images/brands/dreamods_logo.png",
+                            "lines": [
+                                { "name": "MAREA", "image_url": "/images/products/dreamods/marea.jpg" },
+                                { "name": "CLEAF", "image_url": "/images/products/dreamods/cleaf.jpg" }
+                            ]
+                        },
+                        {
+                            "name": "La Tabaccheria",
+                            "website": "latabaccheria.net",
+                            "logo_url": "/images/brands/latabaccheria_logo.png",
+                            "lines": [
+                                { "name": "BLEND LINE", "image_url": "/images/products/latabaccheria/blend-line.jpg" },
+                                { "name": "SINGLE LINE", "image_url": "/images/products/latabaccheria/single-line.jpg" },
+                                { "name": "I SIGARI", "image_url": "/images/products/latabaccheria/i-sigari.jpg" },
+                                { "name": "ICE CLUB", "image_url": "/images/products/latabaccheria/ice-club.jpg" }
+                            ]
+                        },
+                        {
+                            "name": "TNT",
+                            "website": "tnt-vape.com/",
+                            "logo_url": "/images/brands/tnt_logo.png",
+                            "lines": [
+                                { "name": "BOOMS", "image_url": "/images/products/tnt/booms.jpg" },
+                                { "name": "TWENTY NOTES", "image_url": "/images/products/tnt/twenty-notes.jpg" },
+                                { "name": "TWENTY ONE", "image_url": "/images/products/tnt/twenty-one.jpg" },
+                                { "name": "TABAC", "image_url": "/images/products/tnt/tabac.jpg" }
+                            ]
+                        },
+                        {
+                            "name": "Kiwi",
+                            "website": "kiwivapor.com/it/",
+                            "logo_url": "/images/brands/kiwi_logo.png",
+                            "lines": []
+                        },
+                        {
+                            "name": "Elfbar",
+                            "website": "elfbar.it/",
+                            "logo_url": "/images/brands/elfbar_logo.png",
+                            "lines": [
+                                { "name": "ELFLIQ", "image_url": "/images/products/elfbar/elfliq.jpg" }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": "cat_dispositivi",
+                    "name": "Dispositivi",
+                    "description": "Cigarettes électroniques et matériel",
+                    "brands": [
+                        {
+                            "name": "Aspire",
+                            "website": "aspirecig.com/",
+                            "logo_url": "/images/brands/aspire_logo.png",
+                            "lines": []
+                        },
+                        {
+                            "name": "Geekvape",
+                            "website": "geekvape.com/",
+                            "logo_url": "/images/brands/geekvape_logo.png",
+                            "lines": []
+                        },
+                        {
+                            "name": "Innokin",
+                            "website": "it.innokin.com/",
+                            "logo_url": "/images/brands/innokin_logo.png",
+                            "lines": []
+                        },
+                        {
+                            "name": "Justfog",
+                            "website": "justfog.com/main.php",
+                            "logo_url": "/images/brands/justfog_logo.png",
+                            "lines": []
+                        },
+                        {
+                            "name": "Vaporesso",
+                            "website": "vaporesso.com",
+                            "logo_url": "/images/brands/vaporesso_logo.png",
+                            "lines": []
+                        },
+                        {
+                            "name": "Voopoo",
+                            "website": "voopoo.com/",
+                            "logo_url": "/images/brands/voopoo_logo.png",
+                            "lines": []
+                        },
+                        {
+                            "name": "Kiwi",
+                            "website": "kiwivapor.com/it/",
+                            "logo_url": "/images/brands/kiwi_logo.png",
+                            "lines": [
+                                { "name": "KIWI GO+", "image_url": "/images/products/kiwi/kiwi-go-plus.jpg" },
+                                { "name": "KIWI SPARK", "image_url": "/images/products/kiwi/kiwi-spark.jpg" }
+                            ]
+                        },
+                        {
+                            "name": "Elfbar",
+                            "website": "elfbar.it/",
+                            "logo_url": "/images/brands/elfbar_logo.png",
+                            "lines": [
+                                { "name": "ELFA", "image_url": "/images/products/elfbar/elfa.jpg" }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        };
+
+        const initBtn = document.getElementById('init-btn');
+        const statusDiv = document.getElementById('status');
+        const statusText = document.getElementById('status-text');
+        const progressDiv = document.getElementById('progress');
+        const progressBar = document.getElementById('progress-bar');
+        const progressText = document.getElementById('progress-text');
+        const resultDiv = document.getElementById('result');
+
+        function showStatus(message, type = 'info') {
+            statusDiv.classList.remove('hidden');
+            statusText.textContent = message;
+            statusDiv.className = `mb-6 p-4 rounded-lg ${
+                type === 'success' ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30' :
+                type === 'error' ? 'bg-red-500/20 text-red-400 border border-red-500/30' :
+                'bg-blue-500/20 text-blue-400 border border-blue-500/30'
+            }`;
+        }
+
+        function updateProgress(percent, text) {
+            progressDiv.classList.remove('hidden');
+            progressBar.style.width = percent + '%';
+            progressText.textContent = text;
+        }
+
+        initBtn.addEventListener('click', async () => {
+            if (!confirm('⚠️ Cette opération va remplacer toutes les données existantes dans Firebase. Continuer ?')) {
+                return;
+            }
+
+            initBtn.disabled = true;
+            initBtn.innerHTML = '<span class="material-symbols-outlined animate-spin">sync</span><span>Initialisation en cours...</span>';
+            resultDiv.classList.add('hidden');
+            showStatus('Chargement de Firebase...', 'info');
+
+            try {
+                // Wait for Firebase SDK to be loaded
+                await waitForFirebase();
+                
+                showStatus('Connexion à Firebase...', 'info');
+
+                // Initialize Firebase
+                const { initializeFirebase } = window.firebaseConfig;
+                const { database } = await initializeFirebase();
+                
+                updateProgress(20, 'Connexion établie');
+                showStatus('Connexion établie, envoi des données...', 'info');
+
+                // Save to Firebase
+                const catalogRef = database.ref('catalog');
+                
+                updateProgress(50, 'Envoi des données...');
+                await catalogRef.set(catalogData);
+
+                updateProgress(100, 'Terminé !');
+                showStatus('✅ Données initialisées avec succès dans Firebase !', 'success');
+                
+                resultDiv.classList.remove('hidden');
+                resultDiv.className = 'mt-6 p-4 rounded-lg bg-emerald-500/20 border border-emerald-500/30';
+                resultDiv.innerHTML = `
+                    <h3 class="font-bold text-emerald-400 mb-2 flex items-center gap-2">
+                        <span class="material-symbols-outlined">check_circle</span>
+                        Initialisation réussie
+                    </h3>
+                    <div class="text-sm text-slate-300 space-y-1 mt-3">
+                        <p>✓ ${catalogData.sections.length} sections créées</p>
+                        <p>✓ ${catalogData.sections.reduce((sum, s) => sum + s.brands.length, 0)} marques créées</p>
+                        <p>✓ ${catalogData.sections.reduce((sum, s) => sum + s.brands.reduce((bSum, b) => bSum + (b.lines?.length || 0), 0), 0)} lignes de produits créées</p>
+                    </div>
+                    <div class="mt-4 pt-4 border-t border-emerald-500/20">
+                        <a href="brands/index.html" class="text-emerald-400 hover:text-emerald-300 text-sm font-medium flex items-center gap-1">
+                            <span>Voir les marques</span>
+                            <span class="material-symbols-outlined text-sm">arrow_forward</span>
+                        </a>
+                    </div>
+                `;
+
+                initBtn.disabled = false;
+                initBtn.innerHTML = '<span class="material-symbols-outlined">check</span><span>Initialisation terminée</span>';
+
+            } catch (error) {
+                console.error('Error:', error);
+                showStatus('❌ Erreur lors de l\'initialisation: ' + error.message, 'error');
+                
+                resultDiv.classList.remove('hidden');
+                resultDiv.className = 'mt-6 p-4 rounded-lg bg-red-500/20 border border-red-500/30';
+                resultDiv.innerHTML = `
+                    <h3 class="font-bold text-red-400 mb-2 flex items-center gap-2">
+                        <span class="material-symbols-outlined">error</span>
+                        Erreur
+                    </h3>
+                    <p class="text-sm text-slate-300 mt-2">${error.message}</p>
+                    <p class="text-xs text-slate-400 mt-2">Vérifiez la console pour plus de détails.</p>
+                `;
+
+                initBtn.disabled = false;
+                initBtn.innerHTML = '<span class="material-symbols-outlined">cloud_upload</span><span>Réessayer</span>';
+            }
+        });
+    </script>
+</body>
+</html>
+
