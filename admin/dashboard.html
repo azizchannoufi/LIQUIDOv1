@@ -117,45 +117,45 @@
 <div class="p-8 max-w-7xl mx-auto w-full space-y-8">
 <!-- Summary Statistics -->
 <section>
-<div class="flex grid grid-cols-1 md:grid-cols-3 gap-6">
-<div class="flex flex-col gap-2 rounded-xl p-6 border border-slate-200 dark:border-[#54543b] bg-white dark:bg-transparent shadow-sm">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<div id="stat-total-products" class="flex flex-col gap-2 rounded-xl p-6 border border-slate-200 dark:border-[#54543b] bg-white dark:bg-transparent shadow-sm">
 <div class="flex justify-between items-start">
 <p class="text-slate-500 dark:text-[#baba9c] text-sm font-semibold uppercase tracking-wider">Total Products</p>
 <span class="material-symbols-outlined text-primary">inventory</span>
 </div>
 <div class="flex items-baseline gap-2">
-<p class="text-3xl font-bold leading-tight">1,240</p>
+<p id="stat-products-value" class="text-3xl font-bold leading-tight">0</p>
 <span class="text-emerald-500 text-sm font-bold flex items-center">
-<span class="material-symbols-outlined text-xs">trending_up</span> 12%
+<span class="material-symbols-outlined text-xs">trending_up</span> <span id="stat-products-trend">--</span>
                                 </span>
 </div>
-<p class="text-slate-400 text-xs">Compared to last month</p>
+<p class="text-slate-400 text-xs">Total product lines in catalog</p>
 </div>
-<div class="flex flex-col gap-2 rounded-xl p-6 border border-slate-200 dark:border-[#54543b] bg-white dark:bg-transparent shadow-sm">
+<div id="stat-active-brands" class="flex flex-col gap-2 rounded-xl p-6 border border-slate-200 dark:border-[#54543b] bg-white dark:bg-transparent shadow-sm">
 <div class="flex justify-between items-start">
 <p class="text-slate-500 dark:text-[#baba9c] text-sm font-semibold uppercase tracking-wider">Active Brands</p>
 <span class="material-symbols-outlined text-primary">verified</span>
 </div>
 <div class="flex items-baseline gap-2">
-<p class="text-3xl font-bold leading-tight">48</p>
+<p id="stat-brands-value" class="text-3xl font-bold leading-tight">0</p>
 <span class="text-emerald-500 text-sm font-bold flex items-center">
-<span class="material-symbols-outlined text-xs">trending_up</span> 2%
+<span class="material-symbols-outlined text-xs">trending_up</span> <span id="stat-brands-trend">--</span>
                                 </span>
 </div>
-<p class="text-slate-400 text-xs">3 new brands added this week</p>
+<p class="text-slate-400 text-xs">Unique brands across all sections</p>
 </div>
-<div class="flex flex-col gap-2 rounded-xl p-6 border border-slate-200 dark:border-[#54543b] bg-white dark:bg-transparent shadow-sm">
+<div id="stat-total-sections" class="flex flex-col gap-2 rounded-xl p-6 border border-slate-200 dark:border-[#54543b] bg-white dark:bg-transparent shadow-sm">
 <div class="flex justify-between items-start">
-<p class="text-slate-500 dark:text-[#baba9c] text-sm font-semibold uppercase tracking-wider">Store Visits</p>
-<span class="material-symbols-outlined text-primary">monitoring</span>
+<p class="text-slate-500 dark:text-[#baba9c] text-sm font-semibold uppercase tracking-wider">Catalog Sections</p>
+<span class="material-symbols-outlined text-primary">category</span>
 </div>
 <div class="flex items-baseline gap-2">
-<p class="text-3xl font-bold leading-tight">12,850</p>
+<p id="stat-sections-value" class="text-3xl font-bold leading-tight">0</p>
 <span class="text-emerald-500 text-sm font-bold flex items-center">
-<span class="material-symbols-outlined text-xs">trending_up</span> 25%
+<span class="material-symbols-outlined text-xs">check_circle</span> <span id="stat-sections-trend">Active</span>
                                 </span>
 </div>
-<p class="text-slate-400 text-xs">Daily average peak at 2 PM</p>
+<p class="text-slate-400 text-xs">Total catalog sections</p>
 </div>
 </div>
 </section>

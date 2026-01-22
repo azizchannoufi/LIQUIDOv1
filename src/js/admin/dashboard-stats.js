@@ -22,6 +22,9 @@
     
     async function loadStatistics() {
         try {
+            // Show loading state
+            showLoadingState();
+            
             const sections = await catalogService.getSections();
             
             // Count total products (lines)
@@ -39,41 +42,57 @@
                 }
             }
             
-            // Update UI
-            updateStatCard('total-products', totalProducts);
-            updateStatCard('active-brands', uniqueBrands.size);
+            // Update UI with real data
+            updateStatValue('stat-products-value', totalProducts);
+            updateStatValue('stat-brands-value', uniqueBrands.size);
+            updateStatValue('stat-sections-value', sections.length);
+            
+            // Update trends (for now, just show static info)
+            const productsTrend = document.getElementById('stat-products-trend');
+            const brandsTrend = document.getElementById('stat-brands-trend');
+            if (productsTrend) productsTrend.textContent = 'Live';
+            if (brandsTrend) brandsTrend.textContent = 'Live';
             
             // Load recent activity
             await loadRecentActivity(sections);
         } catch (error) {
             console.error('Error loading statistics:', error);
+            showErrorState();
         }
     }
     
-    function updateStatCard(statId, value) {
-        // Find stat card by looking for text content
-        const cards = document.querySelectorAll('[class*="rounded-xl"]');
-        cards.forEach(card => {
-            const text = card.textContent || '';
-            if (text.includes('Total Products') && statId === 'total-products') {
-                const valueEl = card.querySelector('.text-3xl');
-                if (valueEl) {
-                    valueEl.textContent = value.toLocaleString();
-                }
-            } else if (text.includes('Active Brands') && statId === 'active-brands') {
-                const valueEl = card.querySelector('.text-3xl');
-                if (valueEl) {
-                    valueEl.textContent = value.toLocaleString();
-                }
-            }
-        });
+    function showLoadingState() {
+        const productsValue = document.getElementById('stat-products-value');
+        const brandsValue = document.getElementById('stat-brands-value');
+        const sectionsValue = document.getElementById('stat-sections-value');
+        
+        if (productsValue) productsValue.textContent = '...';
+        if (brandsValue) brandsValue.textContent = '...';
+        if (sectionsValue) sectionsValue.textContent = '...';
+    }
+    
+    function showErrorState() {
+        const productsValue = document.getElementById('stat-products-value');
+        const brandsValue = document.getElementById('stat-brands-value');
+        const sectionsValue = document.getElementById('stat-sections-value');
+        
+        if (productsValue) productsValue.textContent = 'Error';
+        if (brandsValue) brandsValue.textContent = 'Error';
+        if (sectionsValue) sectionsValue.textContent = 'Error';
+    }
+    
+    function updateStatValue(elementId, value) {
+        const element = document.getElementById(elementId);
+        if (element) {
+            element.textContent = value.toLocaleString();
+        }
     }
     
     async function loadRecentActivity(sections) {
         const activityContainer = document.getElementById('recent-activity');
         if (!activityContainer) return;
         
-        // Get recent brands (last 5)
+        // Get all brands with their sections
         const allBrands = [];
         for (const section of sections) {
             const brands = section.brands || [];
@@ -81,7 +100,9 @@
                 allBrands.push({
                     name: brand.name,
                     section: section.name,
-                    linesCount: (brand.lines || []).length
+                    sectionId: section.id,
+                    linesCount: (brand.lines || []).length,
+                    logoUrl: brand.logo_url || ''
                 });
             }
         }
@@ -89,28 +110,36 @@
         if (allBrands.length === 0) {
             activityContainer.innerHTML = `
                 <div class="py-8 text-center">
-                    <p class="text-sm text-slate-400 dark:text-[#baba9c]">No recent activity</p>
-                    <p class="text-xs text-slate-500 dark:text-slate-600 mt-2">Activity will appear here as you manage your catalog</p>
+                    <div class="inline-flex items-center justify-center size-16 rounded-full bg-slate-100 dark:bg-[#393928] mb-4">
+                        <span class="material-symbols-outlined text-3xl text-slate-400 dark:text-[#baba9c]">inventory_2</span>
+                    </div>
+                    <p class="text-sm text-slate-400 dark:text-[#baba9c] font-medium">Aucune activité récente</p>
+                    <p class="text-xs text-slate-500 dark:text-slate-600 mt-2">Les activités apparaîtront ici lorsque vous gérerez votre catalogue</p>
                 </div>
             `;
             return;
         }
         
-        // Show last 5 brands
+        // Show last 5 brands (most recent)
         const recentBrands = allBrands.slice(-5).reverse();
         activityContainer.innerHTML = recentBrands.map(brand => `
-            <div class="py-4 border-b border-slate-100 dark:border-[#393928] last:border-0">
+            <div class="py-4 border-b border-slate-100 dark:border-[#393928] last:border-0 hover:bg-slate-50 dark:hover:bg-[#1a1a0f] transition-colors rounded-lg px-2 -mx-2">
                 <div class="flex items-center justify-between">
-                    <div class="flex items-center gap-3">
-                        <div class="size-10 rounded-lg bg-primary/20 flex items-center justify-center">
-                            <span class="material-symbols-outlined text-primary text-lg">loyalty</span>
+                    <div class="flex items-center gap-3 flex-1 min-w-0">
+                        <div class="size-10 rounded-lg bg-primary/20 flex items-center justify-center flex-shrink-0 overflow-hidden">
+                            ${brand.logoUrl 
+                                ? `<img src="${brand.logoUrl}" alt="${brand.name}" class="w-full h-full object-contain" onerror="this.parentElement.innerHTML='<span class=\\'material-symbols-outlined text-primary text-lg\\'>loyalty</span>'"/>`
+                                : `<span class="material-symbols-outlined text-primary text-lg">loyalty</span>`
+                            }
                         </div>
-                        <div>
-                            <p class="text-white text-sm font-bold">${brand.name}</p>
-                            <p class="text-slate-400 dark:text-[#baba9c] text-xs">${brand.section} • ${brand.linesCount} ${brand.linesCount === 1 ? 'ligne' : 'lignes'}</p>
+                        <div class="flex-1 min-w-0">
+                            <p class="text-white dark:text-white text-sm font-bold truncate">${brand.name}</p>
+                            <p class="text-slate-400 dark:text-[#baba9c] text-xs truncate">${brand.section} • ${brand.linesCount} ${brand.linesCount === 1 ? 'ligne' : 'lignes'}</p>
                         </div>
                     </div>
-                    <span class="text-slate-400 dark:text-[#baba9c] text-xs">Active</span>
+                    <a href="brands/add.html?section=${encodeURIComponent(brand.sectionId)}&brand=${encodeURIComponent(brand.name)}" class="text-slate-400 dark:text-[#baba9c] hover:text-primary transition-colors flex-shrink-0 ml-2" title="Voir">
+                        <span class="material-symbols-outlined text-sm">arrow_forward</span>
+                    </a>
                 </div>
             </div>
         `).join('');
