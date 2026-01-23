@@ -3,10 +3,9 @@
 <html class="dark" lang="en"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>LIQUIDO Admin - Edit Brand</title>
+<title>LIQUIDO Admin - Add Brand</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <script id="tailwind-config">
         tailwind.config = {
@@ -22,7 +21,7 @@
                         "muted-dark": "#baba9c",
                     },
                     fontFamily: {
-                        "display": ["Plus Jakarta Sans", "sans-serif"]
+                        "display": ["Inter", "sans-serif"]
                     },
                     borderRadius: {
                         "DEFAULT": "0.25rem",
@@ -35,80 +34,78 @@
         }
     </script>
 <style>
-        body {
-            font-family: "Plus Jakarta Sans", sans-serif;
-        }
         .material-symbols-outlined {
             font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
         }
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .sidebar-active {
+            background-color: #393928;
+            border-left: 4px solid #f2f20d;
+        }
     </style>
 </head>
-<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white min-h-screen">
-<div class="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden">
-<div class="layout-container flex h-full grow flex-col">
-<!-- TopNavBar Component -->
-<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-border-dark px-10 py-3 bg-background-light dark:bg-background-dark sticky top-0 z-50">
-<div class="flex items-center gap-8">
-<div class="flex items-center gap-4 text-slate-900 dark:text-white">
-<div class="size-6 text-primary">
-<svg fill="currentColor" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
-<path d="M24 45.8096C19.6865 45.8096 15.4698 44.5305 11.8832 42.134C8.29667 39.7376 5.50128 36.3314 3.85056 32.3462C2.19985 28.361 1.76794 23.9758 2.60947 19.7452C3.451 15.5145 5.52816 11.6284 8.57829 8.5783C11.6284 5.52817 15.5145 3.45101 19.7452 2.60948C23.9758 1.76795 28.361 2.19986 32.3462 3.85057C36.3314 5.50129 39.7376 8.29668 42.134 11.8833C44.5305 15.4698 45.8096 19.6865 45.8096 24L24 24L24 45.8096Z"></path>
-</svg>
+<body class="bg-background-light dark:bg-background-dark min-h-screen text-slate-900 dark:text-white">
+<div class="flex h-screen overflow-hidden">
+<!-- Sidebar Navigation -->
+<aside class="w-64 bg-background-light dark:bg-[#12120a] border-r border-slate-200 dark:border-[#393928] flex flex-col justify-between py-6 sticky top-0 h-screen">
+<div class="flex flex-col gap-8">
+<!-- Brand Identity -->
+<div class="px-6 flex items-center gap-3">
+<div class="bg-primary rounded-lg size-10 flex items-center justify-center text-background-dark">
+<span class="material-symbols-outlined font-bold">water_drop</span>
 </div>
-<h2 class="text-lg font-bold leading-tight tracking-[-0.015em] font-display">LIQUIDO Admin</h2>
+<div class="flex flex-col">
+<h1 class="text-lg font-bold leading-tight tracking-tight">LIQUIDO</h1>
+<p class="text-slate-500 dark:text-[#baba9c] text-xs font-medium uppercase tracking-widest">Admin Console</p>
 </div>
-<nav class="flex items-center gap-9">
-<a class="text-muted-dark hover:text-primary text-sm font-medium leading-normal transition-colors" href="../dashboard.html">Dashboard</a>
-<a class="text-white text-sm font-medium leading-normal border-b-2 border-primary pb-1" href="index.html">Brands</a>
-<a class="text-muted-dark hover:text-primary text-sm font-medium leading-normal transition-colors" href="../products/index.html">Inventory</a>
-<a class="text-muted-dark hover:text-primary text-sm font-medium leading-normal transition-colors" href="#">Orders</a>
-<a class="text-muted-dark hover:text-primary text-sm font-medium leading-normal transition-colors" href="../settings.html">Settings</a>
+</div>
+<!-- Navigation Links -->
+<nav class="flex flex-col gap-1 px-3">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-[#baba9c] hover:bg-slate-100 dark:hover:bg-[#2a2a1a] transition-colors" href="../dashboard.html">
+<span class="material-symbols-outlined">dashboard</span>
+<p class="text-sm font-medium">Dashboard</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-[#baba9c] hover:bg-slate-100 dark:hover:bg-[#2a2a1a] transition-colors" href="../products/index.html">
+<span class="material-symbols-outlined">inventory_2</span>
+<p class="text-sm font-medium">Products</p>
+</a>
+<a class="sidebar-active flex items-center gap-3 px-3 py-2.5 rounded-lg text-primary" href="index.html">
+<span class="material-symbols-outlined">loyalty</span>
+<p class="text-sm font-semibold">Brands</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-[#baba9c] hover:bg-slate-100 dark:hover:bg-[#2a2a1a] transition-colors" href="../users/index.html">
+<span class="material-symbols-outlined">people</span>
+<p class="text-sm font-medium">Users</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-[#baba9c] hover:bg-slate-100 dark:hover:bg-[#2a2a1a] transition-colors" href="../settings.html">
+<span class="material-symbols-outlined">settings</span>
+<p class="text-sm font-medium">Store Settings</p>
+</a>
 </nav>
 </div>
-<div class="flex flex-1 justify-end gap-8 items-center">
-<label class="flex flex-col min-w-40 h-10 max-w-64">
-<div class="flex w-full flex-1 items-stretch rounded-lg h-full overflow-hidden">
-<div class="text-muted-dark flex border-none bg-surface-dark items-center justify-center pl-4">
-<span class="material-symbols-outlined text-[20px]">search</span>
+<!-- Logout Section -->
+<div class="px-4">
+<a href="../index.html" class="flex w-full cursor-pointer items-center justify-center overflow-hidden rounded-lg h-11 bg-primary text-background-dark text-sm font-bold transition-transform hover:scale-[1.02] active:scale-95">
+<span class="material-symbols-outlined mr-2">logout</span>
+<span>Logout</span>
+</a>
 </div>
-<input class="form-input flex w-full min-w-0 flex-1 border-none bg-surface-dark text-white focus:outline-0 focus:ring-0 h-full placeholder:text-muted-dark px-4 pl-2 text-sm font-normal" placeholder="Search brands..." value=""/>
-</div>
-</label>
-<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 ring-2 ring-primary/20" data-alt="Admin user avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCo46i4lsus1HQbxq90XWn2eq-ODuJtYoGI8gPo7PTnKMDT9_lICCWg57nVIP0oX0yr5fEJQgMSO4EyK3AcM67RLi1ycm9F8cBF9jedInBWYdniSEd8S1cBZg1sf5K1sthzBwE6PAS-jkyPsZ74LAtfqtkevvAb-scMr59L02RZCUNlJqoSDxa1t_kobEFH5_m5tUdkjgKqEGjpLXDSbjalCqc9S3_Ov7-acjBG-f2tbSbZclsVchBeQrMqzy_-9-dug4Kz_Ru5Hk0");'></div>
-</div>
-</header>
-<!-- Main Content Container -->
-<main class="flex flex-1 justify-center py-8 px-4 sm:px-10 lg:px-40">
-<div class="layout-content-container flex flex-col max-w-[960px] flex-1">
-<!-- Breadcrumbs Component -->
-<div class="flex flex-wrap gap-2 px-4 pb-4">
-<a class="text-muted-dark hover:text-primary text-sm font-medium leading-normal flex items-center gap-1" href="../dashboard.html">
-<span class="material-symbols-outlined text-sm">home</span>
-                            Dashboard
-                        </a>
-<span class="text-muted-dark text-sm font-medium leading-normal">/</span>
-<a class="text-muted-dark hover:text-primary text-sm font-medium leading-normal" href="index.html">Brands</a>
-<span class="text-muted-dark text-sm font-medium leading-normal">/</span>
-<span class="text-white text-sm font-medium leading-normal" id="breadcrumb-text">Add Brand</span>
-</div>
-<!-- PageHeading Component -->
-<div class="flex flex-wrap justify-between items-center gap-3 p-4 mb-4">
-<div class="flex min-w-72 flex-col gap-1">
-<h1 class="text-white text-4xl font-black leading-tight tracking-[-0.033em] font-display" id="page-title">Add New Brand</h1>
-<p class="text-muted-dark text-base font-normal leading-normal" id="page-description">Create a new partner brand and add it to the catalog.</p>
-</div>
-<div class="flex gap-3">
-<button class="flex items-center gap-2 px-4 py-2 bg-surface-dark hover:bg-border-dark text-white rounded-lg transition-all text-sm font-bold border border-border-dark">
-<span class="material-symbols-outlined text-[18px]">visibility</span>
-                                View Brand Page
-                            </button>
-</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col overflow-y-auto bg-background-light dark:bg-background-dark">
+<div class="p-8 max-w-7xl mx-auto w-full">
+<!-- Page Heading -->
+<div class="mb-8">
+<h1 class="text-white text-4xl font-black tracking-tight leading-none mb-2" id="page-title">Add New Brand</h1>
+<p class="text-[#baba9c] text-lg font-normal" id="page-description">Create a new partner brand and add it to the catalog.</p>
 </div>
 <!-- Form Section -->
-<form id="brand-form" class="space-y-8">
+<form id="brand-form" class="space-y-6">
 <!-- General Info Card -->
-<div class="bg-surface-dark/40 border border-border-dark rounded-xl p-6">
-<h2 class="text-white text-[22px] font-bold leading-tight tracking-[-0.015em] mb-6 flex items-center gap-2">
+<div class="bg-surface-dark border border-border-dark rounded-xl p-6">
+<h2 class="text-white text-xl font-bold mb-6 flex items-center gap-2">
 <span class="material-symbols-outlined text-primary">info</span>
                                 General Information
                             </h2>
@@ -116,21 +113,21 @@
 <!-- TextField Component -->
 <div class="flex flex-col gap-2">
 <label class="text-white text-sm font-semibold">Brand Name *</label>
-<input name="brand-name" id="brand-name" class="form-input w-full rounded-lg text-white border border-border-dark bg-background-dark/50 focus:border-primary focus:ring-1 focus:ring-primary h-12 px-4 text-base font-normal placeholder:text-muted-dark" type="text" placeholder="e.g. Suprem-e, Vaporart" required/>
+<input name="brand-name" id="brand-name" class="w-full rounded-lg text-white border border-border-dark bg-background-dark focus:border-primary focus:ring-1 focus:ring-primary h-12 px-4 text-base font-normal placeholder:text-muted-dark" type="text" placeholder="e.g. Suprem-e, Vaporart" required/>
 </div>
 <div class="flex flex-col gap-2">
 <label class="text-white text-sm font-semibold">Website URL (Optional)</label>
-<input name="website" id="website" class="form-input w-full rounded-lg text-white border border-border-dark bg-background-dark/50 focus:border-primary focus:ring-1 focus:ring-primary h-12 px-4 text-base font-normal placeholder:text-muted-dark" placeholder="e.g. goldwave.it/" type="url"/>
+<input name="website" id="website" class="w-full rounded-lg text-white border border-border-dark bg-background-dark focus:border-primary focus:ring-1 focus:ring-primary h-12 px-4 text-base font-normal placeholder:text-muted-dark" placeholder="e.g. goldwave.it/" type="url"/>
 </div>
 <div class="flex flex-col gap-2 md:col-span-2">
 <label class="text-white text-sm font-semibold">Brand Description/Bio</label>
-<textarea name="description" id="description" class="form-input w-full rounded-lg text-white border border-border-dark bg-background-dark/50 focus:border-primary focus:ring-1 focus:ring-primary p-4 text-base font-normal placeholder:text-muted-dark resize-none" rows="4" placeholder="Enter brand description..."></textarea>
+<textarea name="description" id="description" class="w-full rounded-lg text-white border border-border-dark bg-background-dark focus:border-primary focus:ring-1 focus:ring-primary p-4 text-base font-normal placeholder:text-muted-dark resize-none" rows="4" placeholder="Enter brand description..."></textarea>
 </div>
 </div>
 </div>
 <!-- Visual Assets Card -->
-<div class="bg-surface-dark/40 border border-border-dark rounded-xl p-6">
-<h2 class="text-white text-[22px] font-bold leading-tight tracking-[-0.015em] mb-6 flex items-center gap-2">
+<div class="bg-surface-dark border border-border-dark rounded-xl p-6">
+<h2 class="text-white text-xl font-bold mb-6 flex items-center gap-2">
 <span class="material-symbols-outlined text-primary">image</span>
                                 Brand Assets
                             </h2>
@@ -148,7 +145,7 @@
 </div>
 <div class="flex-1 w-full">
 <p class="text-white text-sm font-semibold mb-2">Logo URL</p>
-<input type="text" name="logo-url" id="logo-url" class="form-input w-full rounded-lg text-white border border-border-dark bg-background-dark/50 focus:border-primary focus:ring-1 focus:ring-primary h-12 px-4 text-base font-normal placeholder:text-muted-dark mb-2" placeholder="/images/brands/brand_logo.png"/>
+<input type="text" name="logo-url" id="logo-url" class="w-full rounded-lg text-white border border-border-dark bg-background-dark focus:border-primary focus:ring-1 focus:ring-primary h-12 px-4 text-base font-normal placeholder:text-muted-dark mb-2" placeholder="/images/brands/brand_logo.png"/>
 <p class="text-muted-dark text-xs mb-4">Or upload a file:</p>
 <div class="w-full border-2 border-dashed border-border-dark rounded-xl p-8 flex flex-col items-center justify-center bg-background-dark/20 hover:bg-background-dark/40 hover:border-primary/50 transition-all cursor-pointer">
 <input type="file" id="logo-upload" accept="image/*" class="hidden"/>
@@ -162,8 +159,8 @@
 </div>
 </div>
 <!-- Catalog Sections Card -->
-<div class="bg-surface-dark/40 border border-border-dark rounded-xl p-6">
-<h2 class="text-white text-[22px] font-bold leading-tight tracking-[-0.015em] mb-2 flex items-center gap-2">
+<div class="bg-surface-dark border border-border-dark rounded-xl p-6">
+<h2 class="text-white text-xl font-bold mb-2 flex items-center gap-2">
 <span class="material-symbols-outlined text-primary">category</span>
                                 Catalog Sections
                             </h2>
@@ -171,7 +168,7 @@
 <div class="space-y-4 mb-6">
 <div class="flex flex-col gap-2">
 <label class="text-white text-sm font-semibold">Primary Section *</label>
-<select id="primary-section" class="form-select w-full rounded-lg text-white border border-border-dark bg-background-dark/50 focus:border-primary focus:ring-1 focus:ring-primary h-12 px-4 text-base font-normal" required>
+<select id="primary-section" class="w-full rounded-lg text-white border border-border-dark bg-background-dark focus:border-primary focus:ring-1 focus:ring-primary h-12 px-4 text-base font-normal" required>
 <option value="">Select a section...</option>
 <option value="cat_liquidi">Liquidi - E-liquides et arômes</option>
 <option value="cat_dispositivi">Dispositivi - Cigarettes électroniques et matériel</option>
@@ -182,7 +179,7 @@
 <div class="flex flex-wrap gap-3" id="selected-sections">
 <!-- Selected sections will appear here -->
 </div>
-<select id="add-section" class="form-select w-full rounded-lg text-white border border-border-dark bg-background-dark/50 focus:border-primary focus:ring-1 focus:ring-primary h-12 px-4 text-base font-normal">
+<select id="add-section" class="w-full rounded-lg text-white border border-border-dark bg-background-dark focus:border-primary focus:ring-1 focus:ring-primary h-12 px-4 text-base font-normal">
 <option value="">Add another section...</option>
 <option value="cat_liquidi">Liquidi</option>
 <option value="cat_dispositivi">Dispositivi</option>
@@ -191,8 +188,8 @@
 </div>
 </div>
 <!-- Product Lines Card -->
-<div class="bg-surface-dark/40 border border-border-dark rounded-xl p-6">
-<h2 class="text-white text-[22px] font-bold leading-tight tracking-[-0.015em] mb-2 flex items-center gap-2">
+<div class="bg-surface-dark border border-border-dark rounded-xl p-6">
+<h2 class="text-white text-xl font-bold mb-2 flex items-center gap-2">
 <span class="material-symbols-outlined text-primary">inventory_2</span>
                                 Product Lines
                             </h2>
@@ -206,39 +203,27 @@
                             </button>
 </div>
 <!-- Action Buttons -->
-<div class="flex items-center justify-end gap-4 pt-4 border-t border-border-dark">
-<button type="button" class="px-6 py-3 rounded-lg text-white font-bold text-sm bg-transparent hover:bg-surface-dark transition-colors">
+<div class="flex items-center justify-end gap-4 pt-6 border-t border-border-dark mt-8">
+<a href="index.html" class="px-6 py-3 rounded-lg text-white font-bold text-sm bg-transparent hover:bg-surface-dark transition-colors">
                                 Cancel
-                            </button>
-<button type="submit" class="px-8 py-3 rounded-lg bg-primary hover:bg-primary/90 text-black font-extrabold text-sm shadow-lg shadow-primary/10 transition-all flex items-center gap-2">
+                            </a>
+<button type="submit" class="px-8 py-3 rounded-lg bg-primary hover:bg-primary/90 text-black font-bold text-sm shadow-lg shadow-primary/10 transition-all flex items-center gap-2">
 <span class="material-symbols-outlined text-[20px]">save</span>
                                 Save Brand
                             </button>
 </div>
 </form>
-<!-- Footer Spacer -->
-<div class="h-20"></div>
 </div>
 </main>
-</div>
-</div>
-<!-- Optional Success Toast (Static for Demo) -->
-<div class="fixed bottom-8 right-8 bg-surface-dark border border-primary/50 text-white px-6 py-4 rounded-xl shadow-2xl flex items-center gap-4 z-[100] animate-pulse">
-<div class="size-8 rounded-full bg-primary/20 flex items-center justify-center text-primary">
-<span class="material-symbols-outlined">check_circle</span>
-</div>
-<div class="flex flex-col">
-<p class="font-bold text-sm">Ready to update?</p>
-<p class="text-muted-dark text-xs">Don't forget to save your progress.</p>
-</div>
-<button class="text-muted-dark hover:text-white">
-<span class="material-symbols-outlined text-sm">close</span>
-</button>
 </div>
 <!-- Firebase SDK (Legacy for Realtime Database) -->
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-analytics-compat.js"></script>
+
+<!-- Cloudinary Services -->
+<script src="../../src/js/services/cloudinary-config.js"></script>
+<script src="../../src/js/services/cloudinary-service.js"></script>
 
 <!-- Catalog Services -->
 <script src="../../src/js/services/firebase-config.js"></script>

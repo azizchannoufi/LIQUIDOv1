@@ -104,15 +104,12 @@
 <a class="text-xs font-bold uppercase tracking-widest hover:text-primary transition-colors" href="index.html">Home</a>
 <a class="text-xs font-bold uppercase tracking-widest hover:text-primary transition-colors" href="brands.html">Marchi</a>
 <a class="text-xs font-bold uppercase tracking-widest hover:text-primary transition-colors" href="products.html">Prodotti</a>
+<a class="text-xs font-bold uppercase tracking-widest hover:text-primary transition-colors" href="myliquido.html">MyLiquido</a>
 <a class="text-xs font-bold uppercase tracking-widest hover:text-primary transition-colors" href="about.html">Chi Siamo</a>
 <a class="text-xs font-bold uppercase tracking-widest hover:text-primary transition-colors" href="contact.html">Contatti</a>
 </nav>
 </div>
 <div class="flex items-center gap-6">
-<div class="hidden lg:flex items-center bg-white/5 border border-white/10 rounded-sm px-4 py-2 w-64">
-<span class="material-symbols-outlined text-white/40 text-sm">search</span>
-<input class="bg-transparent border-none focus:ring-0 text-sm placeholder:text-white/30 w-full" placeholder="Cerca prodotti..." type="text"/>
-</div>
 <button class="bg-primary hover:bg-white text-background-dark px-6 py-2.5 rounded-sm font-black text-xs uppercase tracking-widest transition-all flex items-center gap-2 accent-glow">
 <span class="material-symbols-outlined text-lg">location_on</span>
                 Trova un Negozio
@@ -443,6 +440,7 @@
     
     <!-- Catalog Services -->
     <script src="../src/js/services/firebase-config.js"></script>
+    <script src="../src/js/services/visits-tracker.js"></script>
     <script src="../src/js/services/firebase-catalog-service.js"></script>
     <script src="../src/js/services/catalog-service.js"></script>
     <script src="../src/js/modules/brands-renderer.js"></script>
@@ -480,6 +478,17 @@
                 }
             } catch (error) {
                 console.error('Error initializing brands carousel:', error);
+            }
+        })();
+        
+        // Track visit
+        (async function() {
+            try {
+                if (window.visitsTracker) {
+                    await window.visitsTracker.recordVisit(window.location.pathname);
+                }
+            } catch (error) {
+                console.error('Error tracking visit:', error);
             }
         })();
     </script>
