@@ -63,6 +63,30 @@
             -webkit-box-orient: vertical;
             overflow: hidden;
         }
+        /* Animation spéciale pour MYLIQUIDO */
+        .myliquido-special {
+            color: var(--primary-color);
+            animation: myliquidoPulse 2s ease-in-out infinite;
+        }
+        .myliquido-special:hover {
+            animation: myliquidoPulseHover 0.6s ease-in-out;
+        }
+        @keyframes myliquidoPulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+        @keyframes myliquidoPulseHover {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+        }
     </style>
 </head>
 <body class="bg-background-dark text-white transition-colors duration-300">
@@ -86,7 +110,7 @@
 <a class="text-xs font-bold uppercase tracking-widest hover:text-primary transition-colors" href="index.html">Home</a>
 <a class="text-xs font-bold uppercase tracking-widest hover:text-primary transition-colors" href="brands.html">Marchi</a>
 <a class="text-xs font-bold uppercase tracking-widest hover:text-primary transition-colors text-primary" href="products.html">Prodotti</a>
-<a class="text-xs font-bold uppercase tracking-widest hover:text-primary transition-colors" href="myliquido.html">MyLiquido</a>
+<a class="text-xs font-bold uppercase tracking-widest hover:text-primary transition-colors myliquido-special" href="myliquido.html">MyLiquido</a>
 <a class="text-xs font-bold uppercase tracking-widest hover:text-primary transition-colors" href="about.html">Chi Siamo</a>
 <a class="text-xs font-bold uppercase tracking-widest hover:text-primary transition-colors" href="contact.html">Contatti</a>
 </nav>
