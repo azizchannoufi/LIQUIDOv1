@@ -22,10 +22,12 @@
     let currentSection = null;
     let currentBrand = null;
     let brands = [];
+    let productImages = []; // Array to store multiple images
     
     // Initialize form
     document.addEventListener('DOMContentLoaded', async () => {
         await initForm();
+        initImageHandlers();
     });
     
     async function initForm() {
@@ -102,8 +104,23 @@
                         // Populate form fields
                         const imageUrlInput = document.getElementById('image-url');
                         if (imageUrlInput) {
-                            imageUrlInput.value = line.image_url || '';
+                            imageUrlInput.value = '';
                         }
+                        
+                        // Load images
+                        productImages = [];
+                        if (line.image_url) {
+                            productImages.push(line.image_url);
+                        }
+                        if (line.images && Array.isArray(line.images)) {
+                            // Merge additional images (avoid duplicates)
+                            line.images.forEach(img => {
+                                if (img && !productImages.includes(img)) {
+                                    productImages.push(img);
+                                }
+                            });
+                        }
+                        renderImages();
                         
                         // Show new line toggle if needed
                         const toggleBtn = document.getElementById('toggle-new-line');
@@ -239,32 +256,184 @@
         }
     }
     
-    async function loadExistingData() {
-        // Check if we're editing (URL params)
-        const urlParams = new URLSearchParams(window.location.search);
-        const productId = urlParams.get('id');
-        const brandParam = urlParams.get('brand');
-        const sectionParam = urlParams.get('section');
+    function initImageHandlers() {
+        const imageUpload = document.getElementById('image-upload');
+        const addUrlBtn = document.getElementById('add-url-btn');
+        const imageUrlInput = document.getElementById('image-url');
+        const uploadArea = imageUpload?.closest('div');
         
-        if (sectionParam) {
-            const sectionSelect = document.getElementById('product-section');
-            if (sectionSelect) {
-                sectionSelect.value = sectionParam;
-                sectionSelect.dispatchEvent(new Event('change'));
-                
-                // Wait for brands to load
-                setTimeout(async () => {
-                    if (brandParam) {
-                        const brandSelect = document.getElementById('product-brand');
-                        if (brandSelect) {
-                            brandSelect.value = brandParam;
-                            brandSelect.dispatchEvent(new Event('change'));
-                        }
+        // Handle file upload
+        if (imageUpload) {
+            imageUpload.addEventListener('change', (e) => {
+                const files = Array.from(e.target.files);
+                files.forEach(file => {
+                    if (file.type.startsWith('image/')) {
+                        addImageFromFile(file);
                     }
-                }, 500);
-            }
+                });
+                // Reset input to allow same file selection
+                e.target.value = '';
+            });
+        }
+        
+        // Handle drag and drop
+        if (uploadArea) {
+            uploadArea.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                uploadArea.classList.add('border-primary', 'bg-primary/5');
+            });
+            
+            uploadArea.addEventListener('dragleave', (e) => {
+                e.preventDefault();
+                uploadArea.classList.remove('border-primary', 'bg-primary/5');
+            });
+            
+            uploadArea.addEventListener('drop', (e) => {
+                e.preventDefault();
+                uploadArea.classList.remove('border-primary', 'bg-primary/5');
+                
+                const files = Array.from(e.dataTransfer.files);
+                files.forEach(file => {
+                    if (file.type.startsWith('image/')) {
+                        addImageFromFile(file);
+                    }
+                });
+            });
+        }
+        
+        // Handle URL addition
+        if (addUrlBtn && imageUrlInput) {
+            addUrlBtn.addEventListener('click', () => {
+                const url = imageUrlInput.value.trim();
+                if (url) {
+                    addImageFromUrl(url);
+                    imageUrlInput.value = '';
+                }
+            });
+            
+            // Allow Enter key
+            imageUrlInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    addUrlBtn.click();
+                }
+            });
         }
     }
+    
+    async function addImageFromFile(file) {
+        // Show loading state
+        const loadingId = `loading-${Date.now()}`;
+        const container = document.getElementById('images-preview-container');
+        
+        if (container) {
+            container.innerHTML += `
+                <div id="${loadingId}" class="flex items-center gap-3 p-3 bg-slate-50 dark:bg-[#27271b] rounded-lg border border-slate-200 dark:border-[#393928]">
+                    <div class="w-16 h-16 rounded-lg bg-slate-100 dark:bg-[#1f1f14] flex items-center justify-center">
+                        <div class="animate-spin rounded-full h-6 w-6 border-b-2 border-primary"></div>
+                    </div>
+                    <div class="flex-1">
+                        <p class="text-slate-900 dark:text-white text-sm font-medium">Uploading ${file.name}...</p>
+                        <p class="text-slate-500 dark:text-slate-600 text-xs">Uploading to Cloudinary...</p>
+                    </div>
+                </div>
+            `;
+        }
+        
+        try {
+            // Validate file
+            if (!file.type.startsWith('image/')) {
+                throw new Error('Please select an image file');
+            }
+            
+            // Ensure Cloudinary is initialized
+            if (!window.cloudinaryService) {
+                throw new Error('Cloudinary service not available. Please check configuration.');
+            }
+            
+            // Get user ID (use a default if not authenticated)
+            const userId = 'admin_product_' + Date.now();
+            
+            // Upload to Cloudinary
+            const imageUrl = await window.cloudinaryService.uploadProductImage(
+                file,
+                userId,
+                (progress) => {
+                    console.log('Upload progress:', progress + '%');
+                }
+            );
+            
+            // Remove loading indicator
+            const loadingEl = document.getElementById(loadingId);
+            if (loadingEl) {
+                loadingEl.remove();
+            }
+            
+            // Add image to list
+            addImage(imageUrl, file.name);
+        } catch (error) {
+            console.error('Error uploading image:', error);
+            
+            // Remove loading indicator
+            const loadingEl = document.getElementById(loadingId);
+            if (loadingEl) {
+                loadingEl.remove();
+            }
+            
+            alert('❌ Error uploading image: ' + error.message);
+        }
+    }
+    
+    function addImageFromUrl(url) {
+        // Validate URL
+        try {
+            new URL(url);
+            addImage(url, 'URL Image');
+        } catch (e) {
+            alert('Please enter a valid URL');
+        }
+    }
+    
+    function addImage(url, label) {
+        productImages.push(url);
+        renderImages();
+    }
+    
+    function removeImage(index) {
+        productImages.splice(index, 1);
+        renderImages();
+    }
+    
+    function renderImages() {
+        const container = document.getElementById('images-preview-container');
+        if (!container) return;
+        
+        if (productImages.length === 0) {
+            container.innerHTML = '<p class="text-slate-400 dark:text-slate-600 text-sm">No images added yet</p>';
+            return;
+        }
+        
+        container.innerHTML = productImages.map((url, index) => `
+            <div class="flex items-center gap-3 p-3 bg-slate-50 dark:bg-[#27271b] rounded-lg border border-slate-200 dark:border-[#393928]">
+                <div class="relative w-16 h-16 rounded-lg overflow-hidden bg-slate-100 dark:bg-[#1f1f14] flex-shrink-0">
+                    <img src="${url}" alt="Product image ${index + 1}" class="w-full h-full object-cover" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\\'http://www.w3.org/2000/svg\\' width=\\'64\\' height=\\'64\\'%3E%3Crect fill=\\'%23ccc\\' width=\\'64\\' height=\\'64\\'/%3E%3Ctext fill=\\'%23999\\' x=\\'50%25\\' y=\\'50%25\\' text-anchor=\\'middle\\' dy=\\'.3em\\' font-size=\\'10\\'%3EImage%3C/text%3E%3C/svg%3E'"/>
+                    ${index === 0 ? '<span class="absolute top-1 left-1 bg-primary text-black text-xs font-bold px-1.5 py-0.5 rounded">Main</span>' : ''}
+                </div>
+                <div class="flex-1 min-w-0">
+                    <p class="text-slate-900 dark:text-white text-sm font-medium truncate">${index === 0 ? 'Main Image' : `Image ${index + 1}`}</p>
+                    <p class="text-slate-500 dark:text-slate-600 text-xs truncate">${url.length > 50 ? url.substring(0, 50) + '...' : url}</p>
+                </div>
+                <button type="button" onclick="window.productFormRemoveImage(${index})" class="p-2 text-red-500 hover:bg-red-500/10 rounded-lg transition-colors" title="Remove image">
+                    <span class="material-symbols-outlined text-lg">delete</span>
+                </button>
+            </div>
+        `).join('');
+    }
+    
+    // Expose remove function globally
+    window.productFormRemoveImage = function(index) {
+        removeImage(index);
+    };
     
     // Form submission handler
     const form = document.querySelector('form');
@@ -278,23 +447,35 @@
             const lineSelect = document.getElementById('product-line');
             const newLineInput = document.getElementById('new-line-name');
             
-            const productNameInput = document.getElementById('product-name');
-            const productData = {
-                name: productNameInput?.value.trim() || '',
-                section: sectionSelect?.value || '',
-                brand: brandSelect?.value || '',
-                line: lineSelect?.value || newLineInput?.value.trim() || '',
-                isNewLine: !lineSelect?.value && newLineInput?.value,
-                description: formData.get('description') || '',
-                flavorProfile: formData.get('flavor-profile') || '',
-                imageUrl: formData.get('image-url') || ''
-            };
-            
-            // Validate
-            if (!productData.name || !productData.section || !productData.brand || !productData.line) {
-                alert('Please fill in all required fields: Product Name, Section, Brand, and Line.');
-                return;
-            }
+                const productNameInput = document.getElementById('product-name');
+                
+                // Get images - first image is main, rest are additional
+                const mainImageUrl = productImages.length > 0 ? productImages[0] : '';
+                const additionalImages = productImages.slice(1);
+                
+                const productData = {
+                    name: productNameInput?.value.trim() || '',
+                    section: sectionSelect?.value || '',
+                    brand: brandSelect?.value || '',
+                    line: lineSelect?.value || newLineInput?.value.trim() || '',
+                    isNewLine: !lineSelect?.value && newLineInput?.value,
+                    description: formData.get('description') || '',
+                    flavorProfile: formData.get('flavor-profile') || '',
+                    imageUrl: mainImageUrl,
+                    images: productImages // Store all images
+                };
+                
+                // Validate
+                if (!productData.name || !productData.section || !productData.brand || !productData.line) {
+                    alert('Please fill in all required fields: Product Name, Section, Brand, and Line.');
+                    return;
+                }
+                
+                // Warn if no images
+                if (productImages.length === 0) {
+                    const proceed = confirm('No images added. Continue without images?');
+                    if (!proceed) return;
+                }
             
             // Save to Firebase
             try {
@@ -341,8 +522,13 @@
                 
                 const lineData = {
                     name: productData.line,
-                    image_url: productData.imageUrl || ''
+                    image_url: productData.imageUrl || '' // First image as main
                 };
+                
+                // Only add images array if there are multiple images
+                if (productImages.length > 1) {
+                    lineData.images = productImages; // All images including the first one
+                }
                 
                 // Show loading
                 const submitBtn = form.querySelector('button[type="submit"]');
@@ -361,6 +547,8 @@
                 const addAnother = confirm('Product saved! Add another product?');
                 if (addAnother) {
                     form.reset();
+                    productImages = [];
+                    renderImages();
                     document.getElementById('product-section').value = '';
                     document.getElementById('product-brand').innerHTML = '<option value="">Select Section First</option>';
                     document.getElementById('product-brand').disabled = true;

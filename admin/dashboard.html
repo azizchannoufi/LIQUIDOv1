@@ -5,6 +5,7 @@
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>LIQUIDO Admin Dashboard Overview</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
@@ -73,11 +74,28 @@
 <span class="material-symbols-outlined">loyalty</span>
 <p class="text-sm font-medium">Brands</p>
 </a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-[#baba9c] hover:bg-slate-100 dark:hover:bg-[#2a2a1a] transition-colors" href="users/index.html">
+<span class="material-symbols-outlined">people</span>
+<p class="text-sm font-medium">Users</p>
+</a>
 <a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-[#baba9c] hover:bg-slate-100 dark:hover:bg-[#2a2a1a] transition-colors" href="settings.html">
 <span class="material-symbols-outlined">settings</span>
 <p class="text-sm font-medium">Store Settings</p>
 </a>
 </nav>
+<!-- Registered Users Section -->
+<div class="px-3">
+<div class="rounded-lg border border-slate-200 dark:border-[#393928] bg-white dark:bg-[#1a1a0f] p-4">
+<div class="flex items-center justify-between mb-3">
+<h3 class="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-[#baba9c]">Registered Users</h3>
+<span class="material-symbols-outlined text-primary text-lg">people</span>
+</div>
+<div id="users-count" class="text-2xl font-bold mb-2">0</div>
+<div id="users-list" class="max-h-48 overflow-y-auto space-y-2 text-xs">
+<div class="text-slate-400 dark:text-[#baba9c] text-center py-2">Loading...</div>
+</div>
+</div>
+</div>
 </div>
 <!-- Logout Section -->
 <div class="px-4">
@@ -117,47 +135,60 @@
 <div class="p-8 max-w-7xl mx-auto w-full space-y-8">
 <!-- Summary Statistics -->
 <section>
-<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-<div id="stat-total-products" class="flex flex-col gap-2 rounded-xl p-6 border border-slate-200 dark:border-[#54543b] bg-white dark:bg-transparent shadow-sm">
-<div class="flex justify-between items-start">
-<p class="text-slate-500 dark:text-[#baba9c] text-sm font-semibold uppercase tracking-wider">Total Products</p>
-<span class="material-symbols-outlined text-primary">inventory</span>
-</div>
-<div class="flex items-baseline gap-2">
-<p id="stat-products-value" class="text-3xl font-bold leading-tight">0</p>
-<span class="text-emerald-500 text-sm font-bold flex items-center">
-<span class="material-symbols-outlined text-xs">trending_up</span> <span id="stat-products-trend">--</span>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div id="stat-total-products" class="flex flex-col gap-2 rounded-xl p-6 border border-slate-200 dark:border-[#54543b] bg-white dark:bg-transparent shadow-sm">
+            <div class="flex justify-between items-start">
+                <p class="text-slate-500 dark:text-[#baba9c] text-sm font-semibold uppercase tracking-wider">Total Products</p>
+                <span class="material-symbols-outlined text-primary">inventory</span>
+            </div>
+            <div class="flex items-baseline gap-2">
+                <p id="stat-products-value" class="text-3xl font-bold leading-tight">0</p>
+                <span class="text-emerald-500 text-sm font-bold flex items-center">
+                    <span class="material-symbols-outlined text-xs">trending_up</span> <span id="stat-products-trend">--</span>
                                 </span>
-</div>
-<p class="text-slate-400 text-xs">Total product lines in catalog</p>
-</div>
-<div id="stat-active-brands" class="flex flex-col gap-2 rounded-xl p-6 border border-slate-200 dark:border-[#54543b] bg-white dark:bg-transparent shadow-sm">
-<div class="flex justify-between items-start">
-<p class="text-slate-500 dark:text-[#baba9c] text-sm font-semibold uppercase tracking-wider">Active Brands</p>
-<span class="material-symbols-outlined text-primary">verified</span>
-</div>
-<div class="flex items-baseline gap-2">
-<p id="stat-brands-value" class="text-3xl font-bold leading-tight">0</p>
-<span class="text-emerald-500 text-sm font-bold flex items-center">
-<span class="material-symbols-outlined text-xs">trending_up</span> <span id="stat-brands-trend">--</span>
+            </div>
+            <p class="text-slate-400 text-xs">Total product lines in catalog</p>
+        </div>
+        <div id="stat-active-brands" class="flex flex-col gap-2 rounded-xl p-6 border border-slate-200 dark:border-[#54543b] bg-white dark:bg-transparent shadow-sm">
+            <div class="flex justify-between items-start">
+                <p class="text-slate-500 dark:text-[#baba9c] text-sm font-semibold uppercase tracking-wider">Active Brands</p>
+                <span class="material-symbols-outlined text-primary">verified</span>
+            </div>
+            <div class="flex items-baseline gap-2">
+                <p id="stat-brands-value" class="text-3xl font-bold leading-tight">0</p>
+                <span class="text-emerald-500 text-sm font-bold flex items-center">
+                    <span class="material-symbols-outlined text-xs">trending_up</span> <span id="stat-brands-trend">--</span>
                                 </span>
-</div>
-<p class="text-slate-400 text-xs">Unique brands across all sections</p>
-</div>
-<div id="stat-total-sections" class="flex flex-col gap-2 rounded-xl p-6 border border-slate-200 dark:border-[#54543b] bg-white dark:bg-transparent shadow-sm">
-<div class="flex justify-between items-start">
-<p class="text-slate-500 dark:text-[#baba9c] text-sm font-semibold uppercase tracking-wider">Catalog Sections</p>
-<span class="material-symbols-outlined text-primary">category</span>
-</div>
-<div class="flex items-baseline gap-2">
-<p id="stat-sections-value" class="text-3xl font-bold leading-tight">0</p>
-<span class="text-emerald-500 text-sm font-bold flex items-center">
-<span class="material-symbols-outlined text-xs">check_circle</span> <span id="stat-sections-trend">Active</span>
+            </div>
+            <p class="text-slate-400 text-xs">Unique brands across all sections</p>
+        </div>
+        <div id="stat-total-sections" class="flex flex-col gap-2 rounded-xl p-6 border border-slate-200 dark:border-[#54543b] bg-white dark:bg-transparent shadow-sm">
+            <div class="flex justify-between items-start">
+                <p class="text-slate-500 dark:text-[#baba9c] text-sm font-semibold uppercase tracking-wider">Catalog Sections</p>
+                <span class="material-symbols-outlined text-primary">category</span>
+            </div>
+            <div class="flex items-baseline gap-2">
+                <p id="stat-sections-value" class="text-3xl font-bold leading-tight">0</p>
+                <span class="text-emerald-500 text-sm font-bold flex items-center">
+                    <span class="material-symbols-outlined text-xs">check_circle</span> <span id="stat-sections-trend">Active</span>
                                 </span>
-</div>
-<p class="text-slate-400 text-xs">Total catalog sections</p>
-</div>
-</div>
+            </div>
+            <p class="text-slate-400 text-xs">Total catalog sections</p>
+        </div>
+        <div id="stat-total-users" class="flex flex-col gap-2 rounded-xl p-6 border border-slate-200 dark:border-[#54543b] bg-white dark:bg-transparent shadow-sm">
+            <div class="flex justify-between items-start">
+                <p class="text-slate-500 dark:text-[#baba9c] text-sm font-semibold uppercase tracking-wider">Total Users</p>
+                <span class="material-symbols-outlined text-primary">people</span>
+            </div>
+            <div class="flex items-baseline gap-2">
+                <p id="stat-users-value" class="text-3xl font-bold leading-tight">0</p>
+                <span class="text-emerald-500 text-sm font-bold flex items-center">
+                    <span class="material-symbols-outlined text-xs">trending_up</span> <span id="stat-users-trend">Live</span>
+                                </span>
+            </div>
+            <p class="text-slate-400 text-xs">Registered users in system</p>
+        </div>
+    </div>
 </section>
 <!-- Quick Actions Section -->
 <section class="bg-slate-50 dark:bg-[#1a1a0f] rounded-2xl p-6 border border-slate-200 dark:border-[#393928]">
@@ -186,17 +217,27 @@
 </section>
 <!-- Visual Content / Recent Activity Placeholder -->
 <section class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-<!-- Analytics Preview -->
+<!-- Site Visits Statistics -->
 <div class="flex flex-col gap-4">
-<h3 class="text-md font-bold text-slate-500 dark:text-[#baba9c]">Inventory Growth</h3>
-<div class="h-64 w-full rounded-2xl bg-gradient-to-br from-slate-200 to-slate-100 dark:from-[#2a2a1a] dark:to-[#12120a] relative overflow-hidden border border-slate-200 dark:border-[#393928]">
-<div class="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_50%_50%,#f2f20d_0,transparent_50%)]"></div>
-<div class="p-8 h-full flex items-center justify-center text-center">
-<div class="space-y-2">
-<span class="material-symbols-outlined text-4xl text-primary">bar_chart</span>
-<p class="text-sm font-medium text-slate-500 dark:text-[#baba9c]">Real-time visual data mapping will appear here.</p>
+<div class="flex items-center justify-between">
+<h3 class="text-md font-bold text-slate-500 dark:text-[#baba9c]">Site Visits</h3>
+<div class="flex gap-2">
+<button id="visits-period-7d" class="px-3 py-1 text-xs font-semibold rounded-lg bg-primary text-black hover:bg-primary/90 transition-colors">7 Days</button>
+<button id="visits-period-30d" class="px-3 py-1 text-xs font-semibold rounded-lg bg-slate-200 dark:bg-[#393928] text-slate-700 dark:text-[#baba9c] hover:bg-slate-300 dark:hover:bg-[#4a4a35] transition-colors">30 Days</button>
 </div>
 </div>
+<div class="h-80 w-full rounded-2xl bg-white dark:bg-[#1f1f14] relative overflow-hidden border border-slate-200 dark:border-[#393928] p-6">
+<div class="flex items-center justify-between mb-4">
+<div>
+<p id="total-visits-display" class="text-2xl font-black text-slate-900 dark:text-white">0</p>
+<p class="text-xs font-medium text-slate-500 dark:text-[#baba9c]">Total Visits</p>
+</div>
+<div class="text-right">
+<p id="today-visits-count" class="text-xl font-bold text-primary">0</p>
+<p class="text-xs font-medium text-slate-500 dark:text-[#baba9c]">Today</p>
+</div>
+</div>
+<canvas id="visits-chart"></canvas>
 </div>
 </div>
 <!-- Recent Updates List -->
@@ -222,7 +263,9 @@
 <script src="../src/js/services/firebase-config.js"></script>
 <script src="../src/js/services/firebase-catalog-service.js"></script>
 <script src="../src/js/services/catalog-service.js"></script>
+<script src="../src/js/services/visits-tracker.js"></script>
 <script src="../src/js/modules/catalog-init.js"></script>
 <script src="../src/js/admin/dashboard-stats.js"></script>
+<script src="../src/js/admin/users-list.js"></script>
 </body></html>
 </body></html>

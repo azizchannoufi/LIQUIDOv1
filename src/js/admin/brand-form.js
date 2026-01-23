@@ -253,27 +253,79 @@
         });
     }
     
-    // Logo upload handler
+    // Logo upload handler with Cloudinary
     const logoUpload = document.getElementById('logo-upload');
     if (logoUpload) {
-        logoUpload.addEventListener('change', (e) => {
+        logoUpload.addEventListener('change', async function(e) {
             const file = e.target.files[0];
-            if (file) {
-                // In a real app, you would upload to a server
-                // For now, we'll create a local preview
-                const reader = new FileReader();
-                reader.onload = (event) => {
-                    if (logoPreview) {
-                        logoPreview.src = event.target.result;
-                        logoPreview.classList.remove('hidden');
-                        logoPreview.parentElement.querySelector('span').classList.add('hidden');
+            if (!file) return;
+            
+            // Show loading state
+            const uploadArea = logoUpload.closest('div');
+            const originalContent = uploadArea?.innerHTML;
+            if (uploadArea) {
+                uploadArea.innerHTML = '<div class="flex flex-col items-center gap-2"><div class="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div><p class="text-sm text-white">Uploading...</p></div>';
+            }
+            
+            try {
+                // Validate file
+                if (!file.type.startsWith('image/')) {
+                    throw new Error('Please select an image file');
+                }
+                
+                // Ensure Cloudinary is initialized
+                if (!window.cloudinaryService) {
+                    throw new Error('Cloudinary service not available. Please check configuration.');
+                }
+                
+                // Get user ID (use a default if not authenticated)
+                const userId = 'admin_brand_' + Date.now();
+                
+                // Upload to Cloudinary
+                const imageUrl = await window.cloudinaryService.uploadProductImage(
+                    file,
+                    userId,
+                    (progress) => {
+                        // Update progress if needed
+                        console.log('Upload progress:', progress + '%');
                     }
-                    // Set the URL input (in real app, this would be the uploaded URL)
-                    if (logoUrlInput) {
-                        logoUrlInput.value = `/images/brands/${file.name}`;
+                );
+                
+                // Update preview and URL input
+                if (logoPreview) {
+                    logoPreview.src = imageUrl;
+                    logoPreview.classList.remove('hidden');
+                    const noLogoSpan = logoPreview.parentElement.querySelector('span');
+                    if (noLogoSpan) noLogoSpan.classList.add('hidden');
+                }
+                
+                if (logoUrlInput) {
+                    logoUrlInput.value = imageUrl;
+                }
+                
+                // Restore upload area
+                if (uploadArea && originalContent) {
+                    uploadArea.innerHTML = originalContent;
+                    // Re-attach event listener
+                    const newUpload = document.getElementById('logo-upload');
+                    if (newUpload) {
+                        newUpload.addEventListener('change', arguments.callee);
                     }
-                };
-                reader.readAsDataURL(file);
+                }
+                
+                alert('✅ Logo uploaded successfully to Cloudinary!');
+            } catch (error) {
+                console.error('Error uploading logo:', error);
+                alert('❌ Error uploading logo: ' + error.message);
+                
+                // Restore upload area
+                if (uploadArea && originalContent) {
+                    uploadArea.innerHTML = originalContent;
+                    const newUpload = document.getElementById('logo-upload');
+                    if (newUpload) {
+                        newUpload.addEventListener('change', arguments.callee);
+                    }
+                }
             }
         });
     }

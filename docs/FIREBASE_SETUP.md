@@ -68,6 +68,8 @@ Si Firebase n'est pas disponible, le système bascule automatiquement vers le fi
 
 ## Sécurité
 
+### Realtime Database Rules
+
 ⚠️ **Important** : Configurez les règles de sécurité Firebase dans la console :
 
 ```json
@@ -76,6 +78,12 @@ Si Firebase n'est pas disponible, le système bascule automatiquement vers le fi
     "catalog": {
       ".read": true,
       ".write": false
+    },
+    "users": {
+      "$uid": {
+        ".read": "$uid === auth.uid",
+        ".write": "$uid === auth.uid"
+      }
     }
   }
 }
@@ -84,6 +92,34 @@ Si Firebase n'est pas disponible, le système bascule automatiquement vers le fi
 Pour permettre l'écriture depuis l'admin, vous devrez :
 1. Activer Firebase Authentication
 2. Configurer les règles pour autoriser l'écriture uniquement aux utilisateurs authentifiés
+
+### Storage Rules
+
+⚠️ **CRITIQUE** : Configurez les règles de sécurité Firebase Storage pour permettre les uploads :
+
+1. Allez dans Firebase Console > Storage > Rules
+2. Configurez les règles suivantes :
+
+```javascript
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    // Permettre les uploads dans product-requests pour les utilisateurs authentifiés
+    match /product-requests/{userId}/{fileName} {
+      allow read: if true; // Tous peuvent lire
+      allow write: if request.auth != null && request.auth.uid == userId;
+      allow delete: if request.auth != null && request.auth.uid == userId;
+    }
+    
+    // Bloquer tout le reste par défaut
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+  }
+}
+```
+
+**Note importante** : Sans ces règles, vous obtiendrez des erreurs CORS lors des uploads.
 
 ## Scripts inclus
 
