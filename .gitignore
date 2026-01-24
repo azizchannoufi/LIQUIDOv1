@@ -38,8 +38,8 @@ desktop.ini
 .env.local
 .env.*.local
 
-# Firebase Configuration (contains API keys)
-src/js/services/firebase-config.js
-firebase-config.js
+# Firebase Configuration
+# firebase-config.js is now tracked in git (generated from .env)
+# firebase-config.template.js is tracked in git (template file)
 *.firebase.json
 firebase-service-account.json

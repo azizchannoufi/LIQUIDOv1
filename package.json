@@ -7,6 +7,9 @@
     "dev": "node server.js",
     "start": "npm run dev",
     "serve": "node server.js",
+    "build:config": "node scripts/build-firebase-config.js",
+    "init:env": "node scripts/init-env.js",
+    "prestart": "npm run build:config",
     "lint:html": "echo 'HTML linting not configured yet'",
     "lint:css": "echo 'CSS linting not configured yet'",
     "lint:js": "echo 'JS linting not configured yet'"
