@@ -327,6 +327,30 @@ class FirebaseCatalogService {
         // Return unsubscribe function
         return () => catalogRef.off('value', handler);
     }
+
+    /**
+     * Get all product lines from all sections
+     * @returns {Promise<Array>} Array of all product lines with section and brand info
+     */
+    async getAllLinesFromAllSections() {
+        await this.initialize();
+        
+        const sections = await this.getSections();
+        const allLines = [];
+        
+        for (const section of sections) {
+            const lines = await this.getAllLinesBySection(section.id);
+            for (const line of lines) {
+                allLines.push({
+                    ...line,
+                    sectionId: section.id,
+                    sectionName: section.name
+                });
+            }
+        }
+        
+        return allLines;
+    }
 }
 
 // Create singleton instance

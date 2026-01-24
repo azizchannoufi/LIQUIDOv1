@@ -6,53 +6,106 @@
 (async function() {
     'use strict';
     
-    // Wait for catalog initialization
+    const tbody = document.querySelector('tbody');
+    const searchInput = document.querySelector('input[placeholder*="Search products"]');
+    const loadingDiv = document.getElementById('products-loading');
+    const errorDiv = document.getElementById('products-error');
+    const table = document.getElementById('products-table');
+    
+    if (!tbody) return;
+    
+    // Show loading state
+    if (loadingDiv) loadingDiv.classList.remove('hidden');
+    if (errorDiv) errorDiv.classList.add('hidden');
+    if (table) table.classList.add('hidden');
+    
     let catalogService;
+    let allProducts = [];
+    let filteredProducts = [];
+    
+    // Wait for catalog initialization
     try {
+        // Wait for Firebase config to be available
+        if (typeof window.firebaseConfig === 'undefined' || !window.firebaseConfig.initializeFirebase) {
+            console.warn('Firebase config not loaded yet, waiting...');
+            await new Promise(resolve => {
+                const checkInterval = setInterval(() => {
+                    if (typeof window.firebaseConfig !== 'undefined' && window.firebaseConfig.initializeFirebase) {
+                        clearInterval(checkInterval);
+                        resolve();
+                    }
+                }, 100);
+            });
+        }
+        
         if (window.catalogInit) {
             const catalog = await window.catalogInit;
             catalogService = catalog.service;
         } else {
+            // Create new instance if catalogInit is not available
             catalogService = new CatalogService();
+            await catalogService.initFirebase();
         }
     } catch (error) {
         console.error('Error initializing catalog service:', error);
-        catalogService = new CatalogService();
+        tbody.innerHTML = '<tr><td colspan="5" class="px-6 py-4 text-center text-red-400">Erreur d\'initialisation: ' + error.message + '</td></tr>';
+        return;
     }
-    
-    const tbody = document.querySelector('tbody');
-    const searchInput = document.querySelector('input[placeholder*="Search products"]');
-    
-    if (!tbody) return;
-    
-    let allProducts = [];
-    let filteredProducts = [];
     
     async function loadAllProducts() {
         try {
+            // Show loading
+            if (loadingDiv) loadingDiv.classList.remove('hidden');
+            if (errorDiv) errorDiv.classList.add('hidden');
+            if (table) table.classList.add('hidden');
+            
             const sections = await catalogService.getSections();
             allProducts = [];
             
             for (const section of sections) {
-                const lines = await catalogService.getAllLinesBySection(section.id);
-                for (const line of lines) {
-                    allProducts.push({
-                        ...line,
-                        sectionId: section.id,
-                        sectionName: section.name
-                    });
+                const brands = await catalogService.getBrandsBySection(section.id);
+                for (const brand of brands) {
+                    const lines = brand.lines || [];
+                    for (const line of lines) {
+                        allProducts.push({
+                            ...line,
+                            sectionId: section.id,
+                            sectionName: section.name,
+                            brandName: brand.name || 'N/A'
+                        });
+                    }
                 }
             }
             
             filteredProducts = allProducts;
             renderProducts(filteredProducts);
+            
+            // Hide loading, show table
+            if (loadingDiv) loadingDiv.classList.add('hidden');
+            if (table) table.classList.remove('hidden');
         } catch (error) {
             console.error('Error loading products:', error);
-            tbody.innerHTML = '<tr><td colspan="5" class="px-6 py-4 text-center text-red-400">Erreur lors du chargement des produits</td></tr>';
+            if (loadingDiv) loadingDiv.classList.add('hidden');
+            if (table) table.classList.add('hidden');
+            if (errorDiv) {
+                errorDiv.classList.remove('hidden');
+                errorDiv.innerHTML = `<div class="text-red-400">Erreur lors du chargement des produits: ${error.message}</div>`;
+            }
         }
     }
     
     function renderProducts(products) {
+        const paginationDiv = document.getElementById('products-pagination');
+        const productsCount = document.getElementById('products-count');
+        
+        // Update count
+        if (productsCount) {
+            productsCount.textContent = products.length;
+        }
+        if (paginationDiv) {
+            paginationDiv.classList.toggle('hidden', products.length === 0);
+        }
+        
         if (!products || products.length === 0) {
             tbody.innerHTML = `
                 <tr>

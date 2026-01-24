@@ -20,17 +20,19 @@ const firebaseConfig = {
 // Initialize Firebase (using CDN version for compatibility)
 let firebaseApp = null;
 let firebaseDatabase = null;
+let firebaseAuth = null;
 let firebaseAnalytics = null;
 
 /**
  * Initialize Firebase
- * @returns {Promise<Object>} Firebase app and database instances
+ * @returns {Promise<Object>} Firebase app, database, auth, and analytics instances
  */
 function initializeFirebase() {
     if (firebaseApp) {
         return Promise.resolve({
             app: firebaseApp,
             database: firebaseDatabase,
+            auth: firebaseAuth,
             analytics: firebaseAnalytics
         });
     }
@@ -44,6 +46,7 @@ function initializeFirebase() {
         // Initialize Firebase
         firebaseApp = firebase.initializeApp(firebaseConfig);
         firebaseDatabase = firebase.database();
+        firebaseAuth = firebase.auth();
         
         // Initialize Analytics (optional)
         if (firebase.analytics) {
@@ -53,6 +56,7 @@ function initializeFirebase() {
         return Promise.resolve({
             app: firebaseApp,
             database: firebaseDatabase,
+            auth: firebaseAuth,
             analytics: firebaseAnalytics
         });
     } catch (error) {

@@ -1,9 +1,8 @@
 <!DOCTYPE html>
-
 <html class="dark" lang="en"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>LIQUIDO | Admin Product Management</title>
+<title>LIQUIDO | Admin Services Management</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
@@ -70,9 +69,9 @@
 <span class="material-symbols-outlined">dashboard</span>
 <p class="text-sm font-medium">Dashboard</p>
 </a>
-<a class="sidebar-active flex items-center gap-3 px-3 py-2.5 rounded-lg text-primary" href="index.html">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-[#baba9c] hover:bg-slate-100 dark:hover:bg-[#2a2a1a] transition-colors" href="../products/index.html">
 <span class="material-symbols-outlined">inventory_2</span>
-<p class="text-sm font-semibold">Products</p>
+<p class="text-sm font-medium">Products</p>
 </a>
 <a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-[#baba9c] hover:bg-slate-100 dark:hover:bg-[#2a2a1a] transition-colors" href="../brands/index.html">
 <span class="material-symbols-outlined">loyalty</span>
@@ -86,9 +85,9 @@
 <span class="material-symbols-outlined">shopping_cart</span>
 <p class="text-sm font-medium">Orders</p>
 </a>
-<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-[#baba9c] hover:bg-slate-100 dark:hover:bg-[#2a2a1a] transition-colors" href="../services/index.html">
+<a class="sidebar-active flex items-center gap-3 px-3 py-2.5 rounded-lg text-primary" href="index.html">
 <span class="material-symbols-outlined">room_service</span>
-<p class="text-sm font-medium">Services</p>
+<p class="text-sm font-semibold">Services</p>
 </a>
 <a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-[#baba9c] hover:bg-slate-100 dark:hover:bg-[#2a2a1a] transition-colors" href="../settings.html">
 <span class="material-symbols-outlined">settings</span>
@@ -109,16 +108,15 @@
 <!-- Header Section -->
 <header class="p-8 pb-4">
 <div class="flex flex-wrap gap-2 mb-2">
-<a class="text-[#baba9c] text-sm font-medium hover:text-white transition-colors" href="#">Dashboard</a>
+<a class="text-[#baba9c] text-sm font-medium hover:text-white transition-colors" href="../dashboard.html">Dashboard</a>
 <span class="text-[#baba9c] text-sm font-medium">/</span>
-<span class="text-white text-sm font-medium">Product Management</span>
+<span class="text-white text-sm font-medium">Services Management</span>
 </div>
 <div class="flex flex-wrap justify-between items-end gap-4">
-<h2 class="text-white text-4xl font-black leading-tight tracking-tight">Product Management</h2>
-<a href="add.html" class="flex items-center gap-2 px-6 py-3 bg-primary text-background-dark rounded-xl font-bold text-sm transition-transform active:scale-95">
-<span class="material-symbols-outlined">add</span>
-<span>Add New Product</span>
-</a>
+<div>
+<h2 class="text-white text-4xl font-black leading-tight tracking-tight">Customer Services</h2>
+<p class="text-[#baba9c] text-sm mt-1">Total: <span id="total-services-count" class="text-primary font-bold">0</span> service requests</p>
+</div>
 </div>
 </header>
 <!-- Filters and Search -->
@@ -130,56 +128,55 @@
 <div class="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none text-[#baba9c]">
 <span class="material-symbols-outlined">search</span>
 </div>
-<input class="w-full h-full bg-border-dark border-none rounded-xl pl-12 text-white placeholder:text-[#baba9c] focus:ring-1 focus:ring-primary text-sm" placeholder="Search products by name or SKU..." type="text"/>
+<input id="search-input" class="w-full h-full bg-border-dark border-none rounded-xl pl-12 text-white placeholder:text-[#baba9c] focus:ring-1 focus:ring-primary text-sm" placeholder="Search services by customer, type, or description..." type="text"/>
 </div>
 </div>
-<!-- Chips / Filters -->
-<div class="lg:col-span-6 flex flex-wrap gap-2 items-center justify-end">
-<button class="flex items-center gap-2 h-10 px-4 rounded-xl bg-border-dark text-white border border-transparent hover:border-primary/50 transition-all">
-<span class="text-sm font-medium">All Brands</span>
-<span class="material-symbols-outlined text-sm">expand_more</span>
-</button>
-<button class="flex items-center gap-2 h-10 px-4 rounded-xl bg-primary/20 text-primary border border-primary/30">
-<span class="text-sm font-bold">Vaporesso</span>
-<span class="material-symbols-outlined text-sm">close</span>
-</button>
-<button class="flex items-center gap-2 h-10 px-4 rounded-xl bg-border-dark text-white border border-transparent hover:border-primary/50 transition-all">
-<span class="text-sm font-medium">SMOK</span>
-<span class="material-symbols-outlined text-sm">expand_more</span>
-</button>
-<button class="flex items-center gap-2 h-10 px-4 rounded-xl bg-border-dark text-white border border-transparent hover:border-primary/50 transition-all">
-<span class="text-sm font-medium">Category</span>
-<span class="material-symbols-outlined text-sm">filter_list</span>
-</button>
+<!-- Type Filter -->
+<div class="lg:col-span-6 flex flex-wrap gap-4 items-center justify-end">
+<select id="type-filter" class="px-4 py-2 rounded-xl bg-border-dark border-none text-white text-sm focus:ring-1 focus:ring-primary">
+<option value="all">All Types</option>
+<option value="product-request">Product Request</option>
+<option value="maintenance-request">Maintenance Request</option>
+</select>
+<select id="status-filter" class="px-4 py-2 rounded-xl bg-border-dark border-none text-white text-sm focus:ring-1 focus:ring-primary">
+<option value="all">All Status</option>
+<option value="pending">Pending</option>
+<option value="confirmed">Confirmed</option>
+<option value="completed">Completed</option>
+<option value="cancelled">Cancelled</option>
+</select>
 </div>
 </div>
 </section>
 <!-- Table Section -->
 <section class="px-8 pb-8 flex-grow">
 <div class="bg-surface-dark border border-border-dark rounded-2xl overflow-hidden">
-<div id="products-loading" class="p-8 text-center">
-<div class="text-[#baba9c]">Chargement des produits depuis Firebase...</div>
+<div id="loading-state" class="p-8 text-center">
+<div class="text-[#baba9c]">Loading services...</div>
 </div>
-<div id="products-error" class="p-8 text-center hidden">
-<div class="text-red-400">Erreur lors du chargement des produits. Veuillez rafraîchir la page.</div>
+<div id="error-state" class="p-8 text-center hidden">
+<div class="text-red-500">Error loading services. Please refresh the page.</div>
 </div>
-<table id="products-table" class="w-full text-left border-collapse hidden">
+<table id="services-table" class="w-full text-left border-collapse hidden">
 <thead>
 <tr class="bg-border-dark/30 border-b border-border-dark">
-<th class="px-6 py-4 text-[#baba9c] font-bold text-xs uppercase tracking-widest">Product Info</th>
-<th class="px-6 py-4 text-[#baba9c] font-bold text-xs uppercase tracking-widest">Brand</th>
-<th class="px-6 py-4 text-[#baba9c] font-bold text-xs uppercase tracking-widest">Category</th>
+<th class="px-6 py-4 text-[#baba9c] font-bold text-xs uppercase tracking-widest">Service Info</th>
+<th class="px-6 py-4 text-[#baba9c] font-bold text-xs uppercase tracking-widest">Customer</th>
+<th class="px-6 py-4 text-[#baba9c] font-bold text-xs uppercase tracking-widest">Type</th>
+<th class="px-6 py-4 text-[#baba9c] font-bold text-xs uppercase tracking-widest">Details</th>
 <th class="px-6 py-4 text-[#baba9c] font-bold text-xs uppercase tracking-widest">Status</th>
+<th class="px-6 py-4 text-[#baba9c] font-bold text-xs uppercase tracking-widest">Created</th>
 <th class="px-6 py-4 text-[#baba9c] font-bold text-xs uppercase tracking-widest text-right">Actions</th>
 </tr>
 </thead>
-<tbody class="divide-y divide-border-dark">
-<!-- Products will be loaded dynamically from Firebase -->
+<tbody id="services-tbody" class="divide-y divide-border-dark">
+<!-- Services will be loaded dynamically from Firebase -->
 </tbody>
 </table>
-<!-- Pagination -->
-<div id="products-pagination" class="flex items-center justify-between px-6 py-4 bg-border-dark/20 hidden">
-<p class="text-xs text-[#baba9c] font-medium">Total: <span id="products-count" class="text-primary font-bold">0</span> products</p>
+<div id="empty-state" class="p-12 text-center hidden">
+<span class="material-symbols-outlined text-6xl text-[#baba9c] mb-4">room_service</span>
+<p class="text-[#baba9c] text-lg font-medium">No services found</p>
+<p class="text-[#baba9c] text-sm mt-2">Service requests will appear here once customers submit them</p>
 </div>
 </div>
 </section>
@@ -191,10 +188,8 @@
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-analytics-compat.js"></script>
 
-<!-- Catalog Services -->
+<!-- Services -->
 <script src="../../src/js/services/firebase-config.js"></script>
-<script src="../../src/js/services/firebase-catalog-service.js"></script>
-<script src="../../src/js/services/catalog-service.js"></script>
-<script src="../../src/js/modules/catalog-init.js"></script>
-<script src="../../src/js/admin/products-list.js"></script>
+<script src="../../src/js/admin/services-list-page.js"></script>
 </body></html>
+

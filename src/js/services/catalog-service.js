@@ -64,11 +64,25 @@ class CatalogService {
                 } catch (error) {
                     console.warn('Firebase load failed, falling back to JSON:', error);
                     this.useFirebase = false;
-                    return await this.loadFromJSON();
+                    try {
+                        return await this.loadFromJSON();
+                    } catch (jsonError) {
+                        console.warn('JSON fallback also failed, using empty catalog:', jsonError);
+                        this.catalog = { sections: [] };
+                        return this.catalog;
+                    }
                 }
             })();
         } else {
-            this.loadPromise = this.loadFromJSON();
+            this.loadPromise = (async () => {
+                try {
+                    return await this.loadFromJSON();
+                } catch (error) {
+                    console.warn('JSON load failed, using empty catalog:', error);
+                    this.catalog = { sections: [] };
+                    return this.catalog;
+                }
+            })();
         }
 
         return this.loadPromise;
@@ -79,37 +93,43 @@ class CatalogService {
      * @returns {Promise<Object>} Catalog data
      */
     async loadFromJSON() {
+        // Try different paths based on current location
+        const currentPath = window.location.pathname;
+        let basePath = '';
+        
+        if (currentPath.includes('/admin/')) {
+            basePath = '../../';
+        } else if (currentPath.includes('/public/')) {
+            basePath = '../';
+        } else {
+            basePath = './';
+        }
+        
         const paths = [
-            '../src/data/catalog.json',  // From public/ directory
-            'src/data/catalog.json',     // From root
-            './src/data/catalog.json'    // Alternative
+            `${basePath}src/data/catalog.json`,
+            '../src/data/catalog.json',
+            'src/data/catalog.json',
+            './src/data/catalog.json'
         ];
         
-        let loadAttempt = 0;
-        const tryLoad = (path) => {
-            return fetch(path)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error(`Failed to load catalog: ${response.statusText}`);
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    this.catalog = data.catalog;
+        for (const path of paths) {
+            try {
+                const response = await fetch(path);
+                if (response.ok) {
+                    const data = await response.json();
+                    this.catalog = data.catalog || data;
                     return this.catalog;
-                })
-                .catch(error => {
-                    loadAttempt++;
-                    if (loadAttempt < paths.length) {
-                        return tryLoad(paths[loadAttempt]);
-                    }
-                    console.error('Error loading catalog:', error);
-                    this.loadPromise = null;
-                    throw error;
-                });
-        };
+                }
+            } catch (error) {
+                // Try next path
+                continue;
+            }
+        }
         
-        return tryLoad(paths[0]);
+        // If all paths fail, return empty catalog structure
+        console.warn('Could not load catalog.json, using empty catalog structure');
+        this.catalog = { sections: [] };
+        return this.catalog;
     }
 
     /**
@@ -117,14 +137,18 @@ class CatalogService {
      * @returns {Promise<Array>} Array of sections
      */
     async getSections() {
-        await this.initFirebase();
+        await this.loadCatalog();
         
         if (this.useFirebase && this.firebaseService) {
-            return await this.firebaseService.getSections();
+            try {
+                return await this.firebaseService.getSections();
+            } catch (error) {
+                console.warn('Error getting sections from Firebase, using cached catalog:', error);
+                return this.catalog?.sections || [];
+            }
         }
         
-        const catalog = await this.loadCatalog();
-        return catalog.sections || [];
+        return this.catalog?.sections || [];
     }
 
     /**
@@ -133,10 +157,16 @@ class CatalogService {
      * @returns {Promise<Object|null>} Section object or null
      */
     async getSection(sectionId) {
-        await this.initFirebase();
+        await this.loadCatalog();
         
         if (this.useFirebase && this.firebaseService) {
-            return await this.firebaseService.getSection(sectionId);
+            try {
+                return await this.firebaseService.getSection(sectionId);
+            } catch (error) {
+                console.warn('Error getting section from Firebase, using cached catalog:', error);
+                const sections = await this.getSections();
+                return sections.find(section => section.id === sectionId) || null;
+            }
         }
         
         const sections = await this.getSections();
@@ -149,10 +179,16 @@ class CatalogService {
      * @returns {Promise<Array>} Array of brands
      */
     async getBrandsBySection(sectionId) {
-        await this.initFirebase();
+        await this.loadCatalog();
         
         if (this.useFirebase && this.firebaseService) {
-            return await this.firebaseService.getBrandsBySection(sectionId);
+            try {
+                return await this.firebaseService.getBrandsBySection(sectionId);
+            } catch (error) {
+                console.warn('Error getting brands from Firebase, using cached catalog:', error);
+                const section = await this.getSection(sectionId);
+                return section ? (section.brands || []) : [];
+            }
         }
         
         const section = await this.getSection(sectionId);
@@ -217,10 +253,22 @@ class CatalogService {
      * @returns {Promise<Array>} Array of all product lines in section
      */
     async getAllLinesBySection(sectionId) {
-        await this.initFirebase();
+        await this.loadCatalog();
         
         if (this.useFirebase && this.firebaseService) {
-            return await this.firebaseService.getAllLinesBySection(sectionId);
+            try {
+                return await this.firebaseService.getAllLinesBySection(sectionId);
+            } catch (error) {
+                console.warn('Error getting lines from Firebase, using cached catalog:', error);
+                const brands = await this.getBrandsBySection(sectionId);
+                return brands.flatMap(brand => 
+                    (brand.lines || []).map(line => ({
+                        ...line,
+                        brandName: brand.name,
+                        brandLogo: brand.logo_url
+                    }))
+                );
+            }
         }
         
         const brands = await this.getBrandsBySection(sectionId);
@@ -259,6 +307,34 @@ class CatalogService {
             brands = await this.getAllBrands();
         }
         return brands.filter(brand => brand.lines && brand.lines.length > 0);
+    }
+
+    /**
+     * Get all product lines from all sections
+     * @returns {Promise<Array>} Array of all product lines with section and brand info
+     */
+    async getAllLinesFromAllSections() {
+        await this.initFirebase();
+        
+        if (this.useFirebase && this.firebaseService) {
+            return await this.firebaseService.getAllLinesFromAllSections();
+        }
+        
+        const sections = await this.getSections();
+        const allLines = [];
+        
+        for (const section of sections) {
+            const lines = await this.getAllLinesBySection(section.id);
+            for (const line of lines) {
+                allLines.push({
+                    ...line,
+                    sectionId: section.id,
+                    sectionName: section.name
+                });
+            }
+        }
+        
+        return allLines;
     }
 
     /**

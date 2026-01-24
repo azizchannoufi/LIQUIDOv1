@@ -153,6 +153,78 @@ class ProductsRenderer {
             </div>
         `;
     }
+
+    /**
+     * Render product card for "Nuovi Arrivi" section
+     * @param {Object} line - Product line object
+     * @param {string} brandName - Brand name
+     * @param {string} sectionName - Section name
+     * @returns {string} HTML string
+     */
+    renderNuoviArriviCard(line, brandName, sectionName = '') {
+        const imageUrl = line.image_url || '';
+        const productId = `${brandName.toLowerCase().replace(/\s+/g, '-')}-${line.name.toLowerCase().replace(/\s+/g, '-')}`;
+        const sectionLabel = sectionName || (line.sectionName || '');
+        const description = line.description || line.flavorProfile || '';
+
+        return `
+            <div class="group bg-charcoal border border-white/5 rounded-sm overflow-hidden hover:border-primary/40 transition-all duration-500">
+                <div class="aspect-[4/5] overflow-hidden bg-black relative">
+                    ${imageUrl ? `
+                    <img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 opacity-80 group-hover:opacity-100" 
+                         data-alt="${line.name}" 
+                         src="${imageUrl}"
+                         onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"/>
+                    ` : ''}
+                    <div class="${imageUrl ? 'hidden' : 'flex'} items-center justify-center text-white/30 w-full h-full">
+                        <span class="material-symbols-outlined text-5xl opacity-30">inventory_2</span>
+                    </div>
+                    <div class="absolute top-4 left-4 bg-primary text-background-dark text-[10px] font-black px-3 py-1 uppercase tracking-widest">Nuovo Arrivo</div>
+                </div>
+                <div class="p-8 space-y-4">
+                    <div class="flex justify-between items-start">
+                        <h3 class="text-bold-modern text-xl group-hover:text-primary transition-colors uppercase">${line.name}</h3>
+                        ${sectionLabel ? `<span class="text-white/20 text-[10px] font-black uppercase tracking-widest">${sectionLabel}</span>` : ''}
+                    </div>
+                    ${description ? `<p class="text-sm text-slate-500 line-clamp-2 leading-relaxed">${description}</p>` : ''}
+                    <div class="pt-6 flex items-center justify-between border-t border-white/5">
+                        <a href="product-detail.html?id=${productId}&brand=${encodeURIComponent(brandName)}&line=${encodeURIComponent(line.name)}" 
+                           class="text-white font-black text-[10px] uppercase tracking-widest flex items-center gap-2 group/btn hover:text-primary transition-colors">
+                            Visualizza Prodotto 
+                            <span class="material-symbols-outlined text-sm group-hover/btn:translate-x-1 transition-transform">arrow_forward</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    /**
+     * Render latest products in "Nuovi Arrivi" format
+     * @param {Array} lines - Array of product line objects (with brandName, sectionName)
+     * @param {HTMLElement} container - Container element
+     * @param {number} limit - Maximum number of products to display
+     */
+    renderNuoviArrivi(lines, container, limit = 4) {
+        if (!container) {
+            console.error('Container element not found');
+            return;
+        }
+
+        if (!lines || lines.length === 0) {
+            container.innerHTML = `
+                <div class="col-span-full text-center py-12">
+                    <p class="text-white/40 text-lg">Nessun prodotto disponibile al momento.</p>
+                </div>
+            `;
+            return;
+        }
+
+        const limitedLines = lines.slice(0, limit);
+        container.innerHTML = limitedLines
+            .map(line => this.renderNuoviArriviCard(line, line.brandName, line.sectionName))
+            .join('');
+    }
 }
 
 // Export for module usage

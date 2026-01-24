@@ -1,12 +1,11 @@
 <!DOCTYPE html>
-
 <html class="dark" lang="en"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Admin Brand Management | LIQUIDO</title>
+<title>LIQUIDO | Admin Orders Management</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <script id="tailwind-config">
         tailwind.config = {
@@ -21,7 +20,7 @@
                         "border-dark": "#393928",
                     },
                     fontFamily: {
-                        "display": ["Inter", "sans-serif"]
+                        "display": ["Plus Jakarta Sans", "sans-serif"]
                     },
                     borderRadius: {
                         "DEFAULT": "0.25rem",
@@ -34,11 +33,14 @@
         }
     </script>
 <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
         .material-symbols-outlined {
             font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
         }
-        body {
-            font-family: 'Inter', sans-serif;
+        .fill-icon {
+            font-variation-settings: 'FILL' 1;
         }
         .sidebar-active {
             background-color: #393928;
@@ -46,9 +48,8 @@
         }
     </style>
 </head>
-<body class="bg-background-light dark:bg-background-dark min-h-screen text-slate-900 dark:text-white">
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white min-h-screen">
 <div class="flex h-screen overflow-hidden">
-<!-- Side Navigation -->
 <!-- Sidebar Navigation -->
 <aside class="w-64 bg-background-light dark:bg-[#12120a] border-r border-slate-200 dark:border-[#393928] flex flex-col justify-between py-6 sticky top-0 h-screen">
 <div class="flex flex-col gap-8">
@@ -72,17 +73,17 @@
 <span class="material-symbols-outlined">inventory_2</span>
 <p class="text-sm font-medium">Products</p>
 </a>
-<a class="sidebar-active flex items-center gap-3 px-3 py-2.5 rounded-lg text-primary" href="index.html">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-[#baba9c] hover:bg-slate-100 dark:hover:bg-[#2a2a1a] transition-colors" href="../brands/index.html">
 <span class="material-symbols-outlined">loyalty</span>
-<p class="text-sm font-semibold">Brands</p>
+<p class="text-sm font-medium">Brands</p>
 </a>
 <a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-[#baba9c] hover:bg-slate-100 dark:hover:bg-[#2a2a1a] transition-colors" href="../users/index.html">
 <span class="material-symbols-outlined">people</span>
 <p class="text-sm font-medium">Users</p>
 </a>
-<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-[#baba9c] hover:bg-slate-100 dark:hover:bg-[#2a2a1a] transition-colors" href="../orders/index.html">
+<a class="sidebar-active flex items-center gap-3 px-3 py-2.5 rounded-lg text-primary" href="index.html">
 <span class="material-symbols-outlined">shopping_cart</span>
-<p class="text-sm font-medium">Orders</p>
+<p class="text-sm font-semibold">Orders</p>
 </a>
 <a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-[#baba9c] hover:bg-slate-100 dark:hover:bg-[#2a2a1a] transition-colors" href="../services/index.html">
 <span class="material-symbols-outlined">room_service</span>
@@ -103,62 +104,77 @@
 </div>
 </aside>
 <!-- Main Content Area -->
-<main class="flex-1 flex flex-col overflow-y-auto bg-background-light dark:bg-background-dark">
-<!-- Content Container -->
-<div class="p-8 max-w-7xl mx-auto w-full">
-<!-- Page Heading -->
-<div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8">
-<div class="space-y-2">
-<h1 class="text-white text-4xl font-black tracking-tight leading-none">Brand Management</h1>
-<p class="text-[#baba9c] text-lg font-normal">Manage and monitor your partner brand relationships across all regions.</p>
+<main class="flex-1 flex flex-col overflow-y-auto">
+<!-- Header Section -->
+<header class="p-8 pb-4">
+<div class="flex flex-wrap gap-2 mb-2">
+<a class="text-[#baba9c] text-sm font-medium hover:text-white transition-colors" href="../dashboard.html">Dashboard</a>
+<span class="text-[#baba9c] text-sm font-medium">/</span>
+<span class="text-white text-sm font-medium">Orders Management</span>
 </div>
-<a href="add.html" class="flex items-center justify-center gap-2 px-6 h-12 bg-primary text-background-dark rounded-xl font-bold shadow-lg shadow-primary/10 hover:scale-[1.02] active:scale-[0.98] transition-all">
-<span class="material-symbols-outlined font-bold">add</span>
-<span>Add New Brand</span>
-</a>
+<div class="flex flex-wrap justify-between items-end gap-4">
+<div>
+<h2 class="text-white text-4xl font-black leading-tight tracking-tight">Product Orders</h2>
+<p class="text-[#baba9c] text-sm mt-1">Total: <span id="total-orders-count" class="text-primary font-bold">0</span> orders</p>
 </div>
-<!-- Filters & View Switcher -->
-<div class="flex flex-col lg:flex-row gap-4 mb-8">
+</div>
+</header>
+<!-- Filters and Search -->
+<section class="px-8 py-4">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-4">
 <!-- Search Bar -->
-<div class="flex-1">
-<div class="relative group">
-<div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-[#baba9c] group-focus-within:text-primary transition-colors">
+<div class="lg:col-span-6">
+<div class="relative h-12">
+<div class="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none text-[#baba9c]">
 <span class="material-symbols-outlined">search</span>
 </div>
-<input id="brand-search-input" class="w-full h-14 pl-12 pr-4 rounded-xl bg-surface-dark border-none text-white focus:ring-2 focus:ring-primary/50 placeholder:text-[#baba9c] text-base transition-all" placeholder="Search partner brands by name, category or ID..." type="text"/>
+<input id="search-input" class="w-full h-full bg-border-dark border-none rounded-xl pl-12 text-white placeholder:text-[#baba9c] focus:ring-1 focus:ring-primary text-sm" placeholder="Search orders by product, customer, or date..." type="text"/>
 </div>
 </div>
-<!-- Action Bar / View Switcher -->
-<div class="flex items-center gap-2 bg-surface-dark p-1.5 rounded-xl border border-border-dark">
-<button id="grid-view-btn" class="flex items-center gap-2 px-4 py-2 rounded-lg bg-border-dark text-white text-sm font-semibold transition-all">
-<span class="material-symbols-outlined text-sm">grid_view</span>
-<span>Grid View</span>
-</button>
-<button id="list-view-btn" class="flex items-center gap-2 px-4 py-2 rounded-lg text-[#baba9c] hover:text-white text-sm font-semibold transition-all">
-<span class="material-symbols-outlined text-sm">format_list_bulleted</span>
-<span>List View</span>
-</button>
+<!-- Status Filter -->
+<div class="lg:col-span-6 flex flex-wrap gap-4 items-center justify-end">
+<select id="status-filter" class="px-4 py-2 rounded-xl bg-border-dark border-none text-white text-sm focus:ring-1 focus:ring-primary">
+<option value="all">All Status</option>
+<option value="pending">Pending</option>
+<option value="confirmed">Confirmed</option>
+<option value="completed">Completed</option>
+<option value="cancelled">Cancelled</option>
+</select>
 </div>
 </div>
-<!-- Loading State -->
-<div id="brands-loading" class="flex items-center justify-center py-20">
-<div class="flex flex-col items-center gap-4">
-<div class="size-12 border-4 border-primary/20 border-t-primary rounded-full animate-spin"></div>
-<p class="text-[#baba9c] text-sm font-medium">Chargement des marques...</p>
+</section>
+<!-- Table Section -->
+<section class="px-8 pb-8 flex-grow">
+<div class="bg-surface-dark border border-border-dark rounded-2xl overflow-hidden">
+<div id="loading-state" class="p-8 text-center">
+<div class="text-[#baba9c]">Loading orders...</div>
+</div>
+<div id="error-state" class="p-8 text-center hidden">
+<div class="text-red-500">Error loading orders. Please refresh the page.</div>
+</div>
+<table id="orders-table" class="w-full text-left border-collapse hidden">
+<thead>
+<tr class="bg-border-dark/30 border-b border-border-dark">
+<th class="px-6 py-4 text-[#baba9c] font-bold text-xs uppercase tracking-widest">Order Info</th>
+<th class="px-6 py-4 text-[#baba9c] font-bold text-xs uppercase tracking-widest">Customer</th>
+<th class="px-6 py-4 text-[#baba9c] font-bold text-xs uppercase tracking-widest">Product</th>
+<th class="px-6 py-4 text-[#baba9c] font-bold text-xs uppercase tracking-widest">Pickup Date/Time</th>
+<th class="px-6 py-4 text-[#baba9c] font-bold text-xs uppercase tracking-widest">Status</th>
+<th class="px-6 py-4 text-[#baba9c] font-bold text-xs uppercase tracking-widest">Created</th>
+<th class="px-6 py-4 text-[#baba9c] font-bold text-xs uppercase tracking-widest text-right">Actions</th>
+</tr>
+</thead>
+<tbody id="orders-tbody" class="divide-y divide-border-dark">
+<!-- Orders will be loaded dynamically from Firebase -->
+</tbody>
+</table>
+<div id="empty-state" class="p-12 text-center hidden">
+<span class="material-symbols-outlined text-6xl text-[#baba9c] mb-4">shopping_cart</span>
+<p class="text-[#baba9c] text-lg font-medium">No orders found</p>
+<p class="text-[#baba9c] text-sm mt-2">Orders will appear here once customers place them</p>
 </div>
 </div>
-<!-- Brands Grid -->
-<div id="admin-brands-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 hidden">
-<!-- Brands will be loaded dynamically from Firebase -->
-</div>
-<!-- Pagination -->
-<div id="brands-pagination" class="mt-12 flex items-center justify-between border-t border-border-dark pt-6 hidden">
-<p class="text-[#baba9c] text-sm">Showing <span id="brands-count" class="text-white font-bold">0</span> brands</p>
-<div class="flex items-center gap-2" id="pagination-controls">
-<!-- Pagination will be added dynamically if needed -->
-</div>
-</div>
-</div>
+</section>
 </main>
 </div>
 <!-- Firebase SDK -->
@@ -166,9 +182,9 @@
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-analytics-compat.js"></script>
+
+<!-- Services -->
 <script src="../../src/js/services/firebase-config.js"></script>
-<script src="../../src/js/services/firebase-catalog-service.js"></script>
-<script src="../../src/js/services/catalog-service.js"></script>
-<script src="../../src/js/modules/catalog-init.js"></script>
-<script src="../../src/js/admin/brands-list.js"></script>
+<script src="../../src/js/admin/orders-list-page.js"></script>
 </body></html>
+

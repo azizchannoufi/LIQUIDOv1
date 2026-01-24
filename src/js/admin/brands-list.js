@@ -6,20 +6,6 @@
 (async function() {
     'use strict';
     
-    // Wait for catalog initialization
-    let catalogService;
-    try {
-        if (window.catalogInit) {
-            const catalog = await window.catalogInit;
-            catalogService = catalog.service;
-        } else {
-            catalogService = new CatalogService();
-        }
-    } catch (error) {
-        console.error('Error initializing catalog service:', error);
-        catalogService = new CatalogService();
-    }
-    
     const brandsGrid = document.getElementById('admin-brands-grid');
     const brandsCount = document.getElementById('brands-count');
     const paginationDiv = document.getElementById('brands-pagination');
@@ -28,9 +14,41 @@
     
     if (!brandsGrid) return;
     
+    let catalogService;
     let allBrands = [];
     let filteredBrands = [];
     let currentView = 'grid';
+    
+    // Wait for catalog initialization
+    try {
+        // Wait for Firebase config to be available
+        if (typeof window.firebaseConfig === 'undefined' || !window.firebaseConfig.initializeFirebase) {
+            console.warn('Firebase config not loaded yet, waiting...');
+            await new Promise(resolve => {
+                const checkInterval = setInterval(() => {
+                    if (typeof window.firebaseConfig !== 'undefined' && window.firebaseConfig.initializeFirebase) {
+                        clearInterval(checkInterval);
+                        resolve();
+                    }
+                }, 100);
+            });
+        }
+        
+        if (window.catalogInit) {
+            const catalog = await window.catalogInit;
+            catalogService = catalog.service;
+        } else {
+            // Create new instance if catalogInit is not available
+            catalogService = new CatalogService();
+            await catalogService.initFirebase();
+        }
+    } catch (error) {
+        console.error('Error initializing catalog service:', error);
+        if (loadingDiv) loadingDiv.classList.add('hidden');
+        brandsGrid.innerHTML = '<p class="col-span-full text-center text-red-400 py-12">Erreur d\'initialisation: ' + error.message + '</p>';
+        brandsGrid.classList.remove('hidden');
+        return;
+    }
     
     async function loadAllBrands() {
         try {
@@ -71,7 +89,7 @@
         } catch (error) {
             console.error('Error loading brands:', error);
             if (loadingDiv) loadingDiv.classList.add('hidden');
-            brandsGrid.innerHTML = '<p class="col-span-full text-center text-red-400 py-12">Erreur lors du chargement des marques</p>';
+            brandsGrid.innerHTML = '<p class="col-span-full text-center text-red-400 py-12">Erreur lors du chargement des marques: ' + error.message + '</p>';
             brandsGrid.classList.remove('hidden');
         }
     }

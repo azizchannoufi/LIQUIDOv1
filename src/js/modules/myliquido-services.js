@@ -123,6 +123,50 @@ class MyLiquidoServices {
     }
 
     /**
+     * Service 3: Create product order for loyal customers
+     * @param {string} userId - User ID
+     * @param {Object} productInfo - Product information (name, details, etc.)
+     * @param {string} date - Selected pickup date
+     * @param {string} time - Selected pickup time
+     * @param {Object} userProfile - User profile data
+     * @returns {Promise<string>} WhatsApp URL
+     */
+    async createProductOrder(userId, productInfo, date, time, userProfile) {
+        await this.initialize();
+
+        try {
+            // Save order to Firebase
+            const orderData = {
+                productName: productInfo.name || 'N/A',
+                productDetails: productInfo.details || {},
+                date: date,
+                time: time,
+                createdAt: firebase.database.ServerValue.TIMESTAMP,
+                status: 'pending'
+            };
+
+            const orderRef = this.database.ref(`users/${userId}/orders`).push();
+            await orderRef.set(orderData);
+
+            // Generate WhatsApp message
+            const whatsappMessage = this._formatProductOrderMessage(
+                productInfo,
+                date,
+                time,
+                userProfile
+            );
+
+            // Generate WhatsApp URL
+            const whatsappUrl = this._generateWhatsAppUrl(whatsappMessage);
+
+            return whatsappUrl;
+        } catch (error) {
+            console.error('Error creating product order:', error);
+            throw new Error('Errore durante la creazione dell\'ordine. Riprova.');
+        }
+    }
+
+    /**
      * Format product request message for WhatsApp
      * @param {string} imageUrl - Product image URL
      * @param {string} message - User message
@@ -155,6 +199,31 @@ Data: ${date}
 Ora: ${time}
 
 Descrizione: ${description}
+
+Cliente: ${userProfile.name || 'N/A'}
+Email: ${userProfile.email || 'N/A'}
+Telefono: ${userProfile.phone || 'N/A'}`;
+    }
+
+    /**
+     * Format product order message for WhatsApp
+     * @param {Object} productInfo - Product information
+     * @param {string} date - Selected pickup date
+     * @param {string} time - Selected pickup time
+     * @param {Object} userProfile - User profile
+     * @returns {string} Formatted message
+     */
+    _formatProductOrderMessage(productInfo, date, time, userProfile) {
+        const productName = productInfo.name || 'Prodotto';
+        const productDesc = productInfo.description || '';
+        
+        return `Ciao! Vorrei ordinare un prodotto come cliente fedele.
+
+Prodotto: ${productName}
+${productDesc ? `Descrizione: ${productDesc}` : ''}
+
+Data di ritiro: ${date}
+Ora di ritiro: ${time}
 
 Cliente: ${userProfile.name || 'N/A'}
 Email: ${userProfile.email || 'N/A'}

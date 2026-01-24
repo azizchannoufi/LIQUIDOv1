@@ -44,6 +44,24 @@
         .accent-glow {
             box-shadow: 0 0 20px rgba(248, 237, 112, 0.2);
         }
+        .modal-overlay {
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+        .modal-content {
+            transform: scale(0.9) translateY(-20px);
+            opacity: 0;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+        .modal-overlay.active .modal-content {
+            transform: scale(1) translateY(0);
+            opacity: 1;
+        }
     </style>
 </head>
 <body class="bg-background-dark text-white transition-colors duration-300">
@@ -154,6 +172,10 @@
 <span class="material-symbols-outlined">chat</span>
 <span>Richiedi per Quantità</span>
 </a>
+<button id="btn-order-loyal" class="flex-1 flex min-w-[200px] items-center justify-center gap-2 rounded-xl h-14 px-8 bg-primary/20 border border-primary/40 text-primary text-base font-bold hover:bg-primary/30 transition-colors cursor-pointer">
+<span class="material-symbols-outlined">star</span>
+<span>Ordina per Clienti Fedeli</span>
+</button>
 </div>
 <div class="flex flex-col gap-4">
 <h3 class="text-white text-sm font-bold uppercase tracking-wider">Sensory Notes</h3>
@@ -295,8 +317,129 @@
 <a class="text-[#baba9c] text-xs hover:text-primary" href="#">Cookies Settings</a>
 </div>
 </div>
+<div class="max-w-[1440px] mx-auto pt-8 flex justify-center">
+    <img src="../assets/images/Logo bianco.png" alt="ADM Logo" class="h-16 object-contain opacity-80">
 </div>
+    </div>
 </footer>
 </div>
+
+    <!-- Modal Overlay -->
+    <div id="modal-overlay" class="modal-overlay fixed inset-0 z-[100] bg-black/80 backdrop-blur-sm">
+        <!-- Login Modal -->
+        <div id="login-modal" class="modal-content hidden fixed inset-0 flex items-center justify-center p-4">
+            <div class="bg-[#27271b] border border-[#54543b] rounded-xl p-8 max-w-md w-full relative">
+                <button id="close-login-modal" class="absolute top-4 right-4 text-[#baba9c] hover:text-white transition-colors">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+                <div class="mb-6">
+                    <h2 class="text-2xl font-bold mb-2">Accedi</h2>
+                    <p class="text-[#baba9c] text-sm">Inserisci le tue credenziali per accedere</p>
+                </div>
+                <form id="login-form" class="flex flex-col gap-5">
+                    <div class="flex flex-col gap-2">
+                        <label class="text-sm font-semibold text-[#baba9c]">Email</label>
+                        <input type="email" id="login-email" class="bg-[#181811] border border-[#393928] rounded-lg p-3 text-white focus:outline-none focus:border-primary" placeholder="email@example.com" required/>
+                    </div>
+                    <div class="flex flex-col gap-2">
+                        <label class="text-sm font-semibold text-[#baba9c]">Password</label>
+                        <input type="password" id="login-password" class="bg-[#181811] border border-[#393928] rounded-lg p-3 text-white focus:outline-none focus:border-primary" placeholder="••••••••" required/>
+                    </div>
+                    <div id="login-error" class="hidden text-red-400 text-sm"></div>
+                    <button type="submit" class="bg-primary hover:bg-white text-background-dark px-6 py-3 rounded-sm font-black text-xs uppercase tracking-widest transition-all">
+                        Accedi
+                    </button>
+                    <p class="text-center text-sm text-[#baba9c]">
+                        Non hai un account? 
+                        <button type="button" id="switch-to-signup" class="text-primary hover:text-white font-medium">Registrati</button>
+                    </p>
+                </form>
+            </div>
+        </div>
+
+        <!-- Signup Modal -->
+        <div id="signup-modal" class="modal-content hidden fixed inset-0 flex items-center justify-center p-4">
+            <div class="bg-[#27271b] border border-[#54543b] rounded-xl p-8 max-w-md w-full relative">
+                <button id="close-signup-modal" class="absolute top-4 right-4 text-[#baba9c] hover:text-white transition-colors">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+                <div class="mb-6">
+                    <h2 class="text-2xl font-bold mb-2">Registrati</h2>
+                    <p class="text-[#baba9c] text-sm">Crea un account per accedere ai servizi premium</p>
+                </div>
+                <form id="signup-form" class="flex flex-col gap-5">
+                    <div class="flex flex-col gap-2">
+                        <label class="text-sm font-semibold text-[#baba9c]">Nome Completo</label>
+                        <input type="text" id="signup-name" class="bg-[#181811] border border-[#393928] rounded-lg p-3 text-white focus:outline-none focus:border-primary" placeholder="Mario Rossi" required/>
+                    </div>
+                    <div class="flex flex-col gap-2">
+                        <label class="text-sm font-semibold text-[#baba9c]">Email</label>
+                        <input type="email" id="signup-email" class="bg-[#181811] border border-[#393928] rounded-lg p-3 text-white focus:outline-none focus:border-primary" placeholder="email@example.com" required/>
+                    </div>
+                    <div class="flex flex-col gap-2">
+                        <label class="text-sm font-semibold text-[#baba9c]">Telefono</label>
+                        <input type="tel" id="signup-phone" class="bg-[#181811] border border-[#393928] rounded-lg p-3 text-white focus:outline-none focus:border-primary" placeholder="+39 123 456 7890" required/>
+                    </div>
+                    <div class="flex flex-col gap-2">
+                        <label class="text-sm font-semibold text-[#baba9c]">Password</label>
+                        <input type="password" id="signup-password" class="bg-[#181811] border border-[#393928] rounded-lg p-3 text-white focus:outline-none focus:border-primary" placeholder="••••••••" minlength="6" required/>
+                    </div>
+                    <div class="flex flex-col gap-2">
+                        <label class="text-sm font-semibold text-[#baba9c]">Conferma Password</label>
+                        <input type="password" id="signup-password-confirm" class="bg-[#181811] border border-[#393928] rounded-lg p-3 text-white focus:outline-none focus:border-primary" placeholder="••••••••" minlength="6" required/>
+                    </div>
+                    <div id="signup-error" class="hidden text-red-400 text-sm"></div>
+                    <button type="submit" class="bg-primary hover:bg-white text-background-dark px-6 py-3 rounded-sm font-black text-xs uppercase tracking-widest transition-all">
+                        Registrati
+                    </button>
+                    <p class="text-center text-sm text-[#baba9c]">
+                        Hai già un account? 
+                        <button type="button" id="switch-to-login" class="text-primary hover:text-white font-medium">Accedi</button>
+                    </p>
+                </form>
+            </div>
+        </div>
+
+        <!-- Order Date/Time Picker Modal -->
+        <div id="order-modal" class="modal-content hidden fixed inset-0 flex items-center justify-center p-4">
+            <div class="bg-[#27271b] border border-[#54543b] rounded-xl p-8 max-w-md w-full relative">
+                <button id="close-order-modal" class="absolute top-4 right-4 text-[#baba9c] hover:text-white transition-colors">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+                <div class="mb-6">
+                    <h2 class="text-2xl font-bold mb-2">Prenota il tuo ordine</h2>
+                    <p class="text-[#baba9c] text-sm">Seleziona la data e l'ora per il ritiro del prodotto</p>
+                </div>
+                <form id="order-form" class="flex flex-col gap-5">
+                    <div class="flex flex-col gap-2">
+                        <label class="text-sm font-semibold text-[#baba9c]">Data</label>
+                        <input type="date" id="order-date" class="bg-[#181811] border border-[#393928] rounded-lg p-3 text-white focus:outline-none focus:border-primary" required/>
+                    </div>
+                    <div class="flex flex-col gap-2">
+                        <label class="text-sm font-semibold text-[#baba9c]">Ora</label>
+                        <input type="time" id="order-time" class="bg-[#181811] border border-[#393928] rounded-lg p-3 text-white focus:outline-none focus:border-primary" required/>
+                    </div>
+                    <div id="order-error" class="hidden text-red-400 text-sm"></div>
+                    <button type="submit" class="bg-primary hover:bg-white text-background-dark px-6 py-3 rounded-sm font-black text-xs uppercase tracking-widest transition-all">
+                        Conferma Ordine
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-analytics-compat.js"></script>
+
+    <!-- Firebase Services -->
+    <script src="../src/js/services/firebase-config.js"></script>
+    <script src="../src/js/services/firebase-auth.js"></script>
+    <script src="../src/js/modules/myliquido-services.js"></script>
+
+    <!-- Page Scripts -->
+    <script src="../src/js/pages/product-detail-page.js"></script>
     <script src="../src/js/modules/age-verification.js"></script>
 </body></html>
