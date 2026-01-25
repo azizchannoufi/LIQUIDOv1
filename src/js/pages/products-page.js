@@ -17,6 +17,7 @@
     // Get URL parameters
     const urlParams = new URLSearchParams(window.location.search);
     const brandName = urlParams.get('brand');
+    const lineName = urlParams.get('line');
     const sectionId = urlParams.get('section');
     const sectionParam = urlParams.get('sectionId');
     
@@ -30,7 +31,44 @@
     const brandHeaderContainer = document.querySelector('.brand-header-container');
     
     // Render products
-    if (brandName) {
+    if (brandName && lineName) {
+        // Filter by both brand and line
+        if (brandHeaderContainer) {
+            const brand = sectionId 
+                ? await service.getBrandByNameInSection(sectionId, brandName)
+                : await service.getBrandByName(brandName);
+            
+            if (brand) {
+                productsRenderer.renderBrandHeader(brand, brandHeaderContainer);
+            }
+        }
+        
+        // Get lines for the brand and filter by line name
+        if (productsContainer) {
+            const lines = await service.getBrandLines(brandName, sectionId || null);
+            const filteredLine = lines.find(line => line.name.toLowerCase() === lineName.toLowerCase());
+            
+            if (filteredLine) {
+                const brand = sectionId 
+                    ? await service.getBrandByNameInSection(sectionId, brandName)
+                    : await service.getBrandByName(brandName);
+                
+                const lineWithBrand = {
+                    ...filteredLine,
+                    brandName: brandName,
+                    brandLogo: brand ? brand.logo_url : ''
+                };
+                
+                productsRenderer.renderProductLinesGrid([lineWithBrand], productsContainer);
+            } else {
+                productsContainer.innerHTML = `
+                    <div class="col-span-full text-center py-12">
+                        <p class="text-white/40 text-lg">Ligne "${lineName}" non trouvée pour ${brandName}.</p>
+                    </div>
+                `;
+            }
+        }
+    } else if (brandName) {
         // Render brand header if container exists
         if (brandHeaderContainer) {
             const brand = sectionId 

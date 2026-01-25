@@ -207,6 +207,21 @@
 <span class="carousel-dot w-3 h-3 rounded-full bg-white/30 dark:bg-white/30 bg-black/30 cursor-pointer transition-all hover:bg-white/50 dark:hover:bg-white/50 hover:bg-black/50"></span>
 <span class="carousel-dot w-3 h-3 rounded-full bg-white/30 dark:bg-white/30 bg-black/30 cursor-pointer transition-all hover:bg-white/50 dark:hover:bg-white/50 hover:bg-black/50"></span>
 </div>
+    </div>
+</div>
+</section>
+<!-- Lines Carousel Section -->
+<section class="pt-20 pb-12 bg-background-dark dark:bg-background-dark bg-white">
+<div class="w-full">
+<div class="text-center mb-8 px-6 lg:px-20">
+<h2 class="text-4xl lg:text-5xl text-bold-modern uppercase text-background-dark dark:text-white mb-4">Le Nostre Linee</h2>
+<p class="text-slate-500 dark:text-slate-500 text-slate-600 max-w-2xl mx-auto font-medium">Scopri le nostre linee di prodotti premium selezionate per te</p>
+</div>
+<div id="lines-carousel-container" class="min-h-[500px] md:min-h-[600px] w-full">
+<!-- Lines carousel will be loaded dynamically from Firebase -->
+<div class="flex items-center justify-center h-[500px] md:h-[600px]">
+<p class="text-white/40 dark:text-white/40 text-background-dark/40 text-lg">Caricamento linee...</p>
+</div>
 </div>
 </div>
 </section>
@@ -462,8 +477,41 @@
     <script src="../src/js/modules/products-renderer.js"></script>
     <script src="../src/js/modules/catalog-init.js"></script>
     
-    <!-- Initialize Brands Carousel -->
+    <!-- Initialize Lines Carousel -->
     <script>
+        (async function() {
+            try {
+                // Wait for catalog initialization
+                if (!window.catalogInit) {
+                    await new Promise(resolve => {
+                        const checkCatalog = setInterval(() => {
+                            if (window.catalogInit) {
+                                clearInterval(checkCatalog);
+                                resolve();
+                            }
+                        }, 100);
+                    });
+                }
+                
+                const catalog = await window.catalogInit;
+                
+                if (!catalog || !catalog.brandsRenderer) {
+                    console.error('BrandsRenderer not available:', catalog);
+                    return;
+                }
+                
+                const { brandsRenderer } = catalog;
+                const linesContainer = document.getElementById('lines-carousel-container');
+                
+                if (linesContainer && brandsRenderer) {
+                    await brandsRenderer.renderLinesCarouselFromDB(linesContainer);
+                }
+            } catch (error) {
+                console.error('Error initializing lines carousel:', error);
+            }
+        })();
+        
+        // Initialize Brands Carousel
         (async function() {
             try {
                 // Wait for catalog initialization

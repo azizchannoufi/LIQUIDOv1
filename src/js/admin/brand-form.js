@@ -117,27 +117,52 @@
         
         const lineIndex = container.children.length;
         const lineDiv = document.createElement('div');
-        lineDiv.className = 'flex flex-col md:flex-row gap-4 p-4 bg-background-dark/30 rounded-lg border border-border-dark';
+        lineDiv.className = 'flex flex-col gap-4 p-4 bg-background-dark/30 rounded-lg border border-border-dark';
         lineDiv.innerHTML = `
-            <div class="flex-1">
-                <label class="text-white text-sm font-semibold mb-2 block">Line Name *</label>
-                <input type="text" 
-                       name="lines[${lineIndex}][name]" 
-                       class="form-input w-full rounded-lg text-white border border-border-dark bg-background-dark/50 focus:border-primary focus:ring-1 focus:ring-primary h-10 px-3 text-sm" 
-                       placeholder="e.g. RE-BRAND, FLAVOURBAR" 
-                       required/>
+            <div class="flex flex-col md:flex-row gap-4">
+                <div class="flex-1">
+                    <label class="text-white text-sm font-semibold mb-2 block">Line Name *</label>
+                    <input type="text" 
+                           name="lines[${lineIndex}][name]" 
+                           class="form-input w-full rounded-lg text-white border border-border-dark bg-background-dark/50 focus:border-primary focus:ring-1 focus:ring-primary h-10 px-3 text-sm" 
+                           placeholder="e.g. RE-BRAND, FLAVOURBAR" 
+                           required/>
+                </div>
+                <div class="flex items-end">
+                    <button type="button" class="remove-line-btn px-4 py-2 bg-red-500/20 hover:bg-red-500/30 text-red-400 rounded-lg transition-all text-sm font-bold border border-red-500/30">
+                        <span class="material-symbols-outlined text-sm">delete</span>
+                    </button>
+                </div>
             </div>
-            <div class="flex-1">
-                <label class="text-white text-sm font-semibold mb-2 block">Image URL</label>
-                <input type="text" 
-                       name="lines[${lineIndex}][image_url]" 
-                       class="form-input w-full rounded-lg text-white border border-border-dark bg-background-dark/50 focus:border-primary focus:ring-1 focus:ring-primary h-10 px-3 text-sm" 
-                       placeholder="/images/products/brand/line.jpg"/>
-            </div>
-            <div class="flex items-end">
-                <button type="button" class="remove-line-btn px-4 py-2 bg-red-500/20 hover:bg-red-500/30 text-red-400 rounded-lg transition-all text-sm font-bold border border-red-500/30">
-                    <span class="material-symbols-outlined text-sm">delete</span>
-                </button>
+            <div class="flex flex-col md:flex-row gap-8 items-start">
+                <div class="flex flex-col items-center gap-4">
+                    <p class="text-white text-sm font-semibold w-full">Line Image Preview</p>
+                    <div class="size-32 rounded-xl bg-background-dark border-2 border-dashed border-border-dark flex items-center justify-center overflow-hidden group relative" id="line-preview-${lineIndex}">
+                        <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity cursor-pointer">
+                            <span class="material-symbols-outlined text-white text-3xl">edit</span>
+                        </div>
+                        <img id="line-preview-img-${lineIndex}" class="w-full h-full object-contain hidden" alt="Line image preview"/>
+                        <span class="text-muted-dark text-sm">No image</span>
+                    </div>
+                    <p class="text-muted-dark text-xs">SVG, PNG or JPG. Max 2MB.</p>
+                </div>
+                <div class="flex-1 w-full">
+                    <p class="text-white text-sm font-semibold mb-2">Image URL</p>
+                    <input type="text" 
+                           name="lines[${lineIndex}][image_url]" 
+                           id="line-image-url-${lineIndex}"
+                           class="form-input w-full rounded-lg text-white border border-border-dark bg-background-dark/50 focus:border-primary focus:ring-1 focus:ring-primary h-10 px-3 text-sm mb-2" 
+                           placeholder="/images/products/brand/line.jpg"/>
+                    <p class="text-muted-dark text-xs mb-4">Or upload a file:</p>
+                    <div class="w-full border-2 border-dashed border-border-dark rounded-xl p-8 flex flex-col items-center justify-center bg-background-dark/20 hover:bg-background-dark/40 hover:border-primary/50 transition-all cursor-pointer">
+                        <input type="file" id="line-upload-${lineIndex}" accept="image/*" class="hidden"/>
+                        <label for="line-upload-${lineIndex}" class="cursor-pointer text-center">
+                            <span class="material-symbols-outlined text-4xl text-muted-dark mb-2 block">cloud_upload</span>
+                            <p class="text-white text-base font-medium">Click to upload or drag and drop</p>
+                            <p class="text-muted-dark text-sm">Recommended size: 800x800px</p>
+                        </label>
+                    </div>
+                </div>
             </div>
         `;
         
@@ -145,6 +170,101 @@
         removeBtn.addEventListener('click', () => {
             lineDiv.remove();
         });
+        
+        // Setup image URL preview handler
+        const imageUrlInput = lineDiv.querySelector(`#line-image-url-${lineIndex}`);
+        const imagePreview = lineDiv.querySelector(`#line-preview-img-${lineIndex}`);
+        const previewContainer = lineDiv.querySelector(`#line-preview-${lineIndex}`);
+        
+        if (imageUrlInput && imagePreview) {
+            imageUrlInput.addEventListener('input', (e) => {
+                const url = e.target.value;
+                if (url) {
+                    imagePreview.src = url;
+                    imagePreview.classList.remove('hidden');
+                    previewContainer.querySelector('span').classList.add('hidden');
+                } else {
+                    imagePreview.classList.add('hidden');
+                    previewContainer.querySelector('span').classList.remove('hidden');
+                }
+            });
+        }
+        
+        // Setup Cloudinary upload handler
+        const lineUpload = lineDiv.querySelector(`#line-upload-${lineIndex}`);
+        if (lineUpload) {
+            lineUpload.addEventListener('change', async function(e) {
+                const file = e.target.files[0];
+                if (!file) return;
+                
+                // Show loading state
+                const uploadArea = lineUpload.closest('div');
+                const originalContent = uploadArea?.innerHTML;
+                if (uploadArea) {
+                    uploadArea.innerHTML = '<div class="flex flex-col items-center gap-2"><div class="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div><p class="text-sm text-white">Uploading...</p></div>';
+                }
+                
+                try {
+                    // Validate file
+                    if (!file.type.startsWith('image/')) {
+                        throw new Error('Please select an image file');
+                    }
+                    
+                    // Ensure Cloudinary is initialized
+                    if (!window.cloudinaryService) {
+                        throw new Error('Cloudinary service not available. Please check configuration.');
+                    }
+                    
+                    // Get user ID (use a default if not authenticated)
+                    const userId = 'admin_line_' + Date.now();
+                    
+                    // Upload to Cloudinary
+                    const imageUrl = await window.cloudinaryService.uploadProductImage(
+                        file,
+                        userId,
+                        (progress) => {
+                            console.log('Upload progress:', progress + '%');
+                        }
+                    );
+                    
+                    // Update preview and URL input
+                    if (imagePreview) {
+                        imagePreview.src = imageUrl;
+                        imagePreview.classList.remove('hidden');
+                        const noImageSpan = previewContainer.querySelector('span');
+                        if (noImageSpan) noImageSpan.classList.add('hidden');
+                    }
+                    
+                    if (imageUrlInput) {
+                        imageUrlInput.value = imageUrl;
+                    }
+                    
+                    // Restore upload area
+                    if (uploadArea && originalContent) {
+                        uploadArea.innerHTML = originalContent;
+                        // Re-attach event listener
+                        const newUpload = document.getElementById(`line-upload-${lineIndex}`);
+                        if (newUpload) {
+                            newUpload.addEventListener('change', arguments.callee);
+                        }
+                    }
+                    
+                    alert('✅ Line image uploaded successfully to Cloudinary!');
+                } catch (error) {
+                    console.error('Error uploading line image:', error);
+                    alert('❌ Error uploading line image: ' + error.message);
+                    
+                    // Restore upload area
+                    if (uploadArea && originalContent) {
+                        uploadArea.innerHTML = originalContent;
+                        const newUpload = document.getElementById(`line-upload-${lineIndex}`);
+                        if (newUpload) {
+                            newUpload.addEventListener('change', arguments.callee);
+                        }
+                    }
+                }
+            });
+        }
         
         container.appendChild(lineDiv);
     }
@@ -189,29 +309,55 @@
                         const container = document.getElementById('product-lines-container');
                         brand.lines.forEach((line, index) => {
                             const lineDiv = document.createElement('div');
-                            lineDiv.className = 'flex flex-col md:flex-row gap-4 p-4 bg-background-dark/30 rounded-lg border border-border-dark';
+                            lineDiv.className = 'flex flex-col gap-4 p-4 bg-background-dark/30 rounded-lg border border-border-dark';
+                            const imageUrl = line.image_url || '';
                             lineDiv.innerHTML = `
-                                <div class="flex-1">
-                                    <label class="text-white text-sm font-semibold mb-2 block">Line Name *</label>
-                                    <input type="text" 
-                                           name="lines[${index}][name]" 
-                                           class="form-input w-full rounded-lg text-white border border-border-dark bg-background-dark/50 focus:border-primary focus:ring-1 focus:ring-primary h-10 px-3 text-sm" 
-                                           placeholder="e.g. RE-BRAND, FLAVOURBAR" 
-                                           value="${line.name || ''}"
-                                           required/>
+                                <div class="flex flex-col md:flex-row gap-4">
+                                    <div class="flex-1">
+                                        <label class="text-white text-sm font-semibold mb-2 block">Line Name *</label>
+                                        <input type="text" 
+                                               name="lines[${index}][name]" 
+                                               class="form-input w-full rounded-lg text-white border border-border-dark bg-background-dark/50 focus:border-primary focus:ring-1 focus:ring-primary h-10 px-3 text-sm" 
+                                               placeholder="e.g. RE-BRAND, FLAVOURBAR" 
+                                               value="${line.name || ''}"
+                                               required/>
+                                    </div>
+                                    <div class="flex items-end">
+                                        <button type="button" class="remove-line-btn px-4 py-2 bg-red-500/20 hover:bg-red-500/30 text-red-400 rounded-lg transition-all text-sm font-bold border border-red-500/30">
+                                            <span class="material-symbols-outlined text-sm">delete</span>
+                                        </button>
+                                    </div>
                                 </div>
-                                <div class="flex-1">
-                                    <label class="text-white text-sm font-semibold mb-2 block">Image URL</label>
-                                    <input type="text" 
-                                           name="lines[${index}][image_url]" 
-                                           class="form-input w-full rounded-lg text-white border border-border-dark bg-background-dark/50 focus:border-primary focus:ring-1 focus:ring-primary h-10 px-3 text-sm" 
-                                           placeholder="/images/products/brand/line.jpg"
-                                           value="${line.image_url || ''}"/>
-                                </div>
-                                <div class="flex items-end">
-                                    <button type="button" class="remove-line-btn px-4 py-2 bg-red-500/20 hover:bg-red-500/30 text-red-400 rounded-lg transition-all text-sm font-bold border border-red-500/30">
-                                        <span class="material-symbols-outlined text-sm">delete</span>
-                                    </button>
+                                <div class="flex flex-col md:flex-row gap-8 items-start">
+                                    <div class="flex flex-col items-center gap-4">
+                                        <p class="text-white text-sm font-semibold w-full">Line Image Preview</p>
+                                        <div class="size-32 rounded-xl bg-background-dark border-2 border-dashed border-border-dark flex items-center justify-center overflow-hidden group relative" id="line-preview-${index}">
+                                            <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity cursor-pointer">
+                                                <span class="material-symbols-outlined text-white text-3xl">edit</span>
+                                            </div>
+                                            <img id="line-preview-img-${index}" class="w-full h-full object-contain ${imageUrl ? '' : 'hidden'}" src="${imageUrl}" alt="Line image preview"/>
+                                            <span class="text-muted-dark text-sm ${imageUrl ? 'hidden' : ''}">No image</span>
+                                        </div>
+                                        <p class="text-muted-dark text-xs">SVG, PNG or JPG. Max 2MB.</p>
+                                    </div>
+                                    <div class="flex-1 w-full">
+                                        <p class="text-white text-sm font-semibold mb-2">Image URL</p>
+                                        <input type="text" 
+                                               name="lines[${index}][image_url]" 
+                                               id="line-image-url-${index}"
+                                               class="form-input w-full rounded-lg text-white border border-border-dark bg-background-dark/50 focus:border-primary focus:ring-1 focus:ring-primary h-10 px-3 text-sm mb-2" 
+                                               placeholder="/images/products/brand/line.jpg"
+                                               value="${imageUrl}"/>
+                                        <p class="text-muted-dark text-xs mb-4">Or upload a file:</p>
+                                        <div class="w-full border-2 border-dashed border-border-dark rounded-xl p-8 flex flex-col items-center justify-center bg-background-dark/20 hover:bg-background-dark/40 hover:border-primary/50 transition-all cursor-pointer">
+                                            <input type="file" id="line-upload-${index}" accept="image/*" class="hidden"/>
+                                            <label for="line-upload-${index}" class="cursor-pointer text-center">
+                                                <span class="material-symbols-outlined text-4xl text-muted-dark mb-2 block">cloud_upload</span>
+                                                <p class="text-white text-base font-medium">Click to upload or drag and drop</p>
+                                                <p class="text-muted-dark text-sm">Recommended size: 800x800px</p>
+                                            </label>
+                                        </div>
+                                    </div>
                                 </div>
                             `;
                             
@@ -219,6 +365,101 @@
                             removeBtn.addEventListener('click', () => {
                                 lineDiv.remove();
                             });
+                            
+                            // Setup image URL preview handler
+                            const imageUrlInput = lineDiv.querySelector(`#line-image-url-${index}`);
+                            const imagePreview = lineDiv.querySelector(`#line-preview-img-${index}`);
+                            const previewContainer = lineDiv.querySelector(`#line-preview-${index}`);
+                            
+                            if (imageUrlInput && imagePreview) {
+                                imageUrlInput.addEventListener('input', (e) => {
+                                    const url = e.target.value;
+                                    if (url) {
+                                        imagePreview.src = url;
+                                        imagePreview.classList.remove('hidden');
+                                        previewContainer.querySelector('span').classList.add('hidden');
+                                    } else {
+                                        imagePreview.classList.add('hidden');
+                                        previewContainer.querySelector('span').classList.remove('hidden');
+                                    }
+                                });
+                            }
+                            
+                            // Setup Cloudinary upload handler
+                            const lineUpload = lineDiv.querySelector(`#line-upload-${index}`);
+                            if (lineUpload) {
+                                lineUpload.addEventListener('change', async function(e) {
+                                    const file = e.target.files[0];
+                                    if (!file) return;
+                                    
+                                    // Show loading state
+                                    const uploadArea = lineUpload.closest('div');
+                                    const originalContent = uploadArea?.innerHTML;
+                                    if (uploadArea) {
+                                        uploadArea.innerHTML = '<div class="flex flex-col items-center gap-2"><div class="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div><p class="text-sm text-white">Uploading...</p></div>';
+                                    }
+                                    
+                                    try {
+                                        // Validate file
+                                        if (!file.type.startsWith('image/')) {
+                                            throw new Error('Please select an image file');
+                                        }
+                                        
+                                        // Ensure Cloudinary is initialized
+                                        if (!window.cloudinaryService) {
+                                            throw new Error('Cloudinary service not available. Please check configuration.');
+                                        }
+                                        
+                                        // Get user ID (use a default if not authenticated)
+                                        const userId = 'admin_line_' + Date.now();
+                                        
+                                        // Upload to Cloudinary
+                                        const uploadedImageUrl = await window.cloudinaryService.uploadProductImage(
+                                            file,
+                                            userId,
+                                            (progress) => {
+                                                console.log('Upload progress:', progress + '%');
+                                            }
+                                        );
+                                        
+                                        // Update preview and URL input
+                                        if (imagePreview) {
+                                            imagePreview.src = uploadedImageUrl;
+                                            imagePreview.classList.remove('hidden');
+                                            const noImageSpan = previewContainer.querySelector('span');
+                                            if (noImageSpan) noImageSpan.classList.add('hidden');
+                                        }
+                                        
+                                        if (imageUrlInput) {
+                                            imageUrlInput.value = uploadedImageUrl;
+                                        }
+                                        
+                                        // Restore upload area
+                                        if (uploadArea && originalContent) {
+                                            uploadArea.innerHTML = originalContent;
+                                            // Re-attach event listener
+                                            const newUpload = document.getElementById(`line-upload-${index}`);
+                                            if (newUpload) {
+                                                newUpload.addEventListener('change', arguments.callee);
+                                            }
+                                        }
+                                        
+                                        alert('✅ Line image uploaded successfully to Cloudinary!');
+                                    } catch (error) {
+                                        console.error('Error uploading line image:', error);
+                                        alert('❌ Error uploading line image: ' + error.message);
+                                        
+                                        // Restore upload area
+                                        if (uploadArea && originalContent) {
+                                            uploadArea.innerHTML = originalContent;
+                                            const newUpload = document.getElementById(`line-upload-${index}`);
+                                            if (newUpload) {
+                                                newUpload.addEventListener('change', arguments.callee);
+                                            }
+                                        }
+                                    }
+                                });
+                            }
                             
                             container.appendChild(lineDiv);
                         });

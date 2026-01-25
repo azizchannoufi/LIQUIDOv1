@@ -330,6 +330,238 @@ class BrandsRenderer {
             container.innerHTML = '<p class="text-gray-600 dark:text-white/40 text-center">Erreur lors du chargement des marques</p>';
         }
     }
+
+    /**
+     * Render lines carousel for homepage
+     * @param {Array} lines - Array of line objects with brandName, brandLogo, sectionId, sectionName
+     * @param {HTMLElement} container - Container element
+     */
+    renderLinesCarousel(lines, container) {
+        if (!container) {
+            console.error('Container element not found');
+            return;
+        }
+
+        // Filter lines that have valid images (very strict filtering)
+        const linesWithImages = lines.filter(line => {
+            const imageUrl = line.image_url;
+            
+            // Very strict validation
+            if (!imageUrl) return false;
+            if (typeof imageUrl !== 'string') return false;
+            const trimmedUrl = imageUrl.trim();
+            if (trimmedUrl === '' || trimmedUrl === 'null' || trimmedUrl === 'undefined') return false;
+            
+            // Check if it's a valid URL format
+            const isValidUrl = trimmedUrl.startsWith('http://') || 
+                              trimmedUrl.startsWith('https://') || 
+                              trimmedUrl.startsWith('/') || 
+                              trimmedUrl.startsWith('data:image');
+            
+            return isValidUrl;
+        });
+        
+        if (linesWithImages.length === 0) {
+            container.innerHTML = '<p class="text-gray-600 dark:text-white/40 text-center py-12">Aucune ligne avec image disponible pour le moment.</p>';
+            return;
+        }
+
+        // Display 1 image per slide on mobile, 2 on tablet, 1 on desktop for maximum size
+        const linesPerSlide = 1;
+        const totalSlides = Math.ceil(linesWithImages.length / linesPerSlide);
+        
+        let carouselHTML = `
+            <div class="relative">
+                <div class="lines-carousel-wrapper overflow-hidden">
+                    <div class="lines-carousel-track flex transition-transform duration-500 ease-in-out" style="transform: translateX(0);">
+        `;
+
+        for (let i = 0; i < totalSlides; i++) {
+            const slideLines = linesWithImages.slice(i * linesPerSlide, (i + 1) * linesPerSlide);
+            
+            // Filter out any lines without valid images in this slide (double-check)
+            const validSlideLines = slideLines.filter(line => {
+                const imageUrl = line.image_url;
+                if (!imageUrl || typeof imageUrl !== 'string') return false;
+                const trimmedUrl = imageUrl.trim();
+                return trimmedUrl !== '' && 
+                       trimmedUrl !== 'null' && 
+                       trimmedUrl !== 'undefined' &&
+                       (trimmedUrl.startsWith('http://') || 
+                        trimmedUrl.startsWith('https://') || 
+                        trimmedUrl.startsWith('/') || 
+                        trimmedUrl.startsWith('data:image'));
+            });
+            
+            // Skip empty slides
+            if (validSlideLines.length === 0) {
+                continue;
+            }
+            
+            carouselHTML += `
+                <div class="lines-carousel-slide min-w-full flex items-center justify-center">
+                    <div class="w-full">
+            `;
+            
+            validSlideLines.forEach(line => {
+                const imageUrl = line.image_url;
+                const brandName = line.brandName || '';
+                const lineName = line.name || '';
+                const sectionId = line.sectionId || '';
+                
+                // Create navigation URL
+                const params = new URLSearchParams({
+                    brand: brandName,
+                    line: lineName
+                });
+                if (sectionId) {
+                    params.set('section', sectionId);
+                }
+                const navUrl = `products.html?${params.toString()}`;
+                
+                carouselHTML += `
+                    <a href="${navUrl}" class="group lines-carousel-item block cursor-pointer w-full mb-0">
+                        <div class="relative overflow-hidden bg-gradient-to-br from-zinc-800 to-zinc-900 border-0 hover:border-primary/50 transition-all duration-300">
+                            <div class="aspect-[16/9] md:aspect-[21/9] lg:aspect-[24/9] relative overflow-hidden w-full">
+                                <img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" 
+                                     alt="${lineName} - ${brandName}" 
+                                     src="${imageUrl}" 
+                                     onerror="this.parentElement.parentElement.parentElement.style.display='none';"/>
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent"></div>
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                            </div>
+                            <div class="absolute bottom-0 left-0 right-0 p-6 md:p-8 transform translate-y-0 group-hover:-translate-y-2 transition-transform duration-300">
+                                <p class="text-primary text-xs md:text-sm font-black uppercase tracking-widest mb-2">${brandName}</p>
+                                <h3 class="text-2xl md:text-3xl lg:text-4xl font-black text-white group-hover:text-primary transition-colors leading-tight">${lineName}</h3>
+                            </div>
+                        </div>
+                    </a>
+                `;
+            });
+            
+            carouselHTML += `
+                    </div>
+                </div>
+            `;
+        }
+
+        carouselHTML += `
+                    </div>
+                </div>
+        `;
+
+        if (totalSlides > 1) {
+            carouselHTML += `
+                <div class="flex justify-center gap-2 mt-6">
+            `;
+            
+            for (let i = 0; i < totalSlides; i++) {
+                carouselHTML += `
+                    <button class="lines-carousel-dot w-2 h-2 rounded-full ${i === 0 ? 'bg-primary w-8' : 'bg-white/30'} cursor-pointer transition-all hover:bg-white/50" data-slide="${i}"></button>
+                `;
+            }
+            
+            carouselHTML += `</div>`;
+        }
+
+        carouselHTML += `</div>`;
+        container.innerHTML = carouselHTML;
+
+        if (totalSlides > 1) {
+            this.initLinesCarousel(container);
+        }
+    }
+
+    /**
+     * Initialize lines carousel functionality
+     * @param {HTMLElement} container - Container element
+     */
+    initLinesCarousel(container) {
+        const track = container.querySelector('.lines-carousel-track');
+        const slides = container.querySelectorAll('.lines-carousel-slide');
+        const dots = container.querySelectorAll('.lines-carousel-dot');
+        
+        if (!track || slides.length === 0) return;
+        
+        let currentSlide = 0;
+        const totalSlides = slides.length;
+
+        const updateCarousel = () => {
+            track.style.transform = `translateX(-${currentSlide * 100}%)`;
+            dots.forEach((dot, index) => {
+                if (index === currentSlide) {
+                    dot.classList.add('bg-primary', 'w-8');
+                    dot.classList.remove('bg-white/30', 'w-2');
+                } else {
+                    dot.classList.remove('bg-primary', 'w-8');
+                    dot.classList.add('bg-white/30', 'w-2');
+                }
+            });
+        };
+
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                currentSlide = index;
+                updateCarousel();
+            });
+        });
+
+        // Auto-play carousel
+        let autoPlayInterval = setInterval(() => {
+            currentSlide = (currentSlide + 1) % totalSlides;
+            updateCarousel();
+        }, 5000);
+
+        // Pause on hover
+        const carouselWrapper = container.querySelector('.lines-carousel-wrapper');
+        if (carouselWrapper) {
+            carouselWrapper.addEventListener('mouseenter', () => {
+                clearInterval(autoPlayInterval);
+            });
+            carouselWrapper.addEventListener('mouseleave', () => {
+                autoPlayInterval = setInterval(() => {
+                    currentSlide = (currentSlide + 1) % totalSlides;
+                    updateCarousel();
+                }, 5000);
+            });
+        }
+    }
+
+    /**
+     * Load and render lines carousel from database
+     * @param {HTMLElement} container - Container element
+     */
+    async renderLinesCarouselFromDB(container) {
+        try {
+            const allLines = await this.catalogService.getAllLinesFromAllSections();
+            
+            // Filter lines with valid images before rendering (very strict filtering)
+            const linesWithImages = allLines.filter(line => {
+                const imageUrl = line.image_url;
+                
+                // Very strict validation
+                if (!imageUrl) return false;
+                if (typeof imageUrl !== 'string') return false;
+                const trimmedUrl = imageUrl.trim();
+                if (trimmedUrl === '' || trimmedUrl === 'null' || trimmedUrl === 'undefined') return false;
+                
+                // Check if it's a valid URL format
+                const isValidUrl = trimmedUrl.startsWith('http://') || 
+                                  trimmedUrl.startsWith('https://') || 
+                                  trimmedUrl.startsWith('/') || 
+                                  trimmedUrl.startsWith('data:image');
+                
+                return isValidUrl;
+            });
+            
+            console.log(`Lines carousel: ${linesWithImages.length} lines with images out of ${allLines.length} total lines`);
+            
+            this.renderLinesCarousel(linesWithImages, container);
+        } catch (error) {
+            console.error('Error loading lines for carousel:', error);
+            container.innerHTML = '<p class="text-gray-600 dark:text-white/40 text-center py-12">Erreur lors du chargement des lignes</p>';
+        }
+    }
 }
 
 // Export for module usage
