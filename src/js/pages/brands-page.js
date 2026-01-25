@@ -74,18 +74,25 @@
     }
     
     // Setup section filter buttons
-    document.querySelectorAll('[data-section-id]').forEach(btn => {
+    const filterButtons = document.querySelectorAll('.section-filter-btn, [data-section-id]');
+    filterButtons.forEach(btn => {
         btn.addEventListener('click', async (e) => {
             const sectionId = e.currentTarget.dataset.sectionId;
-            await brandsRenderer.renderBrandsBySection(sectionId, brandsContainer);
             
-            // Update active state
-            document.querySelectorAll('[data-section-id]').forEach(b => {
+            // Render brands based on filter
+            if (sectionId === 'all') {
+                await brandsRenderer.renderAllBrands(brandsContainer);
+            } else {
+                await brandsRenderer.renderBrandsBySection(sectionId, brandsContainer);
+            }
+            
+            // Update active state with smooth transition
+            filterButtons.forEach(b => {
                 b.classList.remove('bg-primary', 'text-black');
-                b.classList.add('bg-white/5', 'text-white/70');
+                b.classList.add('bg-white/5', 'dark:bg-white/5', 'bg-gray-100', 'text-gray-700', 'dark:text-white/70');
             });
+            e.currentTarget.classList.remove('bg-white/5', 'dark:bg-white/5', 'bg-gray-100', 'text-gray-700', 'dark:text-white/70', 'hover:bg-white/10', 'dark:hover:bg-white/10', 'hover:bg-gray-200');
             e.currentTarget.classList.add('bg-primary', 'text-black');
-            e.currentTarget.classList.remove('bg-white/5', 'text-white/70');
         });
     });
 })();

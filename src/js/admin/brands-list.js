@@ -116,7 +116,7 @@
             brandsGrid.className = 'flex flex-col gap-4';
             brandsGrid.innerHTML = brands.map(brand => `
                 <div class="group flex items-center gap-6 bg-surface-dark border border-border-dark rounded-xl p-6 hover:border-primary/40 transition-all">
-                    <div class="w-20 h-20 rounded-lg bg-gradient-to-br from-border-dark to-background-dark flex items-center justify-center border border-white/10 flex-shrink-0 overflow-hidden">
+                    <div class="w-20 h-20 rounded-lg bg-white flex items-center justify-center border border-white/10 flex-shrink-0 overflow-hidden">
                         ${brand.logo_url 
                             ? `<img alt="${brand.name}" class="w-full h-full object-contain" src="${brand.logo_url}" onerror="this.parentElement.innerHTML='<span class=\\'text-white/40 text-xs\\'>No Logo</span>'"/>`
                             : `<span class="text-white/40 text-xs">No Logo</span>`
@@ -162,7 +162,7 @@
                         </div>
                     </div>
                     <div class="h-40 bg-gradient-to-br from-border-dark to-background-dark flex items-center justify-center p-8">
-                        <div class="w-full h-full rounded-xl bg-white/5 flex items-center justify-center border border-white/10 overflow-hidden">
+                        <div class="w-full h-full rounded-xl bg-white flex items-center justify-center border border-white/10 overflow-hidden">
                             ${brand.logo_url 
                                 ? `<img alt="${brand.name}" class="w-full h-full object-contain group-hover:scale-110 transition-transform duration-500" src="${brand.logo_url}" onerror="this.parentElement.innerHTML='<span class=\\'text-white/40 text-sm\\'>No Logo</span>'"/>`
                                 : `<span class="text-white/40 text-sm">No Logo</span>`

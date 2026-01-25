@@ -21,7 +21,7 @@ class BrandsRenderer {
 
         return `
             <div class="brand-card-hover group bg-white/[0.02] border border-white/5 p-10 flex flex-col items-center text-center">
-                <div class="w-full aspect-square mb-10 bg-black/40 border border-white/5 flex items-center justify-center p-8 grayscale group-hover:grayscale-0 transition-all duration-700">
+                <div class="w-full aspect-square mb-10 bg-white dark:bg-white border border-white/5 flex items-center justify-center p-8 grayscale group-hover:grayscale-0 transition-all duration-700">
                     ${logoUrl ? `
                     <img src="${logoUrl}" alt="${brand.name} Logo" class="w-full h-full object-contain" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"/>
                     ` : ''}
@@ -209,14 +209,20 @@ class BrandsRenderer {
                 carouselHTML += `
                     <div class="flex flex-col items-center gap-4 group cursor-pointer hover:opacity-100 transition-opacity">
                         ${logoUrl ? `
-                        <img class="h-16 md:h-20 object-contain grayscale group-hover:grayscale-0 transition-all" 
-                             alt="${brand.name} Logo" 
-                             src="${logoUrl}" 
-                             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"/>
-                        ` : ''}
-                        <div class="${logoUrl ? 'hidden' : 'flex'} items-center justify-center h-16 md:h-20 text-gray-400 dark:text-white/30">
+                        <div class="bg-white dark:bg-white rounded-lg p-3 flex items-center justify-center h-[240px] md:h-[288px] w-[240px] md:w-[288px] shadow-sm border dark:border-white/10">
+                            <img class="h-full w-full object-contain grayscale group-hover:grayscale-0 transition-all" 
+                                 alt="${brand.name} Logo" 
+                                 src="${logoUrl}" 
+                                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"/>
+                        </div>
+                        <div class="${logoUrl ? 'hidden' : 'flex'} items-center justify-center h-[192px] md:h-[240px] bg-white dark:bg-white rounded-lg p-3 border dark:border-white/10 text-gray-400 dark:text-white/30">
                             <span class="material-symbols-outlined text-2xl">image</span>
                         </div>
+                        ` : `
+                        <div class="flex items-center justify-center h-[192px] md:h-[240px] bg-white dark:bg-white rounded-lg p-3 border dark:border-white/10 text-gray-400 dark:text-white/30">
+                            <span class="material-symbols-outlined text-2xl">image</span>
+                        </div>
+                        `}
                         <span class="text-[10px] font-black tracking-widest uppercase text-gray-600 dark:text-white/40 group-hover:text-primary">${brand.name}</span>
                     </div>
                 `;
