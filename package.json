@@ -7,6 +7,9 @@
     "dev": "node server.js",
     "start": "npm run dev",
     "serve": "node server.js",
+    "build:config": "node scripts/build-firebase-config.js",
+    "init:env": "node scripts/init-env.js",
+    "prestart": "npm run build:config",
     "lint:html": "echo 'HTML linting not configured yet'",
     "lint:css": "echo 'CSS linting not configured yet'",
     "lint:js": "echo 'JS linting not configured yet'"
@@ -20,5 +23,10 @@
   "author": "LIQUIDO Team",
   "license": "MIT",
   "devDependencies": {},
-  "dependencies": {}
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "axios": "^1.6.2"
+  }
 }

@@ -1,0 +1,33 @@
+# robots.txt for LIQUIDO Vape Shop
+
+User-agent: *
+Allow: /public/
+Allow: /assets/
+Allow: /src/
+
+# Disallow admin area
+Disallow: /admin/
+
+# Disallow node_modules and other technical files
+Disallow: /node_modules/
+Disallow: /*.json$
+Disallow: /server.js
+Disallow: /test-api.js
+Disallow: /package.json
+Disallow: /package-lock.json
+
+# Allow specific important files
+Allow: /public/index.html
+Allow: /public/products.html
+Allow: /public/brands.html
+Allow: /public/about.html
+Allow: /public/contact.html
+Allow: /public/faq.html
+Allow: /public/myliquido.html
+
+# Sitemap location
+Sitemap: https://liquido.vapeshop/public/sitemap.xml
+
+# Crawl-delay (optional, adjust as needed)
+Crawl-delay: 1
+
