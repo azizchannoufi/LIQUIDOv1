@@ -131,13 +131,36 @@
 .dark {
     --color-background: var(--color-background-dark);
     --color-surface: var(--color-charcoal);
+    --color-primary-active: var(--color-primary);
 }
 
-/* Light mode (if needed in future) */
+/* Light mode - inverted colors with enhanced yellow */
+:root:not(.dark),
 .light {
     --color-background: #FFFFFF;
     --color-surface: #F5F5F5;
+    --color-surface-alt: #E5E5E5;
+    
+    /* Enhanced yellow for light mode - more saturated */
+    --color-primary: #FFD700;
+    --color-primary-dark: #FFC107;
+    --color-primary-light: #FFE44D;
+    --color-primary-active: #FFD700;
+    
+    /* Inverted text colors */
     --color-text-primary: #000000;
     --color-text-secondary: rgba(0, 0, 0, 0.7);
+    --color-text-tertiary: rgba(0, 0, 0, 0.5);
+    
+    /* Inverted borders */
     --color-border: rgba(0, 0, 0, 0.1);
+    --color-border-hover: rgba(0, 0, 0, 0.2);
+    
+    /* Inverted shadows for light mode */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+    --shadow-glow: 0 0 20px rgba(255, 215, 0, 0.4);
+    --shadow-glow-strong: 0 0 40px rgba(255, 215, 0, 0.6);
 }

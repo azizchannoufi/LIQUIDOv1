@@ -88,14 +88,13 @@
         </div>
     </div>
 </nav>
-<header class="fixed top-[40px] w-full z-50 border-b border-white/5 glass-effect">
-<div class="max-w-[1440px] mx-auto px-6 lg:px-20 h-20 flex items-center justify-between">
-<div class="flex items-center gap-12">
+<header class="fixed top-[40px] w-full z-50 border-b border-white/5 dark:border-white/5 border-black/10 glass-effect">
+<div class="max-w-[1440px] mx-auto px-6 lg:px-20 h-20 flex items-center justify-between relative">
             <a href="index.html" class="flex items-center gap-3 cursor-pointer hover:opacity-80 transition-opacity">
-                <img src="../assets/images/Goccia LIQUIDO/GOCCIA Y_W.png" alt="LIQUIDO Logo" class="h-10 object-contain"/>
-                <h2 class="text-2xl text-bold-modern tracking-tighter uppercase">LIQUIDO <span class="text-primary/80 font-normal">VAPE SHOP</span></h2>
+                <img src="../assets/images/Logo LIQUIDO/LOGO 15cm WEB Trasparente_02.png" alt="LIQUIDO VAPE SHOP" class="block dark:hidden" style="width: 120px; height: 115px; object-fit: contain;" />
+                <img src="../assets/images/Logo LIQUIDO/LOGO 15cm WEB Trasparente_04.png" alt="LIQUIDO VAPE SHOP" class="hidden dark:block" style="width: 120px; height: 115px; object-fit: contain;" />
             </a>
-<nav class="hidden md:flex items-center gap-8">
+<nav class="hidden md:flex items-center gap-8 absolute left-1/2 transform -translate-x-1/2">
 <a class="text-xs font-bold uppercase tracking-widest hover:text-primary transition-colors" href="index.html">Home</a>
 <a class="text-xs font-bold uppercase tracking-widest hover:text-primary transition-colors text-primary" href="brands.html">Marchi</a>
 <a class="text-xs font-bold uppercase tracking-widest hover:text-primary transition-colors" href="products.html">Prodotti</a>
@@ -104,8 +103,13 @@
 <a class="text-xs font-bold uppercase tracking-widest hover:text-primary transition-colors" href="contact.html">Contatti</a>
 <a class="text-xs font-bold uppercase tracking-widest hover:text-primary transition-colors" href="faq.html">FAQ</a>
 </nav>
-</div>
 <div class="flex items-center gap-6">
+            <button
+                id="theme-toggle"
+                class="size-10 flex items-center justify-center rounded-sm border border-white/10 dark:border-white/10 border-black/10 hover:bg-primary hover:text-background-dark dark:hover:text-background-dark text-white dark:text-white transition-all"
+                aria-label="Toggle theme">
+                <span class="theme-icon material-symbols-outlined text-lg">dark_mode</span>
+            </button>
 <button class="bg-primary hover:bg-white text-background-dark px-6 py-2.5 rounded-sm font-black text-xs uppercase tracking-widest transition-all flex items-center gap-2 accent-glow">
 <span class="material-symbols-outlined text-lg">location_on</span>
                 Trova un Negozio
@@ -127,7 +131,7 @@
                 <h1 class="text-6xl md:text-8xl font-black tracking-tighter leading-none italic uppercase">
                     Partner <span class="text-primary">Brands</span>
                 </h1>
-                <p class="text-lg md:text-xl text-white/50 max-w-2xl mx-auto leading-relaxed font-light">
+                <p class="text-lg md:text-xl text-gray-600 dark:text-white/50 max-w-2xl mx-auto leading-relaxed font-light">
                     Exclusively curated partnerships with industry pioneers. We bring the world's most innovative vaping
                     technology and refined flavors to the LIQUIDO collection.
                 </p>
@@ -137,20 +141,20 @@
             <div class="flex flex-col md:flex-row items-center justify-between gap-8 border-y border-white/5 py-10">
                 <div class="relative w-full md:max-w-md">
                     <span
-                        class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-white/30">search</span>
+                        class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 dark:text-white/30">search</span>
                     <input
-                        class="w-full pl-12 pr-4 py-4 bg-white/5 border-none focus:ring-1 focus:ring-primary/50 text-white placeholder:text-white/20 text-sm tracking-wide"
+                        class="w-full pl-12 pr-4 py-4 bg-white/5 dark:bg-white/5 bg-gray-100 border-none focus:ring-1 focus:ring-primary/50 text-background-dark dark:text-white placeholder:text-gray-400 dark:placeholder:text-white/20 text-sm tracking-wide"
                         placeholder="Search brands..." type="text" />
                 </div>
                 <div class="flex flex-wrap items-center justify-center gap-2">
                     <button
                         class="px-6 py-2.5 bg-primary text-black text-[11px] font-bold uppercase tracking-widest">All</button>
                     <button
-                        class="px-6 py-2.5 bg-white/5 hover:bg-white/10 transition-colors text-white/70 text-[11px] font-bold uppercase tracking-widest">Hardware</button>
+                        class="px-6 py-2.5 bg-white/5 dark:bg-white/5 bg-gray-100 hover:bg-white/10 dark:hover:bg-white/10 hover:bg-gray-200 transition-colors text-gray-700 dark:text-white/70 text-[11px] font-bold uppercase tracking-widest">Hardware</button>
                     <button
-                        class="px-6 py-2.5 bg-white/5 hover:bg-white/10 transition-colors text-white/70 text-[11px] font-bold uppercase tracking-widest">E-liquids</button>
+                        class="px-6 py-2.5 bg-white/5 dark:bg-white/5 bg-gray-100 hover:bg-white/10 dark:hover:bg-white/10 hover:bg-gray-200 transition-colors text-gray-700 dark:text-white/70 text-[11px] font-bold uppercase tracking-widest">E-liquids</button>
                     <button
-                        class="px-6 py-2.5 bg-white/5 hover:bg-white/10 transition-colors text-white/70 text-[11px] font-bold uppercase tracking-widest">Accessories</button>
+                        class="px-6 py-2.5 bg-white/5 dark:bg-white/5 bg-gray-100 hover:bg-white/10 dark:hover:bg-white/10 hover:bg-gray-200 transition-colors text-gray-700 dark:text-white/70 text-[11px] font-bold uppercase tracking-widest">Accessories</button>
                 </div>
             </div>
         </section>
@@ -194,7 +198,7 @@
                             </div>
                         </div>
                     </div>
-                    <p class="text-white/40 leading-relaxed font-medium max-w-sm">
+                    <p class="text-gray-600 dark:text-white/40 leading-relaxed font-medium max-w-sm">
                         Defining the premium standard in the vaping industry. We provide access to exclusive hardware
                         and globally recognized flavor profiles for the discerning enthusiast.
                     </p>
@@ -296,6 +300,7 @@
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-analytics-compat.js"></script>
     
     <!-- Catalog Services -->
+    <script src="../src/js/modules/theme-toggle.js"></script>
     <script src="../src/js/modules/age-verification.js"></script>
     <script src="../src/js/services/firebase-config.js"></script>
     <script src="../src/js/services/firebase-catalog-service.js"></script>
@@ -304,6 +309,12 @@
     <script src="../src/js/modules/products-renderer.js"></script>
     <script src="../src/js/modules/catalog-init.js"></script>
     <script src="../src/js/pages/brands-page.js"></script>
+    <script>
+        // Initialize theme toggle
+        if (typeof ThemeToggle !== 'undefined') {
+            ThemeToggle.init();
+        }
+    </script>
 </body>
 
 </html>

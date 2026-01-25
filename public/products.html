@@ -91,14 +91,13 @@
         </div>
     </div>
 </nav>
-<header class="fixed top-[40px] w-full z-50 border-b border-white/5 glass-effect">
-<div class="max-w-[1440px] mx-auto px-6 lg:px-20 h-20 flex items-center justify-between">
-<div class="flex items-center gap-12">
+<header class="fixed top-[40px] w-full z-50 border-b border-white/5 dark:border-white/5 border-black/10 glass-effect">
+<div class="max-w-[1440px] mx-auto px-6 lg:px-20 h-20 flex items-center justify-between relative">
             <a href="index.html" class="flex items-center gap-3 cursor-pointer hover:opacity-80 transition-opacity">
-                <img src="../assets/images/Goccia LIQUIDO/GOCCIA Y_W.png" alt="LIQUIDO Logo" class="h-10 object-contain"/>
-                <h2 class="text-2xl text-bold-modern tracking-tighter uppercase">LIQUIDO <span class="text-primary/80 font-normal">VAPE SHOP</span></h2>
+                <img src="../assets/images/Logo LIQUIDO/LOGO 15cm WEB Trasparente_02.png" alt="LIQUIDO VAPE SHOP" class="block dark:hidden" style="width: 120px; height: 115px; object-fit: contain;" />
+                <img src="../assets/images/Logo LIQUIDO/LOGO 15cm WEB Trasparente_04.png" alt="LIQUIDO VAPE SHOP" class="hidden dark:block" style="width: 120px; height: 115px; object-fit: contain;" />
             </a>
-<nav class="hidden md:flex items-center gap-8">
+<nav class="hidden md:flex items-center gap-8 absolute left-1/2 transform -translate-x-1/2">
 <a class="text-xs font-bold uppercase tracking-widest hover:text-primary transition-colors" href="index.html">Home</a>
 <a class="text-xs font-bold uppercase tracking-widest hover:text-primary transition-colors" href="brands.html">Marchi</a>
 <a class="text-xs font-bold uppercase tracking-widest hover:text-primary transition-colors text-primary" href="products.html">Prodotti</a>
@@ -107,8 +106,13 @@
 <a class="text-xs font-bold uppercase tracking-widest hover:text-primary transition-colors" href="contact.html">Contatti</a>
 <a class="text-xs font-bold uppercase tracking-widest hover:text-primary transition-colors" href="faq.html">FAQ</a>
 </nav>
-</div>
 <div class="flex items-center gap-6">
+            <button
+                id="theme-toggle"
+                class="size-10 flex items-center justify-center rounded-sm border border-white/10 dark:border-white/10 border-black/10 hover:bg-primary hover:text-background-dark dark:hover:text-background-dark text-white dark:text-white transition-all"
+                aria-label="Toggle theme">
+                <span class="theme-icon material-symbols-outlined text-lg">dark_mode</span>
+            </button>
 <button class="bg-primary hover:bg-white text-background-dark px-6 py-2.5 rounded-sm font-black text-xs uppercase tracking-widest transition-all flex items-center gap-2 accent-glow">
 <span class="material-symbols-outlined text-lg">location_on</span>
                 Trova un Negozio
@@ -289,6 +293,7 @@
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-analytics-compat.js"></script>
     
     <!-- Catalog Services -->
+    <script src="../src/js/modules/theme-toggle.js"></script>
     <script src="../src/js/modules/age-verification.js"></script>
     <script src="../src/js/services/firebase-config.js"></script>
     <script src="../src/js/services/firebase-catalog-service.js"></script>
@@ -297,4 +302,10 @@
     <script src="../src/js/modules/products-renderer.js"></script>
     <script src="../src/js/modules/catalog-init.js"></script>
     <script src="../src/js/pages/products-page-enhanced.js"></script>
+    <script>
+        // Initialize theme toggle
+        if (typeof ThemeToggle !== 'undefined') {
+            ThemeToggle.init();
+        }
+    </script>
 </body></html>

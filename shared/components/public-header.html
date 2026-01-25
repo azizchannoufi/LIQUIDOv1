@@ -1,29 +1,35 @@
-<header class="fixed top-0 w-full z-50 border-b border-white/5 glass-effect">
+<header class="fixed top-0 w-full z-50 border-b border-white/5 dark:border-white/5 border-black/10 glass-effect">
     <div class="max-w-[1440px] mx-auto px-6 lg:px-20 h-20 flex items-center justify-between">
         <div class="flex items-center gap-12">
             <a href="index.html" class="flex items-center gap-3 cursor-pointer hover:opacity-80 transition-opacity">
                 <div class="size-10 bg-primary rounded-sm flex items-center justify-center text-background-dark">
                     <span class="material-symbols-outlined font-bold">water_drop</span>
                 </div>
-                <h2 class="text-2xl text-bold-modern tracking-tighter uppercase">LIQUIDO <span
+                <h2 class="text-2xl text-bold-modern tracking-tighter uppercase text-background-dark dark:text-white">LIQUIDO <span
                         class="text-primary/80 font-normal">VAPE SHOP</span></h2>
             </a>
             <nav class="hidden md:flex items-center gap-8">
-                <a class="text-xs font-bold uppercase tracking-widest hover:text-primary transition-colors"
+                <a class="text-xs font-bold uppercase tracking-widest hover:text-primary transition-colors text-background-dark dark:text-white"
                     href="index.html">Home</a>
-                <a class="text-xs font-bold uppercase tracking-widest hover:text-primary transition-colors"
+                <a class="text-xs font-bold uppercase tracking-widest hover:text-primary transition-colors text-background-dark dark:text-white"
                     href="brands.html">Marchi</a>
-                <a class="text-xs font-bold uppercase tracking-widest hover:text-primary transition-colors"
+                <a class="text-xs font-bold uppercase tracking-widest hover:text-primary transition-colors text-background-dark dark:text-white"
                     href="products.html">Prodotti</a>
-                <a class="text-xs font-bold uppercase tracking-widest hover:text-primary transition-colors"
+                <a class="text-xs font-bold uppercase tracking-widest hover:text-primary transition-colors text-background-dark dark:text-white"
                     href="myliquido.html">MyLiquido</a>
-                <a class="text-xs font-bold uppercase tracking-widest hover:text-primary transition-colors"
+                <a class="text-xs font-bold uppercase tracking-widest hover:text-primary transition-colors text-background-dark dark:text-white"
                     href="about.html">Chi Siamo</a>
-                <a class="text-xs font-bold uppercase tracking-widest hover:text-primary transition-colors"
+                <a class="text-xs font-bold uppercase tracking-widest hover:text-primary transition-colors text-background-dark dark:text-white"
                     href="contact.html">Contatti</a>
             </nav>
         </div>
         <div class="flex items-center gap-6">
+            <button
+                id="theme-toggle"
+                class="size-10 flex items-center justify-center rounded-sm border border-white/10 dark:border-white/10 border-black/10 hover:bg-primary hover:text-background-dark dark:hover:text-background-dark text-background-dark dark:text-white transition-all"
+                aria-label="Toggle theme">
+                <span class="theme-icon material-symbols-outlined text-lg">dark_mode</span>
+            </button>
             <button
                 class="bg-primary hover:bg-white text-background-dark px-6 py-2.5 rounded-sm font-black text-xs uppercase tracking-widest transition-all flex items-center gap-2 accent-glow">
                 <span class="material-symbols-outlined text-lg">location_on</span>

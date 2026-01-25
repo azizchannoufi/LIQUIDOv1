@@ -25,22 +25,22 @@ class BrandsRenderer {
                     ${logoUrl ? `
                     <img src="${logoUrl}" alt="${brand.name} Logo" class="w-full h-full object-contain" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"/>
                     ` : ''}
-                    <div class="${logoUrl ? 'hidden' : 'flex'} flex-col items-center justify-center text-white/30 w-full h-full">
+                    <div class="${logoUrl ? 'hidden' : 'flex'} flex-col items-center justify-center text-gray-400 dark:text-white/30 w-full h-full">
                         <span class="material-symbols-outlined text-4xl mb-2">image</span>
                         <span class="text-xs">${brand.name}</span>
                     </div>
                 </div>
                 <div class="space-y-4 flex-grow">
                     ${sectionName ? `<span class="text-primary text-[9px] font-black uppercase tracking-[0.25em]">${sectionName}</span>` : ''}
-                    <h3 class="text-3xl font-black italic uppercase group-hover:text-primary transition-colors">
+                    <h3 class="text-3xl font-black italic uppercase text-background-dark dark:text-white group-hover:text-primary transition-colors">
                         ${brand.name}
                     </h3>
                     ${hasLines ? `
-                        <p class="text-white/40 text-sm leading-relaxed px-2 font-medium">
+                        <p class="text-gray-600 dark:text-white/40 text-sm leading-relaxed px-2 font-medium">
                             ${brand.lines.length} ${brand.lines.length === 1 ? 'ligne' : 'lignes'} de produits disponibles
                         </p>
                     ` : `
-                        <p class="text-white/40 text-sm leading-relaxed px-2 font-medium">
+                        <p class="text-gray-600 dark:text-white/40 text-sm leading-relaxed px-2 font-medium">
                             Marque partenaire
                         </p>
                     `}
@@ -48,7 +48,7 @@ class BrandsRenderer {
                 <div class="mt-10 w-full">
                     ${hasLines ? `
                         <button 
-                            class="brand-catalog-btn w-full py-4 border border-white/10 text-white group-hover:bg-primary group-hover:border-primary group-hover:text-black font-black text-[11px] uppercase tracking-[0.2em] transition-all flex items-center justify-center gap-3"
+                            class="brand-catalog-btn w-full py-4 border border-white/10 dark:border-white/10 border-black/10 text-background-dark dark:text-white group-hover:bg-primary group-hover:border-primary group-hover:text-black dark:group-hover:text-black font-black text-[11px] uppercase tracking-[0.2em] transition-all flex items-center justify-center gap-3"
                             data-brand="${brand.name}"
                             data-section="${sectionName}"
                         >
@@ -57,12 +57,12 @@ class BrandsRenderer {
                         </button>
                     ` : `
                         ${website ? `
-                            <a ${website} class="w-full py-4 border border-white/10 text-white group-hover:bg-primary group-hover:border-primary group-hover:text-black font-black text-[11px] uppercase tracking-[0.2em] transition-all flex items-center justify-center gap-3">
+                            <a ${website} class="w-full py-4 border border-white/10 dark:border-white/10 border-black/10 text-background-dark dark:text-white group-hover:bg-primary group-hover:border-primary group-hover:text-black dark:group-hover:text-black font-black text-[11px] uppercase tracking-[0.2em] transition-all flex items-center justify-center gap-3">
                                 Visit Website
                                 <span class="material-symbols-outlined text-sm">open_in_new</span>
                             </a>
                         ` : `
-                            <button class="w-full py-4 border border-white/10 text-white/50 font-black text-[11px] uppercase tracking-[0.2em] cursor-not-allowed">
+                            <button class="w-full py-4 border border-white/10 dark:border-white/10 border-black/10 text-gray-400 dark:text-white/50 font-black text-[11px] uppercase tracking-[0.2em] cursor-not-allowed">
                                 Coming Soon
                             </button>
                         `}
@@ -87,7 +87,7 @@ class BrandsRenderer {
         if (!brands || brands.length === 0) {
             container.innerHTML = `
                 <div class="col-span-full text-center py-12">
-                    <p class="text-white/40 text-lg">Aucune marque disponible pour le moment.</p>
+                    <p class="text-gray-600 dark:text-white/40 text-lg">Aucune marque disponible pour le moment.</p>
                 </div>
             `;
             return;
@@ -130,7 +130,7 @@ class BrandsRenderer {
         try {
             const section = await this.catalogService.getSection(sectionId);
             if (!section) {
-                container.innerHTML = '<p class="text-white/40">Section non trouvée</p>';
+                container.innerHTML = '<p class="text-gray-600 dark:text-white/40">Section non trouvée</p>';
                 return;
             }
 
@@ -184,7 +184,7 @@ class BrandsRenderer {
         }
 
         if (!brands || brands.length === 0) {
-            container.innerHTML = '<p class="text-white/40 text-center">Aucune marque disponible</p>';
+            container.innerHTML = '<p class="text-gray-600 dark:text-white/40 text-center">Aucune marque disponible</p>';
             return;
         }
 
@@ -214,10 +214,10 @@ class BrandsRenderer {
                              src="${logoUrl}" 
                              onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"/>
                         ` : ''}
-                        <div class="${logoUrl ? 'hidden' : 'flex'} items-center justify-center h-16 md:h-20 text-white/30">
+                        <div class="${logoUrl ? 'hidden' : 'flex'} items-center justify-center h-16 md:h-20 text-gray-400 dark:text-white/30">
                             <span class="material-symbols-outlined text-2xl">image</span>
                         </div>
-                        <span class="text-[10px] font-black tracking-widest uppercase text-white/40 group-hover:text-primary">${brand.name}</span>
+                        <span class="text-[10px] font-black tracking-widest uppercase text-gray-600 dark:text-white/40 group-hover:text-primary">${brand.name}</span>
                     </div>
                 `;
             });
@@ -235,11 +235,11 @@ class BrandsRenderer {
 
         if (totalSlides > 1) {
             carouselHTML += `
-                <button class="brands-carousel-prev absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 bg-white/10 hover:bg-white/20 p-3 rounded-full transition-all z-10">
-                    <span class="material-symbols-outlined text-white">chevron_left</span>
+                <button class="brands-carousel-prev absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 bg-white/10 dark:bg-white/10 bg-gray-200 hover:bg-white/20 dark:hover:bg-white/20 hover:bg-gray-300 p-3 rounded-full transition-all z-10">
+                    <span class="material-symbols-outlined text-background-dark dark:text-white">chevron_left</span>
                 </button>
-                <button class="brands-carousel-next absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 bg-white/10 hover:bg-white/20 p-3 rounded-full transition-all z-10">
-                    <span class="material-symbols-outlined text-white">chevron_right</span>
+                <button class="brands-carousel-next absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 bg-white/10 dark:bg-white/10 bg-gray-200 hover:bg-white/20 dark:hover:bg-white/20 hover:bg-gray-300 p-3 rounded-full transition-all z-10">
+                    <span class="material-symbols-outlined text-background-dark dark:text-white">chevron_right</span>
                 </button>
                 <div class="flex justify-center gap-2 mt-8">
             `;
@@ -321,7 +321,7 @@ class BrandsRenderer {
             this.renderBrandsCarousel(brands, container);
         } catch (error) {
             console.error('Error loading brands for carousel:', error);
-            container.innerHTML = '<p class="text-white/40 text-center">Erreur lors du chargement des marques</p>';
+            container.innerHTML = '<p class="text-gray-600 dark:text-white/40 text-center">Erreur lors du chargement des marques</p>';
         }
     }
 }

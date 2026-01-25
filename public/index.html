@@ -101,34 +101,38 @@
         }
     </style>
 </head>
-<body class="bg-background-dark text-white transition-colors duration-300">
+<body class="bg-background-dark dark:bg-background-dark bg-white text-white dark:text-white text-background-dark transition-colors duration-300">
 <!-- Barre de message pour les visiteurs -->
-<nav class="fixed top-0 w-full z-[60] bg-primary/10 border-b border-primary/20 backdrop-blur-sm">
+<nav class="fixed top-0 w-full z-[60] bg-primary/10 dark:bg-primary/10 border-b border-primary/20 dark:border-primary/20 backdrop-blur-sm">
     <div class="max-w-[1440px] mx-auto px-6 lg:px-20 py-2.5">
         <div class="flex items-center justify-center gap-2 text-xs font-bold uppercase tracking-widest text-primary">
             <span class="material-symbols-outlined text-sm">info</span>
-            <p class="text-center">Benvenuto su LIQUIDO - Scopri la nostra selezione premium di prodotti per il vaping</p>
+            <p class="text-center text-background-dark dark:text-background-dark text-white">Benvenuto su LIQUIDO - Scopri la nostra selezione premium di prodotti per il vaping</p>
         </div>
     </div>
 </nav>
-<header class="fixed top-[40px] w-full z-50 border-b border-white/5 glass-effect">
-<div class="max-w-[1440px] mx-auto px-6 lg:px-20 h-20 flex items-center justify-between">
-<div class="flex items-center gap-12">
+<header class="fixed top-[40px] w-full z-50 border-b border-white/5 dark:border-white/5 border-black/10 glass-effect">
+<div class="max-w-[1440px] mx-auto px-6 lg:px-20 h-20 flex items-center justify-between relative">
             <a href="index.html" class="flex items-center gap-3 cursor-pointer hover:opacity-80 transition-opacity">
-                <img src="../assets/images/Goccia LIQUIDO/GOCCIA Y_W.png" alt="LIQUIDO Logo" class="h-10 object-contain"/>
-                <h2 class="text-2xl text-bold-modern tracking-tighter uppercase">LIQUIDO <span class="text-primary/80 font-normal">VAPE SHOP</span></h2>
+                <img src="../assets/images/Logo LIQUIDO/LOGO 15cm WEB Trasparente_02.png" alt="LIQUIDO VAPE SHOP" class="block dark:hidden" style="width: 120px; height: 115px; object-fit: contain;" />
+                <img src="../assets/images/Logo LIQUIDO/LOGO 15cm WEB Trasparente_04.png" alt="LIQUIDO VAPE SHOP" class="hidden dark:block" style="width: 120px; height: 115px; object-fit: contain;" />
             </a>
-<nav class="hidden md:flex items-center gap-8">
-<a class="text-xs font-bold uppercase tracking-widest hover:text-primary transition-colors" href="index.html">Home</a>
-<a class="text-xs font-bold uppercase tracking-widest hover:text-primary transition-colors" href="brands.html">Marchi</a>
-<a class="text-xs font-bold uppercase tracking-widest hover:text-primary transition-colors" href="products.html">Prodotti</a>
-<a class="text-xs font-bold uppercase tracking-widest hover:text-primary transition-colors" href="myliquido.html">MyLiquido</a>
-<a class="text-xs font-bold uppercase tracking-widest hover:text-primary transition-colors" href="about.html">Chi Siamo</a>
-<a class="text-xs font-bold uppercase tracking-widest hover:text-primary transition-colors" href="contact.html">Contatti</a>
-<a class="text-xs font-bold uppercase tracking-widest hover:text-primary transition-colors" href="faq.html">FAQ</a>
+<nav class="hidden md:flex items-center gap-8 absolute left-1/2 transform -translate-x-1/2">
+<a class="text-xs font-bold uppercase tracking-widest hover:text-primary transition-colors text-background-dark dark:text-white" href="index.html">Home</a>
+<a class="text-xs font-bold uppercase tracking-widest hover:text-primary transition-colors text-background-dark dark:text-white" href="brands.html">Marchi</a>
+<a class="text-xs font-bold uppercase tracking-widest hover:text-primary transition-colors text-background-dark dark:text-white" href="products.html">Prodotti</a>
+<a class="text-xs font-bold uppercase tracking-widest hover:text-primary transition-colors text-background-dark dark:text-white" href="myliquido.html">MyLiquido</a>
+<a class="text-xs font-bold uppercase tracking-widest hover:text-primary transition-colors text-background-dark dark:text-white" href="about.html">Chi Siamo</a>
+<a class="text-xs font-bold uppercase tracking-widest hover:text-primary transition-colors text-background-dark dark:text-white" href="contact.html">Contatti</a>
+<a class="text-xs font-bold uppercase tracking-widest hover:text-primary transition-colors text-background-dark dark:text-white" href="faq.html">FAQ</a>
 </nav>
-</div>
 <div class="flex items-center gap-6">
+            <button
+                id="theme-toggle"
+                class="size-10 flex items-center justify-center rounded-sm border border-white/10 dark:border-white/10 border-black/10 hover:bg-primary hover:text-background-dark dark:hover:text-background-dark text-background-dark dark:text-white transition-all"
+                aria-label="Toggle theme">
+                <span class="theme-icon material-symbols-outlined text-lg">dark_mode</span>
+            </button>
 <button class="bg-primary hover:bg-white text-background-dark px-6 py-2.5 rounded-sm font-black text-xs uppercase tracking-widest transition-all flex items-center gap-2 accent-glow">
 <span class="material-symbols-outlined text-lg">location_on</span>
                 Trova un Negozio
@@ -137,7 +141,7 @@
 </div>
 </header>
 <main class="pt-[120px]">
-<section class="relative min-h-[90vh] flex items-center overflow-hidden bg-gradient-to-b from-charcoal to-background-dark">
+<section class="relative min-h-[90vh] flex items-center overflow-hidden bg-gradient-to-b from-charcoal dark:from-charcoal from-surface-light to-background-dark dark:to-background-dark to-white">
 <div class="relative w-full h-[90vh]">
 <div class="carousel-container relative w-full h-full">
 <div class="carousel-slide active relative w-full h-full">
@@ -145,10 +149,10 @@
 <div class="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-transparent"></div>
 <div class="relative z-10 h-full flex items-center px-6 lg:px-20 w-full">
 <div class="w-full space-y-8">
-<h1 class="text-5xl lg:text-7xl text-bold-modern leading-tight uppercase text-white">
+<h1 class="text-5xl lg:text-7xl text-bold-modern leading-tight uppercase text-white dark:text-white text-background-dark">
                         Solo i migliori Brand per ogni tipo di Svapta
                     </h1>
-<p class="text-xl text-white/90 leading-relaxed font-medium">
+<p class="text-xl text-white/90 dark:text-white/90 text-background-dark/90 leading-relaxed font-medium">
                         Trova il migliore HIT per il tuo stile unico
                     </p>
 <button class="bg-primary hover:bg-white text-background-dark px-10 py-5 rounded-sm font-black text-sm uppercase tracking-widest transition-all accent-glow-strong">
@@ -162,10 +166,10 @@
 <div class="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-transparent"></div>
 <div class="relative z-10 h-full flex items-center px-6 lg:px-20 w-full">
 <div class="w-full space-y-8">
-<h1 class="text-5xl lg:text-7xl text-bold-modern leading-tight uppercase text-white">
+<h1 class="text-5xl lg:text-7xl text-bold-modern leading-tight uppercase text-white dark:text-white text-background-dark">
                         Il posto giusto per trovare il tuo LIQUIDO !
                     </h1>
-<p class="text-xl text-white/90 leading-relaxed font-medium">
+<p class="text-xl text-white/90 dark:text-white/90 text-background-dark/90 leading-relaxed font-medium">
                         Vieni a scoprire la nostra accurata selezione di LIQUIDO
                     </p>
 <button class="bg-primary hover:bg-white text-background-dark px-10 py-5 rounded-sm font-black text-sm uppercase tracking-widest transition-all accent-glow-strong">
@@ -179,10 +183,10 @@
 <div class="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-transparent"></div>
 <div class="relative z-10 h-full flex items-center px-6 lg:px-20 w-full">
 <div class="w-full space-y-8">
-<h1 class="text-5xl lg:text-7xl text-bold-modern leading-tight uppercase text-white">
+<h1 class="text-5xl lg:text-7xl text-bold-modern leading-tight uppercase text-white dark:text-white text-background-dark">
                         Non trovi il liquido ideale per te ?
                     </h1>
-<p class="text-xl text-white/90 leading-relaxed font-medium">
+<p class="text-xl text-white/90 dark:text-white/90 text-background-dark/90 leading-relaxed font-medium">
                         Cercalo e prenotalo tramite WhatsApp , in 24/48 ore lo puoi ritirare in negozio piu scelta. zero attese!
                     </p>
 <button class="bg-primary hover:bg-white text-background-dark px-10 py-5 rounded-sm font-black text-sm uppercase tracking-widest transition-all accent-glow-strong">
@@ -192,40 +196,40 @@
 </div>
 </div>
 </div>
-<button class="carousel-prev absolute left-6 top-1/2 -translate-y-1/2 z-20 bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/20 rounded-full p-3 transition-all">
-<span class="material-symbols-outlined text-white">chevron_left</span>
+<button class="carousel-prev absolute left-6 top-1/2 -translate-y-1/2 z-20 bg-white/10 dark:bg-white/10 bg-black/10 hover:bg-white/20 dark:hover:bg-white/20 hover:bg-black/20 backdrop-blur-sm border border-white/20 dark:border-white/20 border-black/20 rounded-full p-3 transition-all">
+<span class="material-symbols-outlined text-white dark:text-white text-background-dark">chevron_left</span>
 </button>
-<button class="carousel-next absolute right-6 top-1/2 -translate-y-1/2 z-20 bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/20 rounded-full p-3 transition-all">
-<span class="material-symbols-outlined text-white">chevron_right</span>
+<button class="carousel-next absolute right-6 top-1/2 -translate-y-1/2 z-20 bg-white/10 dark:bg-white/10 bg-black/10 hover:bg-white/20 dark:hover:bg-white/20 hover:bg-black/20 backdrop-blur-sm border border-white/20 dark:border-white/20 border-black/20 rounded-full p-3 transition-all">
+<span class="material-symbols-outlined text-white dark:text-white text-background-dark">chevron_right</span>
 </button>
 <div class="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex gap-2">
 <span class="carousel-dot active w-3 h-3 rounded-full bg-primary cursor-pointer transition-all"></span>
-<span class="carousel-dot w-3 h-3 rounded-full bg-white/30 cursor-pointer transition-all hover:bg-white/50"></span>
-<span class="carousel-dot w-3 h-3 rounded-full bg-white/30 cursor-pointer transition-all hover:bg-white/50"></span>
+<span class="carousel-dot w-3 h-3 rounded-full bg-white/30 dark:bg-white/30 bg-black/30 cursor-pointer transition-all hover:bg-white/50 dark:hover:bg-white/50 hover:bg-black/50"></span>
+<span class="carousel-dot w-3 h-3 rounded-full bg-white/30 dark:bg-white/30 bg-black/30 cursor-pointer transition-all hover:bg-white/50 dark:hover:bg-white/50 hover:bg-black/50"></span>
 </div>
 </div>
 </div>
 </section>
-<section class="py-20 border-y border-white/5 bg-charcoal">
+<section class="py-20 border-y border-white/5 dark:border-white/5 border-black/10 bg-charcoal dark:bg-charcoal bg-surface-light">
 <div class="max-w-[1440px] mx-auto px-6 lg:px-20">
-<p class="text-center text-white/30 uppercase tracking-[0.4em] text-[10px] font-black mb-12">Rivenditore Autorizzato Per</p>
+<p class="text-center text-white/30 dark:text-white/30 text-background-dark/30 uppercase tracking-[0.4em] text-[10px] font-black mb-12">Rivenditore Autorizzato Per</p>
 <div id="brands-carousel-container" class="opacity-50 min-h-[120px]">
 <!-- Brands carousel will be loaded dynamically from Firebase -->
 </div>
 </div>
 </section>
-<section class="py-32 px-6 lg:px-20 bg-background-dark">
+<section class="py-32 px-6 lg:px-20 bg-background-dark dark:bg-background-dark bg-white">
 <div class="max-w-[1440px] mx-auto">
 <div class="flex flex-col md:flex-row md:items-end justify-between mb-20 gap-8">
 <div class="space-y-4">
-<h2 class="text-5xl lg:text-6xl text-bold-modern uppercase">Nuovi Arrivi</h2>
-<p class="text-slate-500 max-w-md font-medium">Selezioni accuratamente scelte dell'ultimo hardware e e-liquid premium da tutto il mondo.</p>
+<h2 class="text-5xl lg:text-6xl text-bold-modern uppercase text-background-dark dark:text-white">Nuovi Arrivi</h2>
+<p class="text-slate-500 dark:text-slate-500 text-slate-600 max-w-md font-medium">Selezioni accuratamente scelte dell'ultimo hardware e e-liquid premium da tutto il mondo.</p>
 </div>
 <div class="flex gap-4">
-<button class="size-14 rounded-sm border border-white/10 flex items-center justify-center hover:bg-primary hover:text-background-dark transition-all">
+<button class="size-14 rounded-sm border border-white/10 dark:border-white/10 border-black/10 flex items-center justify-center hover:bg-primary hover:text-background-dark dark:hover:text-background-dark transition-all text-background-dark dark:text-white">
 <span class="material-symbols-outlined">arrow_back</span>
 </button>
-<button class="size-14 rounded-sm border border-white/10 flex items-center justify-center hover:bg-primary hover:text-background-dark transition-all">
+<button class="size-14 rounded-sm border border-white/10 dark:border-white/10 border-black/10 flex items-center justify-center hover:bg-primary hover:text-background-dark dark:hover:text-background-dark transition-all text-background-dark dark:text-white">
 <span class="material-symbols-outlined">arrow_forward</span>
 </button>
 </div>
@@ -233,81 +237,81 @@
 <div id="nuovi-arrivi-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
 <!-- Products will be loaded dynamically from Firebase -->
 <div class="col-span-full text-center py-12">
-<p class="text-white/40 text-lg">Caricamento prodotti...</p>
+<p class="text-white/40 dark:text-white/40 text-background-dark/40 text-lg">Caricamento prodotti...</p>
 </div>
 </div>
 </div>
 </section>
-<section class="relative py-40 overflow-hidden bg-charcoal">
+<section class="relative py-40 overflow-hidden bg-charcoal dark:bg-charcoal bg-surface-light">
 <div class="absolute inset-0 z-0">
 <img class="w-full h-full object-cover opacity-10 grayscale" data-alt="smoky background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB2W8yzKRqsy4SEqRz1ttIJAAo9IhiFuUWh-Z5k-5KjdxqkWXSU0iV1kY0W0zl9eMm6Llod9_xa93Le_kmTbyU4v4cTOJdd27q16jhUCyoZKKch1KrEpB-aRRa-uMzIOqLybGrY4JJmtJDKf2gzbtAdUfSM97Sz7TQPjr36nYwz-XCOMwdY-ySeBjryC1kGtupEr73Px7YGdMzBfHAiyUnA2rR1MGFe3mGijldkRk_zkV_wktC8riZZhZtx5pgUZ7h2UUVv794TuA0"/>
-<div class="absolute inset-0 bg-gradient-to-t from-background-dark via-transparent to-background-dark"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-background-dark dark:from-background-dark from-white via-transparent to-background-dark dark:to-background-dark to-white"></div>
 </div>
 <div class="relative z-10 max-w-[1440px] mx-auto px-6 lg:px-20">
-<div class="bg-black/40 border border-white/5 p-16 lg:p-24 rounded-sm glass-effect flex flex-col items-center text-center space-y-10">
+<div class="bg-black/40 dark:bg-black/40 bg-white/60 border border-white/5 dark:border-white/5 border-black/10 p-16 lg:p-24 rounded-sm glass-effect flex flex-col items-center text-center space-y-10">
 <span class="text-primary font-black uppercase tracking-[0.6em] text-[10px]">Lo Standard Liquido</span>
-<h2 class="text-6xl lg:text-8xl text-bold-modern max-w-5xl tracking-tighter uppercase">Oltre le Nuvole. <br/><span class="text-primary italic underline decoration-white/5">Pura Performance.</span></h2>
-<p class="text-xl text-slate-400 max-w-2xl leading-relaxed font-medium">
+<h2 class="text-6xl lg:text-8xl text-bold-modern max-w-5xl tracking-tighter uppercase text-white dark:text-white text-background-dark">Oltre le Nuvole. <br/><span class="text-primary italic underline decoration-white/5 dark:decoration-white/5 decoration-black/10">Pura Performance.</span></h2>
+<p class="text-xl text-slate-400 dark:text-slate-400 text-slate-600 max-w-2xl leading-relaxed font-medium">
                     Non vendiamo solo prodotti; curiamo esperienze. Ogni mod, tank e bottiglia di liquido nel nostro negozio soddisfa i più alti criteri di sicurezza e prestazioni.
                 </p>
 <div class="flex flex-col sm:flex-row gap-6 pt-8 w-full sm:w-auto">
 <button class="bg-primary text-background-dark px-12 py-6 rounded-sm font-black text-xs uppercase tracking-widest hover:bg-white transition-all accent-glow">
                         Trova Negozio
                     </button>
-<button class="bg-white/5 border border-white/10 text-white px-12 py-6 rounded-sm font-black text-xs uppercase tracking-widest hover:bg-white/10 transition-all">
+<button class="bg-white/5 dark:bg-white/5 bg-black/5 border border-white/10 dark:border-white/10 border-black/10 text-white dark:text-white text-background-dark px-12 py-6 rounded-sm font-black text-xs uppercase tracking-widest hover:bg-white/10 dark:hover:bg-white/10 hover:bg-black/10 transition-all">
                         I Nostri Standard
                     </button>
 </div>
 </div>
 </div>
 </section>
-<section class="py-32 px-6 lg:px-20 bg-background-dark">
+<section class="py-32 px-6 lg:px-20 bg-background-dark dark:bg-background-dark bg-white">
 <div class="max-w-[1440px] mx-auto">
 <div class="text-center mb-16">
-<h2 class="text-5xl lg:text-6xl text-bold-modern uppercase mb-4">Domande Frequenti</h2>
-<p class="text-slate-500 max-w-2xl mx-auto font-medium">Trova risposte rapide alle domande più comuni su liquidi vape, dispositivi vape e servizi a Monterotondo, Roma.</p>
+<h2 class="text-5xl lg:text-6xl text-bold-modern uppercase mb-4 text-background-dark dark:text-white">Domande Frequenti</h2>
+<p class="text-slate-500 dark:text-slate-500 text-slate-600 max-w-2xl mx-auto font-medium">Trova risposte rapide alle domande più comuni su liquidi vape, dispositivi vape e servizi a Monterotondo, Roma.</p>
 </div>
 <div class="max-w-4xl mx-auto space-y-4 mb-12">
-<div class="faq-item bg-[#27271b] border border-[#54543b] rounded-lg overflow-hidden">
-<div class="faq-question p-6 flex items-center justify-between cursor-pointer hover:text-primary transition-colors">
+<div class="faq-item bg-[#27271b] dark:bg-[#27271b] bg-surface-alt border border-[#54543b] dark:border-[#54543b] border-black/10 rounded-lg overflow-hidden">
+<div class="faq-question p-6 flex items-center justify-between cursor-pointer hover:text-primary transition-colors text-white dark:text-white text-background-dark">
 <h3 class="text-lg font-bold">Quali sono i migliori liquidi vape disponibili a Monterotondo?</h3>
 <span class="material-symbols-outlined faq-icon text-primary">expand_more</span>
 </div>
 <div class="faq-answer">
-<div class="px-6 pb-6 text-[#baba9c] leading-relaxed">
+<div class="px-6 pb-6 text-[#baba9c] dark:text-[#baba9c] text-slate-600 leading-relaxed">
 <p>Presso LIQUIDO vape shop a Monterotondo (Roma) troverai una selezione premium di liquidi vape delle migliori marche: Dinner Lady, Vaporesso, GeekVape, Voopoo e molti altri. Vieni a visitare il nostro negozio in via Adige 43C per scoprire la nostra gamma completa.</p>
 </div>
 </div>
 </div>
-<div class="faq-item bg-[#27271b] border border-[#54543b] rounded-lg overflow-hidden">
-<div class="faq-question p-6 flex items-center justify-between cursor-pointer hover:text-primary transition-colors">
+<div class="faq-item bg-[#27271b] dark:bg-[#27271b] bg-surface-alt border border-[#54543b] dark:border-[#54543b] border-black/10 rounded-lg overflow-hidden">
+<div class="faq-question p-6 flex items-center justify-between cursor-pointer hover:text-primary transition-colors text-white dark:text-white text-background-dark">
 <h3 class="text-lg font-bold">Offrite servizi di pulizia e manutenzione vape a Monterotondo?</h3>
 <span class="material-symbols-outlined faq-icon text-primary">expand_more</span>
 </div>
 <div class="faq-answer">
-<div class="px-6 pb-6 text-[#baba9c] leading-relaxed">
+<div class="px-6 pb-6 text-[#baba9c] dark:text-[#baba9c] text-slate-600 leading-relaxed">
 <p>Sì, presso il nostro vape shop a Monterotondo offriamo servizi completi di pulizia dispositivi vape e manutenzione vape. I nostri servizi includono: pulizia completa del dispositivo vape, pulizia del tank, cambio coil, sostituzione del cotone dell'atomizzatore. Prenota tramite WhatsApp al +39 379 134 5367.</p>
 </div>
 </div>
 </div>
-<div class="faq-item bg-[#27271b] border border-[#54543b] rounded-lg overflow-hidden">
-<div class="faq-question p-6 flex items-center justify-between cursor-pointer hover:text-primary transition-colors">
+<div class="faq-item bg-[#27271b] dark:bg-[#27271b] bg-surface-alt border border-[#54543b] dark:border-[#54543b] border-black/10 rounded-lg overflow-hidden">
+<div class="faq-question p-6 flex items-center justify-between cursor-pointer hover:text-primary transition-colors text-white dark:text-white text-background-dark">
 <h3 class="text-lg font-bold">Dove si trova il vostro negozio vape a Monterotondo?</h3>
 <span class="material-symbols-outlined faq-icon text-primary">expand_more</span>
 </div>
 <div class="faq-answer">
-<div class="px-6 pb-6 text-[#baba9c] leading-relaxed">
+<div class="px-6 pb-6 text-[#baba9c] dark:text-[#baba9c] text-slate-600 leading-relaxed">
 <p>Il nostro vape shop LIQUIDO si trova a Monterotondo (Roma) in via Adige 43C, CAP 00015. Siamo aperti dal lunedì al venerdì dalle 10:00 alle 21:00, sabato dalle 11:00 alle 22:00, e domenica dalle 12:00 alle 18:00.</p>
 </div>
 </div>
 </div>
-<div class="faq-item bg-[#27271b] border border-[#54543b] rounded-lg overflow-hidden">
-<div class="faq-question p-6 flex items-center justify-between cursor-pointer hover:text-primary transition-colors">
+<div class="faq-item bg-[#27271b] dark:bg-[#27271b] bg-surface-alt border border-[#54543b] dark:border-[#54543b] border-black/10 rounded-lg overflow-hidden">
+<div class="faq-question p-6 flex items-center justify-between cursor-pointer hover:text-primary transition-colors text-white dark:text-white text-background-dark">
 <h3 class="text-lg font-bold">Come conservare correttamente i liquidi vape?</h3>
 <span class="material-symbols-outlined faq-icon text-primary">expand_more</span>
 </div>
 <div class="faq-answer">
-<div class="px-6 pb-6 text-[#baba9c] leading-relaxed">
+<div class="px-6 pb-6 text-[#baba9c] dark:text-[#baba9c] text-slate-600 leading-relaxed">
 <p>Per conservare correttamente i liquidi vape, mantienili in un luogo fresco e asciutto, lontano dalla luce diretta del sole. La temperatura ideale è tra i 15°C e i 25°C. Conserva i liquidi vape in posizione verticale con il tappo ben chiuso per evitare l'ossidazione.</p>
 </div>
 </div>
@@ -321,21 +325,21 @@
 </div>
 </div>
 </section>
-<footer class="bg-charcoal border-t-2 border-primary pt-24 pb-12 px-6 lg:px-20">
+<footer class="bg-charcoal dark:bg-charcoal bg-surface-light border-t-2 border-primary pt-24 pb-12 px-6 lg:px-20">
 <div class="max-w-[1440px] mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-20 mb-20">
 <div class="space-y-8">
 <div class="flex items-center gap-3">
 <img src="../assets/images/Goccia LIQUIDO/GOCCIA Y_W.png" alt="LIQUIDO Logo" class="h-10 object-contain"/>
-<h2 class="text-2xl text-bold-modern tracking-tighter uppercase">LIQUIDO</h2>
+<h2 class="text-2xl text-bold-modern tracking-tighter uppercase text-white dark:text-white text-background-dark">LIQUIDO</h2>
 </div>
 <div class="space-y-4">
 <h4 class="text-[10px] font-black uppercase tracking-widest text-primary/60">Chi Siamo</h4>
-<p class="text-slate-400 leading-relaxed text-sm font-medium">
+<p class="text-slate-400 dark:text-slate-400 text-slate-600 leading-relaxed text-sm font-medium">
                         Dal 2018, LIQUIDO ha ridefinito il panorama del vaping premium. Curiamo solo l'hardware più eccezionale e gli e-liquid artigianali per gli appassionati che rifiutano di scendere a compromessi su qualità o stile.
                     </p>
 </div>
 <div class="flex gap-4">
-                <a class="size-10 rounded-sm bg-white/5 flex items-center justify-center hover:bg-primary/20 transition-all border border-white/10 group" href="https://www.instagram.com/liquido.vapeshop/" target="_blank" rel="noopener noreferrer">
+                <a class="size-10 rounded-sm bg-white/5 dark:bg-white/5 bg-black/5 flex items-center justify-center hover:bg-primary/20 transition-all border border-white/10 dark:border-white/10 border-black/10 group" href="https://www.instagram.com/liquido.vapeshop/" target="_blank" rel="noopener noreferrer">
                     <svg class="size-5 fill-primary" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"></path></svg>
                 </a>
                 <a class="size-10 rounded-sm bg-white/5 flex items-center justify-center hover:bg-primary/20 transition-all border border-white/10 group" href="https://www.facebook.com/liquido.vapeshop/" target="_blank" rel="noopener noreferrer">
@@ -347,17 +351,17 @@
 </div>
 </div>
 <div class="space-y-8">
-<h4 class="font-black text-xs uppercase tracking-[0.2em] text-white">Link Rapidi</h4>
-<ul class="space-y-5 text-slate-500 text-xs font-bold uppercase tracking-widest">
-<li><a class="hover:text-primary transition-colors flex items-center gap-2" href="index.html"><span class="size-1 bg-white/10 group-hover:bg-primary rounded-full transition-colors"></span>Home</a></li>
-<li><a class="hover:text-primary transition-colors flex items-center gap-2" href="brands.html"><span class="size-1 bg-white/10 group-hover:bg-primary rounded-full transition-colors"></span>Marchi</a></li>
-<li><a class="hover:text-primary transition-colors flex items-center gap-2" href="products.html"><span class="size-1 bg-white/10 group-hover:bg-primary rounded-full transition-colors"></span>Prodotti</a></li>
-<li><a class="hover:text-primary transition-colors flex items-center gap-2" href="contact.html"><span class="size-1 bg-white/10 group-hover:bg-primary rounded-full transition-colors"></span>Contatti</a></li>
+<h4 class="font-black text-xs uppercase tracking-[0.2em] text-white dark:text-white text-background-dark">Link Rapidi</h4>
+<ul class="space-y-5 text-slate-500 dark:text-slate-500 text-slate-600 text-xs font-bold uppercase tracking-widest">
+<li><a class="hover:text-primary transition-colors flex items-center gap-2" href="index.html"><span class="size-1 bg-white/10 dark:bg-white/10 bg-black/10 group-hover:bg-primary rounded-full transition-colors"></span>Home</a></li>
+<li><a class="hover:text-primary transition-colors flex items-center gap-2" href="brands.html"><span class="size-1 bg-white/10 dark:bg-white/10 bg-black/10 group-hover:bg-primary rounded-full transition-colors"></span>Marchi</a></li>
+<li><a class="hover:text-primary transition-colors flex items-center gap-2" href="products.html"><span class="size-1 bg-white/10 dark:bg-white/10 bg-black/10 group-hover:bg-primary rounded-full transition-colors"></span>Prodotti</a></li>
+<li><a class="hover:text-primary transition-colors flex items-center gap-2" href="contact.html"><span class="size-1 bg-white/10 dark:bg-white/10 bg-black/10 group-hover:bg-primary rounded-full transition-colors"></span>Contatti</a></li>
 </ul>
 </div>
 <div class="space-y-8">
-<h4 class="font-black text-xs uppercase tracking-[0.2em] text-white">Marchi Partner</h4>
-<ul class="space-y-5 text-slate-500 text-xs font-bold uppercase tracking-widest">
+<h4 class="font-black text-xs uppercase tracking-[0.2em] text-white dark:text-white text-background-dark">Marchi Partner</h4>
+<ul class="space-y-5 text-slate-500 dark:text-slate-500 text-slate-600 text-xs font-bold uppercase tracking-widest">
 <li><a class="hover:text-primary transition-colors" href="#">GeekVape</a></li>
 <li><a class="hover:text-primary transition-colors" href="#">Vaporesso</a></li>
 <li><a class="hover:text-primary transition-colors" href="#">Dinner Lady</a></li>
@@ -366,32 +370,32 @@
 </ul>
 </div>
 <div class="space-y-8">
-<h4 class="font-black text-xs uppercase tracking-[0.2em] text-white">Informazioni Contatto</h4>
+<h4 class="font-black text-xs uppercase tracking-[0.2em] text-white dark:text-white text-background-dark">Informazioni Contatto</h4>
 <div class="space-y-6">
 <div class="flex gap-4">
 <span class="material-symbols-outlined text-primary text-xl">location_on</span>
-<div class="text-slate-400 text-sm font-medium leading-relaxed">
+<div class="text-slate-400 dark:text-slate-400 text-slate-600 text-sm font-medium leading-relaxed">
                         via Adige 43C<br/>
                         00015 - Monterotondo (Rm)
                         </div>
 </div>
 <div class="flex gap-4 items-center">
 <span class="material-symbols-outlined text-primary text-xl">call</span>
-                    <a class="text-slate-400 text-sm font-medium hover:text-white transition-colors" href="tel:+393791345367">+39 379 134 5367</a>
+                    <a class="text-slate-400 dark:text-slate-400 text-slate-600 text-sm font-medium hover:text-white dark:hover:text-white hover:text-background-dark transition-colors" href="tel:+393791345367">+39 379 134 5367</a>
 </div>
 <div class="flex gap-4 items-center">
 <span class="material-symbols-outlined text-primary text-xl">mail</span>
-                    <a class="text-slate-400 text-sm font-medium hover:text-white transition-colors" href="mailto:info.vaporoom@gmail.com">info.vaporoom@gmail.com</a>
+                    <a class="text-slate-400 dark:text-slate-400 text-slate-600 text-sm font-medium hover:text-white dark:hover:text-white hover:text-background-dark transition-colors" href="mailto:info.vaporoom@gmail.com">info.vaporoom@gmail.com</a>
 </div>
 </div>
 </div>
 </div>
-<div class="max-w-[1440px] mx-auto pt-12 border-t border-white/5 flex flex-col md:flex-row justify-between gap-8 items-center text-[10px] text-slate-500 font-black uppercase tracking-[0.3em]">
+<div class="max-w-[1440px] mx-auto pt-12 border-t border-white/5 dark:border-white/5 border-black/10 flex flex-col md:flex-row justify-between gap-8 items-center text-[10px] text-slate-500 dark:text-slate-500 text-slate-600 font-black uppercase tracking-[0.3em]">
 <p>Copyright 2024 LIQUIDO. TUTTI I DIRITTI RISERVATI.</p>
 <div class="flex gap-10">
-<a class="hover:text-white transition-colors" href="#">Privacy Policy</a>
-<a class="hover:text-white transition-colors" href="#">Termini di Servizio</a>
-<a class="hover:text-white transition-colors" href="#">Conformità</a>
+<a class="hover:text-white dark:hover:text-white hover:text-background-dark transition-colors" href="#">Privacy Policy</a>
+<a class="hover:text-white dark:hover:text-white hover:text-background-dark transition-colors" href="#">Termini di Servizio</a>
+<a class="hover:text-white dark:hover:text-white hover:text-background-dark transition-colors" href="#">Conformità</a>
 </div>
 <div class="flex items-center gap-2 text-primary border border-primary/20 px-4 py-2 rounded-sm bg-primary/5">
 <span class="material-symbols-outlined text-sm">verified_user</span>
@@ -440,6 +444,7 @@
 
         setInterval(nextSlide, 5000);
     </script>
+    <script src="../src/js/modules/theme-toggle.js"></script>
     <script src="../src/js/modules/age-verification.js"></script>
     <script src="../src/js/modules/faq-accordion.js"></script>
     <script src="../src/js/services/seo-schema.js"></script>
@@ -550,6 +555,11 @@
                 }
             }
         })();
+        
+        // Initialize theme toggle
+        if (typeof ThemeToggle !== 'undefined') {
+            ThemeToggle.init();
+        }
     </script>
 </body></html>
 

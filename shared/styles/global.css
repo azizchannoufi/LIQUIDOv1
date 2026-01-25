@@ -3,6 +3,7 @@
 /* CSS Variables */
 :root {
     --primary-color: #F8ED70;
+    --primary-color-light: #FFD700;
     --bg-dark: #000000;
     --bg-light: #333333;
     --charcoal: #333333;
@@ -23,6 +24,15 @@ body {
     background: rgba(0, 0, 0, 0.85);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
+    transition: background var(--transition-base);
+}
+
+/* Light mode glass effect */
+:root:not(.dark) .glass-effect,
+.light .glass-effect {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
 }
 
 /* Typography Utilities */
@@ -31,9 +41,10 @@ body {
     letter-spacing: -0.02em;
 }
 
-/* Glow Effects */
+/* Glow Effects - Dark Mode */
 .accent-glow {
     box-shadow: 0 0 20px rgba(248, 237, 112, 0.2);
+    transition: box-shadow var(--transition-base);
 }
 
 .accent-glow-strong:hover {
@@ -42,6 +53,22 @@ body {
 
 .text-glow:hover {
     text-shadow: 0 0 15px rgba(248, 237, 112, 0.4);
+}
+
+/* Light Mode Glow Effects - Enhanced yellow */
+:root:not(.dark) .accent-glow,
+.light .accent-glow {
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
+}
+
+:root:not(.dark) .accent-glow-strong:hover,
+.light .accent-glow-strong:hover {
+    box-shadow: 0 0 30px rgba(255, 215, 0, 0.6);
+}
+
+:root:not(.dark) .text-glow:hover,
+.light .text-glow:hover {
+    text-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
 }
 
 /* Brand Card Hover Effect */
