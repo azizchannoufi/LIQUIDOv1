@@ -402,6 +402,88 @@ class CatalogService {
         
         return await this.firebaseService.deleteProductLine(sectionId, brandName, lineName);
     }
+
+    /**
+     * Get all products from a specific line
+     * @param {string} sectionId - Section ID
+     * @param {string} brandName - Brand name
+     * @param {string} lineName - Product line name
+     * @returns {Promise<Array>} Array of products
+     */
+    async getProductsByLine(sectionId, brandName, lineName) {
+        await this.initFirebase();
+        
+        if (!this.useFirebase || !this.firebaseService) {
+            throw new Error('Firebase not available. Cannot get products.');
+        }
+        
+        return await this.firebaseService.getProductsByLine(sectionId, brandName, lineName);
+    }
+
+    /**
+     * Save a product to Firebase
+     * @param {string} sectionId - Section ID
+     * @param {string} brandName - Brand name
+     * @param {string} lineName - Product line name
+     * @param {Object} productData - Product data (must include images[] array for multiple images)
+     * @returns {Promise<string>} Product ID
+     */
+    async saveProduct(sectionId, brandName, lineName, productData) {
+        await this.initFirebase();
+        
+        if (!this.useFirebase || !this.firebaseService) {
+            throw new Error('Firebase not available. Cannot save product.');
+        }
+        
+        return await this.firebaseService.saveProduct(sectionId, brandName, lineName, productData);
+    }
+
+    /**
+     * Delete a product from Firebase
+     * @param {string} sectionId - Section ID
+     * @param {string} brandName - Brand name
+     * @param {string} lineName - Product line name
+     * @param {string} productId - Product ID
+     * @returns {Promise<void>}
+     */
+    async deleteProduct(sectionId, brandName, lineName, productId) {
+        await this.initFirebase();
+        
+        if (!this.useFirebase || !this.firebaseService) {
+            throw new Error('Firebase not available. Cannot delete product.');
+        }
+        
+        return await this.firebaseService.deleteProduct(sectionId, brandName, lineName, productId);
+    }
+
+    /**
+     * Get all products from a specific section
+     * @param {string} sectionId - Section ID
+     * @returns {Promise<Array>} Array of all products in section
+     */
+    async getAllProductsBySection(sectionId) {
+        await this.initFirebase();
+        
+        if (!this.useFirebase || !this.firebaseService) {
+            throw new Error('Firebase not available. Cannot get products.');
+        }
+        
+        return await this.firebaseService.getAllProductsBySection(sectionId);
+    }
+
+    /**
+     * Get all products from all sections
+     * @returns {Promise<Array>} Array of all products with section, brand, and line info
+     */
+    async getAllProducts() {
+        await this.initFirebase();
+        
+        if (!this.useFirebase || !this.firebaseService) {
+            throw new Error('Firebase not available. Cannot get products.');
+        }
+        
+        return await this.firebaseService.getAllProducts();
+    }
     
     /**
      * Get all brands from all sections

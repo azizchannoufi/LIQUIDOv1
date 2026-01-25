@@ -417,7 +417,7 @@ class BrandsRenderer {
                 if (sectionId) {
                     params.set('section', sectionId);
                 }
-                const navUrl = `products.html?${params.toString()}`;
+                const navUrl = `line-products.html?${params.toString()}`;
                 
                 carouselHTML += `
                     <a href="${navUrl}" class="group lines-carousel-item block cursor-pointer w-full mb-0">

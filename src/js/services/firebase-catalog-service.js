@@ -351,6 +351,265 @@ class FirebaseCatalogService {
         
         return allLines;
     }
+
+    /**
+     * Get all products from a specific line
+     * @param {string} sectionId - Section ID
+     * @param {string} brandName - Brand name
+     * @param {string} lineName - Product line name
+     * @returns {Promise<Array>} Array of products
+     */
+    async getProductsByLine(sectionId, brandName, lineName) {
+        await this.initialize();
+        const catalogRef = this.getCatalogRef();
+        
+        return new Promise((resolve, reject) => {
+            catalogRef.child('sections').once('value')
+                .then((snapshot) => {
+                    const sections = snapshot.val();
+                    if (!sections) {
+                        resolve([]);
+                        return;
+                    }
+                    
+                    const sectionArray = Object.values(sections);
+                    const section = sectionArray.find(s => s.id === sectionId);
+                    if (!section || !section.brands) {
+                        resolve([]);
+                        return;
+                    }
+                    
+                    const brand = section.brands.find(b => b.name === brandName);
+                    if (!brand || !brand.lines) {
+                        resolve([]);
+                        return;
+                    }
+                    
+                    const line = brand.lines.find(l => l.name === lineName);
+                    if (!line || !line.products) {
+                        resolve([]);
+                        return;
+                    }
+                    
+                    const products = Object.values(line.products).map(product => ({
+                        ...product,
+                        sectionId: sectionId,
+                        sectionName: section.name,
+                        brandName: brandName,
+                        brandLogo: brand.logo_url || '',
+                        lineName: lineName,
+                        lineImage: line.image_url || ''
+                    }));
+                    
+                    resolve(products);
+                })
+                .catch((error) => {
+                    reject(error);
+                });
+        });
+    }
+
+    /**
+     * Save a product to a specific line
+     * @param {string} sectionId - Section ID
+     * @param {string} brandName - Brand name
+     * @param {string} lineName - Product line name
+     * @param {Object} productData - Product data (must include images[] array for multiple images)
+     * @returns {Promise<string>} Product ID
+     */
+    async saveProduct(sectionId, brandName, lineName, productData) {
+        await this.initialize();
+        const catalogRef = this.getCatalogRef();
+        
+        // Get current sections
+        const sections = await this.getSections();
+        const sectionIndex = sections.findIndex(s => s.id === sectionId);
+        
+        if (sectionIndex === -1) {
+            throw new Error(`Section ${sectionId} not found`);
+        }
+
+        const section = sections[sectionIndex];
+        const brands = section.brands || [];
+        const brandIndex = brands.findIndex(b => b.name === brandName);
+        
+        if (brandIndex === -1) {
+            throw new Error(`Brand ${brandName} not found in section ${sectionId}`);
+        }
+
+        const brand = brands[brandIndex];
+        const lines = brand.lines || [];
+        const lineIndex = lines.findIndex(l => l.name === lineName);
+        
+        if (lineIndex === -1) {
+            throw new Error(`Line ${lineName} not found in brand ${brandName}`);
+        }
+
+        const line = lines[lineIndex];
+        if (!line.products) {
+            line.products = {};
+        }
+
+        // Generate product ID from name or use existing
+        const productId = productData.id || productData.name.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+        
+        // Ensure images array exists
+        const images = productData.images || [];
+        const imageUrl = productData.imageUrl || (images.length > 0 ? images[0] : '');
+        
+        // Prepare product data
+        const productToSave = {
+            id: productId,
+            name: productData.name,
+            description: productData.description || '',
+            flavorProfile: productData.flavorProfile || '',
+            imageUrl: imageUrl,
+            images: images
+        };
+
+        // Save product
+        line.products[productId] = productToSave;
+        lines[lineIndex] = line;
+        brand.lines = lines;
+        brands[brandIndex] = brand;
+        section.brands = brands;
+
+        // Save to Firebase
+        return new Promise((resolve, reject) => {
+            catalogRef.child('sections').child(sectionIndex.toString()).set(section)
+                .then(() => resolve(productId))
+                .catch((error) => reject(error));
+        });
+    }
+
+    /**
+     * Delete a product from a specific line
+     * @param {string} sectionId - Section ID
+     * @param {string} brandName - Brand name
+     * @param {string} lineName - Product line name
+     * @param {string} productId - Product ID
+     * @returns {Promise<void>}
+     */
+    async deleteProduct(sectionId, brandName, lineName, productId) {
+        await this.initialize();
+        const catalogRef = this.getCatalogRef();
+        
+        const sections = await this.getSections();
+        const sectionIndex = sections.findIndex(s => s.id === sectionId);
+        
+        if (sectionIndex === -1) {
+            throw new Error(`Section ${sectionId} not found`);
+        }
+
+        const section = sections[sectionIndex];
+        const brands = section.brands || [];
+        const brandIndex = brands.findIndex(b => b.name === brandName);
+        
+        if (brandIndex === -1) {
+            throw new Error(`Brand ${brandName} not found in section ${sectionId}`);
+        }
+
+        const brand = brands[brandIndex];
+        const lines = brand.lines || [];
+        const lineIndex = lines.findIndex(l => l.name === lineName);
+        
+        if (lineIndex === -1) {
+            throw new Error(`Line ${lineName} not found in brand ${brandName}`);
+        }
+
+        const line = lines[lineIndex];
+        if (line.products && line.products[productId]) {
+            delete line.products[productId];
+            // If products object is empty, we can optionally remove it
+            if (Object.keys(line.products).length === 0) {
+                delete line.products;
+            }
+        }
+
+        lines[lineIndex] = line;
+        brand.lines = lines;
+        brands[brandIndex] = brand;
+        section.brands = brands;
+
+        return new Promise((resolve, reject) => {
+            catalogRef.child('sections').child(sectionIndex.toString()).set(section)
+                .then(() => resolve())
+                .catch((error) => reject(error));
+        });
+    }
+
+    /**
+     * Get all products from a specific section
+     * @param {string} sectionId - Section ID
+     * @returns {Promise<Array>} Array of all products in section
+     */
+    async getAllProductsBySection(sectionId) {
+        await this.initialize();
+        const catalogRef = this.getCatalogRef();
+        
+        return new Promise((resolve, reject) => {
+            catalogRef.child('sections').once('value')
+                .then((snapshot) => {
+                    const sections = snapshot.val();
+                    if (!sections) {
+                        resolve([]);
+                        return;
+                    }
+                    
+                    const sectionArray = Object.values(sections);
+                    const section = sectionArray.find(s => s.id === sectionId);
+                    if (!section || !section.brands) {
+                        resolve([]);
+                        return;
+                    }
+                    
+                    const allProducts = [];
+                    
+                    for (const brand of section.brands) {
+                        if (!brand.lines) continue;
+                        
+                        for (const line of brand.lines) {
+                            if (!line.products) continue;
+                            
+                            const products = Object.values(line.products);
+                            for (const product of products) {
+                                allProducts.push({
+                                    ...product,
+                                    sectionId: sectionId,
+                                    sectionName: section.name,
+                                    brandName: brand.name,
+                                    brandLogo: brand.logo_url || '',
+                                    lineName: line.name,
+                                    lineImage: line.image_url || ''
+                                });
+                            }
+                        }
+                    }
+                    
+                    resolve(allProducts);
+                })
+                .catch((error) => {
+                    reject(error);
+                });
+        });
+    }
+
+    /**
+     * Get all products from all sections
+     * @returns {Promise<Array>} Array of all products with section, brand, and line info
+     */
+    async getAllProducts() {
+        await this.initialize();
+        const sections = await this.getSections();
+        const allProducts = [];
+        
+        for (const section of sections) {
+            const products = await this.getAllProductsBySection(section.id);
+            allProducts.push(...products);
+        }
+        
+        return allProducts;
+    }
 }
 
 // Create singleton instance

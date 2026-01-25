@@ -2,23 +2,8 @@
 <html class="dark" lang="it"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Catalogo Prodotti Vape | Liquidi e Dispositivi | LIQUIDO</title>
-<meta name="description" content="Catalogo completo di liquidi vape e dispositivi vape premium. Scopri la nostra selezione di e-liquid e mod vape a Monterotondo, Roma. Qualità garantita."/>
-<meta name="keywords" content="liquidi vape, dispositivi vape, e-liquid, mod vape, pod vape, catalogo vape, vape shop, prodotti vape, liquidi vape Roma, dispositivi vape Monterotondo"/>
-<meta name="author" content="LIQUIDO Vape Shop"/>
-<meta name="robots" content="index, follow"/>
-<link rel="canonical" href="https://liquido.vapeshop/public/products.html"/>
-<meta property="og:type" content="website"/>
-<meta property="og:title" content="Catalogo Prodotti Vape | Liquidi e Dispositivi | LIQUIDO"/>
-<meta property="og:description" content="Catalogo completo di liquidi vape e dispositivi vape premium. Scopri la nostra selezione di e-liquid e mod vape a Monterotondo, Roma."/>
-<meta property="og:url" content="https://liquido.vapeshop/public/products.html"/>
-<meta property="og:site_name" content="LIQUIDO Vape Shop"/>
-<meta property="og:locale" content="it_IT"/>
-<meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:title" content="Catalogo Prodotti Vape | LIQUIDO"/>
-<meta name="twitter:description" content="Catalogo completo di liquidi vape e dispositivi vape premium a Monterotondo, Roma."/>
-<meta name="geo.region" content="IT-LA"/>
-<meta name="geo.placename" content="Monterotondo"/>
+<title>Prodotti Linea | LIQUIDO</title>
+<meta name="description" content="Scopri tutti i prodotti della linea premium. Qualità garantita."/>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
@@ -100,7 +85,7 @@
 <nav class="hidden md:flex items-center gap-8 absolute left-1/2 transform -translate-x-1/2">
 <a class="text-xs font-bold uppercase tracking-widest hover:text-primary transition-colors" href="index.html">Home</a>
 <a class="text-xs font-bold uppercase tracking-widest hover:text-primary transition-colors" href="brands.html">Marchi</a>
-<a class="text-xs font-bold uppercase tracking-widest hover:text-primary transition-colors text-primary" href="products.html">Prodotti</a>
+<a class="text-xs font-bold uppercase tracking-widest hover:text-primary transition-colors" href="products.html">Prodotti</a>
 <a class="text-xs font-bold uppercase tracking-widest hover:text-primary transition-colors" href="myliquido.html">MyLiquido</a>
 <a class="text-xs font-bold uppercase tracking-widest hover:text-primary transition-colors" href="about.html">Chi Siamo</a>
 <a class="text-xs font-bold uppercase tracking-widest hover:text-primary transition-colors" href="contact.html">Contatti</a>
@@ -121,64 +106,37 @@
 </div>
 </header>
 <main class="pt-[120px] max-w-[1440px] mx-auto px-6 lg:px-20 py-8">
-<section class="relative mb-12 rounded-xl overflow-hidden bg-zinc-900 aspect-[21/6] md:aspect-[21/4]">
-<div class="absolute inset-0 bg-cover bg-center opacity-40 mix-blend-overlay" style="background-image: url('../assets/images/Goccia LIQUIDO/GOCCIA RGB.jpg');"></div>
+<!-- Line Hero Section -->
+<section id="line-hero" class="relative mb-12 rounded-xl overflow-hidden bg-zinc-900 aspect-[21/6] md:aspect-[21/4]">
+<div class="absolute inset-0 bg-cover bg-center opacity-40 mix-blend-overlay" id="line-hero-bg"></div>
 <div class="absolute inset-0 bg-gradient-to-r from-black via-black/40 to-transparent"></div>
 <div class="relative h-full flex flex-col justify-center px-12 max-w-2xl">
 <div class="mb-4 inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/20 text-primary text-xs font-bold uppercase tracking-widest">
-<span class="material-symbols-outlined text-xs">verified</span> Negozio Ufficiale
+<span class="material-symbols-outlined text-xs">verified</span> <span id="line-brand-name"></span>
             </div>
-<h1 class="text-4xl md:text-5xl font-black text-white mb-4 tracking-tight">LIQUIDO: Eccellenza Vapor Premium</h1>
-<p class="text-zinc-300 text-lg leading-relaxed">
-                Creiamo le migliori esperienze di vapor con ingredienti premium e tecnologia all'avanguardia. Esplora la nostra selezione curata di hardware ad alte prestazioni e e-liquid artigianali.
+<h1 class="text-4xl md:text-5xl font-black text-white mb-4 tracking-tight" id="line-name"></h1>
+<p class="text-zinc-300 text-lg leading-relaxed" id="line-description">
+                Scopri tutti i prodotti di questa linea premium.
             </p>
 </div>
 </section>
-<div class="flex border-b border-zinc-200 dark:border-zinc-800 mb-8 overflow-x-auto no-scrollbar">
-<a data-section-tab="cat_liquidi" class="section-tab flex items-center gap-2 px-6 py-4 border-b-2 border-primary text-primary font-bold whitespace-nowrap cursor-pointer">
-<span class="material-symbols-outlined text-[20px]">water_drop</span> Liquidi
-        </a>
-<a data-section-tab="cat_dispositivi" class="section-tab flex items-center gap-2 px-6 py-4 border-b-2 border-transparent text-zinc-500 hover:text-zinc-700 dark:hover:text-zinc-300 font-bold whitespace-nowrap cursor-pointer">
-<span class="material-symbols-outlined text-[20px]">vape_free</span> Dispositivi
-        </a>
+<!-- Breadcrumbs -->
+<div class="flex flex-wrap gap-2 py-4 mb-4">
+<a class="text-zinc-500 text-sm font-medium hover:text-primary transition-colors" href="index.html">Home</a>
+<span class="text-zinc-500 text-sm">/</span>
+<a class="text-zinc-500 text-sm font-medium hover:text-primary transition-colors" href="products.html">Prodotti</a>
+<span class="text-zinc-500 text-sm">/</span>
+<span class="text-white text-sm font-medium" id="breadcrumb-line"></span>
 </div>
-<div class="flex flex-col lg:flex-row gap-8">
-<aside class="w-full lg:w-64 shrink-0 space-y-8">
-<div>
-<h4 class="text-xs font-bold uppercase tracking-widest text-zinc-500 mb-4">Filtra per Marca</h4>
-<div id="brand-filters" class="space-y-2 max-h-64 overflow-y-auto">
-<!-- Brands will be loaded dynamically -->
-</div>
-</div>
-<div>
-<h4 class="text-xs font-bold uppercase tracking-widest text-zinc-500 mb-4">Filtra per Linea</h4>
-<div id="line-filters" class="space-y-2 max-h-64 overflow-y-auto">
-<!-- Lines will be loaded dynamically -->
-</div>
-</div>
-<div class="pt-4 border-t border-zinc-800">
-<button id="reset-filters" class="w-full flex items-center justify-center gap-2 py-3 rounded text-sm font-bold text-zinc-400 hover:text-white transition-colors">
-<span class="material-symbols-outlined text-sm">refresh</span> Reimposta Filtri
-                </button>
-</div>
-</aside>
 <div class="flex-1">
 <div class="flex items-center justify-between mb-6">
 <p class="text-sm text-zinc-500 font-medium">Mostrando <span id="products-count" class="text-white">0</span> prodotti</p>
-<button class="flex items-center gap-2 text-sm font-medium px-4 py-2 bg-zinc-100 dark:bg-zinc-800 rounded-lg">
-                    Ordina per: Popolare <span class="material-symbols-outlined text-sm">expand_more</span>
-</button>
 </div>
 <div id="products-grid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
 <!-- Products will be loaded dynamically -->
 </div>
 <div id="no-results" class="hidden text-center py-12">
 <p class="text-zinc-400 text-lg">Nessun prodotto trovato</p>
-</div>
-<div id="pagination-container" class="mt-12 flex justify-center items-center gap-2">
-<!-- Pagination will be rendered dynamically -->
-</div>
-</div>
 </div>
 </div>
 </main>
@@ -307,7 +265,7 @@
     <script src="../src/js/modules/brands-renderer.js"></script>
     <script src="../src/js/modules/products-renderer.js"></script>
     <script src="../src/js/modules/catalog-init.js"></script>
-    <script src="../src/js/pages/products-page-enhanced.js"></script>
+    <script src="../src/js/pages/line-products-page.js"></script>
     <script>
         // Initialize theme toggle
         if (typeof ThemeToggle !== 'undefined') {
@@ -315,3 +273,4 @@
         }
     </script>
 </body></html>
+
