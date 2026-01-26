@@ -17,10 +17,20 @@ class ProductsRenderer {
      */
     renderProductLineCard(line, brandName, brandLogo = '') {
         const imageUrl = line.image_url || '';
-        const productId = `${brandName.toLowerCase().replace(/\s+/g, '-')}-${line.name.toLowerCase().replace(/\s+/g, '-')}`;
+        const sectionId = line.sectionId || '';
+
+        // Create navigation URL to line-products page
+        const params = new URLSearchParams({
+            brand: brandName,
+            line: line.name
+        });
+        if (sectionId) {
+            params.set('section', sectionId);
+        }
+        const navUrl = `line-products.html?${params.toString()}`;
 
         return `
-            <a href="product-detail.html?id=${productId}&brand=${encodeURIComponent(brandName)}&line=${encodeURIComponent(line.name)}" 
+            <a href="${navUrl}" 
                class="group product-card bg-zinc-900 rounded-xl overflow-hidden border border-zinc-800 hover:border-primary/50 transition-all duration-300 block cursor-pointer">
                 <div class="aspect-square bg-gradient-to-br from-zinc-800 to-zinc-900 relative overflow-hidden flex items-center justify-center">
                     ${imageUrl ? `
@@ -163,9 +173,19 @@ class ProductsRenderer {
      */
     renderNuoviArriviCard(line, brandName, sectionName = '') {
         const imageUrl = line.image_url || '';
-        const productId = `${brandName.toLowerCase().replace(/\s+/g, '-')}-${line.name.toLowerCase().replace(/\s+/g, '-')}`;
+        const sectionId = line.sectionId || '';
         const sectionLabel = sectionName || (line.sectionName || '');
         const description = line.description || line.flavorProfile || '';
+
+        // Create navigation URL to line-products page
+        const params = new URLSearchParams({
+            brand: brandName,
+            line: line.name
+        });
+        if (sectionId) {
+            params.set('section', sectionId);
+        }
+        const navUrl = `line-products.html?${params.toString()}`;
 
         return `
             <div class="group bg-charcoal border border-white/5 rounded-sm overflow-hidden hover:border-primary/40 transition-all duration-500">
@@ -188,7 +208,7 @@ class ProductsRenderer {
                     </div>
                     ${description ? `<p class="text-sm text-slate-500 line-clamp-2 leading-relaxed">${description}</p>` : ''}
                     <div class="pt-6 flex items-center justify-between border-t border-white/5">
-                        <a href="product-detail.html?id=${productId}&brand=${encodeURIComponent(brandName)}&line=${encodeURIComponent(line.name)}" 
+                        <a href="${navUrl}" 
                            class="text-white font-black text-[10px] uppercase tracking-widest flex items-center gap-2 group/btn hover:text-primary transition-colors">
                             Visualizza Prodotto 
                             <span class="material-symbols-outlined text-sm group-hover/btn:translate-x-1 transition-transform">arrow_forward</span>
@@ -223,6 +243,82 @@ class ProductsRenderer {
         const limitedLines = lines.slice(0, limit);
         container.innerHTML = limitedLines
             .map(line => this.renderNuoviArriviCard(line, line.brandName, line.sectionName))
+            .join('');
+    }
+
+    /**
+     * Render product card HTML for individual product
+     * @param {Object} product - Product object with name, images, brandName, lineName, etc.
+     * @returns {string} HTML string
+     */
+    renderProductCard(product) {
+        // Get main image - use imageUrl or first image from images array
+        const images = product.images || [];
+        const imageUrl = product.imageUrl || (images.length > 0 ? images[0] : '');
+        const productId = product.id || product.name.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+        const brandName = product.brandName || '';
+        const lineName = product.lineName || '';
+        const productName = product.name || '';
+
+        // Build URL for product detail page
+        const params = new URLSearchParams({
+            id: productId,
+            brand: brandName,
+            line: lineName
+        });
+        if (product.sectionId) {
+            params.set('section', product.sectionId);
+        }
+        const detailUrl = `product-detail.html?${params.toString()}`;
+
+        return `
+            <a href="${detailUrl}" 
+               class="group product-card bg-zinc-900 rounded-xl overflow-hidden border border-zinc-800 hover:border-primary/50 transition-all duration-300 block cursor-pointer">
+                <div class="aspect-square bg-gradient-to-br from-zinc-800 to-zinc-900 relative overflow-hidden flex items-center justify-center">
+                    ${imageUrl ? `
+                    <img class="w-full h-full object-contain p-4 group-hover:scale-105 transition-transform duration-500" 
+                         src="${imageUrl}" 
+                         alt="${productName} - ${brandName}"
+                         onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"/>
+                    ` : ''}
+                    <div class="${imageUrl ? 'hidden' : 'flex'} flex-col items-center justify-center text-zinc-600 w-full h-full">
+                        <span class="material-symbols-outlined text-5xl opacity-30">inventory_2</span>
+                    </div>
+                </div>
+                <div class="p-5">
+                    <p class="text-zinc-400 text-[10px] font-bold uppercase tracking-widest mb-2">${brandName}${lineName ? ` • ${lineName}` : ''}</p>
+                    <h3 class="text-base font-bold text-white group-hover:text-primary transition-colors mb-4 line-clamp-2">${productName}</h3>
+                    ${product.flavorProfile ? `<p class="text-zinc-500 text-xs mb-3 line-clamp-1">${product.flavorProfile}</p>` : ''}
+                    <div class="details-btn w-full py-2.5 rounded-lg border border-primary/30 bg-primary/10 text-primary font-bold text-xs tracking-widest transition-all uppercase flex items-center justify-center gap-2 group-hover:bg-primary group-hover:text-black">
+                        Dettagli <span class="material-symbols-outlined text-base">arrow_forward</span>
+                    </div>
+                </div>
+            </a>
+        `;
+    }
+
+    /**
+     * Render products grid
+     * @param {Array} products - Array of product objects
+     * @param {HTMLElement} container - Container element
+     */
+    renderProductsGrid(products, container) {
+        if (!container) {
+            console.error('Container element not found');
+            return;
+        }
+
+        if (!products || products.length === 0) {
+            container.innerHTML = `
+                <div class="col-span-full text-center py-12">
+                    <p class="text-white/40 text-lg">Aucun produit disponible pour le moment.</p>
+                </div>
+            `;
+            return;
+        }
+
+        container.innerHTML = products
+            .map(product => this.renderProductCard(product))
             .join('');
     }
 }

@@ -36,6 +36,7 @@
     // State management
     let currentSection = 'cat_liquidi';
     let selectedBrands = new Set();
+    let selectedLines = new Set();
     let searchQuery = '';
     let allProducts = [];
     let filteredProducts = [];
@@ -63,6 +64,7 @@
     const productsCount = document.getElementById('products-count');
     const noResults = document.getElementById('no-results');
     const brandFiltersContainer = document.getElementById('brand-filters');
+    const lineFiltersContainer = document.getElementById('line-filters');
     const resetFiltersBtn = document.getElementById('reset-filters');
     const headerSearch = document.getElementById('header-search');
     const sectionTabs = document.querySelectorAll('.section-tab');
@@ -80,6 +82,9 @@
         
         // Setup brand filters
         await setupBrandFilters();
+        
+        // Setup line filters
+        await setupLineFilters();
         
         // Setup search
         setupSearch();
@@ -99,13 +104,16 @@
     async function loadProducts(sectionId) {
         try {
             console.log('Loading products for section:', sectionId);
-            allProducts = await service.getAllLinesBySection(sectionId);
+            allProducts = await service.getAllProductsBySection(sectionId);
             console.log('Products loaded:', allProducts.length);
             filteredProducts = [...allProducts];
             currentPage = 1;
             renderProducts();
             updateProductsCount();
             renderPagination();
+            // Update filters after loading products
+            await setupBrandFilters();
+            await setupLineFilters();
         } catch (error) {
             console.error('Error loading products:', error);
             if (productsGrid) {
@@ -137,7 +145,7 @@
         const endIndex = startIndex + productsPerPage;
         const paginatedProducts = filteredProducts.slice(startIndex, endIndex);
         
-        productsRenderer.renderProductLinesGrid(paginatedProducts, productsGrid);
+        productsRenderer.renderProductsGrid(paginatedProducts, productsGrid);
         renderPagination();
     }
     
@@ -160,12 +168,15 @@
                 // Load products for new section
                 await loadProducts(sectionId);
                 
-                // Update brand filters
+                // Update brand and line filters
                 await setupBrandFilters();
+                await setupLineFilters();
                 
-                // Reset brand selection
+                // Reset brand and line selection
                 selectedBrands.clear();
+                selectedLines.clear();
                 updateBrandFiltersUI();
+                updateLineFiltersUI();
                 
                 // Apply filters
                 applyFilters();
@@ -193,33 +204,38 @@
         if (!brandFiltersContainer) return;
         
         try {
-            const brands = await service.getBrandsBySection(currentSection);
-            const brandsWithProducts = brands.filter(brand => brand.lines && brand.lines.length > 0);
+            // Get unique brands from loaded products
+            const uniqueBrands = new Set();
+            allProducts.forEach(product => {
+                if (product.brandName) {
+                    uniqueBrands.add(product.brandName);
+                }
+            });
             
             brandFiltersContainer.innerHTML = '';
             
-            if (brandsWithProducts.length === 0) {
+            if (uniqueBrands.size === 0) {
                 brandFiltersContainer.innerHTML = '<p class="text-zinc-500 text-sm">Nessuna marca disponibile</p>';
                 return;
             }
             
-            brandsWithProducts.forEach(brand => {
+            Array.from(uniqueBrands).sort().forEach(brandName => {
                 const label = document.createElement('label');
                 label.className = 'flex items-center gap-3 cursor-pointer group';
                 label.innerHTML = `
                     <input type="checkbox" 
                            class="brand-filter-checkbox rounded border-zinc-700 bg-zinc-800 text-primary focus:ring-primary" 
-                           value="${brand.name}"
-                           ${selectedBrands.has(brand.name) ? 'checked' : ''}/>
-                    <span class="text-sm font-medium group-hover:text-primary transition-colors">${brand.name}</span>
+                           value="${brandName}"
+                           ${selectedBrands.has(brandName) ? 'checked' : ''}/>
+                    <span class="text-sm font-medium group-hover:text-primary transition-colors">${brandName}</span>
                 `;
                 
                 const checkbox = label.querySelector('.brand-filter-checkbox');
                 checkbox.addEventListener('change', (e) => {
                     if (e.target.checked) {
-                        selectedBrands.add(brand.name);
+                        selectedBrands.add(brandName);
                     } else {
-                        selectedBrands.delete(brand.name);
+                        selectedBrands.delete(brandName);
                     }
                     applyFilters();
                 });
@@ -232,9 +248,65 @@
     }
     
     function updateBrandFiltersUI() {
+        if (!brandFiltersContainer) return;
         const checkboxes = brandFiltersContainer.querySelectorAll('.brand-filter-checkbox');
         checkboxes.forEach(checkbox => {
             checkbox.checked = selectedBrands.has(checkbox.value);
+        });
+    }
+
+    async function setupLineFilters() {
+        if (!lineFiltersContainer) return;
+        
+        try {
+            // Get unique lines from loaded products
+            const uniqueLines = new Set();
+            allProducts.forEach(product => {
+                if (product.lineName) {
+                    uniqueLines.add(product.lineName);
+                }
+            });
+            
+            lineFiltersContainer.innerHTML = '';
+            
+            if (uniqueLines.size === 0) {
+                lineFiltersContainer.innerHTML = '<p class="text-zinc-500 text-sm">Nessuna linea disponibile</p>';
+                return;
+            }
+            
+            Array.from(uniqueLines).sort().forEach(lineName => {
+                const label = document.createElement('label');
+                label.className = 'flex items-center gap-3 cursor-pointer group';
+                label.innerHTML = `
+                    <input type="checkbox" 
+                           class="line-filter-checkbox rounded border-zinc-700 bg-zinc-800 text-primary focus:ring-primary" 
+                           value="${lineName}"
+                           ${selectedLines.has(lineName) ? 'checked' : ''}/>
+                    <span class="text-sm font-medium group-hover:text-primary transition-colors">${lineName}</span>
+                `;
+                
+                const checkbox = label.querySelector('.line-filter-checkbox');
+                checkbox.addEventListener('change', (e) => {
+                    if (e.target.checked) {
+                        selectedLines.add(lineName);
+                    } else {
+                        selectedLines.delete(lineName);
+                    }
+                    applyFilters();
+                });
+                
+                lineFiltersContainer.appendChild(label);
+            });
+        } catch (error) {
+            console.error('Error setting up line filters:', error);
+        }
+    }
+
+    function updateLineFiltersUI() {
+        if (!lineFiltersContainer) return;
+        const checkboxes = lineFiltersContainer.querySelectorAll('.line-filter-checkbox');
+        checkboxes.forEach(checkbox => {
+            checkbox.checked = selectedLines.has(checkbox.value);
         });
     }
     
@@ -263,12 +335,19 @@
                 return false;
             }
             
+            // Line filter
+            if (selectedLines.size > 0 && !selectedLines.has(product.lineName)) {
+                return false;
+            }
+            
             // Search filter
             if (searchQuery) {
                 const searchLower = searchQuery.toLowerCase();
-                const matchesName = product.name.toLowerCase().includes(searchLower);
-                const matchesBrand = product.brandName.toLowerCase().includes(searchLower);
-                if (!matchesName && !matchesBrand) {
+                const matchesName = (product.name || '').toLowerCase().includes(searchLower);
+                const matchesBrand = (product.brandName || '').toLowerCase().includes(searchLower);
+                const matchesLine = (product.lineName || '').toLowerCase().includes(searchLower);
+                const matchesFlavor = (product.flavorProfile || '').toLowerCase().includes(searchLower);
+                if (!matchesName && !matchesBrand && !matchesLine && !matchesFlavor) {
                     return false;
                 }
             }
@@ -363,6 +442,7 @@
     
     function resetFilters() {
         selectedBrands.clear();
+        selectedLines.clear();
         searchQuery = '';
         
         if (headerSearch) {
@@ -370,6 +450,7 @@
         }
         
         updateBrandFiltersUI();
+        updateLineFiltersUI();
         applyFilters();
         updateURL();
     }
@@ -404,10 +485,12 @@
                 currentSection = sectionParam;
                 await loadProducts(currentSection);
                 await setupBrandFilters();
+                await setupLineFilters();
                 updateActiveTab();
             }
             
             selectedBrands.clear();
+            selectedLines.clear();
             if (brandParam) {
                 selectedBrands.add(brandParam);
             }
@@ -418,6 +501,7 @@
             }
             
             updateBrandFiltersUI();
+            updateLineFiltersUI();
             applyFilters();
         });
     }

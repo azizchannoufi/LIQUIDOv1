@@ -515,20 +515,38 @@
                     }
                 }
                 
-                if (!productData.section || !brandName || !productData.line) {
-                    alert('Please fill in all required fields: Section, Brand, and Line.');
+                if (!productData.section || !brandName || !productData.line || !productData.name) {
+                    alert('Please fill in all required fields: Section, Brand, Line, and Product Name.');
                     return;
                 }
                 
-                const lineData = {
-                    name: productData.line,
-                    image_url: productData.imageUrl || '' // First image as main
-                };
-                
-                // Only add images array if there are multiple images
-                if (productImages.length > 1) {
-                    lineData.images = productImages; // All images including the first one
+                // Ensure the line exists first (create it if it doesn't exist)
+                const brand = await catalogService.getBrandByNameInSection(productData.section, brandName);
+                if (!brand) {
+                    alert('Brand not found. Please create the brand first.');
+                    return;
                 }
+                
+                const lines = brand.lines || [];
+                let lineExists = lines.find(l => l.name === productData.line);
+                
+                if (!lineExists) {
+                    // Create the line if it doesn't exist
+                    const newLineData = {
+                        name: productData.line,
+                        image_url: productImages.length > 0 ? productImages[0] : ''
+                    };
+                    await catalogService.saveProductLine(productData.section, brandName, newLineData);
+                }
+                
+                // Prepare product data
+                const productToSave = {
+                    name: productData.name,
+                    description: productData.description || '',
+                    flavorProfile: productData.flavorProfile || '',
+                    imageUrl: productImages.length > 0 ? productImages[0] : '',
+                    images: productImages // All images (can contain multiple)
+                };
                 
                 // Show loading
                 const submitBtn = form.querySelector('button[type="submit"]');
@@ -536,12 +554,12 @@
                 submitBtn.disabled = true;
                 submitBtn.innerHTML = '<span class="animate-spin">⏳</span> Saving...';
                 
-                await catalogService.saveProductLine(productData.section, brandName, lineData);
+                await catalogService.saveProduct(productData.section, brandName, productData.line, productToSave);
                 
                 submitBtn.innerHTML = originalText;
                 submitBtn.disabled = false;
                 
-                alert('✅ Product line saved successfully to Firebase!');
+                alert('✅ Product saved successfully to Firebase!');
                 
                 // Reset or redirect
                 const addAnother = confirm('Product saved! Add another product?');

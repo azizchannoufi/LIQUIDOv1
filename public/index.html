@@ -64,40 +64,40 @@
         .accent-glow-strong:hover {
             box-shadow: 0 0 30px rgba(248, 237, 112, 0.4);
         }
-        .carousel-slide {
-            display: none;
-            animation: fadeIn 0.6s ease-in-out;
-        }
-        .carousel-slide.active {
-            display: block;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        .carousel-dot.active {
-            background-color: var(--primary-color);
-            width: 1.5rem;
-        }
         .brands-carousel-wrapper {
             position: relative;
+            overflow: hidden;
         }
         .brands-carousel-track {
             display: flex;
             will-change: transform;
         }
-        .brands-carousel-slide {
+        .brands-carousel-item {
             flex-shrink: 0;
         }
         .brands-carousel-prev,
         .brands-carousel-next {
-            display: none;
+            display: none !important;
         }
-        @media (min-width: 768px) {
-            .brands-carousel-prev,
-            .brands-carousel-next {
-                display: flex;
+        @keyframes brandsScroll {
+            0% {
+                transform: translateX(0);
             }
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+        .brands-carousel-track {
+            animation: brandsScroll 15s linear infinite;
+        }
+        .brands-carousel-wrapper:hover .brands-carousel-track {
+            animation-play-state: paused;
+        }
+        .text-primary-intense {
+            color: #F5D000;
+        }
+        .dark .text-primary-intense {
+            color: var(--primary-color);
         }
     </style>
 </head>
@@ -121,7 +121,6 @@
 <a class="text-xs font-bold uppercase tracking-widest hover:text-primary transition-colors text-background-dark dark:text-white" href="index.html">Home</a>
 <a class="text-xs font-bold uppercase tracking-widest hover:text-primary transition-colors text-background-dark dark:text-white" href="brands.html">Marchi</a>
 <a class="text-xs font-bold uppercase tracking-widest hover:text-primary transition-colors text-background-dark dark:text-white" href="products.html">Prodotti</a>
-<a class="text-xs font-bold uppercase tracking-widest hover:text-primary transition-colors text-background-dark dark:text-white" href="myliquido.html">MyLiquido</a>
 <a class="text-xs font-bold uppercase tracking-widest hover:text-primary transition-colors text-background-dark dark:text-white" href="about.html">Chi Siamo</a>
 <a class="text-xs font-bold uppercase tracking-widest hover:text-primary transition-colors text-background-dark dark:text-white" href="contact.html">Contatti</a>
 <a class="text-xs font-bold uppercase tracking-widest hover:text-primary transition-colors text-background-dark dark:text-white" href="faq.html">FAQ</a>
@@ -133,22 +132,21 @@
                 aria-label="Toggle theme">
                 <span class="theme-icon material-symbols-outlined text-lg">dark_mode</span>
             </button>
-<button class="bg-primary hover:bg-white text-background-dark px-6 py-2.5 rounded-sm font-black text-xs uppercase tracking-widest transition-all flex items-center gap-2 accent-glow">
-<span class="material-symbols-outlined text-lg">location_on</span>
-                Trova un Negozio
-            </button>
+<a href="myliquido.html" class="bg-primary hover:bg-white text-background-dark px-6 py-2.5 rounded-sm font-black text-xs uppercase tracking-widest transition-all flex items-center gap-2 accent-glow">
+                MyLiquido
+            </a>
 </div>
 </div>
 </header>
 <main class="pt-[120px]">
 <section class="relative min-h-[90vh] flex items-center overflow-hidden bg-gradient-to-b from-charcoal dark:from-charcoal from-surface-light to-background-dark dark:to-background-dark to-white">
 <div class="relative w-full h-[90vh]">
-<div class="carousel-container relative w-full h-full">
-<div class="carousel-slide active relative w-full h-full">
-<div class="absolute inset-0 bg-cover bg-center" style="background-image: url('../assets/images/pexels-olenkabohovyk-11587598.jpg');"></div>
+<video class="absolute inset-0 w-full h-full object-cover" autoplay loop muted playsinline>
+    <source src="../assets/video/Copia di vapore-denso-geometrie.mp4" type="video/mp4">
+</video>
 <div class="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-transparent"></div>
-<div class="relative z-10 h-full flex items-center px-6 lg:px-20 w-full">
-<div class="w-full space-y-8">
+<div class="relative z-10 h-full flex items-center justify-center px-6 lg:px-20 w-full">
+<div class="w-full space-y-8 text-center">
 <h1 class="text-5xl lg:text-7xl text-bold-modern leading-tight uppercase text-white dark:text-white text-background-dark">
                         Solo i migliori Brand per ogni tipo di Svapta
                     </h1>
@@ -158,69 +156,6 @@
 <button class="bg-primary hover:bg-white text-background-dark px-10 py-5 rounded-sm font-black text-sm uppercase tracking-widest transition-all accent-glow-strong">
                         Esplora
                     </button>
-</div>
-</div>
-</div>
-<div class="carousel-slide relative w-full h-full">
-<div class="absolute inset-0 bg-cover bg-center" style="background-image: url('../assets/images/pexels-themeditators-23319716.jpg');"></div>
-<div class="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-transparent"></div>
-<div class="relative z-10 h-full flex items-center px-6 lg:px-20 w-full">
-<div class="w-full space-y-8">
-<h1 class="text-5xl lg:text-7xl text-bold-modern leading-tight uppercase text-white dark:text-white text-background-dark">
-                        Il posto giusto per trovare il tuo LIQUIDO !
-                    </h1>
-<p class="text-xl text-white/90 dark:text-white/90 text-background-dark/90 leading-relaxed font-medium">
-                        Vieni a scoprire la nostra accurata selezione di LIQUIDO
-                    </p>
-<button class="bg-primary hover:bg-white text-background-dark px-10 py-5 rounded-sm font-black text-sm uppercase tracking-widest transition-all accent-glow-strong">
-                        Esplora
-                    </button>
-</div>
-</div>
-</div>
-<div class="carousel-slide relative w-full h-full">
-<div class="absolute inset-0 bg-cover bg-center" style="background-image: url('../assets/images/pexels-darya-grey_owl-132130036-15410593.jpg');"></div>
-<div class="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-transparent"></div>
-<div class="relative z-10 h-full flex items-center px-6 lg:px-20 w-full">
-<div class="w-full space-y-8">
-<h1 class="text-5xl lg:text-7xl text-bold-modern leading-tight uppercase text-white dark:text-white text-background-dark">
-                        Non trovi il liquido ideale per te ?
-                    </h1>
-<p class="text-xl text-white/90 dark:text-white/90 text-background-dark/90 leading-relaxed font-medium">
-                        Cercalo e prenotalo tramite WhatsApp , in 24/48 ore lo puoi ritirare in negozio piu scelta. zero attese!
-                    </p>
-<button class="bg-primary hover:bg-white text-background-dark px-10 py-5 rounded-sm font-black text-sm uppercase tracking-widest transition-all accent-glow-strong">
-                        Esplora
-                    </button>
-</div>
-</div>
-</div>
-</div>
-<button class="carousel-prev absolute left-6 top-1/2 -translate-y-1/2 z-20 bg-white/10 dark:bg-white/10 bg-black/10 hover:bg-white/20 dark:hover:bg-white/20 hover:bg-black/20 backdrop-blur-sm border border-white/20 dark:border-white/20 border-black/20 rounded-full p-3 transition-all">
-<span class="material-symbols-outlined text-white dark:text-white text-background-dark">chevron_left</span>
-</button>
-<button class="carousel-next absolute right-6 top-1/2 -translate-y-1/2 z-20 bg-white/10 dark:bg-white/10 bg-black/10 hover:bg-white/20 dark:hover:bg-white/20 hover:bg-black/20 backdrop-blur-sm border border-white/20 dark:border-white/20 border-black/20 rounded-full p-3 transition-all">
-<span class="material-symbols-outlined text-white dark:text-white text-background-dark">chevron_right</span>
-</button>
-<div class="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex gap-2">
-<span class="carousel-dot active w-3 h-3 rounded-full bg-primary cursor-pointer transition-all"></span>
-<span class="carousel-dot w-3 h-3 rounded-full bg-white/30 dark:bg-white/30 bg-black/30 cursor-pointer transition-all hover:bg-white/50 dark:hover:bg-white/50 hover:bg-black/50"></span>
-<span class="carousel-dot w-3 h-3 rounded-full bg-white/30 dark:bg-white/30 bg-black/30 cursor-pointer transition-all hover:bg-white/50 dark:hover:bg-white/50 hover:bg-black/50"></span>
-</div>
-    </div>
-</div>
-</section>
-<!-- Lines Carousel Section -->
-<section class="pt-20 pb-12 bg-background-dark dark:bg-background-dark bg-white">
-<div class="w-full">
-<div class="text-center mb-8 px-6 lg:px-20">
-<h2 class="text-4xl lg:text-5xl text-bold-modern uppercase text-background-dark dark:text-white mb-4">Le Nostre Linee</h2>
-<p class="text-slate-500 dark:text-slate-500 text-slate-600 max-w-2xl mx-auto font-medium">Scopri le nostre linee di prodotti premium selezionate per te</p>
-</div>
-<div id="lines-carousel-container" class="min-h-[500px] md:min-h-[600px] w-full">
-<!-- Lines carousel will be loaded dynamically from Firebase -->
-<div class="flex items-center justify-center h-[500px] md:h-[600px]">
-<p class="text-white/40 dark:text-white/40 text-background-dark/40 text-lg">Caricamento linee...</p>
 </div>
 </div>
 </div>
@@ -265,7 +200,7 @@
 <div class="relative z-10 max-w-[1440px] mx-auto px-6 lg:px-20">
 <div class="bg-black/40 dark:bg-black/40 bg-white/60 border border-white/5 dark:border-white/5 border-black/10 p-16 lg:p-24 rounded-sm glass-effect flex flex-col items-center text-center space-y-10">
 <span class="text-primary font-black uppercase tracking-[0.6em] text-[10px]">Lo Standard Liquido</span>
-<h2 class="text-6xl lg:text-8xl text-bold-modern max-w-5xl tracking-tighter uppercase text-white dark:text-white text-background-dark">Oltre le Nuvole. <br/><span class="text-primary italic underline decoration-white/5 dark:decoration-white/5 decoration-black/10">Pura Performance.</span></h2>
+<h2 class="text-6xl lg:text-8xl text-bold-modern max-w-5xl tracking-tighter uppercase text-white dark:text-white text-background-dark">Oltre le Nuvole. <br/><span class="text-primary-intense italic underline decoration-white/5 dark:decoration-white/5 decoration-black/10">Pura Performance.</span></h2>
 <p class="text-xl text-slate-400 dark:text-slate-400 text-slate-600 max-w-2xl leading-relaxed font-medium">
                     Non vendiamo solo prodotti; curiamo esperienze. Ogni mod, tank e bottiglia di liquido nel nostro negozio soddisfa i più alti criteri di sicurezza e prestazioni.
                 </p>
@@ -423,41 +358,6 @@
 </footer>
 </main>
 <script>
-        let currentSlide = 0;
-        const slides = document.querySelectorAll('.carousel-slide');
-        const dots = document.querySelectorAll('.carousel-dot');
-        const totalSlides = slides.length;
-
-        function showSlide(index) {
-            slides.forEach((slide, i) => {
-                slide.classList.toggle('active', i === index);
-            });
-            dots.forEach((dot, i) => {
-                dot.classList.toggle('active', i === index);
-            });
-        }
-
-        function nextSlide() {
-            currentSlide = (currentSlide + 1) % totalSlides;
-            showSlide(currentSlide);
-        }
-
-        function prevSlide() {
-            currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
-            showSlide(currentSlide);
-        }
-
-        document.querySelector('.carousel-next').addEventListener('click', nextSlide);
-        document.querySelector('.carousel-prev').addEventListener('click', prevSlide);
-
-        dots.forEach((dot, index) => {
-            dot.addEventListener('click', () => {
-                currentSlide = index;
-                showSlide(currentSlide);
-            });
-        });
-
-        setInterval(nextSlide, 5000);
     </script>
     <script src="../src/js/modules/theme-toggle.js"></script>
     <script src="../src/js/modules/age-verification.js"></script>
@@ -476,42 +376,8 @@
     <script src="../src/js/modules/brands-renderer.js"></script>
     <script src="../src/js/modules/products-renderer.js"></script>
     <script src="../src/js/modules/catalog-init.js"></script>
-    
-    <!-- Initialize Lines Carousel -->
     <script>
-        (async function() {
-            try {
-                // Wait for catalog initialization
-                if (!window.catalogInit) {
-                    await new Promise(resolve => {
-                        const checkCatalog = setInterval(() => {
-                            if (window.catalogInit) {
-                                clearInterval(checkCatalog);
-                                resolve();
-                            }
-                        }, 100);
-                    });
-                }
-                
-                const catalog = await window.catalogInit;
-                
-                if (!catalog || !catalog.brandsRenderer) {
-                    console.error('BrandsRenderer not available:', catalog);
-                    return;
-                }
-                
-                const { brandsRenderer } = catalog;
-                const linesContainer = document.getElementById('lines-carousel-container');
-                
-                if (linesContainer && brandsRenderer) {
-                    await brandsRenderer.renderLinesCarouselFromDB(linesContainer);
-                }
-            } catch (error) {
-                console.error('Error initializing lines carousel:', error);
-            }
-        })();
-        
-        // Initialize Brands Carousel
+    <!-- Initialize Brands Carousel -->
         (async function() {
             try {
                 // Wait for catalog initialization
@@ -543,7 +409,8 @@
                 console.error('Error initializing brands carousel:', error);
             }
         })();
-        
+    </script>
+    <script>
         // Track visit
         (async function() {
             try {

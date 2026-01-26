@@ -188,83 +188,66 @@ class BrandsRenderer {
             return;
         }
 
-        const brandsPerSlide = 6;
-        const totalSlides = Math.ceil(brands.length / brandsPerSlide);
+        // Create infinite loop carousel - duplicate brands for seamless loop
+        const duplicatedBrands = [...brands, ...brands];
         
         let carouselHTML = `
             <div class="relative">
                 <div class="brands-carousel-wrapper overflow-hidden">
-                    <div class="brands-carousel-track flex transition-transform duration-500 ease-in-out" style="transform: translateX(0);">
+                    <div class="brands-carousel-track flex gap-8" style="animation: brandsScroll 15s linear infinite;">
         `;
-
-        for (let i = 0; i < totalSlides; i++) {
-            const slideBrands = brands.slice(i * brandsPerSlide, (i + 1) * brandsPerSlide);
+        
+        duplicatedBrands.forEach(brand => {
+            const logoUrl = brand.logo_url || '';
             carouselHTML += `
-                <div class="brands-carousel-slide min-w-full flex items-center justify-center gap-8 px-4">
-                    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 w-full">
-            `;
-            
-            slideBrands.forEach(brand => {
-                const logoUrl = brand.logo_url || '';
-                carouselHTML += `
-                    <div class="flex flex-col items-center gap-4 group cursor-pointer hover:opacity-100 transition-opacity">
-                        ${logoUrl ? `
-                        <div class="bg-white dark:bg-white rounded-lg p-3 flex items-center justify-center h-[240px] md:h-[288px] w-[240px] md:w-[288px] shadow-sm border dark:border-white/10">
-                            <img class="h-full w-full object-contain grayscale group-hover:grayscale-0 transition-all" 
-                                 alt="${brand.name} Logo" 
-                                 src="${logoUrl}" 
-                                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"/>
-                        </div>
-                        <div class="${logoUrl ? 'hidden' : 'flex'} items-center justify-center h-[192px] md:h-[240px] bg-white dark:bg-white rounded-lg p-3 border dark:border-white/10 text-gray-400 dark:text-white/30">
-                            <span class="material-symbols-outlined text-2xl">image</span>
-                        </div>
-                        ` : `
-                        <div class="flex items-center justify-center h-[192px] md:h-[240px] bg-white dark:bg-white rounded-lg p-3 border dark:border-white/10 text-gray-400 dark:text-white/30">
-                            <span class="material-symbols-outlined text-2xl">image</span>
-                        </div>
-                        `}
-                        <span class="text-[10px] font-black tracking-widest uppercase text-gray-600 dark:text-white/40 group-hover:text-primary">${brand.name}</span>
+                <div class="brands-carousel-item flex-shrink-0 flex flex-col items-center gap-4 group cursor-pointer hover:opacity-100 transition-opacity">
+                    ${logoUrl ? `
+                    <div class="bg-white dark:bg-white rounded-lg p-3 flex items-center justify-center h-[240px] md:h-[288px] w-[240px] md:w-[288px] shadow-sm border dark:border-white/10">
+                        <img class="h-full w-full object-contain grayscale group-hover:grayscale-0 transition-all" 
+                             alt="${brand.name} Logo" 
+                             src="${logoUrl}" 
+                             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"/>
                     </div>
-                `;
-            });
-            
-            carouselHTML += `
+                    <div class="${logoUrl ? 'hidden' : 'flex'} items-center justify-center h-[192px] md:h-[240px] bg-white dark:bg-white rounded-lg p-3 border dark:border-white/10 text-gray-400 dark:text-white/30">
+                        <span class="material-symbols-outlined text-2xl">image</span>
                     </div>
+                    ` : `
+                    <div class="flex items-center justify-center h-[192px] md:h-[240px] bg-white dark:bg-white rounded-lg p-3 border dark:border-white/10 text-gray-400 dark:text-white/30">
+                        <span class="material-symbols-outlined text-2xl">image</span>
+                    </div>
+                    `}
+                    <span class="text-[10px] font-black tracking-widest uppercase text-gray-600 dark:text-white/40 group-hover:text-primary">${brand.name}</span>
                 </div>
             `;
-        }
+        });
 
         carouselHTML += `
                     </div>
                 </div>
+            </div>
         `;
-
-        if (totalSlides > 1) {
-            carouselHTML += `
-                <button class="brands-carousel-prev absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 bg-white/10 dark:bg-white/10 bg-gray-200 hover:bg-white/20 dark:hover:bg-white/20 hover:bg-gray-300 p-3 rounded-full transition-all z-10">
-                    <span class="material-symbols-outlined text-background-dark dark:text-white">chevron_left</span>
-                </button>
-                <button class="brands-carousel-next absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 bg-white/10 dark:bg-white/10 bg-gray-200 hover:bg-white/20 dark:hover:bg-white/20 hover:bg-gray-300 p-3 rounded-full transition-all z-10">
-                    <span class="material-symbols-outlined text-background-dark dark:text-white">chevron_right</span>
-                </button>
-                <div class="flex justify-center gap-2 mt-8">
+        
+        // Add CSS animation
+        if (!document.getElementById('brands-carousel-style')) {
+            const style = document.createElement('style');
+            style.id = 'brands-carousel-style';
+            style.textContent = `
+                @keyframes brandsScroll {
+                    0% {
+                        transform: translateX(0);
+                    }
+                    100% {
+                        transform: translateX(-50%);
+                    }
+                }
+                .brands-carousel-wrapper:hover .brands-carousel-track {
+                    animation-play-state: paused;
+                }
             `;
-            
-            for (let i = 0; i < totalSlides; i++) {
-                carouselHTML += `
-                    <button class="brands-carousel-dot w-2 h-2 rounded-full ${i === 0 ? 'bg-primary' : 'bg-white/30'} cursor-pointer transition-all hover:bg-white/50" data-slide="${i}"></button>
-                `;
-            }
-            
-            carouselHTML += `</div>`;
+            document.head.appendChild(style);
         }
-
-        carouselHTML += `</div>`;
+        
         container.innerHTML = carouselHTML;
-
-        if (totalSlides > 1) {
-            this.initBrandsCarousel(container);
-        }
     }
 
     /**
@@ -272,49 +255,8 @@ class BrandsRenderer {
      * @param {HTMLElement} container - Container element
      */
     initBrandsCarousel(container) {
-        const track = container.querySelector('.brands-carousel-track');
-        const slides = container.querySelectorAll('.brands-carousel-slide');
-        const prevBtn = container.querySelector('.brands-carousel-prev');
-        const nextBtn = container.querySelector('.brands-carousel-next');
-        const dots = container.querySelectorAll('.brands-carousel-dot');
-        
-        let currentSlide = 0;
-        const totalSlides = slides.length;
-
-        const updateCarousel = () => {
-            track.style.transform = `translateX(-${currentSlide * 100}%)`;
-            dots.forEach((dot, index) => {
-                dot.classList.toggle('bg-primary', index === currentSlide);
-                dot.classList.toggle('bg-white/30', index !== currentSlide);
-            });
-        };
-
-        if (prevBtn) {
-            prevBtn.addEventListener('click', () => {
-                currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
-                updateCarousel();
-            });
-        }
-
-        if (nextBtn) {
-            nextBtn.addEventListener('click', () => {
-                currentSlide = (currentSlide + 1) % totalSlides;
-                updateCarousel();
-            });
-        }
-
-        dots.forEach((dot, index) => {
-            dot.addEventListener('click', () => {
-                currentSlide = index;
-                updateCarousel();
-            });
-        });
-
-        // Auto-play carousel
-        setInterval(() => {
-            currentSlide = (currentSlide + 1) % totalSlides;
-            updateCarousel();
-        }, 5000);
+        // Animation is handled by CSS, no JavaScript needed for infinite scroll
+        // The carousel will automatically loop infinitely
     }
 
     /**
@@ -417,7 +359,7 @@ class BrandsRenderer {
                 if (sectionId) {
                     params.set('section', sectionId);
                 }
-                const navUrl = `products.html?${params.toString()}`;
+                const navUrl = `line-products.html?${params.toString()}`;
                 
                 carouselHTML += `
                     <a href="${navUrl}" class="group lines-carousel-item block cursor-pointer w-full mb-0">

@@ -52,7 +52,7 @@
         }
     } catch (error) {
         console.error('Error initializing catalog service:', error);
-        tbody.innerHTML = '<tr><td colspan="5" class="px-6 py-4 text-center text-red-400">Erreur d\'initialisation: ' + error.message + '</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="6" class="px-6 py-4 text-center text-red-400">Erreur d\'initialisation: ' + error.message + '</td></tr>';
         return;
     }
     
@@ -63,30 +63,25 @@
             if (errorDiv) errorDiv.classList.add('hidden');
             if (table) table.classList.add('hidden');
             
+            // Load all products from Firebase
+            allProducts = await catalogService.getAllProducts();
+            
+            // Get sections and brands for filters
             const sections = await catalogService.getSections();
             allSections = sections;
-            allProducts = [];
             allBrands = [];
             
-            for (const section of sections) {
-                const brands = await catalogService.getBrandsBySection(section.id);
-                for (const brand of brands) {
-                    // Collect unique brands
-                    if (!allBrands.find(b => b.name === brand.name)) {
-                        allBrands.push(brand);
-                    }
-                    
-                    const lines = brand.lines || [];
-                    for (const line of lines) {
-                        allProducts.push({
-                            ...line,
-                            sectionId: section.id,
-                            sectionName: section.name,
-                            brandName: brand.name || 'N/A'
-                        });
-                    }
+            // Collect unique brands from products
+            const brandSet = new Set();
+            allProducts.forEach(product => {
+                if (product.brandName && !brandSet.has(product.brandName)) {
+                    brandSet.add(product.brandName);
+                    allBrands.push({
+                        name: product.brandName,
+                        logo_url: product.brandLogo || ''
+                    });
                 }
-            }
+            });
             
             // Initialize filters UI
             initFilters();
@@ -349,7 +344,7 @@
         if (!products || products.length === 0) {
             tbody.innerHTML = `
                 <tr>
-                    <td colspan="5" class="px-6 py-12 text-center">
+                    <td colspan="6" class="px-6 py-12 text-center">
                         <p class="text-white text-lg mb-4">Aucun produit enregistré</p>
                         <a href="add.html" class="inline-flex items-center gap-2 px-6 py-3 bg-primary text-background-dark rounded-xl font-bold hover:scale-105 transition-all">
                             <span class="material-symbols-outlined">add</span>
@@ -361,16 +356,22 @@
             return;
         }
         
-        tbody.innerHTML = products.map(product => `
+        tbody.innerHTML = products.map(product => {
+            // Get product image - use imageUrl or first image from images array
+            const images = product.images || [];
+            const imageUrl = product.imageUrl || (images.length > 0 ? images[0] : '');
+            const productId = product.id || product.name.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+            
+            return `
             <tr class="hover:bg-white/5 transition-colors group">
                 <td class="px-6 py-4">
                     <div class="flex items-center gap-4">
-                        <div class="w-12 h-12 rounded-lg bg-border-dark flex-shrink-0 bg-cover bg-center border border-border-dark/50" style="background-image: url('${product.image_url || ''}')">
-                            ${!product.image_url ? '<span class="text-[#baba9c] text-xs">No img</span>' : ''}
+                        <div class="w-12 h-12 rounded-lg bg-border-dark flex-shrink-0 bg-cover bg-center border border-border-dark/50" style="background-image: url('${imageUrl}')">
+                            ${!imageUrl ? '<span class="text-[#baba9c] text-xs">No img</span>' : ''}
                         </div>
                         <div>
-                            <p class="text-white font-bold text-sm">${product.name}</p>
-                            <p class="text-[#baba9c] text-xs">${product.brandName || 'N/A'}</p>
+                            <p class="text-white font-bold text-sm">${product.name || 'N/A'}</p>
+                            <p class="text-[#baba9c] text-xs">${product.brandName || 'N/A'}${product.lineName ? ` • ${product.lineName}` : ''}</p>
                         </div>
                     </div>
                 </td>
@@ -379,6 +380,9 @@
                 </td>
                 <td class="px-6 py-4">
                     <span class="px-3 py-1 rounded-full bg-border-dark text-[#baba9c] text-[11px] font-bold uppercase tracking-wider">${product.sectionName || 'N/A'}</span>
+                </td>
+                <td class="px-6 py-4">
+                    <span class="text-white text-sm">${product.lineName || 'N/A'}</span>
                 </td>
                 <td class="px-6 py-4">
                     <div class="flex items-center gap-2">
@@ -391,19 +395,22 @@
                         <button class="edit-product-btn p-2 rounded-lg hover:bg-primary/20 text-primary transition-colors" 
                                 data-section="${product.sectionId}" 
                                 data-brand="${product.brandName}" 
-                                data-line="${product.name}">
+                                data-line="${product.lineName}"
+                                data-product-id="${productId}">
                             <span class="material-symbols-outlined">edit_square</span>
                         </button>
                         <button class="delete-product-btn p-2 rounded-lg hover:bg-red-500/10 text-red-400 transition-colors" 
                                 data-section="${product.sectionId}" 
                                 data-brand="${product.brandName}" 
-                                data-line="${product.name}">
+                                data-line="${product.lineName}"
+                                data-product-id="${productId}">
                             <span class="material-symbols-outlined">delete</span>
                         </button>
                     </div>
                 </td>
             </tr>
-        `).join('');
+        `;
+        }).join('');
         
         // Add event listeners
         tbody.querySelectorAll('.edit-product-btn').forEach(btn => {
@@ -411,7 +418,8 @@
                 const sectionId = e.currentTarget.dataset.section;
                 const brandName = e.currentTarget.dataset.brand;
                 const lineName = e.currentTarget.dataset.line;
-                window.location.href = `add.html?section=${encodeURIComponent(sectionId)}&brand=${encodeURIComponent(brandName)}&line=${encodeURIComponent(lineName)}`;
+                const productId = e.currentTarget.dataset.productId;
+                window.location.href = `add.html?section=${encodeURIComponent(sectionId)}&brand=${encodeURIComponent(brandName)}&line=${encodeURIComponent(lineName)}&product=${encodeURIComponent(productId)}`;
             });
         });
         
@@ -420,10 +428,11 @@
                 const sectionId = e.currentTarget.dataset.section;
                 const brandName = e.currentTarget.dataset.brand;
                 const lineName = e.currentTarget.dataset.line;
+                const productId = e.currentTarget.dataset.productId;
                 
-                if (confirm(`Êtes-vous sûr de vouloir supprimer la ligne "${lineName}" de la marque "${brandName}" ?`)) {
+                if (confirm(`Êtes-vous sûr de vouloir supprimer le produit "${productId}" de la ligne "${lineName}" ?`)) {
                     try {
-                        await catalogService.deleteProductLine(sectionId, brandName, lineName);
+                        await catalogService.deleteProduct(sectionId, brandName, lineName, productId);
                         await loadAllProducts();
                     } catch (error) {
                         console.error('Error deleting product:', error);
