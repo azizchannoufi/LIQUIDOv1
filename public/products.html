@@ -101,7 +101,6 @@
 <a class="text-xs font-bold uppercase tracking-widest hover:text-primary transition-colors" href="index.html">Home</a>
 <a class="text-xs font-bold uppercase tracking-widest hover:text-primary transition-colors" href="brands.html">Marchi</a>
 <a class="text-xs font-bold uppercase tracking-widest hover:text-primary transition-colors text-primary" href="products.html">Prodotti</a>
-<a class="text-xs font-bold uppercase tracking-widest hover:text-primary transition-colors" href="myliquido.html">MyLiquido</a>
 <a class="text-xs font-bold uppercase tracking-widest hover:text-primary transition-colors" href="about.html">Chi Siamo</a>
 <a class="text-xs font-bold uppercase tracking-widest hover:text-primary transition-colors" href="contact.html">Contatti</a>
 <a class="text-xs font-bold uppercase tracking-widest hover:text-primary transition-colors" href="faq.html">FAQ</a>
@@ -113,14 +112,29 @@
                 aria-label="Toggle theme">
                 <span class="theme-icon material-symbols-outlined text-lg">dark_mode</span>
             </button>
-<button class="bg-primary hover:bg-white text-background-dark px-6 py-2.5 rounded-sm font-black text-xs uppercase tracking-widest transition-all flex items-center gap-2 accent-glow">
-<span class="material-symbols-outlined text-lg">location_on</span>
-                Trova un Negozio
-            </button>
+<a href="myliquido.html" class="bg-primary hover:bg-white text-background-dark px-6 py-2.5 rounded-sm font-black text-xs uppercase tracking-widest transition-all flex items-center gap-2 accent-glow">
+                MyLiquido
+            </a>
 </div>
 </div>
 </header>
-<main class="pt-[120px] max-w-[1440px] mx-auto px-6 lg:px-20 py-8">
+<main class="pt-[120px]">
+<!-- Lines Carousel Section -->
+<section class="pt-20 pb-12 bg-background-dark dark:bg-background-dark bg-white">
+<div class="w-full">
+<div class="text-center mb-8 px-6 lg:px-20">
+<h2 class="text-4xl lg:text-5xl text-bold-modern uppercase text-background-dark dark:text-white mb-4">Le Nostre Linee</h2>
+<p class="text-slate-500 dark:text-slate-500 text-slate-600 max-w-2xl mx-auto font-medium">Scopri le nostre linee di prodotti premium selezionate per te</p>
+</div>
+<div id="lines-carousel-container" class="min-h-[500px] md:min-h-[600px] w-full">
+<!-- Lines carousel will be loaded dynamically from Firebase -->
+<div class="flex items-center justify-center h-[500px] md:h-[600px]">
+<p class="text-white/40 dark:text-white/40 text-background-dark/40 text-lg">Caricamento linee...</p>
+</div>
+</div>
+</div>
+</section>
+<div class="max-w-[1440px] mx-auto px-6 lg:px-20 py-8">
 <section class="relative mb-12 rounded-xl overflow-hidden bg-zinc-900 aspect-[21/6] md:aspect-[21/4]">
 <div class="absolute inset-0 bg-cover bg-center opacity-40 mix-blend-overlay" style="background-image: url('../assets/images/Goccia LIQUIDO/GOCCIA RGB.jpg');"></div>
 <div class="absolute inset-0 bg-gradient-to-r from-black via-black/40 to-transparent"></div>
@@ -179,6 +193,7 @@
 <!-- Pagination will be rendered dynamically -->
 </div>
 </div>
+    </div>
 </div>
 </div>
 </main>
@@ -313,5 +328,38 @@
         if (typeof ThemeToggle !== 'undefined') {
             ThemeToggle.init();
         }
+        
+        // Initialize Lines Carousel
+        (async function() {
+            try {
+                // Wait for catalog initialization
+                if (!window.catalogInit) {
+                    await new Promise(resolve => {
+                        const checkCatalog = setInterval(() => {
+                            if (window.catalogInit) {
+                                clearInterval(checkCatalog);
+                                resolve();
+                            }
+                        }, 100);
+                    });
+                }
+                
+                const catalog = await window.catalogInit;
+                
+                if (!catalog || !catalog.brandsRenderer) {
+                    console.error('BrandsRenderer not available:', catalog);
+                    return;
+                }
+                
+                const { brandsRenderer } = catalog;
+                const linesContainer = document.getElementById('lines-carousel-container');
+                
+                if (linesContainer && brandsRenderer) {
+                    await brandsRenderer.renderLinesCarouselFromDB(linesContainer);
+                }
+            } catch (error) {
+                console.error('Error initializing lines carousel:', error);
+            }
+        })();
     </script>
 </body></html>
