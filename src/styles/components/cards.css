@@ -16,6 +16,19 @@
     border-color: rgba(248, 237, 112, 0.4);
 }
 
+/* Light mode card */
+:root:not(.dark) .card,
+.light .card {
+    background-color: var(--color-surface);
+    border-color: var(--color-border);
+}
+
+:root:not(.dark) .card:hover,
+.light .card:hover {
+    border-color: rgba(245, 200, 66, 0.4);
+    box-shadow: var(--shadow-md);
+}
+
 /* Card Header */
 .card-header {
     padding: var(--spacing-lg);
@@ -44,6 +57,19 @@
 
 .product-card:hover {
     border-color: rgba(248, 237, 112, 0.4);
+}
+
+/* Light mode product card */
+:root:not(.dark) .product-card,
+.light .product-card {
+    background-color: var(--color-surface);
+    border-color: var(--color-border);
+}
+
+:root:not(.dark) .product-card:hover,
+.light .product-card:hover {
+    border-color: rgba(245, 200, 66, 0.4);
+    box-shadow: var(--shadow-lg);
 }
 
 .product-card-image {
@@ -100,6 +126,12 @@
     font-weight: var(--font-weight-black);
     text-transform: uppercase;
     letter-spacing: 0.1em;
+}
+
+/* Light mode product card category */
+:root:not(.dark) .product-card-category,
+.light .product-card-category {
+    color: rgba(0, 0, 0, 0.4);
 }
 
 .product-card-description {
@@ -165,12 +197,30 @@
     color: var(--color-primary);
 }
 
+/* Light mode brand card name */
+:root:not(.dark) .brand-card-name,
+.light .brand-card-name {
+    color: rgba(0, 0, 0, 0.5);
+}
+
+:root:not(.dark) .brand-card:hover .brand-card-name,
+.light .brand-card:hover .brand-card-name {
+    color: var(--color-primary);
+}
+
 /* Stats Card */
 .stats-card {
     background: linear-gradient(135deg, var(--color-charcoal) 0%, var(--color-background-light) 100%);
     border: 1px solid var(--color-border);
     border-radius: var(--radius-sm);
     padding: var(--spacing-xl);
+}
+
+/* Light mode stats card */
+:root:not(.dark) .stats-card,
+.light .stats-card {
+    background: linear-gradient(135deg, var(--color-surface) 0%, var(--color-surface-alt) 100%);
+    border-color: var(--color-border);
 }
 
 .stats-card-value {

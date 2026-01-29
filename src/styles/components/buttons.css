@@ -53,6 +53,20 @@
     border-color: rgba(255, 255, 255, 0.2);
 }
 
+/* Light mode secondary button */
+:root:not(.dark) .btn-secondary,
+.light .btn-secondary {
+    background-color: rgba(0, 0, 0, 0.05);
+    color: var(--color-text-primary);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+:root:not(.dark) .btn-secondary:hover:not(:disabled),
+.light .btn-secondary:hover:not(:disabled) {
+    background-color: rgba(0, 0, 0, 0.1);
+    border-color: rgba(0, 0, 0, 0.15);
+}
+
 /* Outline Button */
 .btn-outline {
     background-color: transparent;
@@ -73,6 +87,17 @@
 
 .btn-ghost:hover:not(:disabled) {
     background-color: rgba(255, 255, 255, 0.05);
+}
+
+/* Light mode ghost button */
+:root:not(.dark) .btn-ghost,
+.light .btn-ghost {
+    color: var(--color-text-primary);
+}
+
+:root:not(.dark) .btn-ghost:hover:not(:disabled),
+.light .btn-ghost:hover:not(:disabled) {
+    background-color: rgba(0, 0, 0, 0.05);
 }
 
 /* Danger Button */

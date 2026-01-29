@@ -50,11 +50,14 @@ const CONFIG = {
     // Colors (matching Tailwind config)
     COLORS: {
         PRIMARY: '#F8ED70',
+        PRIMARY_LIGHT_MODE: '#F5C842',
         BACKGROUND_DARK: '#000000',
         BACKGROUND_LIGHT: '#333333',
+        BACKGROUND_LIGHT_MODE: '#FAFAFA',
         CHARCOAL: '#333333',
         WHITE: '#FFFFFF',
-        TEXT_SECONDARY: 'rgba(255, 255, 255, 0.7)'
+        TEXT_SECONDARY: 'rgba(255, 255, 255, 0.7)',
+        TEXT_SECONDARY_LIGHT: 'rgba(26, 26, 26, 0.75)'
     },
 
     // Product Categories
