@@ -3,37 +3,43 @@
  * Handles the interactive FAQ accordion functionality
  */
 
-(function() {
+(function () {
     'use strict';
 
     function initFAQAccordion() {
+        // Select all FAQ items
         const faqItems = document.querySelectorAll('.faq-item');
-        
+
+        if (faqItems.length === 0) return;
+
         faqItems.forEach(item => {
             const question = item.querySelector('.faq-question');
             const answer = item.querySelector('.faq-answer');
-            
+
             if (!question || !answer) return;
-            
-            question.addEventListener('click', () => {
-                const isActive = item.classList.contains('active');
-                
-                // Close all other items
+
+            // Remove existing listeners to avoid duplicates (if re-initialized)
+            const newQuestion = question.cloneNode(true);
+            question.parentNode.replaceChild(newQuestion, question);
+
+            newQuestion.addEventListener('click', (e) => {
+                e.preventDefault();
+
+                // Check if this item is currently active
+                const isCurrentlyActive = item.classList.contains('active');
+
+                // First, close ALL items (including this one)
                 faqItems.forEach(otherItem => {
-                    if (otherItem !== item) {
-                        otherItem.classList.remove('active');
-                        const otherAnswer = otherItem.querySelector('.faq-answer');
-                        if (otherAnswer) {
-                            otherAnswer.classList.remove('active');
-                        }
+                    otherItem.classList.remove('active');
+                    const otherAnswer = otherItem.querySelector('.faq-answer');
+                    if (otherAnswer) {
+                        otherAnswer.classList.remove('active');
                     }
                 });
-                
-                // Toggle current item
-                if (isActive) {
-                    item.classList.remove('active');
-                    answer.classList.remove('active');
-                } else {
+
+                // If it wasn't active before, open it now
+                // (If it WAS active, we just leave it closed from the step above)
+                if (!isCurrentlyActive) {
                     item.classList.add('active');
                     answer.classList.add('active');
                 }
@@ -48,4 +54,3 @@
         initFAQAccordion();
     }
 })();
-

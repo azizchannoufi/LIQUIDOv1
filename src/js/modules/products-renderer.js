@@ -88,7 +88,7 @@ class ProductsRenderer {
     async renderProductLinesByBrand(brandName, sectionId, container) {
         try {
             const lines = await this.catalogService.getBrandLines(brandName, sectionId);
-            
+
             if (lines.length === 0) {
                 container.innerHTML = `
                     <div class="col-span-full text-center py-12">
@@ -98,7 +98,7 @@ class ProductsRenderer {
                 return;
             }
 
-            const brand = sectionId 
+            const brand = sectionId
                 ? await this.catalogService.getBrandByNameInSection(sectionId, brandName)
                 : await this.catalogService.getBrandByName(brandName);
 
@@ -139,7 +139,7 @@ class ProductsRenderer {
         if (!container || !brand) return;
 
         const logoUrl = brand.logo_url || '/images/brands/placeholder.png';
-        const websiteLink = brand.website 
+        const websiteLink = brand.website
             ? `<a href="${brand.website}" target="_blank" class="text-primary hover:underline">${brand.website}</a>`
             : '';
 
@@ -156,9 +156,9 @@ class ProductsRenderer {
                 <div class="flex-1 text-center md:text-left">
                     <h2 class="text-4xl font-black italic uppercase mb-2">${brand.name}</h2>
                     ${websiteLink ? `<p class="text-white/60">Site web: ${websiteLink}</p>` : ''}
-                    ${brand.lines && brand.lines.length > 0 
-                        ? `<p class="text-white/40 text-sm mt-2">${brand.lines.length} ${brand.lines.length === 1 ? 'ligne' : 'lignes'} de produits</p>`
-                        : ''}
+                    ${brand.lines && brand.lines.length > 0
+                ? `<p class="text-white/40 text-sm mt-2">${brand.lines.length} ${brand.lines.length === 1 ? 'ligne' : 'lignes'} de produits</p>`
+                : ''}
                 </div>
             </div>
         `;
@@ -245,6 +245,240 @@ class ProductsRenderer {
             .map(line => this.renderNuoviArriviCard(line, line.brandName, line.sectionName))
             .join('');
     }
+
+    /**
+     * Render carousel card for "Nuovi Arrivi" section
+     * @param {Object} line - Product line object
+     * @param {string} brandName - Brand name
+     * @param {string} sectionName - Section name
+     * @returns {string} HTML string
+     */
+    renderNuoviArriviCarouselCard(line, brandName, sectionName = '') {
+        const imageUrl = line.image_url || '';
+        const sectionId = line.sectionId || '';
+        const sectionLabel = sectionName || (line.sectionName || '');
+        const description = line.description || line.flavorProfile || '';
+
+        // Create navigation URL to line-products page
+        const params = new URLSearchParams({
+            brand: brandName,
+            line: line.name
+        });
+        if (sectionId) {
+            params.set('section', sectionId);
+        }
+        const navUrl = `line-products.html?${params.toString()}`;
+
+        return `
+            <div class="w-full flex-shrink-0 px-2">
+                <div class="relative group overflow-hidden rounded-lg bg-gradient-to-br from-zinc-900 to-black border border-white/10 hover:border-primary/50 transition-all duration-500">
+                    <!-- Large Image -->
+                    <div class="aspect-[16/9] lg:aspect-[21/9] overflow-hidden bg-black relative">
+                        ${imageUrl ? `
+                        <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000" 
+                             data-alt="${line.name}" 
+                             src="${imageUrl}"
+                             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"/>
+                        ` : ''}
+                        <div class="${imageUrl ? 'hidden' : 'flex'} items-center justify-center text-white/30 w-full h-full">
+                            <span class="material-symbols-outlined text-8xl opacity-30">inventory_2</span>
+                        </div>
+                        <!-- Gradient Overlay -->
+                        <div class="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent opacity-80"></div>
+                        
+                        <!-- Content Overlay -->
+                        <div class="absolute bottom-0 left-0 right-0 p-8 lg:p-12">
+                            <div class="max-w-3xl">
+                                ${sectionLabel ? `<span class="inline-block bg-primary text-background-dark text-[10px] font-black px-4 py-2 uppercase tracking-widest mb-4">Nuovo Arrivo • ${sectionLabel}</span>` : '<span class="inline-block bg-primary text-background-dark text-[10px] font-black px-4 py-2 uppercase tracking-widest mb-4">Nuovo Arrivo</span>'}
+                                <h3 class="text-4xl lg:text-6xl text-bold-modern uppercase text-white mb-4 group-hover:text-primary transition-colors">${line.name}</h3>
+                                <p class="text-lg text-white/80 font-medium mb-2">${brandName}</p>
+                                ${description ? `<p class="text-sm text-white/60 leading-relaxed mb-6 line-clamp-2 max-w-2xl">${description}</p>` : ''}
+                                <a href="${navUrl}" 
+                                   class="inline-flex items-center gap-3 bg-primary hover:bg-white text-background-dark px-8 py-4 rounded-sm font-black text-xs uppercase tracking-widest transition-all accent-glow-strong">
+                                    Scopri di più
+                                    <span class="material-symbols-outlined text-lg">arrow_forward</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    /**
+     * Render carousel for "Nuovi Arrivi" section
+     * @param {Array} lines - Array of product line objects (with brandName, sectionName)
+     * @param {HTMLElement} carouselContainer - Carousel container element
+     * @param {HTMLElement} indicatorsContainer - Indicators container element
+     * @param {number} limit - Maximum number of products to display
+     */
+    renderNuoviArriviCarousel(lines, carouselContainer, indicatorsContainer, limit = 4) {
+        if (!carouselContainer) {
+            console.error('Carousel container element not found');
+            return;
+        }
+
+        if (!lines || lines.length === 0) {
+            carouselContainer.innerHTML = `
+                <div class="w-full flex items-center justify-center py-20">
+                    <p class="text-background-dark/40 text-lg">Nessun prodotto disponibile al momento.</p>
+                </div>
+            `;
+            return;
+        }
+
+        const limitedLines = lines.slice(0, limit);
+
+        // Render carousel slides
+        carouselContainer.innerHTML = limitedLines
+            .map(line => this.renderNuoviArriviCarouselCard(line, line.brandName, line.sectionName))
+            .join('');
+
+        // Render indicators
+        if (indicatorsContainer) {
+            indicatorsContainer.innerHTML = limitedLines
+                .map((_, index) => `
+                    <button 
+                        class="carousel-indicator w-3 h-3 rounded-full transition-all duration-300 ${index === 0 ? 'bg-primary w-8' : 'bg-black/20 hover:bg-black/40'}" 
+                        data-index="${index}"
+                        aria-label="Go to slide ${index + 1}">
+                    </button>
+                `)
+                .join('');
+        }
+
+        // Initialize carousel functionality
+        this.initializeCarousel(carouselContainer, indicatorsContainer, limitedLines.length);
+    }
+
+    /**
+     * Initialize carousel navigation and auto-play
+     * @param {HTMLElement} carouselContainer - Carousel container element
+     * @param {HTMLElement} indicatorsContainer - Indicators container element
+     * @param {number} totalSlides - Total number of slides
+     */
+    initializeCarousel(carouselContainer, indicatorsContainer, totalSlides) {
+        let currentIndex = 0;
+        let autoPlayInterval;
+
+        const updateCarousel = (index) => {
+            currentIndex = index;
+            const offset = -index * 100;
+            carouselContainer.style.transform = `translateX(${offset}%)`;
+
+            // Update indicators
+            if (indicatorsContainer) {
+                const indicators = indicatorsContainer.querySelectorAll('.carousel-indicator');
+                indicators.forEach((indicator, i) => {
+                    if (i === index) {
+                        indicator.classList.add('bg-primary', 'w-8');
+                        indicator.classList.remove('bg-black/20', 'w-3');
+                    } else {
+                        indicator.classList.remove('bg-primary', 'w-8');
+                        indicator.classList.add('bg-black/20', 'w-3');
+                    }
+                });
+            }
+        };
+
+        const nextSlide = () => {
+            const newIndex = (currentIndex + 1) % totalSlides;
+            updateCarousel(newIndex);
+        };
+
+        const prevSlide = () => {
+            const newIndex = (currentIndex - 1 + totalSlides) % totalSlides;
+            updateCarousel(newIndex);
+        };
+
+        const startAutoPlay = () => {
+            autoPlayInterval = setInterval(nextSlide, 5000); // Change slide every 5 seconds
+        };
+
+        const stopAutoPlay = () => {
+            if (autoPlayInterval) {
+                clearInterval(autoPlayInterval);
+            }
+        };
+
+        // Navigation buttons
+        const prevButton = document.getElementById('nuovi-arrivi-prev');
+        const nextButton = document.getElementById('nuovi-arrivi-next');
+
+        if (prevButton) {
+            prevButton.addEventListener('click', () => {
+                stopAutoPlay();
+                prevSlide();
+                startAutoPlay();
+            });
+        }
+
+        if (nextButton) {
+            nextButton.addEventListener('click', () => {
+                stopAutoPlay();
+                nextSlide();
+                startAutoPlay();
+            });
+        }
+
+        // Indicator buttons
+        if (indicatorsContainer) {
+            const indicators = indicatorsContainer.querySelectorAll('.carousel-indicator');
+            indicators.forEach((indicator, index) => {
+                indicator.addEventListener('click', () => {
+                    stopAutoPlay();
+                    updateCarousel(index);
+                    startAutoPlay();
+                });
+            });
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') {
+                stopAutoPlay();
+                prevSlide();
+                startAutoPlay();
+            } else if (e.key === 'ArrowRight') {
+                stopAutoPlay();
+                nextSlide();
+                startAutoPlay();
+            }
+        });
+
+        // Touch/swipe support
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        carouselContainer.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+            stopAutoPlay();
+        });
+
+        carouselContainer.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+            startAutoPlay();
+        });
+
+        const handleSwipe = () => {
+            if (touchEndX < touchStartX - 50) {
+                nextSlide();
+            }
+            if (touchEndX > touchStartX + 50) {
+                prevSlide();
+            }
+        };
+
+        // Pause on hover
+        carouselContainer.addEventListener('mouseenter', stopAutoPlay);
+        carouselContainer.addEventListener('mouseleave', startAutoPlay);
+
+        // Start auto-play
+        startAutoPlay();
+    }
+
 
     /**
      * Render product card HTML for individual product

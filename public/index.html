@@ -39,7 +39,7 @@
             theme: {
                 extend: {
                     colors: {
-                        "primary": "#F8ED70",
+                        "primary": "#F5D000",
                         "background-light": "#333333",
                         "background-dark": "#000000",
                         "charcoal": "#333333",
@@ -54,7 +54,7 @@
     </script>
     <style type="text/tailwindcss">
         :root {
-            --primary-color: #F8ED70;
+            --primary-color: #F5D000;
             --bg-dark: #000000;
         }
         body { font-family: 'Plus Jakarta Sans', sans-serif; }
@@ -109,6 +109,56 @@
             color: var(--primary-color);
         }
     </style>
+    <style>
+        /* FAQ Accordion Styles */
+        .faq-answer {
+            display: grid;
+            grid-template-rows: 0fr;
+            transition: grid-template-rows 0.3s ease-out;
+            visibility: hidden;
+            /* Hide completely when closed to prevent focus/interaction */
+        }
+
+        .faq-answer>div {
+            overflow: hidden;
+            min-height: 0;
+        }
+
+        .faq-answer.active {
+            grid-template-rows: 1fr;
+            visibility: visible;
+        }
+
+        .faq-icon {
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item.active .faq-icon {
+            transform: rotate(180deg);
+        }
+
+        .faq-question {
+            background-color: var(--primary-color);
+            color: black;
+            border-radius: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .faq-answer>div {
+            background-color: var(--primary-color);
+            color: black;
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            /* Add padding inside the answer box */
+            margin-bottom: 0.5rem;
+            /* Add spacing below the answer if needed */
+        }
+
+        /* Force text color within answer to be black, overriding any existing classes */
+        .faq-answer p {
+            color: black !important;
+        }
+    </style>
 </head>
 
 <body class="bg-white text-background-dark transition-colors duration-300">
@@ -147,34 +197,6 @@
                 </div>
             </div>
         </section>
-        <section class="py-32 px-6 lg:px-20 bg-white">
-            <div class="max-w-[1440px] mx-auto">
-                <div class="flex flex-col md:flex-row md:items-end justify-between mb-20 gap-8">
-                    <div class="space-y-4">
-                        <h2 class="text-5xl lg:text-6xl text-bold-modern uppercase text-background-dark">Nuovi Arrivi
-                        </h2>
-                        <p class="text-slate-600 max-w-md font-medium">Selezioni accuratamente scelte dell'ultimo
-                            hardware e e-liquid premium da tutto il mondo.</p>
-                    </div>
-                    <div class="flex gap-4">
-                        <button
-                            class="size-14 rounded-sm border border-black/10 flex items-center justify-center hover:bg-primary hover:text-background-dark transition-all text-background-dark">
-                            <span class="material-symbols-outlined">arrow_back</span>
-                        </button>
-                        <button
-                            class="size-14 rounded-sm border border-black/10 flex items-center justify-center hover:bg-primary hover:text-background-dark transition-all text-background-dark">
-                            <span class="material-symbols-outlined">arrow_forward</span>
-                        </button>
-                    </div>
-                </div>
-                <div id="nuovi-arrivi-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                    <!-- Products will be loaded dynamically from Firebase -->
-                    <div class="col-span-full text-center py-12">
-                        <p class="text-background-dark/40 text-lg">Caricamento prodotti...</p>
-                    </div>
-                </div>
-            </div>
-        </section>
         <section class="relative py-40 overflow-hidden bg-surface-light">
             <div class="absolute inset-0 z-0">
                 <img class="w-full h-full object-cover opacity-10 grayscale" data-alt="smoky background"
@@ -183,7 +205,7 @@
             </div>
             <div class="relative z-10 max-w-[1440px] mx-auto px-6 lg:px-20">
                 <div
-                    class="bg-white/60 border border-black/10 p-16 lg:p-24 rounded-sm glass-effect flex flex-col items-center text-center space-y-10">
+                    class="bg-black/5 p-16 lg:p-24 rounded-sm backdrop-blur-xl flex flex-col items-center text-center space-y-10">
                     <span class="text-primary font-black uppercase tracking-[0.6em] text-[10px]">Lo Standard
                         Liquido</span>
                     <h2
@@ -196,18 +218,166 @@
                         negozio soddisfa i più alti criteri di sicurezza e prestazioni.
                     </p>
                     <div class="flex flex-col sm:flex-row gap-6 pt-8 w-full sm:w-auto">
-                        <button
-                            class="bg-primary text-background-dark px-12 py-6 rounded-sm font-black text-xs uppercase tracking-widest hover:bg-white transition-all accent-glow">
+                        <a href="contact.html"
+                            class="bg-primary text-background-dark px-12 py-6 rounded-sm font-black text-xs uppercase tracking-widest hover:bg-white transition-all accent-glow inline-flex items-center justify-center">
                             Trova Negozio
-                        </button>
-                        <button
-                            class="bg-black/5 border border-black/10 text-background-dark px-12 py-6 rounded-sm font-black text-xs uppercase tracking-widest hover:bg-black/10 transition-all">
+                        </a>
+                        <a href="products.html"
+                            class="bg-black/5 border border-black/10 text-background-dark px-12 py-6 rounded-sm font-black text-xs uppercase tracking-widest hover:bg-black/10 transition-all inline-flex items-center justify-center">
                             I Nostri Standard
-                        </button>
+                        </a>
                     </div>
                 </div>
             </div>
         </section>
+        <section class="py-32 px-6 lg:px-20 bg-white">
+            <div class="max-w-[1440px] mx-auto">
+                <div class="flex flex-col md:flex-row md:items-end justify-between mb-20 gap-8">
+                    <div class="space-y-4">
+                        <h2 class="text-5xl lg:text-6xl text-bold-modern uppercase text-background-dark">Nuovi Arrivi
+                        </h2>
+                        <p class="text-slate-600 max-w-md font-medium">Selezioni accuratamente scelte dell'ultimo
+                            hardware e e-liquid premium da tutto il mondo.</p>
+                    </div>
+                    <div class="flex gap-4">
+                        <button id="nuovi-arrivi-prev"
+                            class="size-14 rounded-sm border border-black/10 flex items-center justify-center hover:bg-primary hover:text-background-dark transition-all text-background-dark">
+                            <span class="material-symbols-outlined">arrow_back</span>
+                        </button>
+                        <button id="nuovi-arrivi-next"
+                            class="size-14 rounded-sm border border-black/10 flex items-center justify-center hover:bg-primary hover:text-background-dark transition-all text-background-dark">
+                            <span class="material-symbols-outlined">arrow_forward</span>
+                        </button>
+                    </div>
+                </div>
+                <!-- Carousel Container -->
+                <div class="relative overflow-hidden">
+                    <div id="nuovi-arrivi-carousel" class="flex transition-transform duration-700 ease-in-out">
+                        <!-- Products will be loaded dynamically from Firebase -->
+                        <div class="w-full flex items-center justify-center py-20">
+                            <p class="text-background-dark/40 text-lg">Caricamento prodotti...</p>
+                        </div>
+                    </div>
+                    <!-- Carousel Indicators -->
+                    <div id="nuovi-arrivi-indicators" class="flex justify-center gap-3 mt-8">
+                        <!-- Indicators will be generated dynamically -->
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- NEW GOOGLE REVIEWS SECTION -->
+        <section class="py-20 bg-surface-light border-t border-black/5">
+            <div class="max-w-[1440px] mx-auto px-6 lg:px-20">
+                <div class="text-center mb-16">
+
+                    <div class="flex items-center justify-center gap-2 mb-4">
+                        <span class="text-2xl font-bold text-background-dark">4.9</span>
+                        <div class="flex text-[#F8ED70]">
+                            <span class="material-symbols-outlined fill-current">star</span>
+                            <span class="material-symbols-outlined fill-current">star</span>
+                            <span class="material-symbols-outlined fill-current">star</span>
+                            <span class="material-symbols-outlined fill-current">star</span>
+                            <span class="material-symbols-outlined fill-current">star</span>
+                        </div>
+                        <span class="text-slate-500 text-sm font-medium">(su Google Maps)</span>
+                    </div>
+                    <p class="text-slate-600 max-w-2xl mx-auto font-medium">
+                        La soddisfazione dei nostri clienti è la nostra priorità assoluta. Scopri perché siamo il punto
+                        di riferimento per il vaping a Monterotondo.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+                    <!-- Review 1 -->
+                    <div
+                        class="bg-white p-8 rounded-sm shadow-sm hover:shadow-md transition-shadow border border-black/5">
+                        <div class="flex items-center gap-4 mb-4">
+                            <div
+                                class="size-10 rounded-full bg-slate-100 flex items-center justify-center text-lg font-bold text-slate-400">
+                                M
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-background-dark">Marco R.</h4>
+                                <div class="flex text-[#F8ED70] text-sm">
+                                    <span class="material-symbols-outlined text-[18px] fill-current">star</span>
+                                    <span class="material-symbols-outlined text-[18px] fill-current">star</span>
+                                    <span class="material-symbols-outlined text-[18px] fill-current">star</span>
+                                    <span class="material-symbols-outlined text-[18px] fill-current">star</span>
+                                    <span class="material-symbols-outlined text-[18px] fill-current">star</span>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-slate-600 leading-relaxed italic">
+                            "Il miglior vape shop di Monterotondo! Personale super disponibile e vasta scelta di
+                            liquidi. Consigliatissimo per chi cerca qualità."
+                        </p>
+                    </div>
+
+                    <!-- Review 2 -->
+                    <div
+                        class="bg-white p-8 rounded-sm shadow-sm hover:shadow-md transition-shadow border border-black/5">
+                        <div class="flex items-center gap-4 mb-4">
+                            <div
+                                class="size-10 rounded-full bg-slate-100 flex items-center justify-center text-lg font-bold text-slate-400">
+                                G
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-background-dark">Giulia B.</h4>
+                                <div class="flex text-[#F8ED70] text-sm">
+                                    <span class="material-symbols-outlined text-[18px] fill-current">star</span>
+                                    <span class="material-symbols-outlined text-[18px] fill-current">star</span>
+                                    <span class="material-symbols-outlined text-[18px] fill-current">star</span>
+                                    <span class="material-symbols-outlined text-[18px] fill-current">star</span>
+                                    <span class="material-symbols-outlined text-[18px] fill-current">star</span>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-slate-600 leading-relaxed italic">
+                            "Competenza e gentilezza uniche. Mi hanno guidato nella scelta del dispositivo perfetto.
+                            Un'esperienza d'acquisto eccellente."
+                        </p>
+                    </div>
+
+                    <!-- Review 3 -->
+                    <div
+                        class="bg-white p-8 rounded-sm shadow-sm hover:shadow-md transition-shadow border border-black/5">
+                        <div class="flex items-center gap-4 mb-4">
+                            <div
+                                class="size-10 rounded-full bg-slate-100 flex items-center justify-center text-lg font-bold text-slate-400">
+                                A
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-background-dark">Alessandro V.</h4>
+                                <div class="flex text-[#F8ED70] text-sm">
+                                    <span class="material-symbols-outlined text-[18px] fill-current">star</span>
+                                    <span class="material-symbols-outlined text-[18px] fill-current">star</span>
+                                    <span class="material-symbols-outlined text-[18px] fill-current">star</span>
+                                    <span class="material-symbols-outlined text-[18px] fill-current">star</span>
+                                    <span class="material-symbols-outlined text-[18px] fill-current">star</span>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-slate-600 leading-relaxed italic">
+                            "Negozio fornitissimo e ambiente molto curato. I ragazzi sono preparatissimi e sanno sempre
+                            consigliare il liquido giusto. Top!"
+                        </p>
+                    </div>
+                </div>
+
+                <div class="text-center">
+                    <a href="https://www.google.com/maps/search/?api=1&query=LIQUIDO+VAPE+SHOP+Monterotondo"
+                        target="_blank"
+                        class="inline-flex items-center gap-2 bg-white border border-black/10 hover:border-black/30 text-background-dark px-8 py-4 rounded-sm font-black text-xs uppercase tracking-widest transition-all hover:bg-slate-50 group">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/a/aa/Google_Maps_icon_%282020%29.svg"
+                            alt="Google Maps" class="w-6 h-6 mr-1">
+                        Leggi su Google Maps
+                        <span
+                            class="material-symbols-outlined group-hover:translate-x-1 transition-transform text-sm">arrow_forward</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
         <section class="py-32 px-6 lg:px-20 bg-white">
             <div class="max-w-[1440px] mx-auto">
                 <div class="text-center mb-16">
@@ -217,12 +387,12 @@
                         comuni su liquidi vape, dispositivi vape e servizi a Monterotondo, Roma.</p>
                 </div>
                 <div class="max-w-4xl mx-auto space-y-4 mb-12">
-                    <div class="faq-item bg-surface-alt border border-black/10 rounded-lg overflow-hidden">
+                    <div class="faq-item overflow-hidden">
                         <div
-                            class="faq-question p-6 flex items-center justify-between cursor-pointer hover:text-primary transition-colors text-background-dark">
+                            class="faq-question p-6 flex items-center justify-between cursor-pointer hover:brightness-110 transition-all shadow-sm">
                             <h3 class="text-lg font-bold">Quali sono i migliori liquidi vape disponibili a Monterotondo?
                             </h3>
-                            <span class="material-symbols-outlined faq-icon text-primary">expand_more</span>
+                            <span class="material-symbols-outlined faq-icon text-black">expand_more</span>
                         </div>
                         <div class="faq-answer">
                             <div class="px-6 pb-6 text-[#baba9c] dark:text-[#baba9c] text-slate-600 leading-relaxed">
@@ -233,12 +403,12 @@
                             </div>
                         </div>
                     </div>
-                    <div class="faq-item bg-surface-alt border border-black/10 rounded-lg overflow-hidden">
+                    <div class="faq-item overflow-hidden">
                         <div
-                            class="faq-question p-6 flex items-center justify-between cursor-pointer hover:text-primary transition-colors text-background-dark">
+                            class="faq-question p-6 flex items-center justify-between cursor-pointer hover:brightness-110 transition-all shadow-sm">
                             <h3 class="text-lg font-bold">Offrite servizi di pulizia e manutenzione vape a Monterotondo?
                             </h3>
-                            <span class="material-symbols-outlined faq-icon text-primary">expand_more</span>
+                            <span class="material-symbols-outlined faq-icon text-black">expand_more</span>
                         </div>
                         <div class="faq-answer">
                             <div class="px-6 pb-6 text-[#baba9c] dark:text-[#baba9c] text-slate-600 leading-relaxed">
@@ -249,11 +419,11 @@
                             </div>
                         </div>
                     </div>
-                    <div class="faq-item bg-surface-alt border border-black/10 rounded-lg overflow-hidden">
+                    <div class="faq-item overflow-hidden">
                         <div
-                            class="faq-question p-6 flex items-center justify-between cursor-pointer hover:text-primary transition-colors text-background-dark">
+                            class="faq-question p-6 flex items-center justify-between cursor-pointer hover:brightness-110 transition-all shadow-sm">
                             <h3 class="text-lg font-bold">Dove si trova il vostro negozio vape a Monterotondo?</h3>
-                            <span class="material-symbols-outlined faq-icon text-primary">expand_more</span>
+                            <span class="material-symbols-outlined faq-icon text-black">expand_more</span>
                         </div>
                         <div class="faq-answer">
                             <div class="px-6 pb-6 text-[#baba9c] dark:text-[#baba9c] text-slate-600 leading-relaxed">
@@ -263,11 +433,11 @@
                             </div>
                         </div>
                     </div>
-                    <div class="faq-item bg-surface-alt border border-black/10 rounded-lg overflow-hidden">
+                    <div class="faq-item overflow-hidden">
                         <div
-                            class="faq-question p-6 flex items-center justify-between cursor-pointer hover:text-primary transition-colors text-background-dark">
+                            class="faq-question p-6 flex items-center justify-between cursor-pointer hover:brightness-110 transition-all shadow-sm">
                             <h3 class="text-lg font-bold">Come conservare correttamente i liquidi vape?</h3>
-                            <span class="material-symbols-outlined faq-icon text-primary">expand_more</span>
+                            <span class="material-symbols-outlined faq-icon text-black">expand_more</span>
                         </div>
                         <div class="faq-answer">
                             <div class="px-6 pb-6 text-[#baba9c] dark:text-[#baba9c] text-slate-600 leading-relaxed">
@@ -496,9 +666,10 @@
                 }
 
                 const { service, productsRenderer } = catalog;
-                const container = document.getElementById('nuovi-arrivi-grid');
+                const carouselContainer = document.getElementById('nuovi-arrivi-carousel');
+                const indicatorsContainer = document.getElementById('nuovi-arrivi-indicators');
 
-                if (container) {
+                if (carouselContainer) {
                     // Get all products from all sections
                     const allProducts = await service.getAllLinesFromAllSections();
 
@@ -506,21 +677,22 @@
                     // Take the last 4 products (most recently added)
                     const latestProducts = allProducts.slice().reverse().slice(0, 4);
 
-                    // Render products
-                    productsRenderer.renderNuoviArrivi(latestProducts, container, 4);
+                    // Render carousel
+                    productsRenderer.renderNuoviArriviCarousel(latestProducts, carouselContainer, indicatorsContainer, 4);
                 }
             } catch (error) {
                 console.error('Error loading latest products:', error);
-                const container = document.getElementById('nuovi-arrivi-grid');
-                if (container) {
-                    container.innerHTML = `
-                        <div class="col-span-full text-center py-12">
+                const carouselContainer = document.getElementById('nuovi-arrivi-carousel');
+                if (carouselContainer) {
+                    carouselContainer.innerHTML = `
+                        <div class="w-full flex items-center justify-center py-20">
                             <p class="text-red-400 text-lg">Errore nel caricamento dei prodotti.</p>
                         </div>
                     `;
                 }
             }
         })();
+
 
     </script>
 </body>
