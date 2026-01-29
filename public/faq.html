@@ -37,10 +37,11 @@
             theme: {
                 extend: {
                     colors: {
-                        "primary": "#F8ED70",
+                        "primary": "#FFD700",
                         "background-light": "#333333",
                         "background-dark": "#000000",
                         "charcoal": "#333333",
+                        "surface-alt": "#F8FAFC",
                     },
                     fontFamily: {
                         "display": ["Plus Jakarta Sans", "sans-serif"]
@@ -52,7 +53,7 @@
     </script>
     <style type="text/tailwindcss">
         :root {
-            --primary-color: #F8ED70;
+            --primary-color: #FFD700;
             --bg-dark: #000000;
         }
         body { font-family: 'Plus Jakarta Sans', sans-serif; }
@@ -66,7 +67,7 @@
             letter-spacing: -0.02em;
         }
         .accent-glow {
-            box-shadow: 0 0 20px rgba(248, 237, 112, 0.2);
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
         }
         .faq-item {
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
@@ -76,7 +77,7 @@
             transition: all 0.3s ease;
         }
         .faq-question:hover {
-            color: var(--primary-color);
+            opacity: 0.8;
         }
         .faq-answer {
             max-height: 0;
@@ -86,38 +87,10 @@
         .faq-answer.active {
             max-height: 1000px;
         }
-        /* Force text color to white for all modes */
+        /* Text color adaptations */
         .faq-answer p,
-        .faq-answer div,
-        .faq-answer,
-        :root:not(.dark) .faq-answer p,
-        :root:not(.dark) .faq-answer div,
-        :root:not(.dark) .faq-answer,
-        html:not(.dark) .faq-answer p,
-        html:not(.dark) .faq-answer div,
-        html:not(.dark) .faq-answer,
-        .dark .faq-answer p,
-        .dark .faq-answer div,
-        .dark .faq-answer,
-        html.dark .faq-answer p,
-        html.dark .faq-answer div,
-        html.dark .faq-answer {
-            color: #ffffff !important;
-        }
-        /* Override any Tailwind classes or cached styles */
-        .faq-answer div[class*="text-"],
-        .faq-answer p[class*="text-"] {
-            color: #ffffff !important;
-        }
-        :root:not(.dark) .faq-answer div[class*="text-"],
-        :root:not(.dark) .faq-answer p[class*="text-"],
-        html:not(.dark) .faq-answer div[class*="text-"],
-        html:not(.dark) .faq-answer p[class*="text-"],
-        .dark .faq-answer div[class*="text-"],
-        .dark .faq-answer p[class*="text-"],
-        html.dark .faq-answer div[class*="text-"],
-        html.dark .faq-answer p[class*="text-"] {
-            color: #ffffff !important;
+        .faq-answer div {
+            color: #000000 !important;
         }
         .faq-icon {
             transition: transform 0.3s ease;
@@ -130,16 +103,16 @@
 
 <body class="bg-white text-background-dark transition-colors duration-300">
     <!-- Top navigation and header loaded dynamically via component-loader.js -->
-    <main >
+    <main>
         <!-- Hero Section -->
         <section class="relative py-20 px-6 lg:px-20 bg-gradient-to-b from-surface-light to-white">
             <div class="max-w-[1440px] mx-auto text-center">
                 <span class="text-primary font-black uppercase tracking-[0.6em] text-[10px]">Domande Frequenti</span>
                 <h1
-                    class="text-5xl lg:text-7xl text-bold-modern tracking-tighter uppercase mt-4 mb-6 text-background-dark">
-                    FAQ <span class="text-primary">Vape</span>
+                    class="text-5xl lg:text-7xl text-bold-modern tracking-tighter uppercase mt-4 mb-6 text-background-dark dark:text-white">
+                    FAQ <span class="text-primary drop-shadow-md">Vape</span>
                 </h1>
-                <p class="text-xl text-background-dark/80 max-w-3xl mx-auto leading-relaxed">
+                <p class="text-xl text-background-dark/80 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed">
                     Trova risposte alle domande più frequenti su liquidi vape, dispositivi vape, servizi di pulizia e
                     manutenzione vape a Monterotondo, Roma.
                 </p>
@@ -151,16 +124,17 @@
             <div class="max-w-4xl mx-auto">
                 <!-- Liquidi Vape Section -->
                 <div class="mb-16">
-                    <h2 class="text-3xl font-black mb-8 text-primary">Liquidi Vape</h2>
+                    <h2 class="text-3xl font-black mb-8 text-primary drop-shadow-sm">Liquidi Vape</h2>
                     <div class="space-y-4">
-                        <div class="faq-item bg-surface-alt border border-black/10 rounded-lg overflow-hidden">
-                            <div class="faq-question p-6 flex items-center justify-between text-background-dark">
+                        <div
+                            class="faq-item bg-primary text-black rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all">
+                            <div class="faq-question p-6 flex items-center justify-between">
                                 <h3 class="text-lg font-bold">Quali sono i migliori liquidi vape disponibili a
                                     Monterotondo?</h3>
-                                <span class="material-symbols-outlined faq-icon text-primary">expand_more</span>
+                                <span class="material-symbols-outlined faq-icon text-black">expand_more</span>
                             </div>
                             <div class="faq-answer">
-                                <div class="px-6 pb-6 text-background-dark leading-relaxed">
+                                <div class="px-6 pb-6 text-black leading-relaxed">
                                     <p>Presso LIQUIDO vape shop a Monterotondo (Roma) troverai una selezione premium di
                                         liquidi vape delle migliori marche: Dinner Lady, Vaporesso, GeekVape, Voopoo e
                                         molti altri. I nostri liquidi vape sono selezionati per garantire qualità,
@@ -170,13 +144,14 @@
                             </div>
                         </div>
 
-                        <div class="faq-item bg-surface-alt border border-black/10 rounded-lg overflow-hidden">
-                            <div class="faq-question p-6 flex items-center justify-between text-background-dark">
+                        <div
+                            class="faq-item bg-primary text-black rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all">
+                            <div class="faq-question p-6 flex items-center justify-between">
                                 <h3 class="text-lg font-bold">Come conservare correttamente i liquidi vape?</h3>
-                                <span class="material-symbols-outlined faq-icon text-primary">expand_more</span>
+                                <span class="material-symbols-outlined faq-icon text-black">expand_more</span>
                             </div>
                             <div class="faq-answer">
-                                <div class="px-6 pb-6 text-background-dark leading-relaxed">
+                                <div class="px-6 pb-6 text-black leading-relaxed">
                                     <p>Per conservare correttamente i liquidi vape, è importante mantenerli in un luogo
                                         fresco e asciutto, lontano dalla luce diretta del sole. La temperatura ideale è
                                         tra i 15°C e i 25°C. Conserva i liquidi vape in posizione verticale con il tappo
@@ -186,14 +161,15 @@
                             </div>
                         </div>
 
-                        <div class="faq-item bg-surface-alt border border-black/10 rounded-lg overflow-hidden">
-                            <div class="faq-question p-6 flex items-center justify-between text-background-dark">
+                        <div
+                            class="faq-item bg-primary text-black rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all">
+                            <div class="faq-question p-6 flex items-center justify-between">
                                 <h3 class="text-lg font-bold">Quale livello di nicotina scegliere per iniziare con i
                                     liquidi vape?</h3>
-                                <span class="material-symbols-outlined faq-icon text-primary">expand_more</span>
+                                <span class="material-symbols-outlined faq-icon text-black">expand_more</span>
                             </div>
                             <div class="faq-answer">
-                                <div class="px-6 pb-6 text-background-dark leading-relaxed">
+                                <div class="px-6 pb-6 text-black leading-relaxed">
                                     <p>Per i principianti, consigliamo di iniziare con liquidi vape a basso contenuto di
                                         nicotina (3-6 mg/ml) se si utilizzano dispositivi vape sub-ohm, o con
                                         concentrazioni più elevate (12-18 mg/ml) per dispositivi vape con resistenze più
@@ -204,13 +180,14 @@
                             </div>
                         </div>
 
-                        <div class="faq-item bg-surface-alt border border-black/10 rounded-lg overflow-hidden">
-                            <div class="faq-question p-6 flex items-center justify-between text-background-dark">
+                        <div
+                            class="faq-item bg-primary text-black rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all">
+                            <div class="faq-question p-6 flex items-center justify-between">
                                 <h3 class="text-lg font-bold">Quanto durano i liquidi vape?</h3>
-                                <span class="material-symbols-outlined faq-icon text-primary">expand_more</span>
+                                <span class="material-symbols-outlined faq-icon text-black">expand_more</span>
                             </div>
                             <div class="faq-answer">
-                                <div class="px-6 pb-6 text-background-dark leading-relaxed">
+                                <div class="px-6 pb-6 text-black leading-relaxed">
                                     <p>I liquidi vape, se conservati correttamente, mantengono la loro qualità per circa
                                         2 anni dalla data di produzione. Una volta aperti, è consigliabile consumare i
                                         liquidi vape entro 6-12 mesi per garantire il miglior sapore. Presso il nostro
@@ -224,15 +201,17 @@
 
                 <!-- Dispositivi Vape Section -->
                 <div class="mb-16">
-                    <h2 class="text-3xl font-black mb-8 text-primary">Dispositivi Vape e Manutenzione</h2>
+                    <h2 class="text-3xl font-black mb-8 text-primary drop-shadow-sm">Dispositivi Vape e Manutenzione
+                    </h2>
                     <div class="space-y-4">
-                        <div class="faq-item bg-surface-alt border border-black/10 rounded-lg overflow-hidden">
-                            <div class="faq-question p-6 flex items-center justify-between text-background-dark">
+                        <div
+                            class="faq-item bg-primary text-black rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all">
+                            <div class="faq-question p-6 flex items-center justify-between">
                                 <h3 class="text-lg font-bold">Come pulire correttamente il mio dispositivo vape?</h3>
-                                <span class="material-symbols-outlined faq-icon text-primary">expand_more</span>
+                                <span class="material-symbols-outlined faq-icon text-black">expand_more</span>
                             </div>
                             <div class="faq-answer">
-                                <div class="px-6 pb-6 text-background-dark leading-relaxed">
+                                <div class="px-6 pb-6 text-black leading-relaxed">
                                     <p>Per pulire correttamente il tuo dispositivo vape, smonta tutte le parti (tank,
                                         coil, drip tip) e sciacquale con acqua calda. Per una pulizia più approfondita,
                                         puoi utilizzare alcol isopropilico per rimuovere residui di liquidi vape.
@@ -244,14 +223,15 @@
                             </div>
                         </div>
 
-                        <div class="faq-item bg-surface-alt border border-black/10 rounded-lg overflow-hidden">
-                            <div class="faq-question p-6 flex items-center justify-between text-background-dark">
+                        <div
+                            class="faq-item bg-primary text-black rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all">
+                            <div class="faq-question p-6 flex items-center justify-between">
                                 <h3 class="text-lg font-bold">Offrite servizi di pulizia e manutenzione vape a
                                     Monterotondo?</h3>
-                                <span class="material-symbols-outlined faq-icon text-primary">expand_more</span>
+                                <span class="material-symbols-outlined faq-icon text-black">expand_more</span>
                             </div>
                             <div class="faq-answer">
-                                <div class="px-6 pb-6 text-background-dark leading-relaxed">
+                                <div class="px-6 pb-6 text-black leading-relaxed">
                                     <p>Sì, presso LIQUIDO vape shop a Monterotondo (Roma) offriamo servizi completi di
                                         pulizia dispositivi vape e manutenzione vape. I nostri servizi includono:
                                         pulizia completa del dispositivo vape, pulizia del tank, cambio coil,
@@ -262,13 +242,14 @@
                             </div>
                         </div>
 
-                        <div class="faq-item bg-surface-alt border border-black/10 rounded-lg overflow-hidden">
-                            <div class="faq-question p-6 flex items-center justify-between text-background-dark">
+                        <div
+                            class="faq-item bg-primary text-black rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all">
+                            <div class="faq-question p-6 flex items-center justify-between">
                                 <h3 class="text-lg font-bold">Quanto spesso devo pulire il tank della mia vape?</h3>
-                                <span class="material-symbols-outlined faq-icon text-primary">expand_more</span>
+                                <span class="material-symbols-outlined faq-icon text-black">expand_more</span>
                             </div>
                             <div class="faq-answer">
-                                <div class="px-6 pb-6 text-background-dark leading-relaxed">
+                                <div class="px-6 pb-6 text-black leading-relaxed">
                                     <p>È consigliabile pulire il tank del tuo dispositivo vape ogni volta che cambi
                                         liquido vape o almeno una volta alla settimana con uso regolare. Se noti un
                                         sapore strano o una riduzione delle prestazioni, è il momento di pulire il tank.
@@ -279,13 +260,14 @@
                             </div>
                         </div>
 
-                        <div class="faq-item bg-surface-alt border border-black/10 rounded-lg overflow-hidden">
-                            <div class="faq-question p-6 flex items-center justify-between text-background-dark">
+                        <div
+                            class="faq-item bg-primary text-black rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all">
+                            <div class="faq-question p-6 flex items-center justify-between">
                                 <h3 class="text-lg font-bold">Qual è la differenza tra mod vape e pod vape?</h3>
-                                <span class="material-symbols-outlined faq-icon text-primary">expand_more</span>
+                                <span class="material-symbols-outlined faq-icon text-black">expand_more</span>
                             </div>
                             <div class="faq-answer">
-                                <div class="px-6 pb-6 text-background-dark leading-relaxed">
+                                <div class="px-6 pb-6 text-black leading-relaxed">
                                     <p>I mod vape sono dispositivi vape più grandi e potenti, ideali per chi cerca
                                         nuvole di vapore consistenti e personalizzazione avanzata. I pod vape sono
                                         dispositivi vape più compatti e portatili, perfetti per principianti o per chi
@@ -300,15 +282,17 @@
 
                 <!-- Servizi Locali Section -->
                 <div class="mb-16">
-                    <h2 class="text-3xl font-black mb-8 text-primary">Servizi Locali a Monterotondo e Roma</h2>
+                    <h2 class="text-3xl font-black mb-8 text-primary drop-shadow-sm">Servizi Locali a Monterotondo e
+                        Roma</h2>
                     <div class="space-y-4">
-                        <div class="faq-item bg-surface-alt border border-black/10 rounded-lg overflow-hidden">
-                            <div class="faq-question p-6 flex items-center justify-between text-background-dark">
+                        <div
+                            class="faq-item bg-primary text-black rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all">
+                            <div class="faq-question p-6 flex items-center justify-between">
                                 <h3 class="text-lg font-bold">Dove si trova il vostro negozio vape a Monterotondo?</h3>
-                                <span class="material-symbols-outlined faq-icon text-primary">expand_more</span>
+                                <span class="material-symbols-outlined faq-icon text-black">expand_more</span>
                             </div>
                             <div class="faq-answer">
-                                <div class="px-6 pb-6 text-background-dark leading-relaxed">
+                                <div class="px-6 pb-6 text-black leading-relaxed">
                                     <p>Il nostro vape shop LIQUIDO si trova a Monterotondo (Roma) in via Adige 43C, CAP
                                         00015. Siamo facilmente raggiungibili da Roma e dalle zone limitrofe. Il nostro
                                         negozio vape è aperto dal lunedì al venerdì dalle 10:00 alle 21:00, sabato dalle
@@ -318,14 +302,15 @@
                             </div>
                         </div>
 
-                        <div class="faq-item bg-surface-alt border border-black/10 rounded-lg overflow-hidden">
-                            <div class="faq-question p-6 flex items-center justify-between text-background-dark">
+                        <div
+                            class="faq-item bg-primary text-black rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all">
+                            <div class="faq-question p-6 flex items-center justify-between">
                                 <h3 class="text-lg font-bold">Fate assistenza e pulizia dispositivi vape in negozio?
                                 </h3>
-                                <span class="material-symbols-outlined faq-icon text-primary">expand_more</span>
+                                <span class="material-symbols-outlined faq-icon text-black">expand_more</span>
                             </div>
                             <div class="faq-answer">
-                                <div class="px-6 pb-6 text-background-dark leading-relaxed">
+                                <div class="px-6 pb-6 text-black leading-relaxed">
                                     <p>Sì, presso il nostro vape shop a Monterotondo offriamo servizi completi di
                                         assistenza, pulizia dispositivi vape e manutenzione vape direttamente in
                                         negozio. I nostri esperti possono aiutarti con: pulizia completa del dispositivo
@@ -336,14 +321,15 @@
                             </div>
                         </div>
 
-                        <div class="faq-item bg-surface-alt border border-black/10 rounded-lg overflow-hidden">
-                            <div class="faq-question p-6 flex items-center justify-between text-background-dark">
+                        <div
+                            class="faq-item bg-primary text-black rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all">
+                            <div class="faq-question p-6 flex items-center justify-between">
                                 <h3 class="text-lg font-bold">Quali servizi offrite oltre alla vendita di liquidi e
                                     dispositivi vape?</h3>
-                                <span class="material-symbols-outlined faq-icon text-primary">expand_more</span>
+                                <span class="material-symbols-outlined faq-icon text-black">expand_more</span>
                             </div>
                             <div class="faq-answer">
-                                <div class="px-6 pb-6 text-background-dark leading-relaxed">
+                                <div class="px-6 pb-6 text-black leading-relaxed">
                                     <p>Oltre alla vendita di liquidi vape e dispositivi vape, il nostro vape shop a
                                         Monterotondo offre: servizi di pulizia dispositivi vape, manutenzione vape
                                         professionale, pulizia tank, cambio coil, sostituzione cotone atomizzatore,
@@ -355,13 +341,14 @@
                             </div>
                         </div>
 
-                        <div class="faq-item bg-surface-alt border border-black/10 rounded-lg overflow-hidden">
-                            <div class="faq-question p-6 flex items-center justify-between text-background-dark">
+                        <div
+                            class="faq-item bg-primary text-black rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all">
+                            <div class="faq-question p-6 flex items-center justify-between">
                                 <h3 class="text-lg font-bold">Fate consegne a Roma e dintorni?</h3>
-                                <span class="material-symbols-outlined faq-icon text-primary">expand_more</span>
+                                <span class="material-symbols-outlined faq-icon text-black">expand_more</span>
                             </div>
                             <div class="faq-answer">
-                                <div class="px-6 pb-6 text-background-dark leading-relaxed">
+                                <div class="px-6 pb-6 text-black leading-relaxed">
                                     <p>Attualmente il nostro vape shop a Monterotondo offre principalmente vendita in
                                         negozio e ritiro su prenotazione. Per liquidi vape e dispositivi vape speciali,
                                         puoi prenotare tramite WhatsApp al +39 379 134 5367 e ritirare in negozio entro
@@ -375,15 +362,16 @@
 
                 <!-- Acquisti e Informazioni Section -->
                 <div class="mb-16">
-                    <h2 class="text-3xl font-black mb-8 text-primary">Acquisti e Informazioni</h2>
+                    <h2 class="text-3xl font-black mb-8 text-primary drop-shadow-sm">Acquisti e Informazioni</h2>
                     <div class="space-y-4">
-                        <div class="faq-item bg-surface-alt border border-black/10 rounded-lg overflow-hidden">
-                            <div class="faq-question p-6 flex items-center justify-between text-background-dark">
+                        <div
+                            class="faq-item bg-primary text-black rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all">
+                            <div class="faq-question p-6 flex items-center justify-between">
                                 <h3 class="text-lg font-bold">Quali metodi di pagamento accettate?</h3>
-                                <span class="material-symbols-outlined faq-icon text-primary">expand_more</span>
+                                <span class="material-symbols-outlined faq-icon text-black">expand_more</span>
                             </div>
                             <div class="faq-answer">
-                                <div class="px-6 pb-6 text-background-dark leading-relaxed">
+                                <div class="px-6 pb-6 text-black leading-relaxed">
                                     <p>Presso il nostro vape shop a Monterotondo accettiamo pagamenti in contanti, carte
                                         di credito e debito (Visa, Mastercard), e pagamenti digitali. Per informazioni
                                         specifiche sui metodi di pagamento disponibili, puoi contattarci al +39 379 134
@@ -393,13 +381,14 @@
                             </div>
                         </div>
 
-                        <div class="faq-item bg-surface-alt border border-black/10 rounded-lg overflow-hidden">
-                            <div class="faq-question p-6 flex items-center justify-between text-background-dark">
+                        <div
+                            class="faq-item bg-primary text-black rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all">
+                            <div class="faq-question p-6 flex items-center justify-between">
                                 <h3 class="text-lg font-bold">Avete una garanzia sui dispositivi vape?</h3>
-                                <span class="material-symbols-outlined faq-icon text-primary">expand_more</span>
+                                <span class="material-symbols-outlined faq-icon text-black">expand_more</span>
                             </div>
                             <div class="faq-answer">
-                                <div class="px-6 pb-6 text-background-dark leading-relaxed">
+                                <div class="px-6 pb-6 text-black leading-relaxed">
                                     <p>Sì, tutti i dispositivi vape venduti presso il nostro negozio vape a Monterotondo
                                         sono coperti da garanzia del produttore. La durata e i termini della garanzia
                                         variano a seconda del marchio del dispositivo vape. Conserva sempre lo scontrino
@@ -409,14 +398,15 @@
                             </div>
                         </div>
 
-                        <div class="faq-item bg-surface-alt border border-black/10 rounded-lg overflow-hidden">
-                            <div class="faq-question p-6 flex items-center justify-between text-background-dark">
+                        <div
+                            class="faq-item bg-primary text-black rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all">
+                            <div class="faq-question p-6 flex items-center justify-between">
                                 <h3 class="text-lg font-bold">Posso ordinare liquidi vape o dispositivi vape specifici
                                     che non sono in negozio?</h3>
-                                <span class="material-symbols-outlined faq-icon text-primary">expand_more</span>
+                                <span class="material-symbols-outlined faq-icon text-black">expand_more</span>
                             </div>
                             <div class="faq-answer">
-                                <div class="px-6 pb-6 text-background-dark leading-relaxed">
+                                <div class="px-6 pb-6 text-black leading-relaxed">
                                     <p>Assolutamente sì! Presso LIQUIDO vape shop a Monterotondo puoi ordinare liquidi
                                         vape e dispositivi vape specifici anche se non sono disponibili in negozio.
                                         Contattaci tramite WhatsApp al +39 379 134 5367 o utilizza il servizio MyLiquido
