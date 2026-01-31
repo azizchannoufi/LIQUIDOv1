@@ -57,9 +57,41 @@
                 class="bg-yellow-500 hover:bg-yellow-600 text-gray-900 px-6 py-3.5 rounded-sm font-black text-xs uppercase tracking-widest transition-all flex items-center gap-2 shadow-md hover:shadow-lg">
                 MyLiquido
             </a>
+
+            <!-- Hamburger Menu Button -->
+            <button id="hamburger-btn" class="p-2 hover:text-yellow-600 transition-colors">
+                <span class="material-symbols-outlined text-3xl">menu</span>
+            </button>
         </div>
     </div>
+
+    </div>
 </header>
+
+<!-- User Menu Overlay -->
+<div id="user-menu-overlay" class="fixed inset-0 bg-black/50 z-[90] hidden opacity-0 transition-opacity duration-300">
+</div>
+
+<!-- User Menu Drawer -->
+<div id="user-menu"
+    class="fixed top-0 right-0 h-full w-[300px] bg-white shadow-2xl z-[100] transform translate-x-full transition-transform duration-300 flex flex-col">
+    <div class="p-6 border-b border-gray-100 flex justify-between items-center bg-gray-50">
+        <h3 class="font-bold text-lg uppercase tracking-wide">Menu Utente</h3>
+        <button id="close-menu-btn" class="hover:text-red-500 transition-colors p-1">
+            <span class="material-symbols-outlined">close</span>
+        </button>
+    </div>
+    <div id="user-menu-content" class="p-6 flex-1 overflow-y-auto flex flex-col gap-6">
+        <!-- Content populated by JS -->
+        <div class="text-center py-8">
+            <p class="text-gray-500 mb-4">Accedi per gestire il tuo account</p>
+            <a href="myliquido.html"
+                class="block w-full bg-yellow-500 text-gray-900 py-3 rounded font-bold uppercase text-xs tracking-widest hover:bg-yellow-400 transition-colors">
+                Accedi / Registrati
+            </a>
+        </div>
+    </div>
+</div>
 
 <!-- Espace réservé pour éviter que le contenu soit caché sous le header fixe -->
 <div id="header-placeholder"></div>
