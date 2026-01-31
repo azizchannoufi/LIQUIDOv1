@@ -131,6 +131,29 @@
         .animate-scroll:hover {
             animation-play-state: paused;
         }
+        
+        /* Scroll Animations */
+        .scroll-animate {
+            opacity: 0;
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        
+        .scroll-animate.from-left {
+            transform: translateX(-100px);
+        }
+        
+        .scroll-animate.from-right {
+            transform: translateX(100px);
+        }
+        
+        .scroll-animate.from-bottom {
+            transform: translateY(100px);
+        }
+        
+        .scroll-animate.visible {
+            opacity: 1;
+            transform: translateX(0) translateY(0);
+        }
     </style>
 </head>
 
@@ -138,7 +161,7 @@
     <!-- Top navigation and header loaded dynamically via component-loader.js -->
     <main>
         <!-- LIQUIDI CATEGORIES SECTION -->
-        <section class="pt-32 pb-20 bg-white">
+        <section class="pt-32 pb-20 bg-white scroll-animate from-bottom">
             <div class="max-w-[1440px] mx-auto px-6 lg:px-20">
                 <div class="text-center mb-16">
                     <p class="text-center text-gray-600 uppercase tracking-[0.4em] text-[10px] font-black mb-4">Esplora
@@ -238,7 +261,7 @@
         </section>
 
         <!-- BRANDS SECTION -->
-        <section class="py-20 bg-white border-t border-black/5">
+        <section class="py-20 bg-white border-t border-black/5 scroll-animate from-left">
             <div class="max-w-[1440px] mx-auto px-6 lg:px-20">
                 <div class="text-center mb-16">
                     <p class="text-center text-gray-600 uppercase tracking-[0.4em] text-[10px] font-black mb-4">I Nostri
@@ -262,7 +285,7 @@
         </section>
 
         <!-- Lines Carousel Section -->
-        <section class="pb-12 bg-white">
+        <section class="pb-12 bg-white scroll-animate from-right">
             <div class="w-full">
                 <div class="text-center mb-8 px-6 lg:px-20">
                     <h2 class="text-4xl lg:text-5xl text-bold-modern uppercase text-background-dark mb-4">Le Nostre
@@ -525,6 +548,31 @@
                 }
             }
         })();
+    </script>
+
+    <!-- Scroll Animation Script -->
+    <script>
+        // Scroll Animation Observer
+        document.addEventListener('DOMContentLoaded', function () {
+            const observerOptions = {
+                threshold: 0.15,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver(function (entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, observerOptions);
+
+            // Observe all elements with scroll-animate class
+            const animatedElements = document.querySelectorAll('.scroll-animate');
+            animatedElements.forEach(element => {
+                observer.observe(element);
+            });
+        });
     </script>
 </body>
 
