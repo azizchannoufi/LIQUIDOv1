@@ -113,6 +113,24 @@
             border-color: var(--primary-color);
             box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
         }
+        
+        /* Carousel Animation */
+        @keyframes scroll {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+        
+        .animate-scroll {
+            animation: scroll 8s linear infinite;
+        }
+        
+        .animate-scroll:hover {
+            animation-play-state: paused;
+        }
     </style>
 </head>
 
@@ -231,11 +249,13 @@
                         settore per offrirti prodotti di qualità superiore.</p>
                 </div>
 
-                <!-- Brands Grid - Simple Style -->
-                <div id="brands-grid-products-simple" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-                    <!-- Brands will be loaded dynamically from Firebase -->
-                    <div class="col-span-full flex items-center justify-center py-12">
-                        <p class="text-background-dark/40 text-lg">Caricamento marchi...</p>
+                <!-- Brands Carousel - Auto Scroll -->
+                <div class="relative overflow-hidden">
+                    <div id="brands-carousel-track" class="flex gap-6 animate-scroll">
+                        <!-- Brands will be loaded dynamically from Firebase -->
+                        <div class="flex items-center justify-center py-12 w-full">
+                            <p class="text-background-dark/40 text-lg">Caricamento marchi...</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -447,32 +467,47 @@
                 }
 
                 const { service } = catalog;
-                const brandsContainer = document.getElementById('brands-grid-products-simple');
+                const brandsContainer = document.getElementById('brands-carousel-track');
 
                 if (brandsContainer) {
                     // Get all brands from all sections
                     const allBrands = await service.getAllBrands();
 
                     if (allBrands && allBrands.length > 0) {
-                        // Render simple brand cards
-                        const brandsHTML = allBrands.map(brand => {
-                            const logoUrl = brand.logo_url || '';
-                            return `
-                                <div class="brand-card-simple bg-white border-2 border-black rounded-xl p-6 flex items-center justify-center hover:shadow-lg transition-all duration-300 aspect-[2/1]">
-                                    ${logoUrl ? `
-                                        <img src="${logoUrl}" alt="${brand.name}" class="w-full h-full object-contain filter grayscale" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"/>
-                                    ` : ''}
-                                    <div class="${logoUrl ? 'hidden' : 'flex'} flex-col items-center justify-center text-black w-full h-full">
-                                        <span class="text-lg font-black uppercase">${brand.name}</span>
+                        // Filter brands to show only "liquid" type
+                        const liquidiBrands = allBrands.filter(brand => brand.type === 'liquid');
+
+                        if (liquidiBrands.length > 0) {
+                            // Create brand cards
+                            const brandCard = (brand) => {
+                                const logoUrl = brand.logo_url || '';
+                                return `
+                                    <div class="brand-card-carousel flex-shrink-0 w-80 bg-transparent p-4 flex items-center justify-center hover:scale-110 transition-all duration-300 aspect-[2/1]">
+                                        ${logoUrl ? `
+                                            <img src="${logoUrl}" alt="${brand.name}" class="w-full h-full object-contain filter grayscale" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"/>
+                                        ` : ''}
+                                        <div class="${logoUrl ? 'hidden' : 'flex'} flex-col items-center justify-center text-black w-full h-full">
+                                            <span class="text-2xl font-black uppercase">${brand.name}</span>
+                                        </div>
                                     </div>
+                                `;
+                            };
+
+                            // Duplicate brands for infinite scroll effect
+                            const brandsHTML = liquidiBrands.map(brandCard).join('');
+                            const duplicatedHTML = brandsHTML + brandsHTML; // Duplicate for seamless loop
+
+                            brandsContainer.innerHTML = duplicatedHTML;
+                        } else {
+                            brandsContainer.innerHTML = `
+                                <div class="flex items-center justify-center py-12 w-full">
+                                    <p class="text-background-dark/40 text-lg">Nessun marchio liquidi disponibile.</p>
                                 </div>
                             `;
-                        }).join('');
-
-                        brandsContainer.innerHTML = brandsHTML;
+                        }
                     } else {
                         brandsContainer.innerHTML = `
-                            <div class="col-span-full flex items-center justify-center py-12">
+                            <div class="flex items-center justify-center py-12 w-full">
                                 <p class="text-background-dark/40 text-lg">Nessun marchio disponibile.</p>
                             </div>
                         `;
