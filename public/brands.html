@@ -79,18 +79,73 @@
         .text-glow:hover {
             text-shadow: 0 0 15px rgba(248, 237, 112, 0.4);
         }
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+        @keyframes fadeInScale {
+            0% {
+                opacity: 0;
+                transform: scale(0.8) translateY(30px);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+        .animate-float {
+            animation: float 6s ease-in-out infinite;
+        }
+        .animate-fade-in-scale {
+            animation: fadeInScale 1.2s ease-out forwards;
+        }
+        
+        /* Carousel Animation */
+        @keyframes scroll {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-33.33%);
+            }
+        }
+        
+        .animate-scroll {
+            animation: scroll 8s linear infinite;
+        }
+        
+        .animate-scroll:hover {
+            animation-play-state: paused;
+        }
     </style>
 </head>
 
 <body class="bg-white text-background-dark transition-colors duration-300">
     <!-- Top navigation and header loaded dynamically via component-loader.js -->
-    <main class="pt-[120px] max-w-[1440px] mx-auto px-6 lg:px-20 pb-24">
-        <section class="relative px-6 py-20 md:py-32 text-center overflow-hidden">
+    <main class="pt-[100px] max-w-[1440px] mx-auto px-6 lg:px-20 pb-16">
+        <!-- Section Image Hero en grand format -->
+        <section class="relative px-6 py-4 md:py-8 overflow-hidden">
             <div class="absolute inset-0 z-0">
                 <div
-                    class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/5 blur-[120px] rounded-full">
+                    class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary/5 blur-[120px] rounded-full">
                 </div>
             </div>
+            <div class="relative z-10 max-w-6xl mx-auto flex justify-center">
+                <div class="relative animate-fade-in-scale w-full">
+                    <img src="../assets/images/banner_blog_2_-removebg-preview.png" alt="LIQUIDO Premium Brands Banner"
+                        class="w-full h-auto animate-float drop-shadow-2xl" />
+                    <!-- Effet de glow derrière l'image -->
+                    <div class="absolute inset-0 bg-primary/10 blur-3xl -z-10 scale-90"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section Partner Brands -->
+        <section class="relative px-6 py-8 md:py-12 text-center overflow-hidden">
             <div class="relative z-10 max-w-4xl mx-auto space-y-8">
                 <div
                     class="inline-block px-4 py-1 border border-primary/30 text-primary text-[10px] font-bold uppercase tracking-[0.3em] mb-4">
@@ -104,28 +159,16 @@
                 </p>
             </div>
         </section>
+
+        <!-- Brands Carousel Section -->
         <section class="px-6 mb-16">
-            <div class="flex flex-col md:flex-row items-center justify-between gap-8 border-y border-black/10 py-10">
-                <div class="relative w-full md:max-w-md">
-                    <span
-                        class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 dark:text-white/30">search</span>
-                    <input
-                        class="w-full pl-12 pr-4 py-4 bg-gray-100 border-none focus:ring-1 focus:ring-primary/50 text-background-dark placeholder:text-gray-400 text-sm tracking-wide"
-                        placeholder="Search brands..." type="text" />
+            <div class="relative overflow-hidden">
+                <div id="brands-carousel-track" class="flex gap-6 animate-scroll">
+                    <!-- Brands will be loaded dynamically from Firebase -->
+                    <div class="flex items-center justify-center py-12 w-full">
+                        <p class="text-background-dark/40 text-lg">Caricamento marchi...</p>
+                    </div>
                 </div>
-                <div class="flex flex-wrap items-center justify-center gap-2" id="section-filters">
-                    <button data-section-id="all"
-                        class="section-filter-btn px-6 py-2.5 bg-primary text-black text-[11px] font-bold uppercase tracking-widest transition-all duration-200">All</button>
-                    <button data-section-id="cat_dispositivi"
-                        class="section-filter-btn px-6 py-2.5 bg-gray-100 hover:bg-gray-200 transition-all duration-200 text-gray-700 text-[11px] font-bold uppercase tracking-widest">Hardware</button>
-                    <button data-section-id="cat_liquidi"
-                        class="section-filter-btn px-6 py-2.5 bg-gray-100 hover:bg-gray-200 transition-all duration-200 text-gray-700 text-[11px] font-bold uppercase tracking-widest">E-liquids</button>
-                </div>
-            </div>
-        </section>
-        <section class="px-6">
-            <div id="brands-grid-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
-                <!-- Brands will be loaded dynamically from Firebase -->
             </div>
         </section>
         <section class="mt-32 px-6">
@@ -275,8 +318,95 @@
     <script src="../src/js/modules/brands-renderer.js"></script>
     <script src="../src/js/modules/products-renderer.js"></script>
     <script src="../src/js/modules/catalog-init.js"></script>
-    <script src="../src/js/pages/brands-page.js"></script>
     <script>
+            // Initialize Brands Carousel - Device Brands Only
+            (async function () {
+                try {
+                    // Wait for catalog initialization
+                    if (!window.catalogInit) {
+                        await new Promise(resolve => {
+                            const checkCatalog = setInterval(() => {
+                                if (window.catalogInit) {
+                                    clearInterval(checkCatalog);
+                                    resolve();
+                                }
+                            }, 100);
+                        });
+                    }
+
+                    const catalog = await window.catalogInit;
+
+                    if (!catalog || !catalog.service) {
+                        console.error('Catalog service not available:', catalog);
+                        return;
+                    }
+
+                    const { service } = catalog;
+                    const brandsContainer = document.getElementById('brands-carousel-track');
+
+                    if (brandsContainer) {
+                        // Get all brands from all sections
+                        const allBrands = await service.getAllBrands();
+
+                        if (allBrands && allBrands.length > 0) {
+                            // Filter brands to show only "device" type
+                            const deviceBrands = allBrands.filter(brand => brand.type === 'device');
+
+                            if (deviceBrands.length > 0) {
+                                // Create brand cards
+                                const brandCard = (brand) => {
+                                    const logoUrl = brand.logo_url || '';
+                                    return `
+                                    <div class="brand-card-carousel flex-shrink-0 w-80 bg-transparent p-4 flex items-center justify-center hover:scale-110 transition-all duration-300 aspect-[2/1]">
+                                        ${logoUrl ? `
+                                            <img src="${logoUrl}" alt="${brand.name}" class="w-full h-full object-contain filter grayscale" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"/>
+                                        ` : ''}
+                                        <div class="${logoUrl ? 'hidden' : 'flex'} flex-col items-center justify-center text-black w-full h-full">
+                                            <span class="text-2xl font-black uppercase">${brand.name}</span>
+                                        </div>
+                                    </div>
+                                `;
+                                };
+
+                                // Create the brands HTML
+                                const brandsHTML = deviceBrands.map(brandCard).join('');
+
+                                // Duplicate multiple times for seamless infinite scroll (3 copies)
+                                const triplicatedHTML = brandsHTML + brandsHTML + brandsHTML;
+
+                                brandsContainer.innerHTML = triplicatedHTML;
+
+                                // Adjust animation duration based on number of brands
+                                // More brands = longer duration for smooth scrolling
+                                const duration = Math.max(20, deviceBrands.length * 2);
+                                brandsContainer.style.animationDuration = `${duration}s`;
+                            } else {
+                                brandsContainer.innerHTML = `
+                                <div class="flex items-center justify-center py-12 w-full">
+                                    <p class="text-background-dark/40 text-lg">Nessun marchio dispositivi disponibile.</p>
+                                </div>
+                            `;
+                            }
+                        } else {
+                            brandsContainer.innerHTML = `
+                            <div class="flex items-center justify-center py-12 w-full">
+                                <p class="text-background-dark/40 text-lg">Nessun marchio disponibile.</p>
+                            </div>
+                        `;
+                        }
+                    }
+                } catch (error) {
+                    console.error('Error initializing brands carousel:', error);
+                    const brandsContainer = document.getElementById('brands-carousel-track');
+                    if (brandsContainer) {
+                        brandsContainer.innerHTML = `
+                        <div class="flex items-center justify-center py-12 w-full">
+                            <p class="text-red-400 text-lg">Errore nel caricamento dei marchi.</p>
+                        </div>
+                    `;
+                    }
+                }
+            })();
     </script>
 </body>
 
