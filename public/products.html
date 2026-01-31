@@ -88,14 +88,161 @@
             -webkit-box-orient: vertical;
             overflow: hidden;
         }
+        
+        /* Categories Hover Effect */
+        .category-card {
+            flex-basis: 80px;
+            flex-grow: 1;
+        }
+        
+        .category-card:hover {
+            flex-grow: 3;
+        }
+        
+        /* Ensure smooth transitions for all category cards */
+        .category-card:not(:hover) {
+            flex-grow: 0.5;
+        }
+        
+        /* Brand Cards Hover Effect */
+        .brand-card-hover {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .brand-card-hover:hover {
+            transform: translateY(-8px);
+            border-color: var(--primary-color);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
+        }
     </style>
 </head>
 
 <body class="bg-white text-background-dark transition-colors duration-300">
     <!-- Top navigation and header loaded dynamically via component-loader.js -->
-    <main >
+    <main>
+        <!-- LIQUIDI CATEGORIES SECTION -->
+        <section class="pt-32 pb-20 bg-white">
+            <div class="max-w-[1440px] mx-auto px-6 lg:px-20">
+                <div class="text-center mb-16">
+                    <p class="text-center text-gray-600 uppercase tracking-[0.4em] text-[10px] font-black mb-4">Esplora
+                        le Categorie</p>
+                    <h2 class="text-5xl lg:text-6xl text-bold-modern uppercase mb-4 text-background-dark">I Nostri
+                        Liquidi</h2>
+                    <p class="text-slate-600 max-w-2xl mx-auto font-medium">Scopri la nostra selezione premium di
+                        liquidi organizzati per gusto e preferenza.</p>
+                </div>
+
+                <!-- Categories Container -->
+                <div class="flex gap-2 h-[500px] overflow-hidden rounded-lg">
+                    <!-- Category 1: Tabaccosi -->
+                    <div
+                        class="category-card relative flex-1 overflow-hidden cursor-pointer transition-all duration-700 ease-in-out group">
+                        <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                            style="background-image: url('../assets/images/Categoria/Copia di foglie-di-tabacco.jpg');">
+                        </div>
+                        <div
+                            class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/30 transition-opacity duration-500">
+                        </div>
+                        <div class="relative h-full flex items-end justify-center p-8">
+                            <div
+                                class="category-title opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-4 group-hover:translate-y-0">
+                                <h3
+                                    class="text-4xl lg:text-5xl font-black uppercase text-white tracking-tight text-center">
+                                    Tabaccosi</h3>
+                                <p class="text-primary text-sm uppercase tracking-widest font-bold text-center mt-2">
+                                    Classici Intensi</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Category 2: Fruttati -->
+                    <div
+                        class="category-card relative flex-1 overflow-hidden cursor-pointer transition-all duration-700 ease-in-out group">
+                        <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                            style="background-image: url('../assets/images/Categoria/Copia di frutta.jpeg');"></div>
+                        <div
+                            class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/30 transition-opacity duration-500">
+                        </div>
+                        <div class="relative h-full flex items-end justify-center p-8">
+                            <div
+                                class="category-title opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-4 group-hover:translate-y-0">
+                                <h3
+                                    class="text-4xl lg:text-5xl font-black uppercase text-white tracking-tight text-center">
+                                    Fruttati</h3>
+                                <p class="text-primary text-sm uppercase tracking-widest font-bold text-center mt-2">
+                                    Freschezza Naturale</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Category 3: Cremosi -->
+                    <div
+                        class="category-card relative flex-1 overflow-hidden cursor-pointer transition-all duration-700 ease-in-out group">
+                        <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                            style="background-image: url('../assets/images/Categoria/Copia di mix-di-creme.jpg');">
+                        </div>
+                        <div
+                            class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/30 transition-opacity duration-500">
+                        </div>
+                        <div class="relative h-full flex items-end justify-center p-8">
+                            <div
+                                class="category-title opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-4 group-hover:translate-y-0">
+                                <h3
+                                    class="text-4xl lg:text-5xl font-black uppercase text-white tracking-tight text-center">
+                                    Cremosi</h3>
+                                <p class="text-primary text-sm uppercase tracking-widest font-bold text-center mt-2">
+                                    Dolcezza Vellutata</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Category 4: Ghiacciati -->
+                    <div
+                        class="category-card relative flex-1 overflow-hidden cursor-pointer transition-all duration-700 ease-in-out group">
+                        <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                            style="background-image: url('../assets/images/Categoria/Copia di frutta-ice-2.png');">
+                        </div>
+                        <div
+                            class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/30 transition-opacity duration-500">
+                        </div>
+                        <div class="relative h-full flex items-end justify-center p-8">
+                            <div
+                                class="category-title opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-4 group-hover:translate-y-0">
+                                <h3
+                                    class="text-4xl lg:text-5xl font-black uppercase text-white tracking-tight text-center">
+                                    Ghiacciati</h3>
+                                <p class="text-primary text-sm uppercase tracking-widest font-bold text-center mt-2">
+                                    Freschezza Glaciale</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- BRANDS SECTION -->
+        <section class="py-20 bg-white border-t border-black/5">
+            <div class="max-w-[1440px] mx-auto px-6 lg:px-20">
+                <div class="text-center mb-16">
+                    <p class="text-center text-gray-600 uppercase tracking-[0.4em] text-[10px] font-black mb-4">I Nostri
+                        Partner</p>
+                    <h2 class="text-5xl lg:text-6xl text-bold-modern uppercase mb-4 text-background-dark">Marchi Premium
+                    </h2>
+                    <p class="text-slate-600 max-w-2xl mx-auto font-medium">Collaboriamo con i migliori marchi del
+                        settore per offrirti prodotti di qualità superiore.</p>
+                </div>
+
+                <!-- Brands Grid - Simple Style -->
+                <div id="brands-grid-products-simple" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+                    <!-- Brands will be loaded dynamically from Firebase -->
+                    <div class="col-span-full flex items-center justify-center py-12">
+                        <p class="text-background-dark/40 text-lg">Caricamento marchi...</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- Lines Carousel Section -->
-        <section class="pt-20 pb-12 bg-white">
+        <section class="pb-12 bg-white">
             <div class="w-full">
                 <div class="text-center mb-8 px-6 lg:px-20">
                     <h2 class="text-4xl lg:text-5xl text-bold-modern uppercase text-background-dark mb-4">Le Nostre
@@ -112,76 +259,6 @@
                 </div>
             </div>
         </section>
-        <div class="max-w-[1440px] mx-auto px-6 lg:px-20 py-8">
-            <section class="relative mb-12 rounded-xl overflow-hidden bg-zinc-900 aspect-[21/6] md:aspect-[21/4]">
-                <div class="absolute inset-0 bg-cover bg-center opacity-40 mix-blend-overlay"
-                    style="background-image: url('../assets/images/Goccia LIQUIDO/GOCCIA RGB.jpg');"></div>
-                <div class="absolute inset-0 bg-gradient-to-r from-black via-black/40 to-transparent"></div>
-                <div class="relative h-full flex flex-col justify-center px-12 max-w-2xl">
-                    <div
-                        class="mb-4 inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/20 text-primary text-xs font-bold uppercase tracking-widest">
-                        <span class="material-symbols-outlined text-xs">verified</span> Negozio Ufficiale
-                    </div>
-                    <h1 class="text-4xl md:text-5xl font-black text-white mb-4 tracking-tight">LIQUIDO: Eccellenza Vapor
-                        Premium</h1>
-                    <p class="text-zinc-300 text-lg leading-relaxed">
-                        Creiamo le migliori esperienze di vapor con ingredienti premium e tecnologia all'avanguardia.
-                        Esplora la nostra selezione curata di hardware ad alte prestazioni e e-liquid artigianali.
-                    </p>
-                </div>
-            </section>
-            <div class="flex border-b border-zinc-200 mb-8 overflow-x-auto no-scrollbar">
-                <a data-section-tab="cat_liquidi"
-                    class="section-tab flex items-center gap-2 px-6 py-4 border-b-2 border-primary text-primary font-bold whitespace-nowrap cursor-pointer">
-                    <span class="material-symbols-outlined text-[20px]">water_drop</span> Liquidi
-                </a>
-                <a data-section-tab="cat_dispositivi"
-                    class="section-tab flex items-center gap-2 px-6 py-4 border-b-2 border-transparent text-zinc-500 hover:text-zinc-700 font-bold whitespace-nowrap cursor-pointer">
-                    <span class="material-symbols-outlined text-[20px]">vape_free</span> Dispositivi
-                </a>
-            </div>
-            <div class="flex flex-col lg:flex-row gap-8">
-                <aside class="w-full lg:w-64 shrink-0 space-y-8">
-                    <div>
-                        <h4 class="text-xs font-bold uppercase tracking-widest text-zinc-500 mb-4">Filtra per Marca</h4>
-                        <div id="brand-filters" class="space-y-2 max-h-64 overflow-y-auto">
-                            <!-- Brands will be loaded dynamically -->
-                        </div>
-                    </div>
-                    <div>
-                        <h4 class="text-xs font-bold uppercase tracking-widest text-zinc-500 mb-4">Filtra per Linea</h4>
-                        <div id="line-filters" class="space-y-2 max-h-64 overflow-y-auto">
-                            <!-- Lines will be loaded dynamically -->
-                        </div>
-                    </div>
-                    <div class="pt-4 border-t border-zinc-800">
-                        <button id="reset-filters"
-                            class="w-full flex items-center justify-center gap-2 py-3 rounded text-sm font-bold text-zinc-400 hover:text-white transition-colors">
-                            <span class="material-symbols-outlined text-sm">refresh</span> Reimposta Filtri
-                        </button>
-                    </div>
-                </aside>
-                <div class="flex-1">
-                    <div class="flex items-center justify-between mb-6">
-                        <p class="text-sm text-zinc-500 font-medium">Mostrando <span id="products-count"
-                                class="text-white">0</span> prodotti</p>
-                        <button class="flex items-center gap-2 text-sm font-medium px-4 py-2 bg-zinc-100 rounded-lg">
-                            Ordina per: Popolare <span class="material-symbols-outlined text-sm">expand_more</span>
-                        </button>
-                    </div>
-                    <div id="products-grid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-                        <!-- Products will be loaded dynamically -->
-                    </div>
-                    <div id="no-results" class="hidden text-center py-12">
-                        <p class="text-zinc-400 text-lg">Nessun prodotto trovato</p>
-                    </div>
-                    <div id="pagination-container" class="mt-12 flex justify-center items-center gap-2">
-                        <!-- Pagination will be rendered dynamically -->
-                    </div>
-                </div>
-            </div>
-        </div>
-        </div>
     </main>
     <footer class="bg-charcoal border-t-2 border-primary pt-24 pb-12 px-6 lg:px-20">
         <div class="max-w-[1440px] mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-20 mb-20">
@@ -312,7 +389,6 @@
     <script src="../src/js/modules/brands-renderer.js"></script>
     <script src="../src/js/modules/products-renderer.js"></script>
     <script src="../src/js/modules/catalog-init.js"></script>
-    <script src="../src/js/pages/products-page-enhanced.js"></script>
     <script>
             // Initialize Lines Carousel
             (async function () {
@@ -346,6 +422,74 @@
                     console.error('Error initializing lines carousel:', error);
                 }
             })();
+    </script>
+    <script>
+        // Initialize Brands Grid - Simple Style
+        (async function () {
+            try {
+                // Wait for catalog initialization
+                if (!window.catalogInit) {
+                    await new Promise(resolve => {
+                        const checkCatalog = setInterval(() => {
+                            if (window.catalogInit) {
+                                clearInterval(checkCatalog);
+                                resolve();
+                            }
+                        }, 100);
+                    });
+                }
+
+                const catalog = await window.catalogInit;
+
+                if (!catalog || !catalog.service) {
+                    console.error('Catalog service not available:', catalog);
+                    return;
+                }
+
+                const { service } = catalog;
+                const brandsContainer = document.getElementById('brands-grid-products-simple');
+
+                if (brandsContainer) {
+                    // Get all brands from all sections
+                    const allBrands = await service.getAllBrands();
+
+                    if (allBrands && allBrands.length > 0) {
+                        // Render simple brand cards
+                        const brandsHTML = allBrands.map(brand => {
+                            const logoUrl = brand.logo_url || '';
+                            return `
+                                <div class="brand-card-simple bg-white border-2 border-black rounded-xl p-6 flex items-center justify-center hover:shadow-lg transition-all duration-300 aspect-[2/1]">
+                                    ${logoUrl ? `
+                                        <img src="${logoUrl}" alt="${brand.name}" class="w-full h-full object-contain filter grayscale" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"/>
+                                    ` : ''}
+                                    <div class="${logoUrl ? 'hidden' : 'flex'} flex-col items-center justify-center text-black w-full h-full">
+                                        <span class="text-lg font-black uppercase">${brand.name}</span>
+                                    </div>
+                                </div>
+                            `;
+                        }).join('');
+
+                        brandsContainer.innerHTML = brandsHTML;
+                    } else {
+                        brandsContainer.innerHTML = `
+                            <div class="col-span-full flex items-center justify-center py-12">
+                                <p class="text-background-dark/40 text-lg">Nessun marchio disponibile.</p>
+                            </div>
+                        `;
+                    }
+                }
+            } catch (error) {
+                console.error('Error initializing brands grid:', error);
+                const brandsContainer = document.getElementById('brands-grid-products-simple');
+                if (brandsContainer) {
+                    brandsContainer.innerHTML = `
+                        <div class="col-span-full flex items-center justify-center py-12">
+                            <p class="text-red-400 text-lg">Errore nel caricamento dei marchi.</p>
+                        </div>
+                    `;
+                }
+            }
+        })();
     </script>
 </body>
 

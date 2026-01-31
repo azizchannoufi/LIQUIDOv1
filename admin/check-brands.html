@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vérification Rapide - Kiwi & Elfbar</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            margin: 0;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .status {
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            font-size: 1.2em;
+        }
+
+        .success {
+            background: rgba(16, 185, 129, 0.3);
+            border-left: 4px solid #10b981;
+        }
+
+        .error {
+            background: rgba(239, 68, 68, 0.3);
+            border-left: 4px solid #ef4444;
+        }
+
+        .info {
+            background: rgba(59, 130, 246, 0.3);
+            border-left: 4px solid #3b82f6;
+        }
+
+        .warning {
+            background: rgba(245, 158, 11, 0.3);
+            border-left: 4px solid #f59e0b;
+        }
+
+        .brand-card {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 15px 0;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .brand-name {
+            font-size: 1.8em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            margin: 5px;
+            font-weight: bold;
+        }
+
+        .badge-liquid {
+            background: #3b82f6;
+        }
+
+        .badge-device {
+            background: #8b5cf6;
+        }
+
+        .badge-section {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.1em;
+            border-radius: 10px;
+            cursor: pointer;
+            margin: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        pre {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            border-radius: 10px;
+            overflow-x: auto;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>🔍 Vérification Kiwi & Elfbar</h1>
+        <p style="font-size: 1.1em; opacity: 0.9;">Vérification rapide de la présence de Kiwi et Elfbar dans les deux
+            sections</p>
+
+        <button onclick="checkBrands()">🚀 Vérifier Maintenant</button>
+        <button onclick="location.href='init-firebase.html'">🔄 Initialiser Firebase</button>
+
+        <div id="results"></div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+    <script src="../src/js/services/firebase-config.js"></script>
+
+    <script>
+        const resultsDiv = document.getElementById('results');
+
+        async function checkBrands() {
+            resultsDiv.innerHTML = '<div class="status info">⏳ Vérification en cours...</div>';
+
+            try {
+                // Initialize Firebase
+                const { database } = await window.firebaseConfig.initializeFirebase();
+
+                // Get sections
+                const catalogRef = database.ref('catalog/sections');
+                const snapshot = await catalogRef.once('value');
+                const sections = snapshot.val();
+
+                if (!sections) {
+                    resultsDiv.innerHTML = `
+                        <div class="status error">
+                            ❌ Aucune donnée trouvée dans Firebase !<br>
+                            <small>Veuillez d'abord initialiser Firebase avec init-firebase.html</small>
+                        </div>
+                    `;
+                    return;
+                }
+
+                const sectionsArray = Array.isArray(sections) ? sections : Object.values(sections);
+
+                // Find Kiwi and Elfbar
+                let kiwiInLiquidi = null;
+                let kiwiInDispositivi = null;
+                let elfbarInLiquidi = null;
+                let elfbarInDispositivi = null;
+
+                sectionsArray.forEach(section => {
+                    if (section.id === 'cat_liquidi' && section.brands) {
+                        kiwiInLiquidi = section.brands.find(b => b.name === 'Kiwi');
+                        elfbarInLiquidi = section.brands.find(b => b.name === 'Elfbar');
+                    }
+                    if (section.id === 'cat_dispositivi' && section.brands) {
+                        kiwiInDispositivi = section.brands.find(b => b.name === 'Kiwi');
+                        elfbarInDispositivi = section.brands.find(b => b.name === 'Elfbar');
+                    }
+                });
+
+                // Display results
+                let html = '<div class="status success">✅ Vérification terminée !</div>';
+
+                // Kiwi Results
+                html += '<div class="brand-card">';
+                html += '<div class="brand-name">🥝 KIWI</div>';
+
+                if (kiwiInLiquidi) {
+                    html += '<div class="status success" style="margin: 10px 0; padding: 10px;">';
+                    html += '✅ Trouvé dans <strong>Liquidi</strong><br>';
+                    html += `<span class="badge badge-liquid">Type: ${kiwiInLiquidi.type}</span>`;
+                    html += `<span class="badge badge-section">Lignes: ${kiwiInLiquidi.lines?.length || 0}</span>`;
+                    html += '</div>';
+                } else {
+                    html += '<div class="status error" style="margin: 10px 0; padding: 10px;">❌ NON trouvé dans Liquidi</div>';
+                }
+
+                if (kiwiInDispositivi) {
+                    html += '<div class="status success" style="margin: 10px 0; padding: 10px;">';
+                    html += '✅ Trouvé dans <strong>Dispositivi</strong><br>';
+                    html += `<span class="badge badge-device">Type: ${kiwiInDispositivi.type}</span>`;
+                    html += `<span class="badge badge-section">Produits: ${kiwiInDispositivi.products?.length || 0}</span>`;
+                    html += '</div>';
+                } else {
+                    html += '<div class="status error" style="margin: 10px 0; padding: 10px;">❌ NON trouvé dans Dispositivi</div>';
+                }
+
+                html += '</div>';
+
+                // Elfbar Results
+                html += '<div class="brand-card">';
+                html += '<div class="brand-name">🧊 ELFBAR</div>';
+
+                if (elfbarInLiquidi) {
+                    html += '<div class="status success" style="margin: 10px 0; padding: 10px;">';
+                    html += '✅ Trouvé dans <strong>Liquidi</strong><br>';
+                    html += `<span class="badge badge-liquid">Type: ${elfbarInLiquidi.type}</span>`;
+                    html += `<span class="badge badge-section">Lignes: ${elfbarInLiquidi.lines?.length || 0}</span>`;
+                    if (elfbarInLiquidi.lines && elfbarInLiquidi.lines.length > 0) {
+                        html += `<br><small>Lignes: ${elfbarInLiquidi.lines.map(l => l.name).join(', ')}</small>`;
+                    }
+                    html += '</div>';
+                } else {
+                    html += '<div class="status error" style="margin: 10px 0; padding: 10px;">❌ NON trouvé dans Liquidi</div>';
+                }
+
+                if (elfbarInDispositivi) {
+                    html += '<div class="status success" style="margin: 10px 0; padding: 10px;">';
+                    html += '✅ Trouvé dans <strong>Dispositivi</strong><br>';
+                    html += `<span class="badge badge-device">Type: ${elfbarInDispositivi.type}</span>`;
+                    html += `<span class="badge badge-section">Produits: ${elfbarInDispositivi.products?.length || 0}</span>`;
+                    if (elfbarInDispositivi.products && elfbarInDispositivi.products.length > 0) {
+                        html += `<br><small>Produits: ${elfbarInDispositivi.products.map(p => p.name).join(', ')}</small>`;
+                    }
+                    html += '</div>';
+                } else {
+                    html += '<div class="status error" style="margin: 10px 0; padding: 10px;">❌ NON trouvé dans Dispositivi</div>';
+                }
+
+                html += '</div>';
+
+                // Summary
+                const kiwiOk = kiwiInLiquidi && kiwiInDispositivi;
+                const elfbarOk = elfbarInLiquidi && elfbarInDispositivi;
+
+                if (kiwiOk && elfbarOk) {
+                    html += '<div class="status success" style="font-size: 1.3em; text-align: center;">';
+                    html += '🎉 PARFAIT ! Kiwi et Elfbar sont présents dans les deux sections !';
+                    html += '</div>';
+                } else {
+                    html += '<div class="status warning" style="font-size: 1.3em; text-align: center;">';
+                    html += '⚠️ PROBLÈME : Certaines marques sont manquantes !<br>';
+                    html += '<small>Veuillez réinitialiser Firebase avec init-firebase.html</small>';
+                    html += '</div>';
+                }
+
+                // Show raw data
+                html += '<details style="margin-top: 30px;"><summary style="cursor: pointer; font-size: 1.2em; margin-bottom: 10px;">📄 Voir les données brutes</summary>';
+                html += '<pre>' + JSON.stringify({
+                    kiwiInLiquidi,
+                    kiwiInDispositivi,
+                    elfbarInLiquidi,
+                    elfbarInDispositivi
+                }, null, 2) + '</pre>';
+                html += '</details>';
+
+                resultsDiv.innerHTML = html;
+
+            } catch (error) {
+                resultsDiv.innerHTML = `
+                    <div class="status error">
+                        ❌ Erreur : ${error.message}<br>
+                        <small>${error.stack}</small>
+                    </div>
+                `;
+                console.error('Error:', error);
+            }
+        }
+
+        // Auto-check on load
+        setTimeout(checkBrands, 500);
+    </script>
+</body>
+
+</html>

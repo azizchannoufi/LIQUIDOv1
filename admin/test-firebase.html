@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Firebase - Debug</title>
+    <style>
+        body {
+            font-family: 'Courier New', monospace;
+            background: #1a1a1a;
+            color: #00ff00;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            color: #00ffff;
+        }
+
+        h2 {
+            color: #ffff00;
+            margin-top: 30px;
+        }
+
+        .success {
+            color: #00ff00;
+        }
+
+        .error {
+            color: #ff0000;
+        }
+
+        .warning {
+            color: #ffaa00;
+        }
+
+        .info {
+            color: #00aaff;
+        }
+
+        pre {
+            background: #000;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            border-left: 3px solid #00ff00;
+        }
+
+        button {
+            background: #00ff00;
+            color: #000;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 5px;
+            margin: 10px 5px;
+        }
+
+        button:hover {
+            background: #00cc00;
+        }
+
+        .loading {
+            display: inline-block;
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+
+            0%,
+            50% {
+                opacity: 1;
+            }
+
+            51%,
+            100% {
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <h1>🔥 Firebase Realtime Database - Test de Connexion</h1>
+
+    <div id="status">
+        <p class="loading">⏳ Chargement...</p>
+    </div>
+
+    <button onclick="testConnection()">🔄 Tester la Connexion</button>
+    <button onclick="fetchCatalog()">📦 Récupérer le Catalogue</button>
+    <button onclick="fetchSections()">📂 Récupérer les Sections</button>
+    <button onclick="fetchBrands()">🏷️ Récupérer les Marques</button>
+
+    <h2>📊 Résultats</h2>
+    <div id="results"></div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+
+    <!-- Firebase Config -->
+    <script src="../src/js/services/firebase-config.js"></script>
+
+    <script>
+        const statusDiv = document.getElementById('status');
+        const resultsDiv = document.getElementById('results');
+
+        let db = null;
+
+        // Initialize Firebase on load
+        (async function init() {
+            try {
+                statusDiv.innerHTML = '<p class="loading">⏳ Initialisation de Firebase...</p>';
+
+                const { database } = await window.firebaseConfig.initializeFirebase();
+                db = database;
+
+                statusDiv.innerHTML = '<p class="success">✅ Firebase initialisé avec succès!</p>';
+
+                // Auto-fetch catalog on load
+                setTimeout(fetchCatalog, 500);
+            } catch (error) {
+                statusDiv.innerHTML = `<p class="error">❌ Erreur d'initialisation: ${error.message}</p>`;
+                console.error('Init error:', error);
+            }
+        })();
+
+        async function testConnection() {
+            resultsDiv.innerHTML = '<p class="loading">⏳ Test de connexion...</p>';
+
+            try {
+                const ref = db.ref('.info/connected');
+                const snapshot = await ref.once('value');
+                const connected = snapshot.val();
+
+                if (connected) {
+                    resultsDiv.innerHTML = '<p class="success">✅ Connecté à Firebase Realtime Database!</p>';
+                } else {
+                    resultsDiv.innerHTML = '<p class="warning">⚠️ Déconnecté de Firebase</p>';
+                }
+            } catch (error) {
+                resultsDiv.innerHTML = `<p class="error">❌ Erreur: ${error.message}</p>`;
+                console.error('Connection test error:', error);
+            }
+        }
+
+        async function fetchCatalog() {
+            resultsDiv.innerHTML = '<p class="loading">⏳ Récupération du catalogue complet...</p>';
+
+            try {
+                const catalogRef = db.ref('catalog');
+                const snapshot = await catalogRef.once('value');
+                const catalog = snapshot.val();
+
+                console.log('📦 Catalog data:', catalog);
+
+                if (!catalog) {
+                    resultsDiv.innerHTML = `
+                        <p class="error">❌ Aucune donnée trouvée à 'catalog'</p>
+                        <p class="warning">⚠️ La base de données est vide. Veuillez initialiser avec init-firebase.html</p>
+                    `;
+                    return;
+                }
+
+                resultsDiv.innerHTML = `
+                    <p class="success">✅ Catalogue récupéré!</p>
+                    <p class="info">📊 Structure trouvée:</p>
+                    <pre>${JSON.stringify(catalog, null, 2)}</pre>
+                `;
+            } catch (error) {
+                resultsDiv.innerHTML = `<p class="error">❌ Erreur: ${error.message}</p>`;
+                console.error('Fetch catalog error:', error);
+            }
+        }
+
+        async function fetchSections() {
+            resultsDiv.innerHTML = '<p class="loading">⏳ Récupération des sections...</p>';
+
+            try {
+                const sectionsRef = db.ref('catalog/sections');
+                const snapshot = await sectionsRef.once('value');
+                const sections = snapshot.val();
+
+                console.log('📂 Sections data:', sections);
+
+                if (!sections) {
+                    resultsDiv.innerHTML = `
+                        <p class="error">❌ Aucune section trouvée à 'catalog/sections'</p>
+                        <p class="warning">⚠️ Veuillez initialiser Firebase avec init-firebase.html</p>
+                    `;
+                    return;
+                }
+
+                const sectionsArray = Array.isArray(sections) ? sections : Object.values(sections);
+
+                resultsDiv.innerHTML = `
+                    <p class="success">✅ ${sectionsArray.length} sections trouvées!</p>
+                    <p class="info">📊 Sections:</p>
+                    <ul>
+                        ${sectionsArray.map(s => `<li>${s.name} (${s.id}) - ${s.brands?.length || 0} marques</li>`).join('')}
+                    </ul>
+                    <p class="info">📄 Données complètes:</p>
+                    <pre>${JSON.stringify(sections, null, 2)}</pre>
+                `;
+            } catch (error) {
+                resultsDiv.innerHTML = `<p class="error">❌ Erreur: ${error.message}</p>`;
+                console.error('Fetch sections error:', error);
+            }
+        }
+
+        async function fetchBrands() {
+            resultsDiv.innerHTML = '<p class="loading">⏳ Récupération des marques...</p>';
+
+            try {
+                const sectionsRef = db.ref('catalog/sections');
+                const snapshot = await sectionsRef.once('value');
+                const sections = snapshot.val();
+
+                if (!sections) {
+                    resultsDiv.innerHTML = `<p class="error">❌ Aucune section trouvée</p>`;
+                    return;
+                }
+
+                const sectionsArray = Array.isArray(sections) ? sections : Object.values(sections);
+                let allBrands = [];
+                let brandsHtml = '';
+
+                sectionsArray.forEach(section => {
+                    if (section.brands && section.brands.length > 0) {
+                        brandsHtml += `<h3 style="color: #ffff00; margin-top: 20px;">📂 ${section.name}</h3><ul>`;
+                        section.brands.forEach(brand => {
+                            allBrands.push(brand);
+                            const typeIcon = brand.type === 'liquid' ? '💧' : brand.type === 'device' ? '📱' : '❓';
+                            const linesCount = brand.lines?.length || 0;
+                            const productsCount = brand.products?.length || 0;
+                            brandsHtml += `
+                                <li>
+                                    ${typeIcon} <strong>${brand.name}</strong> 
+                                    (Type: ${brand.type || 'non défini'})
+                                    - ${linesCount} lignes, ${productsCount} produits
+                                </li>
+                            `;
+                        });
+                        brandsHtml += '</ul>';
+                    }
+                });
+
+                console.log('🏷️ All brands:', allBrands);
+
+                resultsDiv.innerHTML = `
+                    <p class="success">✅ ${allBrands.length} marques trouvées au total!</p>
+                    ${brandsHtml}
+                    <p class="info" style="margin-top: 30px;">📄 Données complètes:</p>
+                    <pre>${JSON.stringify(allBrands, null, 2)}</pre>
+                `;
+            } catch (error) {
+                resultsDiv.innerHTML = `<p class="error">❌ Erreur: ${error.message}</p>`;
+                console.error('Fetch brands error:', error);
+            }
+        }
+    </script>
+</body>
+
+</html>
