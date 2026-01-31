@@ -99,7 +99,7 @@
         <!-- Hero Section -->
         <section class="mb-16 text-center">
             <div class="mb-8">
-                <span class="text-primary font-black uppercase tracking-[0.6em] text-[10px]">Servizi Premium</span>
+                <span class="text-black font-black uppercase tracking-[0.6em] text-2xl">Servizi Premium</span>
                 <h1 class="text-5xl lg:text-7xl text-bold-modern tracking-tighter uppercase mt-4 mb-6">
                     My<span class="text-primary">Liquido</span>
                 </h1>
@@ -112,12 +112,12 @@
 
         <!-- Authentication Section (if not logged in) -->
         <section id="auth-section" class="mb-16">
+            <div class="max-w-md mx-auto text-center mb-6">
+                <span class="material-symbols-outlined text-primary text-5xl mb-4">lock</span>
+                <h2 class="text-2xl font-bold mb-2">Accedi a MyLiquido</h2>
+                <p class="text-[#baba9c] text-sm">Registrati o accedi per accedere ai servizi premium</p>
+            </div>
             <div class="max-w-md mx-auto bg-[#27271b] border border-[#54543b] rounded-xl p-8 text-center">
-                <div class="mb-6">
-                    <span class="material-symbols-outlined text-primary text-5xl mb-4">lock</span>
-                    <h2 class="text-2xl font-bold mb-2">Accedi a MyLiquido</h2>
-                    <p class="text-[#baba9c] text-sm">Registrati o accedi per accedere ai servizi premium</p>
-                </div>
                 <div class="flex flex-col sm:flex-row gap-4">
                     <button id="btn-open-login"
                         class="flex-1 bg-primary hover:bg-white text-background-dark px-6 py-3 rounded-sm font-black text-xs uppercase tracking-widest transition-all">
@@ -134,109 +134,116 @@
         <!-- Services Section (if logged in) -->
         <section id="services-section" class="hidden">
             <!-- Service 1: Special Product Request -->
-            <div class="mb-16 bg-[#27271b] border border-[#54543b] rounded-xl p-8 lg:p-12">
-                <div class="mb-8">
-                    <div class="flex items-center gap-3 mb-4">
-                        <span class="material-symbols-outlined text-primary text-4xl">inventory_2</span>
-                        <h2 class="text-3xl font-bold">Richiedi un Prodotto Speciale</h2>
-                    </div>
-                    <p class="text-[#baba9c] text-lg leading-relaxed">
-                        Hai bisogno di un prodotto specifico che non trovi nel nostro catalogo? Carica un'immagine del
-                        prodotto che desideri e inviaci un messaggio. Ti aiuteremo a trovarlo e te lo porteremo
-                        direttamente.
-                    </p>
+            <div id="special-request" class="mb-32">
+                <div class="flex items-center gap-3 mb-4">
+                    <span class="material-symbols-outlined text-primary text-4xl">inventory_2</span>
+                    <h2 class="text-3xl font-bold">Richiedi un Prodotto Speciale</h2>
                 </div>
-                <form id="product-request-form" class="flex flex-col gap-6">
-                    <div class="flex flex-col gap-2">
-                        <label class="text-sm font-semibold text-[#baba9c]">Immagine del Prodotto</label>
-                        <div class="relative">
-                            <input type="file" id="product-image" accept="image/jpeg,image/jpg,image/png,image/webp"
-                                class="hidden" />
-                            <label for="product-image"
-                                class="flex flex-col items-center justify-center border-2 border-dashed border-[#54543b] rounded-lg p-8 cursor-pointer hover:border-primary transition-colors">
-                                <span class="material-symbols-outlined text-primary text-4xl mb-2">cloud_upload</span>
-                                <span class="text-sm text-[#baba9c]">Clicca per caricare un'immagine</span>
-                                <span class="text-xs text-[#baba9c]/70 mt-1">JPG, PNG o WEBP (max 5MB)</span>
-                            </label>
-                            <div id="image-preview" class="hidden mt-4">
-                                <img id="preview-img" src="" alt="Preview"
-                                    class="max-w-xs rounded-lg border border-[#54543b]" />
-                                <button type="button" id="remove-image"
-                                    class="mt-2 text-xs text-red-400 hover:text-red-300">Rimuovi immagine</button>
+                <div class="bg-[#27271b] border border-[#54543b] rounded-xl p-8 lg:p-12">
+                    <div class="mb-8">
+                        <p class="text-[#baba9c] text-lg leading-relaxed">
+                            Hai bisogno di un prodotto specifico che non trovi nel nostro catalogo? Carica un'immagine
+                            del
+                            prodotto che desideri e inviaci un messaggio. Ti aiuteremo a trovarlo e te lo porteremo
+                            direttamente.
+                        </p>
+                    </div>
+                    <form id="product-request-form" class="flex flex-col gap-6">
+                        <div class="flex flex-col gap-2">
+                            <label class="text-sm font-semibold text-[#baba9c]">Immagine del Prodotto</label>
+                            <div class="relative">
+                                <input type="file" id="product-image" accept="image/jpeg,image/jpg,image/png,image/webp"
+                                    class="hidden" />
+                                <label for="product-image"
+                                    class="flex flex-col items-center justify-center border-2 border-dashed border-[#54543b] rounded-lg p-8 cursor-pointer hover:border-primary transition-colors">
+                                    <span
+                                        class="material-symbols-outlined text-primary text-4xl mb-2">cloud_upload</span>
+                                    <span class="text-sm text-[#baba9c]">Clicca per caricare un'immagine</span>
+                                    <span class="text-xs text-[#baba9c]/70 mt-1">JPG, PNG o WEBP (max 5MB)</span>
+                                </label>
+                                <div id="image-preview" class="hidden mt-4">
+                                    <img id="preview-img" src="" alt="Preview"
+                                        class="max-w-xs rounded-lg border border-[#54543b]" />
+                                    <button type="button" id="remove-image"
+                                        class="mt-2 text-xs text-red-400 hover:text-red-300">Rimuovi immagine</button>
+                                </div>
+                            </div>
+                            <div id="image-progress" class="hidden mt-2">
+                                <div class="bg-[#181811] rounded-full h-2 overflow-hidden">
+                                    <div id="progress-bar" class="bg-primary h-full transition-all duration-300"
+                                        style="width: 0%"></div>
+                                </div>
+                                <p class="text-xs text-[#baba9c] mt-1">Caricamento in corso...</p>
                             </div>
                         </div>
-                        <div id="image-progress" class="hidden mt-2">
-                            <div class="bg-[#181811] rounded-full h-2 overflow-hidden">
-                                <div id="progress-bar" class="bg-primary h-full transition-all duration-300"
-                                    style="width: 0%"></div>
-                            </div>
-                            <p class="text-xs text-[#baba9c] mt-1">Caricamento in corso...</p>
+                        <div class="flex flex-col gap-2">
+                            <label class="text-sm font-semibold text-[#baba9c]">Messaggio</label>
+                            <textarea id="product-message" rows="4"
+                                class="bg-[#181811] border border-[#393928] rounded-lg p-3 text-white focus:outline-none focus:border-primary resize-none"
+                                placeholder="Descrivi il prodotto che stai cercando..."></textarea>
                         </div>
-                    </div>
-                    <div class="flex flex-col gap-2">
-                        <label class="text-sm font-semibold text-[#baba9c]">Messaggio</label>
-                        <textarea id="product-message" rows="4"
-                            class="bg-[#181811] border border-[#393928] rounded-lg p-3 text-white focus:outline-none focus:border-primary resize-none"
-                            placeholder="Descrivi il prodotto che stai cercando..."></textarea>
-                    </div>
-                    <div id="product-error" class="hidden text-red-400 text-sm"></div>
-                    <button type="submit"
-                        class="bg-primary hover:bg-white text-background-dark px-8 py-4 rounded-sm font-black text-xs uppercase tracking-widest transition-all flex items-center justify-center gap-2">
-                        <span>Invia Richiesta su WhatsApp</span>
-                        <span class="material-symbols-outlined">send</span>
-                    </button>
-                </form>
-            </div>
+                        <div id="product-error" class="hidden text-red-400 text-sm"></div>
+                        <button type="submit"
+                            class="bg-primary hover:bg-white text-background-dark px-8 py-4 rounded-sm font-black text-xs uppercase tracking-widest transition-all flex items-center justify-center gap-2">
+                            <span>Invia Richiesta su WhatsApp</span>
+                            <span class="material-symbols-outlined">send</span>
+                        </button>
+                    </form>
+                </div>
 
-            <!-- Service 2: Maintenance Service -->
-            <div class="mb-16 bg-[#27271b] border border-[#54543b] rounded-xl p-8 lg:p-12">
-                <div class="mb-8">
+                <!-- Service 2: Maintenance Service -->
+                <div id="maintenance-service" class="mb-16">
                     <div class="flex items-center gap-3 mb-4">
-                        <span class="material-symbols-outlined text-primary text-4xl">build</span>
+                        <span class="material-symbols-outlined text-primary text-3xl">build</span>
                         <h2 class="text-3xl font-bold">Servizio di Manutenzione</h2>
                     </div>
-                    <p class="text-[#baba9c] text-lg leading-relaxed">
-                        La tua vape ha bisogno di manutenzione? Prenota un appuntamento per cambiare il coil, sostituire
-                        il cotone dell'atomizzatore o per un servizio di pulizia completo. Scegli la data e l'ora che
-                        preferisci.
-                    </p>
-                </div>
-                <form id="maintenance-request-form" class="flex flex-col gap-6">
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                        <div class="flex flex-col gap-2">
-                            <label class="text-sm font-semibold text-[#baba9c]">Data</label>
-                            <input type="date" id="maintenance-date"
-                                class="bg-[#181811] border border-[#393928] rounded-lg p-3 text-white focus:outline-none focus:border-primary"
-                                min="" required />
+                    <div class="bg-[#27271b] border border-[#54543b] rounded-xl p-8 lg:p-12">
+                        <div class="mb-8">
+                            <p class="text-[#baba9c] text-lg leading-relaxed">
+                                La tua vape ha bisogno di manutenzione? Prenota un appuntamento per cambiare il coil,
+                                sostituire
+                                il cotone dell'atomizzatore o per un servizio di pulizia completo. Scegli la data e
+                                l'ora che
+                                preferisci.
+                            </p>
                         </div>
-                        <div class="flex flex-col gap-2">
-                            <label class="text-sm font-semibold text-[#baba9c]">Ora</label>
-                            <input type="time" id="maintenance-time"
-                                class="bg-[#181811] border border-[#393928] rounded-lg p-3 text-white focus:outline-none focus:border-primary"
-                                required />
-                        </div>
+                        <form id="maintenance-request-form" class="flex flex-col gap-6">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                                <div class="flex flex-col gap-2">
+                                    <label class="text-sm font-semibold text-[#baba9c]">Data</label>
+                                    <input type="date" id="maintenance-date"
+                                        class="bg-[#181811] border border-[#393928] rounded-lg p-3 text-white focus:outline-none focus:border-primary"
+                                        min="" required />
+                                </div>
+                                <div class="flex flex-col gap-2">
+                                    <label class="text-sm font-semibold text-[#baba9c]">Ora</label>
+                                    <input type="time" id="maintenance-time"
+                                        class="bg-[#181811] border border-[#393928] rounded-lg p-3 text-white focus:outline-none focus:border-primary"
+                                        required />
+                                </div>
+                            </div>
+                            <div class="flex flex-col gap-2">
+                                <label class="text-sm font-semibold text-[#baba9c]">Descrizione</label>
+                                <textarea id="maintenance-description" rows="4"
+                                    class="bg-[#181811] border border-[#393928] rounded-lg p-3 text-white focus:outline-none focus:border-primary resize-none"
+                                    placeholder="Descrivi cosa vuoi far fare (es. cambio coil, sostituzione cotone, pulizia completa...)"></textarea>
+                            </div>
+                            <div id="maintenance-error" class="hidden text-red-400 text-sm"></div>
+                            <button type="submit"
+                                class="bg-primary hover:bg-white text-background-dark px-8 py-4 rounded-sm font-black text-xs uppercase tracking-widest transition-all flex items-center justify-center gap-2">
+                                <span>Prenota su WhatsApp</span>
+                                <span class="material-symbols-outlined">calendar_today</span>
+                            </button>
+                        </form>
                     </div>
-                    <div class="flex flex-col gap-2">
-                        <label class="text-sm font-semibold text-[#baba9c]">Descrizione</label>
-                        <textarea id="maintenance-description" rows="4"
-                            class="bg-[#181811] border border-[#393928] rounded-lg p-3 text-white focus:outline-none focus:border-primary resize-none"
-                            placeholder="Descrivi cosa vuoi far fare (es. cambio coil, sostituzione cotone, pulizia completa...)"></textarea>
-                    </div>
-                    <div id="maintenance-error" class="hidden text-red-400 text-sm"></div>
-                    <button type="submit"
-                        class="bg-primary hover:bg-white text-background-dark px-8 py-4 rounded-sm font-black text-xs uppercase tracking-widest transition-all flex items-center justify-center gap-2">
-                        <span>Prenota su WhatsApp</span>
-                        <span class="material-symbols-outlined">calendar_today</span>
-                    </button>
-                </form>
-            </div>
 
-            <!-- Logout Button -->
-            <div class="text-center">
-                <button id="btn-logout" class="text-[#baba9c] hover:text-white text-sm font-medium transition-colors">
-                    Esci
-                </button>
-            </div>
+                    <!-- Logout Button -->
+                    <div class="text-center">
+                        <button id="btn-logout"
+                            class="text-[#baba9c] hover:text-white text-sm font-medium transition-colors">
+                            Esci
+                        </button>
+                    </div>
         </section>
     </main>
 
