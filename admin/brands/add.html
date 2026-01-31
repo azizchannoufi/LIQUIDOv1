@@ -1,13 +1,18 @@
 <!DOCTYPE html>
 
-<html class="dark" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>LIQUIDO Admin - Add Brand</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
+<html class="dark" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>LIQUIDO Admin - Add Brand</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
             theme: {
@@ -33,211 +38,260 @@
             },
         }
     </script>
-<style>
+    <style>
         .material-symbols-outlined {
             font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
         }
+
         body {
             font-family: 'Inter', sans-serif;
         }
+
         .sidebar-active {
             background-color: #393928;
             border-left: 4px solid #f2f20d;
         }
     </style>
 </head>
+
 <body class="bg-background-light dark:bg-background-dark min-h-screen text-slate-900 dark:text-white">
-<div class="flex h-screen overflow-hidden">
-<!-- Sidebar Navigation -->
-<aside class="w-64 bg-background-light dark:bg-[#12120a] border-r border-slate-200 dark:border-[#393928] flex flex-col justify-between py-6 sticky top-0 h-screen">
-<div class="flex flex-col gap-8">
-<!-- Brand Identity -->
-<div class="px-6 flex items-center gap-3">
-<div class="bg-primary rounded-lg size-10 flex items-center justify-center text-background-dark">
-<span class="material-symbols-outlined font-bold">water_drop</span>
-</div>
-<div class="flex flex-col">
-<h1 class="text-lg font-bold leading-tight tracking-tight">LIQUIDO</h1>
-<p class="text-slate-500 dark:text-[#baba9c] text-xs font-medium uppercase tracking-widest">Admin Console</p>
-</div>
-</div>
-<!-- Navigation Links -->
-<nav class="flex flex-col gap-1 px-3">
-<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-[#baba9c] hover:bg-slate-100 dark:hover:bg-[#2a2a1a] transition-colors" href="../dashboard.html">
-<span class="material-symbols-outlined">dashboard</span>
-<p class="text-sm font-medium">Dashboard</p>
-</a>
-<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-[#baba9c] hover:bg-slate-100 dark:hover:bg-[#2a2a1a] transition-colors" href="../products/index.html">
-<span class="material-symbols-outlined">inventory_2</span>
-<p class="text-sm font-medium">Products</p>
-</a>
-<a class="sidebar-active flex items-center gap-3 px-3 py-2.5 rounded-lg text-primary" href="index.html">
-<span class="material-symbols-outlined">loyalty</span>
-<p class="text-sm font-semibold">Brands</p>
-</a>
-<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-[#baba9c] hover:bg-slate-100 dark:hover:bg-[#2a2a1a] transition-colors" href="../users/index.html">
-<span class="material-symbols-outlined">people</span>
-<p class="text-sm font-medium">Users</p>
-</a>
-<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-[#baba9c] hover:bg-slate-100 dark:hover:bg-[#2a2a1a] transition-colors" href="../orders/index.html">
-<span class="material-symbols-outlined">shopping_cart</span>
-<p class="text-sm font-medium">Orders</p>
-</a>
-<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-[#baba9c] hover:bg-slate-100 dark:hover:bg-[#2a2a1a] transition-colors" href="../services/index.html">
-<span class="material-symbols-outlined">room_service</span>
-<p class="text-sm font-medium">Services</p>
-</a>
-<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-[#baba9c] hover:bg-slate-100 dark:hover:bg-[#2a2a1a] transition-colors" href="../settings.html">
-<span class="material-symbols-outlined">settings</span>
-<p class="text-sm font-medium">Store Settings</p>
-</a>
-</nav>
-</div>
-<!-- Logout Section -->
-<div class="px-4">
-<a href="../index.html" class="flex w-full cursor-pointer items-center justify-center overflow-hidden rounded-lg h-11 bg-primary text-background-dark text-sm font-bold transition-transform hover:scale-[1.02] active:scale-95">
-<span class="material-symbols-outlined mr-2">logout</span>
-<span>Logout</span>
-</a>
-</div>
-</aside>
-<!-- Main Content Area -->
-<main class="flex-1 flex flex-col overflow-y-auto bg-background-light dark:bg-background-dark">
-<div class="p-8 max-w-7xl mx-auto w-full">
-<!-- Page Heading -->
-<div class="mb-8">
-<h1 class="text-white text-4xl font-black tracking-tight leading-none mb-2" id="page-title">Add New Brand</h1>
-<p class="text-[#baba9c] text-lg font-normal" id="page-description">Create a new partner brand and add it to the catalog.</p>
-</div>
-<!-- Form Section -->
-<form id="brand-form" class="space-y-6">
-<!-- General Info Card -->
-<div class="bg-surface-dark border border-border-dark rounded-xl p-6">
-<h2 class="text-white text-xl font-bold mb-6 flex items-center gap-2">
-<span class="material-symbols-outlined text-primary">info</span>
-                                General Information
-                            </h2>
-<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-<!-- TextField Component -->
-<div class="flex flex-col gap-2">
-<label class="text-white text-sm font-semibold">Brand Name *</label>
-<input name="brand-name" id="brand-name" class="w-full rounded-lg text-white border border-border-dark bg-background-dark focus:border-primary focus:ring-1 focus:ring-primary h-12 px-4 text-base font-normal placeholder:text-muted-dark" type="text" placeholder="e.g. Suprem-e, Vaporart" required/>
-</div>
-<div class="flex flex-col gap-2">
-<label class="text-white text-sm font-semibold">Website URL (Optional)</label>
-<input name="website" id="website" class="w-full rounded-lg text-white border border-border-dark bg-background-dark focus:border-primary focus:ring-1 focus:ring-primary h-12 px-4 text-base font-normal placeholder:text-muted-dark" placeholder="e.g. goldwave.it/" type="url"/>
-</div>
-<div class="flex flex-col gap-2 md:col-span-2">
-<label class="text-white text-sm font-semibold">Brand Description/Bio</label>
-<textarea name="description" id="description" class="w-full rounded-lg text-white border border-border-dark bg-background-dark focus:border-primary focus:ring-1 focus:ring-primary p-4 text-base font-normal placeholder:text-muted-dark resize-none" rows="4" placeholder="Enter brand description..."></textarea>
-</div>
-</div>
-</div>
-<!-- Visual Assets Card -->
-<div class="bg-surface-dark border border-border-dark rounded-xl p-6">
-<h2 class="text-white text-xl font-bold mb-6 flex items-center gap-2">
-<span class="material-symbols-outlined text-primary">image</span>
-                                Brand Assets
-                            </h2>
-<div class="flex flex-col md:flex-row gap-8 items-start">
-<div class="flex flex-col items-center gap-4">
-<p class="text-white text-sm font-semibold w-full">Logo Preview</p>
-<div class="size-32 rounded-xl bg-background-dark border-2 border-dashed border-border-dark flex items-center justify-center overflow-hidden group relative" id="logo-preview">
-<div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity cursor-pointer">
-<span class="material-symbols-outlined text-white text-3xl">edit</span>
-</div>
-<img id="logo-preview-img" class="w-24 h-24 object-contain hidden" alt="Brand logo preview"/>
-<span class="text-muted-dark text-sm">No logo</span>
-</div>
-<p class="text-muted-dark text-xs">SVG, PNG or JPG. Max 2MB.</p>
-</div>
-<div class="flex-1 w-full">
-<p class="text-white text-sm font-semibold mb-2">Logo URL</p>
-<input type="text" name="logo-url" id="logo-url" class="w-full rounded-lg text-white border border-border-dark bg-background-dark focus:border-primary focus:ring-1 focus:ring-primary h-12 px-4 text-base font-normal placeholder:text-muted-dark mb-2" placeholder="/images/brands/brand_logo.png"/>
-<p class="text-muted-dark text-xs mb-4">Or upload a file:</p>
-<div class="w-full border-2 border-dashed border-border-dark rounded-xl p-8 flex flex-col items-center justify-center bg-background-dark/20 hover:bg-background-dark/40 hover:border-primary/50 transition-all cursor-pointer">
-<input type="file" id="logo-upload" accept="image/*" class="hidden"/>
-<label for="logo-upload" class="cursor-pointer text-center">
-<span class="material-symbols-outlined text-4xl text-muted-dark mb-2 block">cloud_upload</span>
-<p class="text-white text-base font-medium">Click to upload or drag and drop</p>
-<p class="text-muted-dark text-sm">Recommended size: 512x512px</p>
-</label>
-</div>
-</div>
-</div>
-</div>
-<!-- Catalog Sections Card -->
-<div class="bg-surface-dark border border-border-dark rounded-xl p-6">
-<h2 class="text-white text-xl font-bold mb-2 flex items-center gap-2">
-<span class="material-symbols-outlined text-primary">category</span>
-                                Catalog Sections
-                            </h2>
-<p class="text-muted-dark text-sm mb-6">Select which catalog section(s) this brand will appear in.</p>
-<div class="space-y-4 mb-6">
-<div class="flex flex-col gap-2">
-<label class="text-white text-sm font-semibold">Primary Section *</label>
-<select id="primary-section" class="w-full rounded-lg text-white border border-border-dark bg-background-dark focus:border-primary focus:ring-1 focus:ring-primary h-12 px-4 text-base font-normal" required>
-<option value="">Select a section...</option>
-<option value="cat_liquidi">Liquidi - E-liquides et arômes</option>
-<option value="cat_dispositivi">Dispositivi - Cigarettes électroniques et matériel</option>
-</select>
-</div>
-<div class="flex flex-col gap-2">
-<label class="text-white text-sm font-semibold">Additional Sections (Optional)</label>
-<div class="flex flex-wrap gap-3" id="selected-sections">
-<!-- Selected sections will appear here -->
-</div>
-<select id="add-section" class="w-full rounded-lg text-white border border-border-dark bg-background-dark focus:border-primary focus:ring-1 focus:ring-primary h-12 px-4 text-base font-normal">
-<option value="">Add another section...</option>
-<option value="cat_liquidi">Liquidi</option>
-<option value="cat_dispositivi">Dispositivi</option>
-</select>
-</div>
-</div>
-</div>
-<!-- Product Lines Card -->
-<div class="bg-surface-dark border border-border-dark rounded-xl p-6">
-<h2 class="text-white text-xl font-bold mb-2 flex items-center gap-2">
-<span class="material-symbols-outlined text-primary">inventory_2</span>
-                                Product Lines
-                            </h2>
-<p class="text-muted-dark text-sm mb-6">Add product lines for this brand. You can add lines later if needed.</p>
-<div id="product-lines-container" class="space-y-4 mb-4">
-<!-- Product lines will be added here dynamically -->
-</div>
-<button type="button" id="add-line-btn" class="flex items-center gap-2 px-4 py-2 bg-surface-dark hover:bg-border-dark text-white rounded-lg transition-all text-sm font-bold border border-border-dark">
-<span class="material-symbols-outlined text-sm">add</span>
-                                Add Product Line
-                            </button>
-</div>
-<!-- Action Buttons -->
-<div class="flex items-center justify-end gap-4 pt-6 border-t border-border-dark mt-8">
-<a href="index.html" class="px-6 py-3 rounded-lg text-white font-bold text-sm bg-transparent hover:bg-surface-dark transition-colors">
-                                Cancel
-                            </a>
-<button type="submit" class="px-8 py-3 rounded-lg bg-primary hover:bg-primary/90 text-black font-bold text-sm shadow-lg shadow-primary/10 transition-all flex items-center gap-2">
-<span class="material-symbols-outlined text-[20px]">save</span>
-                                Save Brand
-                            </button>
-</div>
-</form>
-</div>
-</main>
-</div>
-<!-- Firebase SDK (Legacy for Realtime Database) -->
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-analytics-compat.js"></script>
+    <div class="flex h-screen overflow-hidden">
+        <!-- Sidebar Navigation -->
+        <aside
+            class="w-64 bg-background-light dark:bg-[#12120a] border-r border-slate-200 dark:border-[#393928] flex flex-col justify-between py-6 sticky top-0 h-screen">
+            <div class="flex flex-col gap-8">
+                <!-- Brand Identity -->
+                <div class="px-6 flex items-center gap-3">
+                    <div class="bg-primary rounded-lg size-10 flex items-center justify-center text-background-dark">
+                        <span class="material-symbols-outlined font-bold">water_drop</span>
+                    </div>
+                    <div class="flex flex-col">
+                        <h1 class="text-lg font-bold leading-tight tracking-tight">LIQUIDO</h1>
+                        <p class="text-slate-500 dark:text-[#baba9c] text-xs font-medium uppercase tracking-widest">
+                            Admin Console</p>
+                    </div>
+                </div>
+                <!-- Navigation Links -->
+                <nav class="flex flex-col gap-1 px-3">
+                    <a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-[#baba9c] hover:bg-slate-100 dark:hover:bg-[#2a2a1a] transition-colors"
+                        href="../dashboard.html">
+                        <span class="material-symbols-outlined">dashboard</span>
+                        <p class="text-sm font-medium">Dashboard</p>
+                    </a>
+                    <a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-[#baba9c] hover:bg-slate-100 dark:hover:bg-[#2a2a1a] transition-colors"
+                        href="../products/index.html">
+                        <span class="material-symbols-outlined">inventory_2</span>
+                        <p class="text-sm font-medium">Products</p>
+                    </a>
+                    <a class="sidebar-active flex items-center gap-3 px-3 py-2.5 rounded-lg text-primary"
+                        href="index.html">
+                        <span class="material-symbols-outlined">loyalty</span>
+                        <p class="text-sm font-semibold">Brands</p>
+                    </a>
+                    <a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-[#baba9c] hover:bg-slate-100 dark:hover:bg-[#2a2a1a] transition-colors"
+                        href="../users/index.html">
+                        <span class="material-symbols-outlined">people</span>
+                        <p class="text-sm font-medium">Users</p>
+                    </a>
+                    <a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-[#baba9c] hover:bg-slate-100 dark:hover:bg-[#2a2a1a] transition-colors"
+                        href="../orders/index.html">
+                        <span class="material-symbols-outlined">shopping_cart</span>
+                        <p class="text-sm font-medium">Orders</p>
+                    </a>
+                    <a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-[#baba9c] hover:bg-slate-100 dark:hover:bg-[#2a2a1a] transition-colors"
+                        href="../services/index.html">
+                        <span class="material-symbols-outlined">room_service</span>
+                        <p class="text-sm font-medium">Services</p>
+                    </a>
+                    <a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-[#baba9c] hover:bg-slate-100 dark:hover:bg-[#2a2a1a] transition-colors"
+                        href="../settings.html">
+                        <span class="material-symbols-outlined">settings</span>
+                        <p class="text-sm font-medium">Store Settings</p>
+                    </a>
+                </nav>
+            </div>
+            <!-- Logout Section -->
+            <div class="px-4">
+                <a href="../index.html"
+                    class="flex w-full cursor-pointer items-center justify-center overflow-hidden rounded-lg h-11 bg-primary text-background-dark text-sm font-bold transition-transform hover:scale-[1.02] active:scale-95">
+                    <span class="material-symbols-outlined mr-2">logout</span>
+                    <span>Logout</span>
+                </a>
+            </div>
+        </aside>
+        <!-- Main Content Area -->
+        <main class="flex-1 flex flex-col overflow-y-auto bg-background-light dark:bg-background-dark">
+            <div class="p-8 max-w-7xl mx-auto w-full">
+                <!-- Page Heading -->
+                <div class="mb-8">
+                    <h1 class="text-white text-4xl font-black tracking-tight leading-none mb-2" id="page-title">Add New
+                        Brand</h1>
+                    <p class="text-[#baba9c] text-lg font-normal" id="page-description">Create a new partner brand and
+                        add it to the catalog.</p>
+                </div>
+                <!-- Form Section -->
+                <form id="brand-form" class="space-y-6">
+                    <!-- General Info Card -->
+                    <div class="bg-surface-dark border border-border-dark rounded-xl p-6">
+                        <h2 class="text-white text-xl font-bold mb-6 flex items-center gap-2">
+                            <span class="material-symbols-outlined text-primary">info</span>
+                            General Information
+                        </h2>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <!-- TextField Component -->
+                            <div class="flex flex-col gap-2">
+                                <label class="text-white text-sm font-semibold">Brand Name *</label>
+                                <input name="brand-name" id="brand-name"
+                                    class="w-full rounded-lg text-white border border-border-dark bg-background-dark focus:border-primary focus:ring-1 focus:ring-primary h-12 px-4 text-base font-normal placeholder:text-muted-dark"
+                                    type="text" placeholder="e.g. Suprem-e, Vaporart" required />
+                            </div>
+                            <div class="flex flex-col gap-2">
+                                <label class="text-white text-sm font-semibold">Brand Type *</label>
+                                <select name="brand-type" id="brand-type"
+                                    class="w-full rounded-lg text-white border border-border-dark bg-background-dark focus:border-primary focus:ring-1 focus:ring-primary h-12 px-4 text-base font-normal"
+                                    required>
+                                    <option value="">Select type...</option>
+                                    <option value="liquid">Liquide</option>
+                                    <option value="device">Dispositif</option>
+                                </select>
+                            </div>
+                            <div class="flex flex-col gap-2">
+                                <label class="text-white text-sm font-semibold">Website URL (Optional)</label>
+                                <input name="website" id="website"
+                                    class="w-full rounded-lg text-white border border-border-dark bg-background-dark focus:border-primary focus:ring-1 focus:ring-primary h-12 px-4 text-base font-normal placeholder:text-muted-dark"
+                                    placeholder="e.g. goldwave.it/" type="url" />
+                            </div>
+                            <div class="flex flex-col gap-2 md:col-span-2">
+                                <label class="text-white text-sm font-semibold">Brand Description/Bio</label>
+                                <textarea name="description" id="description"
+                                    class="w-full rounded-lg text-white border border-border-dark bg-background-dark focus:border-primary focus:ring-1 focus:ring-primary p-4 text-base font-normal placeholder:text-muted-dark resize-none"
+                                    rows="4" placeholder="Enter brand description..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Visual Assets Card -->
+                    <div class="bg-surface-dark border border-border-dark rounded-xl p-6">
+                        <h2 class="text-white text-xl font-bold mb-6 flex items-center gap-2">
+                            <span class="material-symbols-outlined text-primary">image</span>
+                            Brand Assets
+                        </h2>
+                        <div class="flex flex-col md:flex-row gap-8 items-start">
+                            <div class="flex flex-col items-center gap-4">
+                                <p class="text-white text-sm font-semibold w-full">Logo Preview</p>
+                                <div class="size-32 rounded-xl bg-background-dark border-2 border-dashed border-border-dark flex items-center justify-center overflow-hidden group relative"
+                                    id="logo-preview">
+                                    <div
+                                        class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity cursor-pointer">
+                                        <span class="material-symbols-outlined text-white text-3xl">edit</span>
+                                    </div>
+                                    <img id="logo-preview-img" class="w-24 h-24 object-contain hidden"
+                                        alt="Brand logo preview" />
+                                    <span class="text-muted-dark text-sm">No logo</span>
+                                </div>
+                                <p class="text-muted-dark text-xs">SVG, PNG or JPG. Max 2MB.</p>
+                            </div>
+                            <div class="flex-1 w-full">
+                                <p class="text-white text-sm font-semibold mb-2">Logo URL</p>
+                                <input type="text" name="logo-url" id="logo-url"
+                                    class="w-full rounded-lg text-white border border-border-dark bg-background-dark focus:border-primary focus:ring-1 focus:ring-primary h-12 px-4 text-base font-normal placeholder:text-muted-dark mb-2"
+                                    placeholder="/images/brands/brand_logo.png" />
+                                <p class="text-muted-dark text-xs mb-4">Or upload a file:</p>
+                                <div
+                                    class="w-full border-2 border-dashed border-border-dark rounded-xl p-8 flex flex-col items-center justify-center bg-background-dark/20 hover:bg-background-dark/40 hover:border-primary/50 transition-all cursor-pointer">
+                                    <input type="file" id="logo-upload" accept="image/*" class="hidden" />
+                                    <label for="logo-upload" class="cursor-pointer text-center">
+                                        <span
+                                            class="material-symbols-outlined text-4xl text-muted-dark mb-2 block">cloud_upload</span>
+                                        <p class="text-white text-base font-medium">Click to upload or drag and drop</p>
+                                        <p class="text-muted-dark text-sm">Recommended size: 512x512px</p>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Catalog Sections Card -->
+                    <div class="bg-surface-dark border border-border-dark rounded-xl p-6">
+                        <h2 class="text-white text-xl font-bold mb-2 flex items-center gap-2">
+                            <span class="material-symbols-outlined text-primary">category</span>
+                            Catalog Sections
+                        </h2>
+                        <p class="text-muted-dark text-sm mb-6">Select which catalog section(s) this brand will appear
+                            in.</p>
+                        <div class="space-y-4 mb-6">
+                            <div class="flex flex-col gap-2">
+                                <label class="text-white text-sm font-semibold">Primary Section *</label>
+                                <select id="primary-section"
+                                    class="w-full rounded-lg text-white border border-border-dark bg-background-dark focus:border-primary focus:ring-1 focus:ring-primary h-12 px-4 text-base font-normal"
+                                    required>
+                                    <option value="">Select a section...</option>
+                                    <option value="cat_liquidi">Liquidi - E-liquides et arômes</option>
+                                    <option value="cat_dispositivi">Dispositivi - Cigarettes électroniques et matériel
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="flex flex-col gap-2">
+                                <label class="text-white text-sm font-semibold">Additional Sections (Optional)</label>
+                                <div class="flex flex-wrap gap-3" id="selected-sections">
+                                    <!-- Selected sections will appear here -->
+                                </div>
+                                <select id="add-section"
+                                    class="w-full rounded-lg text-white border border-border-dark bg-background-dark focus:border-primary focus:ring-1 focus:ring-primary h-12 px-4 text-base font-normal">
+                                    <option value="">Add another section...</option>
+                                    <option value="cat_liquidi">Liquidi</option>
+                                    <option value="cat_dispositivi">Dispositivi</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Product Lines Card -->
+                    <div class="bg-surface-dark border border-border-dark rounded-xl p-6">
+                        <h2 class="text-white text-xl font-bold mb-2 flex items-center gap-2">
+                            <span class="material-symbols-outlined text-primary">inventory_2</span>
+                            Product Lines
+                        </h2>
+                        <p class="text-muted-dark text-sm mb-6">Add product lines for this brand. You can add lines
+                            later if needed.</p>
+                        <div id="product-lines-container" class="space-y-4 mb-4">
+                            <!-- Product lines will be added here dynamically -->
+                        </div>
+                        <button type="button" id="add-line-btn"
+                            class="flex items-center gap-2 px-4 py-2 bg-surface-dark hover:bg-border-dark text-white rounded-lg transition-all text-sm font-bold border border-border-dark">
+                            <span class="material-symbols-outlined text-sm">add</span>
+                            Add Product Line
+                        </button>
+                    </div>
+                    <!-- Action Buttons -->
+                    <div class="flex items-center justify-end gap-4 pt-6 border-t border-border-dark mt-8">
+                        <a href="index.html"
+                            class="px-6 py-3 rounded-lg text-white font-bold text-sm bg-transparent hover:bg-surface-dark transition-colors">
+                            Cancel
+                        </a>
+                        <button type="submit"
+                            class="px-8 py-3 rounded-lg bg-primary hover:bg-primary/90 text-black font-bold text-sm shadow-lg shadow-primary/10 transition-all flex items-center gap-2">
+                            <span class="material-symbols-outlined text-[20px]">save</span>
+                            Save Brand
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </main>
+    </div>
+    <!-- Firebase SDK (Legacy for Realtime Database) -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-analytics-compat.js"></script>
 
-<!-- Cloudinary Services -->
-<script src="../../src/js/services/cloudinary-config.js"></script>
-<script src="../../src/js/services/cloudinary-service.js"></script>
+    <!-- Cloudinary Services -->
+    <script src="../../src/js/services/cloudinary-config.js"></script>
+    <script src="../../src/js/services/cloudinary-service.js"></script>
 
-<!-- Catalog Services -->
-<script src="../../src/js/services/firebase-config.js"></script>
-<script src="../../src/js/services/firebase-catalog-service.js"></script>
-<script src="../../src/js/services/catalog-service.js"></script>
-<script src="../../src/js/modules/catalog-init.js"></script>
-<script src="../../src/js/admin/brand-form.js"></script>
-</body></html>
+    <!-- Catalog Services -->
+    <script src="../../src/js/services/firebase-config.js"></script>
+    <script src="../../src/js/services/firebase-catalog-service.js"></script>
+    <script src="../../src/js/services/catalog-service.js"></script>
+    <script src="../../src/js/modules/catalog-init.js"></script>
+    <script src="../../src/js/admin/brand-form.js"></script>
+</body>
+
+</html>

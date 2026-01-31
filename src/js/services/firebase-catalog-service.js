@@ -56,14 +56,39 @@ class FirebaseCatalogService {
     async getSections() {
         await this.initialize();
         const catalogRef = this.getCatalogRef();
-        
+
+        console.log('🔍 Fetching sections from Firebase path: catalog/sections');
+
         return new Promise((resolve, reject) => {
             catalogRef.child('sections').once('value')
                 .then((snapshot) => {
-                    const sections = snapshot.val();
-                    resolve(sections ? Object.values(sections) : []);
+                    const sectionsData = snapshot.val();
+                    console.log('📥 Raw sections data from Firebase:', sectionsData);
+
+                    if (!sectionsData) {
+                        console.warn('⚠️ No sections data found in Firebase at catalog/sections');
+                        resolve([]);
+                        return;
+                    }
+
+                    // Check if it's an array or object
+                    let sections;
+                    if (Array.isArray(sectionsData)) {
+                        sections = sectionsData;
+                        console.log('✓ Sections is an array with', sections.length, 'items');
+                    } else if (typeof sectionsData === 'object') {
+                        sections = Object.values(sectionsData);
+                        console.log('✓ Sections converted from object to array with', sections.length, 'items');
+                    } else {
+                        console.error('❌ Unexpected sections data type:', typeof sectionsData);
+                        sections = [];
+                    }
+
+                    console.log('📤 Returning sections:', sections);
+                    resolve(sections);
                 })
                 .catch((error) => {
+                    console.error('❌ Error fetching sections from Firebase:', error);
                     reject(error);
                 });
         });
@@ -142,7 +167,7 @@ class FirebaseCatalogService {
      */
     async getAllLinesBySection(sectionId) {
         const brands = await this.getBrandsBySection(sectionId);
-        return brands.flatMap(brand => 
+        return brands.flatMap(brand =>
             (brand.lines || []).map(line => ({
                 ...line,
                 brandName: brand.name,
@@ -159,7 +184,7 @@ class FirebaseCatalogService {
     async searchBrands(query) {
         const brands = await this.getAllBrands();
         const lowerQuery = query.toLowerCase();
-        return brands.filter(brand => 
+        return brands.filter(brand =>
             brand.name.toLowerCase().includes(lowerQuery)
         );
     }
@@ -173,21 +198,21 @@ class FirebaseCatalogService {
     async saveBrand(sectionId, brandData) {
         await this.initialize();
         const catalogRef = this.getCatalogRef();
-        
+
         // Get current sections
         const sections = await this.getSections();
         const sectionIndex = sections.findIndex(s => s.id === sectionId);
-        
+
         if (sectionIndex === -1) {
             throw new Error(`Section ${sectionId} not found`);
         }
 
         const section = sections[sectionIndex];
         const brands = section.brands || [];
-        
+
         // Check if brand already exists
         const existingBrandIndex = brands.findIndex(b => b.name === brandData.name);
-        
+
         if (existingBrandIndex !== -1) {
             // Update existing brand
             brands[existingBrandIndex] = brandData;
@@ -216,10 +241,10 @@ class FirebaseCatalogService {
      */
     async saveProductLine(sectionId, brandName, lineData) {
         await this.initialize();
-        
+
         // Get brand or create it if it doesn't exist
         let brand = await this.getBrandByNameInSection(sectionId, brandName);
-        
+
         if (!brand) {
             // Create new brand with this line
             brand = {
@@ -232,7 +257,7 @@ class FirebaseCatalogService {
             // Update brand lines
             const lines = brand.lines || [];
             const existingLineIndex = lines.findIndex(l => l.name === lineData.name);
-            
+
             if (existingLineIndex !== -1) {
                 lines[existingLineIndex] = lineData;
             } else {
@@ -256,7 +281,7 @@ class FirebaseCatalogService {
         await this.initialize();
         const sections = await this.getSections();
         const sectionIndex = sections.findIndex(s => s.id === sectionId);
-        
+
         if (sectionIndex === -1) {
             throw new Error(`Section ${sectionId} not found`);
         }
@@ -284,7 +309,7 @@ class FirebaseCatalogService {
         await this.initialize();
         const sections = await this.getSections();
         const sectionIndex = sections.findIndex(s => s.id === sectionId);
-        
+
         if (sectionIndex === -1) {
             throw new Error(`Section ${sectionId} not found`);
         }
@@ -292,7 +317,7 @@ class FirebaseCatalogService {
         const section = sections[sectionIndex];
         const brands = section.brands || [];
         const brandIndex = brands.findIndex(b => b.name === brandName);
-        
+
         if (brandIndex === -1) {
             throw new Error(`Brand ${brandName} not found in section ${sectionId}`);
         }
@@ -323,7 +348,7 @@ class FirebaseCatalogService {
             const catalog = snapshot.val();
             callback(catalog);
         });
-        
+
         // Return unsubscribe function
         return () => catalogRef.off('value', handler);
     }
@@ -334,10 +359,10 @@ class FirebaseCatalogService {
      */
     async getAllLinesFromAllSections() {
         await this.initialize();
-        
+
         const sections = await this.getSections();
         const allLines = [];
-        
+
         for (const section of sections) {
             const lines = await this.getAllLinesBySection(section.id);
             for (const line of lines) {
@@ -348,7 +373,7 @@ class FirebaseCatalogService {
                 });
             }
         }
-        
+
         return allLines;
     }
 
@@ -362,7 +387,7 @@ class FirebaseCatalogService {
     async getProductsByLine(sectionId, brandName, lineName) {
         await this.initialize();
         const catalogRef = this.getCatalogRef();
-        
+
         return new Promise((resolve, reject) => {
             catalogRef.child('sections').once('value')
                 .then((snapshot) => {
@@ -371,26 +396,26 @@ class FirebaseCatalogService {
                         resolve([]);
                         return;
                     }
-                    
+
                     const sectionArray = Object.values(sections);
                     const section = sectionArray.find(s => s.id === sectionId);
                     if (!section || !section.brands) {
                         resolve([]);
                         return;
                     }
-                    
+
                     const brand = section.brands.find(b => b.name === brandName);
                     if (!brand || !brand.lines) {
                         resolve([]);
                         return;
                     }
-                    
+
                     const line = brand.lines.find(l => l.name === lineName);
                     if (!line || !line.products) {
                         resolve([]);
                         return;
                     }
-                    
+
                     const products = Object.values(line.products).map(product => ({
                         ...product,
                         sectionId: sectionId,
@@ -400,7 +425,7 @@ class FirebaseCatalogService {
                         lineName: lineName,
                         lineImage: line.image_url || ''
                     }));
-                    
+
                     resolve(products);
                 })
                 .catch((error) => {
@@ -420,11 +445,11 @@ class FirebaseCatalogService {
     async saveProduct(sectionId, brandName, lineName, productData) {
         await this.initialize();
         const catalogRef = this.getCatalogRef();
-        
+
         // Get current sections
         const sections = await this.getSections();
         const sectionIndex = sections.findIndex(s => s.id === sectionId);
-        
+
         if (sectionIndex === -1) {
             throw new Error(`Section ${sectionId} not found`);
         }
@@ -432,7 +457,7 @@ class FirebaseCatalogService {
         const section = sections[sectionIndex];
         const brands = section.brands || [];
         const brandIndex = brands.findIndex(b => b.name === brandName);
-        
+
         if (brandIndex === -1) {
             throw new Error(`Brand ${brandName} not found in section ${sectionId}`);
         }
@@ -440,7 +465,7 @@ class FirebaseCatalogService {
         const brand = brands[brandIndex];
         const lines = brand.lines || [];
         const lineIndex = lines.findIndex(l => l.name === lineName);
-        
+
         if (lineIndex === -1) {
             throw new Error(`Line ${lineName} not found in brand ${brandName}`);
         }
@@ -452,11 +477,11 @@ class FirebaseCatalogService {
 
         // Generate product ID from name or use existing
         const productId = productData.id || productData.name.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
-        
+
         // Ensure images array exists
         const images = productData.images || [];
         const imageUrl = productData.imageUrl || (images.length > 0 ? images[0] : '');
-        
+
         // Prepare product data
         const productToSave = {
             id: productId,
@@ -493,10 +518,10 @@ class FirebaseCatalogService {
     async deleteProduct(sectionId, brandName, lineName, productId) {
         await this.initialize();
         const catalogRef = this.getCatalogRef();
-        
+
         const sections = await this.getSections();
         const sectionIndex = sections.findIndex(s => s.id === sectionId);
-        
+
         if (sectionIndex === -1) {
             throw new Error(`Section ${sectionId} not found`);
         }
@@ -504,7 +529,7 @@ class FirebaseCatalogService {
         const section = sections[sectionIndex];
         const brands = section.brands || [];
         const brandIndex = brands.findIndex(b => b.name === brandName);
-        
+
         if (brandIndex === -1) {
             throw new Error(`Brand ${brandName} not found in section ${sectionId}`);
         }
@@ -512,7 +537,7 @@ class FirebaseCatalogService {
         const brand = brands[brandIndex];
         const lines = brand.lines || [];
         const lineIndex = lines.findIndex(l => l.name === lineName);
-        
+
         if (lineIndex === -1) {
             throw new Error(`Line ${lineName} not found in brand ${brandName}`);
         }
@@ -546,7 +571,7 @@ class FirebaseCatalogService {
     async getAllProductsBySection(sectionId) {
         await this.initialize();
         const catalogRef = this.getCatalogRef();
-        
+
         return new Promise((resolve, reject) => {
             catalogRef.child('sections').once('value')
                 .then((snapshot) => {
@@ -555,22 +580,22 @@ class FirebaseCatalogService {
                         resolve([]);
                         return;
                     }
-                    
+
                     const sectionArray = Object.values(sections);
                     const section = sectionArray.find(s => s.id === sectionId);
                     if (!section || !section.brands) {
                         resolve([]);
                         return;
                     }
-                    
+
                     const allProducts = [];
-                    
+
                     for (const brand of section.brands) {
                         if (!brand.lines) continue;
-                        
+
                         for (const line of brand.lines) {
                             if (!line.products) continue;
-                            
+
                             const products = Object.values(line.products);
                             for (const product of products) {
                                 allProducts.push({
@@ -585,7 +610,7 @@ class FirebaseCatalogService {
                             }
                         }
                     }
-                    
+
                     resolve(allProducts);
                 })
                 .catch((error) => {
@@ -602,12 +627,12 @@ class FirebaseCatalogService {
         await this.initialize();
         const sections = await this.getSections();
         const allProducts = [];
-        
+
         for (const section of sections) {
             const products = await this.getAllProductsBySection(section.id);
             allProducts.push(...products);
         }
-        
+
         return allProducts;
     }
 }

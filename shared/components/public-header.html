@@ -1,40 +1,91 @@
-<header class="fixed top-0 w-full z-50 border-b border-white/5 dark:border-white/5 border-black/10 glass-effect">
-    <div class="max-w-[1440px] mx-auto px-6 lg:px-20 h-20 flex items-center justify-between">
-        <div class="flex items-center gap-12">
-            <a href="index.html" class="flex items-center gap-3 cursor-pointer hover:opacity-80 transition-opacity">
-                <div class="size-10 bg-primary rounded-sm flex items-center justify-center text-background-dark">
-                    <span class="material-symbols-outlined font-bold">water_drop</span>
-                </div>
-                <h2 class="text-2xl text-bold-modern tracking-tighter uppercase text-background-dark dark:text-white">LIQUIDO <span
-                        class="text-primary/80 font-normal">VAPE SHOP</span></h2>
+<header id="main-header"
+    class="fixed w-full z-[60] bg-white/95 backdrop-blur-sm shadow-sm transition-all duration-300 top-10">
+    <div class="max-w-[1440px] mx-auto w-full px-6 lg:px-20 h-28 flex items-center justify-between">
+        <!-- Logo très à gauche -->
+        <a href="index.html"
+            class="flex items-center gap-3 cursor-pointer hover:opacity-80 transition-opacity -ml-2 lg:-ml-4">
+            <img src="../assets/images/Logo LIQUIDO/LOGO 15cm WEB Trasparente_02.png" alt="LIQUIDO VAPE SHOP"
+                class="w-[300px] h-auto object-contain" />
+        </a>
+
+        <!-- Navigation centrée -->
+        <nav class="absolute left-1/2 transform -translate-x-1/2 flex items-center gap-10">
+            <a class="text-sm font-bold uppercase tracking-widest hover:text-yellow-600 transition-colors text-gray-800"
+                href="index.html">Home</a>
+            <a class="text-sm font-bold uppercase tracking-widest hover:text-yellow-600 transition-colors text-gray-800"
+                href="products.html">Liquidi</a>
+            <a class="text-sm font-bold uppercase tracking-widest hover:text-yellow-600 transition-colors text-gray-800"
+                href="brands.html">Dispositivi</a>
+            <a class="text-sm font-bold uppercase tracking-widest hover:text-yellow-600 transition-colors text-gray-800"
+                href="about.html">Chi Siamo</a>
+            <a class="text-sm font-bold uppercase tracking-widest hover:text-yellow-600 transition-colors text-gray-800"
+                href="contact.html">Contatti</a>
+            <a class="text-sm font-bold uppercase tracking-widest hover:text-yellow-600 transition-colors text-gray-800"
+                href="faq.html">FAQ</a>
+        </nav>
+
+        <!-- Bouton MyLiquido et recherche -->
+        <div class="flex items-center gap-6 relative">
+            <!-- Bouton de recherche -->
+            <button id="search-toggle" class="p-2 hover:text-yellow-600 transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+            </button>
+
+            <!-- Champ de recherche (caché par défaut) -->
+            <div id="search-container"
+                class="absolute top-full right-0 mt-2 w-80 bg-white shadow-lg rounded-md p-4 hidden">
+                <form id="search-form" class="relative">
+                    <input type="text" id="search-input"
+                        class="w-full px-4 py-3 pl-10 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
+                        placeholder="Cerca prodotti, marchi...">
+                    <button type="submit" class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        </svg>
+                    </button>
+                </form>
+            </div>
+
+            <!-- Bouton MyLiquido -->
+            <a href="myliquido.html"
+                class="bg-yellow-500 hover:bg-yellow-600 text-gray-900 px-6 py-3.5 rounded-sm font-black text-xs uppercase tracking-widest transition-all flex items-center gap-2 shadow-md hover:shadow-lg">
+                MyLiquido
             </a>
-            <nav class="hidden md:flex items-center gap-8">
-                <a class="text-xs font-bold uppercase tracking-widest hover:text-primary transition-colors text-background-dark dark:text-white"
-                    href="index.html">Home</a>
-                <a class="text-xs font-bold uppercase tracking-widest hover:text-primary transition-colors text-background-dark dark:text-white"
-                    href="brands.html">Marchi</a>
-                <a class="text-xs font-bold uppercase tracking-widest hover:text-primary transition-colors text-background-dark dark:text-white"
-                    href="products.html">Prodotti</a>
-                <a class="text-xs font-bold uppercase tracking-widest hover:text-primary transition-colors text-background-dark dark:text-white"
-                    href="myliquido.html">MyLiquido</a>
-                <a class="text-xs font-bold uppercase tracking-widest hover:text-primary transition-colors text-background-dark dark:text-white"
-                    href="about.html">Chi Siamo</a>
-                <a class="text-xs font-bold uppercase tracking-widest hover:text-primary transition-colors text-background-dark dark:text-white"
-                    href="contact.html">Contatti</a>
-            </nav>
-        </div>
-        <div class="flex items-center gap-6">
-            <button
-                id="theme-toggle"
-                class="size-10 flex items-center justify-center rounded-sm border border-white/10 dark:border-white/10 border-black/10 hover:bg-primary hover:text-background-dark dark:hover:text-background-dark text-background-dark dark:text-white transition-all"
-                aria-label="Toggle theme">
-                <span class="theme-icon material-symbols-outlined text-lg">dark_mode</span>
-            </button>
-            <button
-                class="bg-primary hover:bg-white text-background-dark px-6 py-2.5 rounded-sm font-black text-xs uppercase tracking-widest transition-all flex items-center gap-2 accent-glow">
-                <span class="material-symbols-outlined text-lg">location_on</span>
-                Trova un Negozio
-            </button>
         </div>
     </div>
 </header>
+
+<!-- Espace réservé pour éviter que le contenu soit caché sous le header fixe -->
+<div id="header-placeholder"></div>
+
+
+
+<!-- CSS pour l'animation -->
+<style>
+    #search-container {
+        animation: fadeIn 0.2s ease-out;
+        z-index: 70;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    #search-toggle {
+        cursor: pointer;
+    }
+</style>

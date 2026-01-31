@@ -134,33 +134,33 @@
     --color-primary-active: var(--color-primary);
 }
 
-/* Light mode - inverted colors with enhanced yellow */
+/* Light mode - refined modern color palette */
 :root:not(.dark),
 .light {
-    --color-background: #FFFFFF;
-    --color-surface: #F5F5F5;
-    --color-surface-alt: #E5E5E5;
+    --color-background: #FAFAFA;
+    --color-surface: #F0F0F0;
+    --color-surface-alt: #E8E8E8;
     
-    /* Enhanced yellow for light mode - more saturated */
-    --color-primary: #FFD700;
-    --color-primary-dark: #FFC107;
-    --color-primary-light: #FFE44D;
-    --color-primary-active: #FFD700;
+    /* Refined primary colors for light mode */
+    --color-primary: #F5C842;
+    --color-primary-dark: #E0B030;
+    --color-primary-light: #FFD966;
+    --color-primary-active: #F5C842;
     
-    /* Inverted text colors */
-    --color-text-primary: #000000;
-    --color-text-secondary: rgba(0, 0, 0, 0.7);
-    --color-text-tertiary: rgba(0, 0, 0, 0.5);
+    /* Optimized text colors for better readability */
+    --color-text-primary: #1A1A1A;
+    --color-text-secondary: rgba(26, 26, 26, 0.75);
+    --color-text-tertiary: rgba(26, 26, 26, 0.55);
     
-    /* Inverted borders */
-    --color-border: rgba(0, 0, 0, 0.1);
-    --color-border-hover: rgba(0, 0, 0, 0.2);
+    /* Refined borders */
+    --color-border: rgba(0, 0, 0, 0.08);
+    --color-border-hover: rgba(0, 0, 0, 0.15);
     
-    /* Inverted shadows for light mode */
-    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    /* Enhanced shadows for light mode */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.04);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.08);
     --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-    --shadow-glow: 0 0 20px rgba(255, 215, 0, 0.4);
-    --shadow-glow-strong: 0 0 40px rgba(255, 215, 0, 0.6);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.12);
+    --shadow-glow: 0 0 20px rgba(245, 200, 66, 0.35);
+    --shadow-glow-strong: 0 0 40px rgba(245, 200, 66, 0.5);
 }
