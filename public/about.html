@@ -76,12 +76,58 @@
         .material-symbols-outlined {
             font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
         }
+
+        /* Scroll Animations */
+        .animate-on-scroll {
+            opacity: 0;
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .animate-on-scroll.animated {
+            opacity: 1;
+        }
+
+        .fade-in-left {
+            transform: translateX(-50px);
+        }
+
+        .fade-in-left.animated {
+            transform: translateX(0);
+        }
+
+        .fade-in-right {
+            transform: translateX(50px);
+        }
+
+        .fade-in-right.animated {
+            transform: translateX(0);
+        }
+
+        .fade-in-bottom {
+            transform: translateY(50px);
+        }
+
+        .fade-in-bottom.animated {
+            transform: translateY(0);
+        }
+
+        .stagger-delay-1 {
+            transition-delay: 0.1s;
+        }
+
+        .stagger-delay-2 {
+            transition-delay: 0.2s;
+        }
+
+        .stagger-delay-3 {
+            transition-delay: 0.3s;
+        }
     </style>
 </head>
 
 <body class="bg-white text-background-dark transition-colors duration-300">
     <!-- Top navigation and header loaded dynamically via component-loader.js -->
-    <main >
+    <main>
         <!-- Hero Section -->
         <section class="relative">
             <div class="flex min-h-[60vh] flex-col gap-6 bg-cover bg-fixed bg-center bg-no-repeat items-center justify-center p-8 text-center"
@@ -102,46 +148,64 @@
                 </div>
             </div>
         </section>
-        <!-- Mission & Expertise Section -->
+        <!-- Chi Siamo Section -->
         <section class="max-w-7xl mx-auto px-6 py-20 lg:py-32">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-                <div class="flex flex-col gap-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center animate-on-scroll fade-in-bottom">
+                <div class="flex flex-col gap-8 animate-on-scroll fade-in-left">
                     <div>
-                        <h2 class="text-primary font-bold text-sm tracking-widest uppercase mb-2">Dedizione</h2>
-                        <h3 class="text-3xl md:text-5xl font-black leading-tight">La Nostra Missione &amp;
-                            Competenza</h3>
+                        <h2 class="text-primary font-bold text-sm tracking-widest uppercase mb-2">Chi Siamo</h2>
+                        <h3 class="text-3xl md:text-5xl font-black leading-tight">Un Punto di Riferimento Affidabile
+                        </h3>
                     </div>
                     <p class="text-lg text-slate-600 leading-relaxed">
-                        Siamo impegnati a fornire i migliori liquidi e hardware, garantendo che ogni prodotto soddisfi
-                        i nostri rigorosi standard di sicurezza e qualità. Il nostro viaggio è iniziato con un obiettivo
-                        semplice: filtrare
-                        il rumore e presentare solo il meglio dell'eccellenza del vaping.
+                        Un punto di riferimento affidabile, dove ogni scelta è guidata da conoscenza ed esperienza che
+                        offriamo ai nostri clienti.
                     </p>
+
                     <div class="space-y-6">
-                        <div class="flex gap-4 p-4 rounded-xl border border-slate-200 bg-slate-50">
+                        <div
+                            class="flex gap-4 p-4 rounded-xl border border-slate-200 bg-slate-50 animate-on-scroll fade-in-left stagger-delay-1">
                             <div class="bg-primary/20 p-3 rounded-lg h-fit">
-                                <span class="material-symbols-outlined text-primary">verified_user</span>
+                                <span class="material-symbols-outlined text-primary">visibility</span>
                             </div>
                             <div>
-                                <h4 class="font-bold text-lg">Sicurezza Prima di Tutto</h4>
-                                <p class="text-sm text-slate-500">Prodotti testati in laboratorio
-                                    che privilegiano la salute del consumatore e la trasparenza rispetto alle tendenze
-                                    di mercato.</p>
+                                <h4 class="font-bold text-lg">Visione</h4>
+                                <p class="text-sm text-slate-500">Siamo uno spazio educativo ed esperienziale pensato
+                                    per chi vuole scoprire, comprendere e vivere lo svapo in modo cosciente. Offriamo
+                                    solo prodotti selezionati tra i migliori marchi, garantendo sicurezza, prestazioni e
+                                    gusto autentico.</p>
                             </div>
                         </div>
-                        <div class="flex gap-4 p-4 rounded-xl border border-slate-200 bg-slate-50">
+
+                        <div
+                            class="flex gap-4 p-4 rounded-xl border border-slate-200 bg-slate-50 animate-on-scroll fade-in-left stagger-delay-2">
+                            <div class="bg-primary/20 p-3 rounded-lg h-fit">
+                                <span class="material-symbols-outlined text-primary">flag</span>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-lg">Missione</h4>
+                                <p class="text-sm text-slate-500">La nostra missione è diventare un luogo dove la
+                                    qualità incontra la fiducia, e ogni cliente trova supporto, consulenza e
+                                    un'esperienza straordinaria da vivere.</p>
+                            </div>
+                        </div>
+
+                        <div
+                            class="flex gap-4 p-4 rounded-xl border border-slate-200 bg-slate-50 animate-on-scroll fade-in-left stagger-delay-3">
                             <div class="bg-primary/20 p-3 rounded-lg h-fit">
                                 <span class="material-symbols-outlined text-primary">diamond</span>
                             </div>
                             <div>
-                                <h4 class="font-bold text-lg">Curazione Premium</h4>
-                                <p class="text-sm text-slate-500">Una selezione di livello mondiale di
-                                    hardware e liquidi selezionati a mano da esperti veterani del settore.</p>
+                                <h4 class="font-bold text-lg">Valori</h4>
+                                <p class="text-sm text-slate-500">Che tu sia alle prime armi o un esperto del vapore, da
+                                    noi troverai un team pronto ad accompagnarti passo dopo passo, tra aromi unici,
+                                    dispositivi all'avanguardia e la voglia di rendere lo svapo un'esperienza di livello
+                                    superiore.</p>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="relative group">
+                <div class="relative group animate-on-scroll fade-in-right">
                     <div
                         class="absolute -inset-4 bg-primary/10 rounded-2xl blur-xl group-hover:bg-primary/20 transition duration-500">
                     </div>
@@ -154,14 +218,14 @@
         </section>
         <!-- Quality Standards Grid -->
         <section class="bg-slate-100 py-20">
-            <div class="max-w-7xl mx-auto px-6 text-center mb-16">
+            <div class="max-w-7xl mx-auto px-6 text-center mb-16 animate-on-scroll fade-in-bottom">
                 <h2 class="text-3xl md:text-4xl font-black mb-4">Standard di Qualità</h2>
                 <p class="text-slate-500 max-w-2xl mx-auto">Il nostro impegno per l'eccellenza è
                     supportato da certificazioni internazionali e rigorosi protocolli interni.</p>
             </div>
             <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div
-                    class="flex flex-col items-center p-8 rounded-2xl border border-slate-200 bg-white hover:border-primary/50 transition-all group">
+                    class="flex flex-col items-center p-8 rounded-2xl border border-slate-200 bg-white hover:border-primary/50 transition-all group animate-on-scroll fade-in-bottom stagger-delay-1">
                     <div class="bg-primary rounded-full p-4 mb-6 group-hover:scale-110 transition-transform">
                         <span class="material-symbols-outlined text-black text-3xl">gavel</span>
                     </div>
@@ -171,7 +235,7 @@
                         per la tua totale tranquillità e sicurezza.</p>
                 </div>
                 <div
-                    class="flex flex-col items-center p-8 rounded-2xl border border-slate-200 bg-white hover:border-primary/50 transition-all group">
+                    class="flex flex-col items-center p-8 rounded-2xl border border-slate-200 bg-white hover:border-primary/50 transition-all group animate-on-scroll fade-in-bottom stagger-delay-2">
                     <div class="bg-primary rounded-full p-4 mb-6 group-hover:scale-110 transition-transform">
                         <span class="material-symbols-outlined text-black text-3xl">fact_check</span>
                     </div>
@@ -181,7 +245,7 @@
                         standard internazionali per la sicurezza e l'eccellenza operativa.</p>
                 </div>
                 <div
-                    class="flex flex-col items-center p-8 rounded-2xl border border-slate-200 bg-white hover:border-primary/50 transition-all group">
+                    class="flex flex-col items-center p-8 rounded-2xl border border-slate-200 bg-white hover:border-primary/50 transition-all group animate-on-scroll fade-in-bottom stagger-delay-3">
                     <div class="bg-primary rounded-full p-4 mb-6 group-hover:scale-110 transition-transform">
                         <span class="material-symbols-outlined text-black text-3xl">star</span>
                     </div>
@@ -192,10 +256,126 @@
                 </div>
             </div>
         </section>
+
+        <!-- Google Reviews Section -->
+        <section class="py-20 bg-slate-50 border-t border-black/5">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="text-center mb-16 animate-on-scroll fade-in-bottom">
+                    <h2 class="text-4xl md:text-5xl font-black mb-6 text-background-dark">E non lo diciamo solo noi…
+                    </h2>
+
+                    <div class="flex items-center justify-center gap-2 mb-4">
+                        <span class="text-2xl font-bold text-background-dark">4.9</span>
+                        <div class="flex text-[#F8ED70]">
+                            <span class="material-symbols-outlined fill-current">star</span>
+                            <span class="material-symbols-outlined fill-current">star</span>
+                            <span class="material-symbols-outlined fill-current">star</span>
+                            <span class="material-symbols-outlined fill-current">star</span>
+                            <span class="material-symbols-outlined fill-current">star</span>
+                        </div>
+                        <span class="text-slate-500 text-sm font-medium">(su Google Maps)</span>
+                    </div>
+                    <p class="text-slate-600 max-w-2xl mx-auto font-medium">
+                        La soddisfazione dei nostri clienti è la nostra priorità assoluta. Scopri perché siamo il punto
+                        di riferimento per il vaping a Monterotondo.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+                    <!-- Review 1 -->
+                    <div
+                        class="bg-white p-8 rounded-xl shadow-sm hover:shadow-md transition-shadow border border-black/5 animate-on-scroll fade-in-bottom stagger-delay-1">
+                        <div class="flex items-center gap-4 mb-4">
+                            <div
+                                class="size-10 rounded-full bg-slate-100 flex items-center justify-center text-lg font-bold text-slate-400">
+                                M
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-background-dark">Marco R.</h4>
+                                <div class="flex text-[#F8ED70] text-sm">
+                                    <span class="material-symbols-outlined text-[18px] fill-current">star</span>
+                                    <span class="material-symbols-outlined text-[18px] fill-current">star</span>
+                                    <span class="material-symbols-outlined text-[18px] fill-current">star</span>
+                                    <span class="material-symbols-outlined text-[18px] fill-current">star</span>
+                                    <span class="material-symbols-outlined text-[18px] fill-current">star</span>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-slate-600 leading-relaxed italic">
+                            "Il miglior vape shop di Monterotondo! Personale super disponibile e vasta scelta di
+                            liquidi. Consigliatissimo per chi cerca qualità."
+                        </p>
+                    </div>
+
+                    <!-- Review 2 -->
+                    <div
+                        class="bg-white p-8 rounded-xl shadow-sm hover:shadow-md transition-shadow border border-black/5 animate-on-scroll fade-in-bottom stagger-delay-2">
+                        <div class="flex items-center gap-4 mb-4">
+                            <div
+                                class="size-10 rounded-full bg-slate-100 flex items-center justify-center text-lg font-bold text-slate-400">
+                                G
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-background-dark">Giulia B.</h4>
+                                <div class="flex text-[#F8ED70] text-sm">
+                                    <span class="material-symbols-outlined text-[18px] fill-current">star</span>
+                                    <span class="material-symbols-outlined text-[18px] fill-current">star</span>
+                                    <span class="material-symbols-outlined text-[18px] fill-current">star</span>
+                                    <span class="material-symbols-outlined text-[18px] fill-current">star</span>
+                                    <span class="material-symbols-outlined text-[18px] fill-current">star</span>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-slate-600 leading-relaxed italic">
+                            "Competenza e gentilezza uniche. Mi hanno guidato nella scelta del dispositivo perfetto.
+                            Un'esperienza d'acquisto eccellente."
+                        </p>
+                    </div>
+
+                    <!-- Review 3 -->
+                    <div
+                        class="bg-white p-8 rounded-xl shadow-sm hover:shadow-md transition-shadow border border-black/5 animate-on-scroll fade-in-bottom stagger-delay-3">
+                        <div class="flex items-center gap-4 mb-4">
+                            <div
+                                class="size-10 rounded-full bg-slate-100 flex items-center justify-center text-lg font-bold text-slate-400">
+                                A
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-background-dark">Alessandro V.</h4>
+                                <div class="flex text-[#F8ED70] text-sm">
+                                    <span class="material-symbols-outlined text-[18px] fill-current">star</span>
+                                    <span class="material-symbols-outlined text-[18px] fill-current">star</span>
+                                    <span class="material-symbols-outlined text-[18px] fill-current">star</span>
+                                    <span class="material-symbols-outlined text-[18px] fill-current">star</span>
+                                    <span class="material-symbols-outlined text-[18px] fill-current">star</span>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-slate-600 leading-relaxed italic">
+                            "Negozio fornitissimo e ambiente molto curato. I ragazzi sono preparatissimi e sanno sempre
+                            consigliare il liquido giusto. Top!"
+                        </p>
+                    </div>
+                </div>
+
+                <div class="text-center">
+                    <a href="https://www.google.com/maps/search/?api=1&query=LIQUIDO+VAPE+SHOP+Monterotondo"
+                        target="_blank"
+                        class="inline-flex items-center gap-2 bg-white border border-black/10 hover:border-black/30 text-background-dark px-8 py-4 rounded-xl font-black text-xs uppercase tracking-widest transition-all hover:bg-slate-50 group">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/a/aa/Google_Maps_icon_%282020%29.svg"
+                            alt="Google Maps" class="w-6 h-6 mr-1">
+                        Leggi su Google Maps
+                        <span
+                            class="material-symbols-outlined group-hover:translate-x-1 transition-transform text-sm">arrow_forward</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
         <!-- The Shop Experience -->
         <section class="max-w-7xl mx-auto px-6 py-24">
             <div class="flex flex-col md:flex-row gap-12 items-center">
-                <div class="w-full md:w-1/2 order-2 md:order-1">
+                <div class="w-full md:w-1/2 order-2 md:order-1 animate-on-scroll fade-in-left">
                     <div class="grid grid-cols-2 gap-4">
                         <img alt="Store Interior" class="rounded-xl w-full h-48 object-cover"
                             data-alt="Modern retail store interior design"
@@ -208,7 +388,7 @@
                             src="https://lh3.googleusercontent.com/aida-public/AB6AXuAd4AIF-mjXXSQPr2VfgQnLUPFYJm4YTDNAr4wYa0jYWvzJK0s7CHf69GspfGim2feE1KinKXn353mfVIZNDR3TO-nSLbTRyRaGdoWMVvU_SNWca9ZVvKTznNFD683qOGuwHFghzfJC7itszmYUDabxQ7a71utcKLVVbLwj0GnBgX2w46OcPFZRslwEoRJcBwpPUNtikaABn9Yi1eEc7-Fmnu6wZd-fI98t5Lb5mgKqwxuYr3y9GMYq2TE6_qIxiN4LnflZYeJ3ae4" />
                     </div>
                 </div>
-                <div class="w-full md:w-1/2 order-1 md:order-2 flex flex-col gap-6">
+                <div class="w-full md:w-1/2 order-1 md:order-2 flex flex-col gap-6 animate-on-scroll fade-in-right">
                     <h2 class="text-primary font-bold tracking-widest uppercase text-sm">Esperienza</h2>
                     <h3 class="text-4xl md:text-5xl font-black dark:text-white">Il Negozio</h3>
                     <p class="text-lg text-slate-600 dark:text-slate-300 leading-relaxed">
@@ -312,6 +492,28 @@
     <!-- Component Loader (must be loaded first) -->
     <script src="../shared/js/component-loader.js"></script>
     <script src="../src/js/modules/age-verification.js"></script>
+
+    <!-- Scroll Animation Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const animatedElements = document.querySelectorAll('.animate-on-scroll');
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animated');
+                    }
+                });
+            }, {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            });
+
+            animatedElements.forEach(element => {
+                observer.observe(element);
+            });
+        });
+    </script>
 </body>
 
 </html>

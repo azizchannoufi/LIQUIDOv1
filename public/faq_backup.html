@@ -98,51 +98,6 @@
         .faq-item.active .faq-icon {
             transform: rotate(180deg);
         }
-        
-        /* Scroll Animations */
-        .scroll-animate {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-        }
-        
-        .scroll-animate.animate-in {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        
-        .scroll-animate-left {
-            opacity: 0;
-            transform: translateX(-50px);
-            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-        }
-        
-        .scroll-animate-left.animate-in {
-            opacity: 1;
-            transform: translateX(0);
-        }
-        
-        .scroll-animate-right {
-            opacity: 0;
-            transform: translateX(50px);
-            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-        }
-        
-        .scroll-animate-right.animate-in {
-            opacity: 1;
-            transform: translateX(0);
-        }
-        
-        .scroll-animate-scale {
-            opacity: 0;
-            transform: scale(0.9);
-            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-        }
-        
-        .scroll-animate-scale.animate-in {
-            opacity: 1;
-            transform: scale(1);
-        }
     </style>
 </head>
 
@@ -151,7 +106,7 @@
     <main>
         <!-- Hero Section -->
         <section class="relative py-20 px-6 lg:px-20 bg-gradient-to-b from-surface-light to-white">
-            <div class="max-w-[1440px] mx-auto text-center scroll-animate">
+            <div class="max-w-[1440px] mx-auto text-center">
                 <span class="text-primary font-black uppercase tracking-[0.6em] text-[10px]">Domande Frequenti</span>
                 <h1
                     class="text-5xl lg:text-7xl text-bold-modern tracking-tighter uppercase mt-4 mb-6 text-background-dark dark:text-white">
@@ -168,7 +123,7 @@
         <section class="py-20 px-6 lg:px-20">
             <div class="max-w-4xl mx-auto">
                 <!-- Liquidi Vape Section -->
-                <div class="mb-16 scroll-animate">
+                <div class="mb-16">
                     <h2 class="text-3xl font-black mb-8 text-primary drop-shadow-sm">Liquidi Vape</h2>
                     <div class="space-y-4">
                         <div
@@ -245,7 +200,7 @@
                 </div>
 
                 <!-- Dispositivi Vape Section -->
-                <div class="mb-16 scroll-animate">
+                <div class="mb-16">
                     <h2 class="text-3xl font-black mb-8 text-primary drop-shadow-sm">Dispositivi Vape e Manutenzione
                     </h2>
                     <div class="space-y-4">
@@ -326,7 +281,7 @@
                 </div>
 
                 <!-- Servizi Locali Section -->
-                <div class="mb-16 scroll-animate">
+                <div class="mb-16">
                     <h2 class="text-3xl font-black mb-8 text-primary drop-shadow-sm">Servizi Locali a Monterotondo e
                         Roma</h2>
                     <div class="space-y-4">
@@ -406,7 +361,7 @@
                 </div>
 
                 <!-- Acquisti e Informazioni Section -->
-                <div class="mb-16 scroll-animate">
+                <div class="mb-16">
                     <h2 class="text-3xl font-black mb-8 text-primary drop-shadow-sm">Acquisti e Informazioni</h2>
                     <div class="space-y-4">
                         <div
@@ -465,7 +420,7 @@
                 </div>
 
                 <!-- Contact CTA -->
-                <div class="bg-primary/10 border border-primary/30 rounded-xl p-8 text-center scroll-animate-scale">
+                <div class="bg-primary/10 border border-primary/30 rounded-xl p-8 text-center">
                     <h3 class="text-2xl font-black mb-4 text-background-dark">Hai altre domande?</h3>
                     <p class="text-background-dark mb-6">Il nostro team è sempre disponibile per aiutarti con qualsiasi
                         domanda su liquidi vape, dispositivi vape, servizi di pulizia e manutenzione vape.</p>
@@ -608,24 +563,6 @@
     <script src="../src/js/modules/faq-accordion.js"></script>
     <script src="../src/js/services/seo-schema.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const observerOptions = {
-                threshold: 0.1,
-                rootMargin: '0px 0px -50px 0px'
-            };
-
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('animate-in');
-                        observer.unobserve(entry.target); // Only animate once
-                    }
-                });
-            }, observerOptions);
-
-            const animatedElements = document.querySelectorAll('.scroll-animate, .scroll-animate-left, .scroll-animate-right, .scroll-animate-scale');
-            animatedElements.forEach(el => observer.observe(el));
-        });
     </script>
 </body>
 

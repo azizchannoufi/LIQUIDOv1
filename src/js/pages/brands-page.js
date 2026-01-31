@@ -9,7 +9,7 @@
  * 4. brands-page.js
  */
 
-(async function() {
+(async function () {
     // Wait for catalog initialization
     if (!window.catalogInit) {
         await new Promise(resolve => {
@@ -21,40 +21,42 @@
             }, 100);
         });
     }
-    
+
     const catalog = await window.catalogInit;
-    
+
     if (!catalog || !catalog.service || !catalog.brandsRenderer) {
         console.error('Catalog initialization failed:', catalog);
         return;
     }
-    
+
     const { service, brandsRenderer } = catalog;
-    
+
     // Get URL parameters
     const urlParams = new URLSearchParams(window.location.search);
     const sectionId = urlParams.get('section') || null;
     const searchQuery = urlParams.get('search') || null;
-    
+
     // Get container element
     const brandsContainer = document.getElementById('brands-grid-container') ||
-                           document.querySelector('.brands-grid-container') || 
-                           document.querySelector('section.px-6 > div.grid');
-    
+        document.querySelector('.brands-grid-container') ||
+        document.querySelector('section.px-6 > div.grid');
+
     if (!brandsContainer) {
         console.error('Brands container not found');
         return;
     }
-    
+
     // Render brands based on filters
+    // Par défaut, afficher uniquement les marques de type "dispositivi" (devices)
     if (searchQuery) {
         await brandsRenderer.searchAndRenderBrands(searchQuery, brandsContainer);
     } else if (sectionId) {
         await brandsRenderer.renderBrandsBySection(sectionId, brandsContainer);
     } else {
-        await brandsRenderer.renderAllBrands(brandsContainer);
+        // Afficher uniquement les devices par défaut
+        await brandsRenderer.renderBrandsBySection('cat_dispositivi', brandsContainer);
     }
-    
+
     // Setup search functionality
     const searchInput = document.querySelector('input[placeholder*="Search"], input[placeholder*="Cerca"]');
     if (searchInput) {
@@ -62,7 +64,7 @@
         searchInput.addEventListener('input', (e) => {
             clearTimeout(searchTimeout);
             const query = e.target.value.trim();
-            
+
             searchTimeout = setTimeout(async () => {
                 if (query.length > 0) {
                     await brandsRenderer.searchAndRenderBrands(query, brandsContainer);
@@ -72,20 +74,20 @@
             }, 300);
         });
     }
-    
+
     // Setup section filter buttons
     const filterButtons = document.querySelectorAll('.section-filter-btn, [data-section-id]');
     filterButtons.forEach(btn => {
         btn.addEventListener('click', async (e) => {
             const sectionId = e.currentTarget.dataset.sectionId;
-            
+
             // Render brands based on filter
             if (sectionId === 'all') {
                 await brandsRenderer.renderAllBrands(brandsContainer);
             } else {
                 await brandsRenderer.renderBrandsBySection(sectionId, brandsContainer);
             }
-            
+
             // Update active state with smooth transition
             filterButtons.forEach(b => {
                 b.classList.remove('bg-primary', 'text-black');
