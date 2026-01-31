@@ -108,6 +108,47 @@
         .dark .text-primary-intense {
             color: var(--primary-color);
         }
+
+        /* Scroll Animations */
+        .scroll-animate {
+            opacity: 0;
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .scroll-animate-left {
+            transform: translateX(-100px);
+        }
+
+        .scroll-animate-right {
+            transform: translateX(100px);
+        }
+
+        .scroll-animate-up {
+            transform: translateY(50px);
+        }
+
+        .scroll-animate.animate-in {
+            opacity: 1;
+            transform: translateX(0) translateY(0);
+        }
+
+        /* Stagger animation for grid items */
+        .scroll-animate-stagger {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .scroll-animate-stagger.animate-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Delay classes for staggered animations */
+        .delay-100 { transition-delay: 0.1s; }
+        .delay-200 { transition-delay: 0.2s; }
+        .delay-300 { transition-delay: 0.3s; }
+        .delay-400 { transition-delay: 0.4s; }
     </style>
     <style>
         /* FAQ Accordion Styles */
@@ -188,7 +229,7 @@
                 </div>
             </div>
         </section>
-        <section class="py-20 bg-surface-light">
+        <section class="py-20 bg-surface-light scroll-animate scroll-animate-up">
             <div class="max-w-[1440px] mx-auto px-6 lg:px-20">
                 <p class="text-center text-gray-600 uppercase tracking-[0.4em] text-[10px] font-black mb-12">Rivenditore
                     Autorizzato Per</p>
@@ -197,42 +238,138 @@
                 </div>
             </div>
         </section>
-        <section class="relative py-40 overflow-hidden bg-surface-light">
+        <section class="relative py-32 overflow-hidden bg-white">
             <div class="absolute inset-0 z-0">
-                <img class="w-full h-full object-cover opacity-10 grayscale" data-alt="smoky background"
+                <img class="w-full h-full object-cover opacity-5 grayscale" data-alt="smoky background"
                     src="https://lh3.googleusercontent.com/aida-public/AB6AXuB2W8yzKRqsy4SEqRz1ttIJAAo9IhiFuUWh-Z5k-5KjdxqkWXSU0iV1kY0W0zl9eMm6Llod9_xa93Le_kmTbyU4v4cTOJdd27q16jhUCyoZKKch1KrEpB-aRRa-uMzIOqLybGrY4JJmtJDKf2gzbtAdUfSM97Sz7TQPjr36nYwz-XCOMwdY-ySeBjryC1kGtupEr73Px7YGdMzBfHAiyUnA2rR1MGFe3mGijldkRk_zkV_wktC8riZZhZtx5pgUZ7h2UUVv794TuA0" />
-                <div class="absolute inset-0 bg-gradient-to-t from-white via-transparent to-white"></div>
             </div>
             <div class="relative z-10 max-w-[1440px] mx-auto px-6 lg:px-20">
-                <div
-                    class="bg-black/5 p-16 lg:p-24 rounded-sm backdrop-blur-xl flex flex-col items-center text-center space-y-10">
-                    <span class="text-primary font-black uppercase tracking-[0.6em] text-[10px]">Lo Standard
-                        Liquido</span>
+                <!-- Section Header -->
+                <div class="text-center mb-20 scroll-animate scroll-animate-left">
+                    <span class="text-primary font-black uppercase tracking-[0.6em] text-[10px] mb-6 block">Perché
+                        Sceglierci</span>
                     <h2
-                        class="text-6xl lg:text-8xl text-bold-modern max-w-5xl tracking-tighter uppercase text-background-dark">
-                        Oltre le Nuvole. <br /><span
-                            class="text-primary-intense italic underline decoration-black/10">Pura Performance.</span>
+                        class="text-5xl lg:text-7xl text-bold-modern tracking-tighter uppercase text-background-dark mb-6">
+                        PUNTI DI FORZA
                     </h2>
-                    <p class="text-xl text-slate-600 max-w-2xl leading-relaxed font-medium">
-                        Non vendiamo solo prodotti; curiamo esperienze. Ogni mod, tank e bottiglia di liquido nel nostro
-                        negozio soddisfa i più alti criteri di sicurezza e prestazioni.
+                    <p class="text-xl text-slate-600 max-w-3xl mx-auto leading-relaxed font-medium">
+                        Il nostro negozio di liquidi da inalazione e sigarette elettroniche nasce per offrire
+                        un'esperienza di svapo di alto livello, basata su qualità, competenza e affidabilità.
                     </p>
-                    <div class="flex flex-col sm:flex-row gap-6 pt-8 w-full sm:w-auto">
-                        <a href="contact.html"
-                            class="bg-primary text-background-dark px-12 py-6 rounded-sm font-black text-xs uppercase tracking-widest hover:bg-white transition-all accent-glow inline-flex items-center justify-center">
-                            Trova Negozio
-                        </a>
-                        <a href="products.html"
-                            class="bg-black/5 border border-black/10 text-background-dark px-12 py-6 rounded-sm font-black text-xs uppercase tracking-widest hover:bg-black/10 transition-all inline-flex items-center justify-center">
-                            I Nostri Standard
-                        </a>
+                </div>
+
+                <!-- Strengths Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
+                    <!-- Strength 1: Prodotti Certificati -->
+                    <div
+                        class="group bg-black/5 backdrop-blur-sm p-10 lg:p-12 rounded-xl border border-black/10 hover:border-primary/30 transition-all duration-300 hover:shadow-xl scroll-animate-stagger">
+                        <div class="flex items-start gap-6">
+                            <div class="flex-shrink-0">
+                                <div
+                                    class="size-16 bg-primary rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                                    <span
+                                        class="material-symbols-outlined text-4xl text-background-dark">verified</span>
+                                </div>
+                            </div>
+                            <div class="flex-1">
+                                <h3 class="text-2xl font-black uppercase tracking-tight text-background-dark mb-4">
+                                    Prodotti Certificati
+                                </h3>
+                                <p class="text-slate-600 leading-relaxed font-medium">
+                                    Selezioniamo esclusivamente prodotti certificati dei migliori marchi, garantendo
+                                    sicurezza, prestazioni e gusto autentico.
+                                </p>
+                            </div>
+                        </div>
                     </div>
+
+                    <!-- Strength 2: Consulenza Personalizzata -->
+                    <div
+                        class="group bg-black/5 backdrop-blur-sm p-10 lg:p-12 rounded-xl border border-black/10 hover:border-primary/30 transition-all duration-300 hover:shadow-xl scroll-animate-stagger delay-100">
+                        <div class="flex items-start gap-6">
+                            <div class="flex-shrink-0">
+                                <div
+                                    class="size-16 bg-primary rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                                    <span
+                                        class="material-symbols-outlined text-4xl text-background-dark">support_agent</span>
+                                </div>
+                            </div>
+                            <div class="flex-1">
+                                <h3 class="text-2xl font-black uppercase tracking-tight text-background-dark mb-4">
+                                    Consulenza Personalizzata
+                                </h3>
+                                <p class="text-slate-600 leading-relaxed font-medium">
+                                    Ogni cliente viene seguito con una consulenza personalizzata, pensata sia per chi si
+                                    avvicina per la prima volta allo svapo sia per utenti esperti.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Strength 3: Ambiente Moderno -->
+                    <div
+                        class="group bg-black/5 backdrop-blur-sm p-10 lg:p-12 rounded-xl border border-black/10 hover:border-primary/30 transition-all duration-300 hover:shadow-xl scroll-animate-stagger delay-200">
+                        <div class="flex items-start gap-6">
+                            <div class="flex-shrink-0">
+                                <div
+                                    class="size-16 bg-primary rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                                    <span
+                                        class="material-symbols-outlined text-4xl text-background-dark">storefront</span>
+                                </div>
+                            </div>
+                            <div class="flex-1">
+                                <h3 class="text-2xl font-black uppercase tracking-tight text-background-dark mb-4">
+                                    Ambiente Elegante
+                                </h3>
+                                <p class="text-slate-600 leading-relaxed font-medium">
+                                    L'ambiente è curato, moderno ed elegante, progettato per mettere a proprio agio e
+                                    valorizzare ogni scelta.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Strength 4: Servizio Professionale -->
+                    <div
+                        class="group bg-black/5 backdrop-blur-sm p-10 lg:p-12 rounded-xl border border-black/10 hover:border-primary/30 transition-all duration-300 hover:shadow-xl scroll-animate-stagger delay-300">
+                        <div class="flex items-start gap-6">
+                            <div class="flex-shrink-0">
+                                <div
+                                    class="size-16 bg-primary rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                                    <span
+                                        class="material-symbols-outlined text-4xl text-background-dark">workspace_premium</span>
+                                </div>
+                            </div>
+                            <div class="flex-1">
+                                <h3 class="text-2xl font-black uppercase tracking-tight text-background-dark mb-4">
+                                    Servizio Professionale
+                                </h3>
+                                <p class="text-slate-600 leading-relaxed font-medium">
+                                    A completare l'esperienza, un assortimento sempre aggiornato e un servizio attento,
+                                    trasparente e professionale.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Call to Action -->
+                <div class="flex flex-col sm:flex-row gap-6 pt-16 justify-center">
+                    <a href="contact.html"
+                        class="bg-primary text-background-dark px-12 py-6 rounded-xl font-black text-xs uppercase tracking-widest hover:bg-white transition-all accent-glow-strong inline-flex items-center justify-center hover:scale-105 transform duration-300">
+                        Visita il Negozio
+                    </a>
+                    <a href="products.html"
+                        class="bg-black/5 border border-black/10 text-background-dark px-12 py-6 rounded-xl font-black text-xs uppercase tracking-widest hover:bg-black/10 transition-all inline-flex items-center justify-center hover:scale-105 transform duration-300">
+                        Scopri i Prodotti
+                    </a>
                 </div>
             </div>
         </section>
         <section class="py-32 px-6 lg:px-20 bg-white">
             <div class="max-w-[1440px] mx-auto">
-                <div class="flex flex-col md:flex-row md:items-end justify-between mb-20 gap-8">
+                <div
+                    class="flex flex-col md:flex-row md:items-end justify-between mb-20 gap-8 scroll-animate scroll-animate-right">
                     <div class="space-y-4">
                         <h2 class="text-5xl lg:text-6xl text-bold-modern uppercase text-background-dark">Nuovi Arrivi
                         </h2>
@@ -269,7 +406,7 @@
         <!-- NEW GOOGLE REVIEWS SECTION -->
         <section class="py-20 bg-surface-light border-t border-black/5">
             <div class="max-w-[1440px] mx-auto px-6 lg:px-20">
-                <div class="text-center mb-16">
+                <div class="text-center mb-16 scroll-animate scroll-animate-left">
 
                     <div class="flex items-center justify-center gap-2 mb-4">
                         <span class="text-2xl font-bold text-background-dark">4.9</span>
@@ -291,7 +428,7 @@
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
                     <!-- Review 1 -->
                     <div
-                        class="bg-white p-8 rounded-sm shadow-sm hover:shadow-md transition-shadow border border-black/5">
+                        class="bg-white p-8 rounded-sm shadow-sm hover:shadow-md transition-shadow border border-black/5 scroll-animate-stagger">
                         <div class="flex items-center gap-4 mb-4">
                             <div
                                 class="size-10 rounded-full bg-slate-100 flex items-center justify-center text-lg font-bold text-slate-400">
@@ -316,7 +453,7 @@
 
                     <!-- Review 2 -->
                     <div
-                        class="bg-white p-8 rounded-sm shadow-sm hover:shadow-md transition-shadow border border-black/5">
+                        class="bg-white p-8 rounded-sm shadow-sm hover:shadow-md transition-shadow border border-black/5 scroll-animate-stagger delay-100">
                         <div class="flex items-center gap-4 mb-4">
                             <div
                                 class="size-10 rounded-full bg-slate-100 flex items-center justify-center text-lg font-bold text-slate-400">
@@ -341,7 +478,7 @@
 
                     <!-- Review 3 -->
                     <div
-                        class="bg-white p-8 rounded-sm shadow-sm hover:shadow-md transition-shadow border border-black/5">
+                        class="bg-white p-8 rounded-sm shadow-sm hover:shadow-md transition-shadow border border-black/5 scroll-animate-stagger delay-200">
                         <div class="flex items-center gap-4 mb-4">
                             <div
                                 class="size-10 rounded-full bg-slate-100 flex items-center justify-center text-lg font-bold text-slate-400">
@@ -381,7 +518,7 @@
 
         <section class="py-32 px-6 lg:px-20 bg-white">
             <div class="max-w-[1440px] mx-auto">
-                <div class="text-center mb-16">
+                <div class="text-center mb-16 scroll-animate scroll-animate-right">
                     <h2 class="text-5xl lg:text-6xl text-bold-modern uppercase mb-4 text-background-dark">Domande
                         Frequenti</h2>
                     <p class="text-slate-600 max-w-2xl mx-auto font-medium">Trova risposte rapide alle domande più
@@ -695,6 +832,38 @@
         })();
 
 
+    </script>
+    <script>
+        // Scroll Animations with Intersection Observer
+        document.addEventListener('DOMContentLoaded', function () {
+            // Configuration for Intersection Observer
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1 // Trigger when 10% of the element is visible
+            };
+
+            // Callback function for observer
+            const observerCallback = (entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        // Add the animate-in class when element is in viewport
+                        entry.target.classList.add('animate-in');
+                        // Optional: stop observing after animation (comment out to allow re-animation on scroll up)
+                        // observer.unobserve(entry.target);
+                    }
+                });
+            };
+
+            // Create the observer
+            const observer = new IntersectionObserver(observerCallback, observerOptions);
+
+            // Observe all elements with scroll-animate class
+            const animatedElements = document.querySelectorAll('.scroll-animate, .scroll-animate-stagger');
+            animatedElements.forEach(element => {
+                observer.observe(element);
+            });
+        });
     </script>
 </body>
 
