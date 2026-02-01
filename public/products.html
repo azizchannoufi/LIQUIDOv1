@@ -286,14 +286,14 @@
 
         <!-- Lines Carousel Section -->
         <section class="pb-12 bg-white scroll-animate from-right">
-            <div class="w-full">
-                <div class="text-center mb-8 px-6 lg:px-20">
+            <div class="max-w-[1440px] mx-auto px-6 lg:px-20">
+                <div class="text-center mb-16">
                     <h2 class="text-4xl lg:text-5xl text-bold-modern uppercase text-background-dark mb-4">Le Nostre
                         Linee</h2>
                     <p class="text-slate-600 max-w-2xl mx-auto font-medium">Scopri le nostre linee di prodotti premium
                         selezionate per te</p>
                 </div>
-                <div id="lines-carousel-container" class="min-h-[500px] md:min-h-[600px] w-full">
+                <div id="lines-carousel-container" class="min-h-[500px] w-full">
                     <!-- Lines carousel will be loaded dynamically from Firebase -->
                     <div class="flex items-center justify-center h-[500px] md:h-[600px]">
                         <p class="text-white/40 dark:text-white/40 text-background-dark/40 text-lg">Caricamento linee...
@@ -459,7 +459,7 @@
                     const linesContainer = document.getElementById('lines-carousel-container');
 
                     if (linesContainer && brandsRenderer) {
-                        await brandsRenderer.renderLinesCarouselFromDB(linesContainer);
+                        await brandsRenderer.renderLinesZigZag(linesContainer);
                     }
                 } catch (error) {
                     console.error('Error initializing lines carousel:', error);
