@@ -1,0 +1,72 @@
+<div id="cookie-banner"
+    class="fixed bottom-0 left-0 w-full z-50 transform translate-y-full transition-transform duration-500 ease-in-out">
+    <div class="bg-background-dark/95 backdrop-blur-md border-t border-white/10 p-6 shadow-2xl">
+        <div class="max-w-[1440px] mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+            <div class="flex-1">
+                <div class="flex items-center gap-3 mb-2">
+                    <span class="material-symbols-outlined text-primary text-2xl">cookie</span>
+                    <h3 class="text-white font-bold text-lg uppercase tracking-wider">Informativa sui Cookie</h3>
+                </div>
+                <p class="text-slate-400 text-sm leading-relaxed max-w-3xl">
+                    Utilizziamo cookie tecnici per garantire il corretto funzionamento del sito e, previo tuo consenso,
+                    cookie di terze parti per migliorare la tua esperienza di navigazione.
+                    Chiudendo questo banner acconsenti all'uso dei cookie.
+                    <a href="privacy-policy.html" class="text-primary hover:underline font-medium ml-1">Leggi la Privacy
+                        Policy</a>.
+                </p>
+            </div>
+            <div class="flex items-center gap-4">
+                <button id="btn-accept-cookies"
+                    class="bg-primary hover:bg-white text-background-dark px-8 py-3 rounded-sm font-black text-xs uppercase tracking-widest transition-all hover:scale-105 shadow-lg">
+                    Accetta e Chiudi
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // Function to set a cookie
+        function setCookie(name, value, days) {
+            let expires = "";
+            if (days) {
+                const date = new Date();
+                date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+                expires = "; expires=" + date.toUTCString();
+            }
+            document.cookie = name + "=" + (value || "") + expires + "; path=/; SameSite=Lax";
+        }
+
+        // Function to get a cookie
+        function getCookie(name) {
+            const nameEQ = name + "=";
+            const ca = document.cookie.split(';');
+            for (let i = 0; i < ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+                if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+            }
+            return null;
+        }
+
+        const banner = document.getElementById('cookie-banner');
+        const acceptBtn = document.getElementById('btn-accept-cookies');
+
+        // Check if cookie exists
+        if (!getCookie('liquido_cookies_accepted')) {
+            // Show banner with a slight delay
+            setTimeout(() => {
+                banner.classList.remove('translate-y-full');
+            }, 1000);
+        }
+
+        // Handle acceptance
+        if (acceptBtn) {
+            acceptBtn.addEventListener('click', () => {
+                setCookie('liquido_cookies_accepted', 'true', 365); // Expires in 1 year
+                banner.classList.add('translate-y-full');
+            });
+        }
+    });
+</script>
