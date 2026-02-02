@@ -44,7 +44,7 @@ async function loadComponent(elementId, componentPath, options = {}) {
  * Load multiple components in parallel
  * @param {Array} components - Array of {elementId, componentPath} objects
  */
-async function loadComponents(components) {
+async function loadComponentsInParallel(components) {
     const promises = components.map(({ elementId, componentPath, options }) =>
         loadComponent(elementId, componentPath, options)
     );
@@ -98,10 +98,67 @@ async function loadHeader() {
     }
 }
 
+/**
+ * Load the footer component
+ * Automatically appends to the main element or body
+ */
+async function loadFooter() {
+    try {
+        const response = await fetch('../shared/components/public-footer.html');
+        if (!response.ok) {
+            throw new Error(`Failed to load footer: ${response.statusText}`);
+        }
+
+        const html = await response.text();
+        const main = document.querySelector('main');
+        if (main) {
+            main.insertAdjacentHTML('afterend', html);
+        } else {
+            document.body.insertAdjacentHTML('beforeend', html);
+        }
+    } catch (error) {
+        console.error('Error loading footer:', error);
+    }
+}
+
+/**
+ * Load the cookie banner component
+ * Automatically appends to the body
+ */
+async function loadCookieBanner() {
+    try {
+        const response = await fetch('../shared/components/cookie-banner.html');
+        if (!response.ok) {
+            throw new Error(`Failed to load cookie banner: ${response.statusText}`);
+        }
+
+        const html = await response.text();
+        document.body.insertAdjacentHTML('beforeend', html);
+
+        // The script inside the HTML won't run automatically when inserted via innerHTML/insertAdjacentHTML
+        // We need to extract and run it manually
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = html;
+        const scripts = tempDiv.querySelectorAll('script');
+
+        scripts.forEach(oldScript => {
+            const newScript = document.createElement('script');
+            Array.from(oldScript.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value));
+            newScript.appendChild(document.createTextNode(oldScript.innerHTML));
+            document.body.appendChild(newScript);
+        });
+
+    } catch (error) {
+        console.error('Error loading cookie banner:', error);
+    }
+}
+
 // Auto-load components when DOM is ready
 async function loadComponents() {
     await loadTopNav();
     await loadHeader();
+    await loadFooter();
+    await loadCookieBanner();
 }
 
 if (document.readyState === 'loading') {
@@ -112,5 +169,5 @@ if (document.readyState === 'loading') {
 
 // Export for use as module
 if (typeof module !== 'undefined' && module.exports) {
-    module.exports = { loadComponent, loadComponents: loadComponentsMultiple, loadTopNav, loadHeader };
+    module.exports = { loadComponent, loadComponents: loadComponentsInParallel, loadTopNav, loadHeader, loadFooter, loadCookieBanner };
 }
