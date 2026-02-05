@@ -39,7 +39,7 @@
             theme: {
                 extend: {
                     colors: {
-                        "primary": "#F5D000",
+                        "primary": "#F8ED70",
                         "background-light": "#333333",
                         "background-dark": "#000000",
                         "charcoal": "#333333",
@@ -54,7 +54,7 @@
     </script>
     <style type="text/tailwindcss">
         :root {
-            --primary-color: #F5D000;
+            --primary-color: #F8ED70;
             --bg-dark: #000000;
         }
         body { font-family: 'Plus Jakarta Sans', sans-serif; }
@@ -103,7 +103,7 @@
             animation-play-state: paused;
         }
         .text-primary-intense {
-            color: #F5D000;
+            color: #F8ED70;
         }
         .dark .text-primary-intense {
             color: var(--primary-color);
@@ -199,6 +199,11 @@
         .faq-answer p {
             color: black !important;
         }
+
+        /* Star Rating Filled Stars */
+        .star-rating .material-symbols-outlined {
+            font-variation-settings: 'FILL' 1;
+        }
     </style>
 </head>
 
@@ -259,97 +264,71 @@
                 </div>
 
                 <!-- Strengths Grid -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
+                <!-- Strengths Grid (Horizontal List) -->
+                <div class="flex flex-col md:flex-row justify-between gap-8 lg:gap-6">
                     <!-- Strength 1: Prodotti Certificati -->
-                    <div
-                        class="group bg-black/5 backdrop-blur-sm p-10 lg:p-12 rounded-xl border border-black/10 hover:border-primary/30 transition-all duration-300 hover:shadow-xl scroll-animate-stagger">
-                        <div class="flex items-start gap-6">
-                            <div class="flex-shrink-0">
-                                <div
-                                    class="size-16 bg-primary rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                                    <span
-                                        class="material-symbols-outlined text-4xl text-background-dark">verified</span>
-                                </div>
-                            </div>
-                            <div class="flex-1">
-                                <h3 class="text-2xl font-black uppercase tracking-tight text-background-dark mb-4">
-                                    Prodotti Certificati
-                                </h3>
-                                <p class="text-slate-600 leading-relaxed font-medium">
-                                    Selezioniamo esclusivamente prodotti certificati dei migliori marchi, garantendo
-                                    sicurezza, prestazioni e gusto autentico.
-                                </p>
-                            </div>
+                    <div class="flex-1 flex flex-col items-center text-center group scroll-animate-stagger">
+                        <div
+                            class="size-20 bg-primary/20 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-primary transition-all duration-300 shadow-sm">
+                            <span class="material-symbols-outlined text-4xl text-background-dark">verified</span>
                         </div>
+                        <h3
+                            class="text-xl font-black uppercase tracking-tight text-background-dark mb-4 group-hover:text-primary-dark transition-colors">
+                            Prodotti Certificati
+                        </h3>
+                        <p class="text-slate-600 leading-relaxed font-medium text-sm">
+                            Selezioniamo esclusivamente prodotti certificati dei migliori marchi, garantendo sicurezza,
+                            prestazioni e gusto autentico.
+                        </p>
                     </div>
 
                     <!-- Strength 2: Consulenza Personalizzata -->
-                    <div
-                        class="group bg-black/5 backdrop-blur-sm p-10 lg:p-12 rounded-xl border border-black/10 hover:border-primary/30 transition-all duration-300 hover:shadow-xl scroll-animate-stagger delay-100">
-                        <div class="flex items-start gap-6">
-                            <div class="flex-shrink-0">
-                                <div
-                                    class="size-16 bg-primary rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                                    <span
-                                        class="material-symbols-outlined text-4xl text-background-dark">support_agent</span>
-                                </div>
-                            </div>
-                            <div class="flex-1">
-                                <h3 class="text-2xl font-black uppercase tracking-tight text-background-dark mb-4">
-                                    Consulenza Personalizzata
-                                </h3>
-                                <p class="text-slate-600 leading-relaxed font-medium">
-                                    Ogni cliente viene seguito con una consulenza personalizzata, pensata sia per chi si
-                                    avvicina per la prima volta allo svapo sia per utenti esperti.
-                                </p>
-                            </div>
+                    <div class="flex-1 flex flex-col items-center text-center group scroll-animate-stagger delay-100">
+                        <div
+                            class="size-20 bg-primary/20 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-primary transition-all duration-300 shadow-sm">
+                            <span class="material-symbols-outlined text-4xl text-background-dark">support_agent</span>
                         </div>
+                        <h3
+                            class="text-xl font-black uppercase tracking-tight text-background-dark mb-4 group-hover:text-primary-dark transition-colors">
+                            Consulenza Personalizzata
+                        </h3>
+                        <p class="text-slate-600 leading-relaxed font-medium text-sm">
+                            Ogni cliente viene seguito con una consulenza personalizzata, pensata sia per chi si
+                            avvicina per la prima volta allo svapo sia per utenti esperti.
+                        </p>
                     </div>
 
-                    <!-- Strength 3: Ambiente Moderno -->
-                    <div
-                        class="group bg-black/5 backdrop-blur-sm p-10 lg:p-12 rounded-xl border border-black/10 hover:border-primary/30 transition-all duration-300 hover:shadow-xl scroll-animate-stagger delay-200">
-                        <div class="flex items-start gap-6">
-                            <div class="flex-shrink-0">
-                                <div
-                                    class="size-16 bg-primary rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                                    <span
-                                        class="material-symbols-outlined text-4xl text-background-dark">storefront</span>
-                                </div>
-                            </div>
-                            <div class="flex-1">
-                                <h3 class="text-2xl font-black uppercase tracking-tight text-background-dark mb-4">
-                                    Ambiente Elegante
-                                </h3>
-                                <p class="text-slate-600 leading-relaxed font-medium">
-                                    L'ambiente è curato, moderno ed elegante, progettato per mettere a proprio agio e
-                                    valorizzare ogni scelta.
-                                </p>
-                            </div>
+                    <!-- Strength 3: Ambiente Elegante -->
+                    <div class="flex-1 flex flex-col items-center text-center group scroll-animate-stagger delay-200">
+                        <div
+                            class="size-20 bg-primary/20 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-primary transition-all duration-300 shadow-sm">
+                            <span class="material-symbols-outlined text-4xl text-background-dark">storefront</span>
                         </div>
+                        <h3
+                            class="text-xl font-black uppercase tracking-tight text-background-dark mb-4 group-hover:text-primary-dark transition-colors">
+                            Ambiente Elegante
+                        </h3>
+                        <p class="text-slate-600 leading-relaxed font-medium text-sm">
+                            L'ambiente è curato, moderno ed elegante, progettato per mettere a proprio agio e
+                            valorizzare ogni scelta.
+                        </p>
                     </div>
 
                     <!-- Strength 4: Servizio Professionale -->
-                    <div
-                        class="group bg-black/5 backdrop-blur-sm p-10 lg:p-12 rounded-xl border border-black/10 hover:border-primary/30 transition-all duration-300 hover:shadow-xl scroll-animate-stagger delay-300">
-                        <div class="flex items-start gap-6">
-                            <div class="flex-shrink-0">
-                                <div
-                                    class="size-16 bg-primary rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                                    <span
-                                        class="material-symbols-outlined text-4xl text-background-dark">workspace_premium</span>
-                                </div>
-                            </div>
-                            <div class="flex-1">
-                                <h3 class="text-2xl font-black uppercase tracking-tight text-background-dark mb-4">
-                                    Servizio Professionale
-                                </h3>
-                                <p class="text-slate-600 leading-relaxed font-medium">
-                                    A completare l'esperienza, un assortimento sempre aggiornato e un servizio attento,
-                                    trasparente e professionale.
-                                </p>
-                            </div>
+                    <div class="flex-1 flex flex-col items-center text-center group scroll-animate-stagger delay-300">
+                        <div
+                            class="size-20 bg-primary/20 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-primary transition-all duration-300 shadow-sm">
+                            <span
+                                class="material-symbols-outlined text-4xl text-background-dark">workspace_premium</span>
                         </div>
+                        <h3
+                            class="text-xl font-black uppercase tracking-tight text-background-dark mb-4 group-hover:text-primary-dark transition-colors">
+                            Servizio Professionale
+                        </h3>
+                        <p class="text-slate-600 leading-relaxed font-medium text-sm">
+                            A completare l'esperienza, un assortimento sempre aggiornato e un servizio attento,
+                            trasparente e professionale.
+                        </p>
                     </div>
                 </div>
 
@@ -410,7 +389,7 @@
 
                     <div class="flex items-center justify-center gap-2 mb-4">
                         <span class="text-2xl font-bold text-background-dark">4.9</span>
-                        <div class="flex text-[#F8ED70]">
+                        <div class="flex text-[#F8ED70] star-rating">
                             <span class="material-symbols-outlined fill-current">star</span>
                             <span class="material-symbols-outlined fill-current">star</span>
                             <span class="material-symbols-outlined fill-current">star</span>
@@ -436,7 +415,7 @@
                             </div>
                             <div>
                                 <h4 class="font-bold text-background-dark">Marco R.</h4>
-                                <div class="flex text-[#F8ED70] text-sm">
+                                <div class="flex text-[#F8ED70] text-sm star-rating">
                                     <span class="material-symbols-outlined text-[18px] fill-current">star</span>
                                     <span class="material-symbols-outlined text-[18px] fill-current">star</span>
                                     <span class="material-symbols-outlined text-[18px] fill-current">star</span>
@@ -461,7 +440,7 @@
                             </div>
                             <div>
                                 <h4 class="font-bold text-background-dark">Giulia B.</h4>
-                                <div class="flex text-[#F8ED70] text-sm">
+                                <div class="flex text-[#F8ED70] text-sm star-rating">
                                     <span class="material-symbols-outlined text-[18px] fill-current">star</span>
                                     <span class="material-symbols-outlined text-[18px] fill-current">star</span>
                                     <span class="material-symbols-outlined text-[18px] fill-current">star</span>
@@ -486,7 +465,7 @@
                             </div>
                             <div>
                                 <h4 class="font-bold text-background-dark">Alessandro V.</h4>
-                                <div class="flex text-[#F8ED70] text-sm">
+                                <div class="flex text-[#F8ED70] text-sm star-rating">
                                     <span class="material-symbols-outlined text-[18px] fill-current">star</span>
                                     <span class="material-symbols-outlined text-[18px] fill-current">star</span>
                                     <span class="material-symbols-outlined text-[18px] fill-current">star</span>
