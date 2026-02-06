@@ -12,8 +12,8 @@
 /* Light mode CSS Variables */
 :root:not(.dark),
 .light {
-    --primary-color: #F5C842;
-    --primary-color-light: #FFD966;
+    --primary-color: #F8ED70;
+    --primary-color-light: #F8ED70;
 }
 
 /* Base Styles */
@@ -66,17 +66,17 @@ body {
 /* Light Mode Glow Effects - Refined yellow */
 :root:not(.dark) .accent-glow,
 .light .accent-glow {
-    box-shadow: 0 0 20px rgba(245, 200, 66, 0.35);
+    box-shadow: 0 0 20px rgba(248, 237, 112, 0.35);
 }
 
 :root:not(.dark) .accent-glow-strong:hover,
 .light .accent-glow-strong:hover {
-    box-shadow: 0 0 30px rgba(245, 200, 66, 0.5);
+    box-shadow: 0 0 30px rgba(248, 237, 112, 0.5);
 }
 
 :root:not(.dark) .text-glow:hover,
 .light .text-glow:hover {
-    text-shadow: 0 0 15px rgba(245, 200, 66, 0.5);
+    text-shadow: 0 0 15px rgba(248, 237, 112, 0.5);
 }
 
 /* Brand Card Hover Effect */

@@ -97,6 +97,24 @@ function initHeaderLogic() {
             });
         }
     }
+    // --- Active Link Highlighting ---
+    function highlightActiveLink() {
+        const currentPath = window.location.pathname.split('/').pop() || 'index.html';
+        const navLinks = header.querySelectorAll('nav a');
+
+        navLinks.forEach(link => {
+            const linkHref = link.getAttribute('href');
+            if (linkHref === currentPath) {
+                link.classList.add('text-primary');
+                link.classList.remove('text-gray-800');
+            } else {
+                link.classList.remove('text-primary');
+                link.classList.add('text-gray-800');
+            }
+        });
+    }
+
+    highlightActiveLink();
 
     // --- User Menu Logic ---
     const menuBtn = document.getElementById('hamburger-btn');
@@ -140,7 +158,7 @@ function initHeaderLogic() {
                 menuContent.innerHTML = `
                     <div class="flex flex-col gap-6">
                         <div class="flex items-center gap-3 pb-6 border-b border-gray-100">
-                             <div class="w-12 h-12 rounded-full bg-yellow-500 flex items-center justify-center text-white font-bold text-xl shadow-md">
+                             <div class="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-black font-bold text-xl shadow-md">
                                 ${initial}
                              </div>
                              <div class="overflow-hidden">
@@ -151,14 +169,14 @@ function initHeaderLogic() {
 
                         <div class="space-y-3">
                             <h4 class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-2 px-1">Servizi MyLiquido</h4>
-                            <a href="myliquido.html#special-request" onclick="window.closeUserMenu()" class="flex items-center gap-4 p-3 rounded-lg hover:bg-yellow-50 bg-white border border-gray-100 hover:border-yellow-200 transition-all group shadow-sm">
-                                <div class="w-8 h-8 rounded bg-yellow-100 flex items-center justify-center text-yellow-600 group-hover:bg-yellow-500 group-hover:text-white transition-colors">
+                            <a href="myliquido.html#special-request" onclick="window.closeUserMenu()" class="flex items-center gap-4 p-3 rounded-lg hover:bg-primary/5 bg-white border border-gray-100 hover:border-primary/30 transition-all group shadow-sm">
+                                <div class="w-8 h-8 rounded bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-black transition-colors">
                                     <span class="material-symbols-outlined text-lg">inventory_2</span>
                                 </div>
                                 <span class="text-sm font-bold text-gray-700 group-hover:text-gray-900">Richiedi Prodotto</span>
                             </a>
-                            <a href="myliquido.html#maintenance-service" onclick="window.closeUserMenu()" class="flex items-center gap-4 p-3 rounded-lg hover:bg-yellow-50 bg-white border border-gray-100 hover:border-yellow-200 transition-all group shadow-sm">
-                                <div class="w-8 h-8 rounded bg-yellow-100 flex items-center justify-center text-yellow-600 group-hover:bg-yellow-500 group-hover:text-white transition-colors">
+                            <a href="myliquido.html#maintenance-service" onclick="window.closeUserMenu()" class="flex items-center gap-4 p-3 rounded-lg hover:bg-primary/5 bg-white border border-gray-100 hover:border-primary/30 transition-all group shadow-sm">
+                                <div class="w-8 h-8 rounded bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-black transition-colors">
                                     <span class="material-symbols-outlined text-lg">build</span>
                                 </div>
                                 <span class="text-sm font-bold text-gray-700 group-hover:text-gray-900">Manutenzione</span>
@@ -204,7 +222,7 @@ function initHeaderLogic() {
                              <p class="text-gray-500 text-sm px-6 leading-relaxed">Accedi al tuo account per gestire i tuoi ordini e richiedere servizi esclusivi MyLiquido.</p>
                         </div>
                         <div class="w-full space-y-4 pt-4 px-2">
-                            <a href="myliquido.html" class="block w-full bg-yellow-500 hover:bg-yellow-400 text-gray-900 font-extrabold uppercase text-xs tracking-[0.15em] py-4 rounded shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-0.5">
+                            <a href="myliquido.html" class="block w-full bg-primary hover:bg-primary/80 text-gray-900 font-extrabold uppercase text-xs tracking-[0.15em] py-4 rounded shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-0.5">
                                 Accedi / Registrati
                             </a>
                         </div>
