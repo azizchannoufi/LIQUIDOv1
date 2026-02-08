@@ -519,48 +519,165 @@ class BrandsRenderer {
      * Render lines in a Zig-Zag layout
      * @param {HTMLElement} container - Container element
      */
+    /**
+     * Render lines in a Zig-Zag layout (Internal helper or for direct use)
+     * @param {Array} lines - Array of line objects
+     * @param {HTMLElement} container - Container element
+     */
+    renderSpecificLinesZigZag(lines, container) {
+        // Filter lines with valid images before rendering
+        const linesWithImages = lines.filter(line => {
+            const imageUrl = line.image_url;
+            if (!imageUrl) return false;
+            if (typeof imageUrl !== 'string') return false;
+            const trimmedUrl = imageUrl.trim();
+            if (trimmedUrl === '' || trimmedUrl === 'null' || trimmedUrl === 'undefined') return false;
+            const isValidUrl = trimmedUrl.startsWith('http://') ||
+                trimmedUrl.startsWith('https://') ||
+                trimmedUrl.startsWith('/') ||
+                trimmedUrl.startsWith('data:image');
+            return isValidUrl;
+        });
+
+        if (linesWithImages.length === 0) {
+            container.innerHTML = '<p class="text-gray-600 dark:text-white/40 text-center py-12">Aucune ligne avec image disponible pour le moment.</p>';
+            return;
+        }
+
+        let html = '<div class="flex flex-col gap-20 py-10">';
+
+        linesWithImages.forEach((line, index) => {
+            const isEven = index % 2 === 0;
+            const rowClass = isEven ? 'flex-row' : 'flex-row-reverse';
+            const textSlideClass = isEven ? 'from-left' : 'from-right';
+            const imageSlideClass = isEven ? 'from-right' : 'from-left';
+
+            const brandName = line.brandName || '';
+            const lineName = line.name || '';
+            const imageUrl = line.image_url;
+            const description = line.description || `Scopri la linea ${lineName} di ${brandName}. Un'esperienza di svapo unica con aromi selezionati e qualità premium.`;
+
+            const params = new URLSearchParams({
+                brand: brandName,
+                line: lineName
+            });
+            if (line.sectionId) params.set('section', line.sectionId);
+            const navUrl = `line-products.html?${params.toString()}`;
+
+            html += `
+                <div class="flex hidden md:flex ${rowClass} items-center justify-between gap-10 lg:gap-20 group relative">
+                    <!-- Text Side -->
+                    <div class="flex-1 w-full lg:w-1/2 scroll-animate ${textSlideClass}">
+                         <div class="space-y-6 ${isEven ? 'text-left' : 'text-right'}">
+                            <div class="space-y-2">
+                                <h3 class="text-primary text-sm font-black uppercase tracking-[0.2em]">${brandName}</h3>
+                                <h2 class="text-4xl lg:text-5xl font-black text-background-dark dark:text-white uppercase leading-none">${lineName}</h2>
+                            </div>
+                            <p class="text-slate-600 dark:text-slate-400 font-medium leading-relaxed max-w-lg ${isEven ? 'mr-auto' : 'ml-auto'}">
+                                ${description}
+                            </p>
+                            <div class="${isEven ? '' : 'flex justify-end'}">
+                                <a href="${navUrl}" class="inline-flex items-center gap-3 px-8 py-4 bg-background-dark text-white hover:bg-primary hover:text-background-dark transition-all duration-300 uppercase font-black tracking-widest text-xs rounded-sm group-btn">
+                                    Vedi Catalogo
+                                    <span class="material-symbols-outlined group-btn-hover:translate-x-1 transition-transform">arrow_forward</span>
+                                </a>
+                            </div>
+                         </div>
+                    </div>
+
+                    <!-- Image Side -->
+                    <div class="flex-1 w-full lg:w-1/2 scroll-animate ${imageSlideClass}">
+                        <div class="relative aspect-[4/3] w-full overflow-hidden rounded-lg shadow-2xl group-hover:shadow-primary/20 transition-all duration-500">
+                            <img src="${imageUrl}" alt="${lineName}" class="w-full h-full object-cover transform scale-100 group-hover:scale-110 transition-transform duration-700">
+                            <div class="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-300"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mobile View (Always Vertical) -->
+                <div class="flex md:hidden flex-col gap-6 group relative scroll-animate from-bottom">
+                     <div class="relative aspect-[4/3] w-full overflow-hidden rounded-lg shadow-lg">
+                        <img src="${imageUrl}" alt="${lineName}" class="w-full h-full object-cover">
+                     </div>
+                     <div class="space-y-4 text-center">
+                        <h3 class="text-primary text-xs font-black uppercase tracking-[0.2em]">${brandName}</h3>
+                        <h2 class="text-3xl font-black text-background-dark dark:text-white uppercase">${lineName}</h2>
+                        <p class="text-slate-600 dark:text-slate-400 text-sm font-medium leading-relaxed">
+                            ${description}
+                        </p>
+                        <a href="${navUrl}" class="inline-flex w-full justify-center items-center gap-2 px-6 py-3 bg-background-dark text-white uppercase font-bold text-xs rounded-sm">
+                            Vedi Catalogo
+                        </a>
+                     </div>
+                </div>
+            `;
+
+            if (index < linesWithImages.length - 1) {
+                html += `
+                    <div class="w-full h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent my-12 lg:my-20 opacity-30"></div>
+                `;
+            }
+        });
+
+        html += '</div>';
+        container.innerHTML = html;
+
+        this.initScrollObserver(container);
+    }
+
+    /**
+     * Render lines in a Zig-Zag layout (fetches all lines)
+     * @param {HTMLElement} container - Container element
+     */
     async renderLinesZigZag(container) {
         try {
             const allLines = await this.catalogService.getAllLinesFromAllSections();
+            this.renderSpecificLinesZigZag(allLines, container);
+        } catch (error) {
+            console.error('Error rendering zig-zag lines:', error);
+            container.innerHTML = '<p class="text-red-400 text-center">Errore nel caricamento delle linee.</p>';
+        }
+    }
 
-            // Filter lines with valid images before rendering
-            const linesWithImages = allLines.filter(line => {
-                const imageUrl = line.image_url;
-                if (!imageUrl) return false;
-                if (typeof imageUrl !== 'string') return false;
-                const trimmedUrl = imageUrl.trim();
-                if (trimmedUrl === '' || trimmedUrl === 'null' || trimmedUrl === 'undefined') return false;
-                const isValidUrl = trimmedUrl.startsWith('http://') ||
-                    trimmedUrl.startsWith('https://') ||
-                    trimmedUrl.startsWith('/') ||
-                    trimmedUrl.startsWith('data:image');
-                return isValidUrl;
-            });
+    /**
+     * Render a grid of Brand Logos + Names
+     * @param {HTMLElement} container - Container element
+     */
+    /**
+     * Render brands in a Zig-Zag layout (similar to lines)
+     * @param {HTMLElement} container - Container element
+     */
+    async renderBrandsZigZag(container) {
+        try {
+            const allBrands = await this.catalogService.getAllBrands();
 
-            if (linesWithImages.length === 0) {
-                container.innerHTML = '<p class="text-gray-600 dark:text-white/40 text-center py-12">Aucune ligne avec image disponible pour le moment.</p>';
+            // Filter brands (must have a name, maybe a logo but we handle missing logos)
+            // Prioritize brands with lines or liquid brands
+            const brandsToDisplay = allBrands.filter(b => (b.type === 'liquid' || b.lines?.length > 0));
+
+            if (brandsToDisplay.length === 0) {
+                container.innerHTML = '<p class="text-center text-gray-500 py-12">Nessun marchio trovato.</p>';
                 return;
             }
 
             let html = '<div class="flex flex-col gap-20 py-10">';
 
-            linesWithImages.forEach((line, index) => {
+            brandsToDisplay.forEach((brand, index) => {
                 const isEven = index % 2 === 0;
                 const rowClass = isEven ? 'flex-row' : 'flex-row-reverse';
                 const textSlideClass = isEven ? 'from-left' : 'from-right';
                 const imageSlideClass = isEven ? 'from-right' : 'from-left';
 
-                const brandName = line.brandName || '';
-                const lineName = line.name || '';
-                const imageUrl = line.image_url;
-                const description = line.description || `Scopri la linea ${lineName} di ${brandName}. Un'esperienza di svapo unica con aromi selezionati e qualità premium.`;
+                const brandName = brand.name || 'Brand';
+                const logoUrl = brand.logo_url;
+                const hasLogo = logoUrl && logoUrl.trim() !== '';
 
-                const params = new URLSearchParams({
-                    brand: brandName,
-                    line: lineName
-                });
-                if (line.sectionId) params.set('section', line.sectionId);
-                const navUrl = `line-products.html?${params.toString()}`;
+                // Construct a default description if none exists
+                const lineCount = brand.lines ? brand.lines.length : 0;
+                const description = brand.description || `Scopri l'eccellenza di ${brandName}. ${lineCount > 0 ? `Esplora le nostre ${lineCount} linee esclusive.` : 'Partner ufficiale Liquido.'} Qualità premium e sapori indimenticabili.`;
+
+                // Navigation URL
+                const navUrl = `brand-lines.html?brand=${encodeURIComponent(brandName)}`;
 
                 html += `
                     <div class="flex hidden md:flex ${rowClass} items-center justify-between gap-10 lg:gap-20 group relative">
@@ -568,49 +685,55 @@ class BrandsRenderer {
                         <div class="flex-1 w-full lg:w-1/2 scroll-animate ${textSlideClass}">
                              <div class="space-y-6 ${isEven ? 'text-left' : 'text-right'}">
                                 <div class="space-y-2">
-                                    <h3 class="text-primary text-sm font-black uppercase tracking-[0.2em]">${brandName}</h3>
-                                    <h2 class="text-4xl lg:text-5xl font-black text-background-dark dark:text-white uppercase leading-none">${lineName}</h2>
+                                    <h3 class="text-primary text-sm font-black uppercase tracking-[0.2em]">Partner Ufficiale</h3>
+                                    <h2 class="text-4xl lg:text-5xl font-black text-background-dark dark:text-white uppercase leading-none">${brandName}</h2>
                                 </div>
                                 <p class="text-slate-600 dark:text-slate-400 font-medium leading-relaxed max-w-lg ${isEven ? 'mr-auto' : 'ml-auto'}">
                                     ${description}
                                 </p>
                                 <div class="${isEven ? '' : 'flex justify-end'}">
                                     <a href="${navUrl}" class="inline-flex items-center gap-3 px-8 py-4 bg-background-dark text-white hover:bg-primary hover:text-background-dark transition-all duration-300 uppercase font-black tracking-widest text-xs rounded-sm group-btn">
-                                        Vedi Catalogo
+                                        Vedi Linee
                                         <span class="material-symbols-outlined group-btn-hover:translate-x-1 transition-transform">arrow_forward</span>
                                     </a>
                                 </div>
                              </div>
                         </div>
 
-                        <!-- Image Side -->
+                        <!-- Image Side (Brand Logo/Image) -->
                         <div class="flex-1 w-full lg:w-1/2 scroll-animate ${imageSlideClass}">
-                            <div class="relative aspect-[4/3] w-full overflow-hidden rounded-lg shadow-2xl group-hover:shadow-primary/20 transition-all duration-500">
-                                <img src="${imageUrl}" alt="${lineName}" class="w-full h-full object-cover transform scale-100 group-hover:scale-110 transition-transform duration-700">
-                                <div class="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-300"></div>
+                            <div class="relative aspect-[4/3] w-full overflow-hidden rounded-lg shadow-2xl group-hover:shadow-primary/20 transition-all duration-500 bg-white border border-gray-100 flex items-center justify-center p-12">
+                                ${hasLogo ?
+                        `<img src="${logoUrl}" alt="${brandName}" class="w-2/3 h-2/3 object-contain filter grayscale group-hover:grayscale-0 transition-all duration-500 transform scale-100 group-hover:scale-110">` :
+                        `<div class="flex flex-col items-center justify-center text-gray-300"><span class="material-symbols-outlined text-6xl">image_not_supported</span><span class="mt-4 font-bold uppercase tracking-widest text-xs">Logo non disponibile</span></div>`
+                    }
+                                <div class="absolute inset-0 bg-transparent mix-blend-multiply"></div>
                             </div>
                         </div>
                     </div>
 
                     <!-- Mobile View (Always Vertical) -->
                     <div class="flex md:hidden flex-col gap-6 group relative scroll-animate from-bottom">
-                         <div class="relative aspect-[4/3] w-full overflow-hidden rounded-lg shadow-lg">
-                            <img src="${imageUrl}" alt="${lineName}" class="w-full h-full object-cover">
+                         <div class="relative aspect-[4/3] w-full overflow-hidden rounded-lg shadow-lg bg-white border border-gray-100 flex items-center justify-center p-8">
+                            ${hasLogo ?
+                        `<img src="${logoUrl}" alt="${brandName}" class="w-3/4 h-3/4 object-contain filter grayscale-0">` :
+                        `<span class="material-symbols-outlined text-4xl text-gray-300">image_not_supported</span>`
+                    }
                          </div>
                          <div class="space-y-4 text-center">
-                            <h3 class="text-primary text-xs font-black uppercase tracking-[0.2em]">${brandName}</h3>
-                            <h2 class="text-3xl font-black text-background-dark dark:text-white uppercase">${lineName}</h2>
+                            <h3 class="text-primary text-xs font-black uppercase tracking-[0.2em]">Partner Ufficiale</h3>
+                            <h2 class="text-3xl font-black text-background-dark dark:text-white uppercase">${brandName}</h2>
                             <p class="text-slate-600 dark:text-slate-400 text-sm font-medium leading-relaxed">
                                 ${description}
                             </p>
                             <a href="${navUrl}" class="inline-flex w-full justify-center items-center gap-2 px-6 py-3 bg-background-dark text-white uppercase font-bold text-xs rounded-sm">
-                                Vedi Catalogo
+                                Vedi Linee
                             </a>
                          </div>
                     </div>
                 `;
 
-                if (index < linesWithImages.length - 1) {
+                if (index < brandsToDisplay.length - 1) {
                     html += `
                         <div class="w-full h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent my-12 lg:my-20 opacity-30"></div>
                     `;
@@ -623,8 +746,8 @@ class BrandsRenderer {
             this.initScrollObserver(container);
 
         } catch (error) {
-            console.error('Error rendering zig-zag lines:', error);
-            container.innerHTML = '<p class="text-red-400 text-center">Errore nel caricamento delle linee.</p>';
+            console.error('Error rendering brand logos grid:', error);
+            container.innerHTML = '<p class="text-center text-red-400">Errore nel caricamento dei marchi.</p>';
         }
     }
 
