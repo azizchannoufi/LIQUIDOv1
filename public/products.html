@@ -285,20 +285,19 @@
             </div>
         </section>
 
-        <!-- Lines Carousel Section -->
-        <section class="pb-12 bg-white scroll-animate from-right">
+        <!-- Brands Grid Section (Replaces Lines Carousel) -->
+        <section class="pb-12 bg-white">
             <div class="max-w-[1440px] mx-auto px-6 lg:px-20">
-                <div class="text-center mb-16">
-                    <h2 class="text-4xl lg:text-5xl text-bold-modern uppercase text-background-dark mb-4">Le Nostre
-                        Linee</h2>
-                    <p class="text-slate-600 max-w-2xl mx-auto font-medium">Scopri le nostre linee di prodotti premium
-                        selezionate per te</p>
+                <div class="text-center mb-16 scroll-animate from-right">
+                    <h2 class="text-4xl lg:text-5xl text-bold-modern uppercase text-background-dark mb-4">I Nostri
+                        Marchi</h2>
+                    <p class="text-slate-600 max-w-2xl mx-auto font-medium">Sfoglia i nostri marchi partner e scopri le
+                        loro linee esclusive</p>
                 </div>
-                <div id="lines-carousel-container" class="min-h-[500px] w-full">
-                    <!-- Lines carousel will be loaded dynamically from Firebase -->
-                    <div class="flex items-center justify-center h-[500px] md:h-[600px]">
-                        <p class="text-white/40 dark:text-white/40 text-background-dark/40 text-lg">Caricamento linee...
-                        </p>
+                <div id="brands-grid-container" class="min-h-[500px] w-full">
+                    <!-- Brands grid will be loaded dynamically -->
+                    <div class="flex items-center justify-center h-[300px]">
+                        <p class="text-background-dark/40 text-lg">Caricamento marchi...</p>
                     </div>
                 </div>
             </div>
@@ -321,7 +320,7 @@
     <script src="../src/js/modules/products-renderer.js"></script>
     <script src="../src/js/modules/catalog-init.js"></script>
     <script>
-            // Initialize Lines Carousel
+            // Initialize Brands Zig-Zag Section
             (async function () {
                 try {
                     // Wait for catalog initialization
@@ -344,13 +343,13 @@
                     }
 
                     const { brandsRenderer } = catalog;
-                    const linesContainer = document.getElementById('lines-carousel-container');
+                    const brandsContainer = document.getElementById('brands-grid-container');
 
-                    if (linesContainer && brandsRenderer) {
-                        await brandsRenderer.renderLinesZigZag(linesContainer);
+                    if (brandsContainer && brandsRenderer) {
+                        await brandsRenderer.renderBrandsZigZag(brandsContainer);
                     }
                 } catch (error) {
-                    console.error('Error initializing lines carousel:', error);
+                    console.error('Error initializing brands zig-zag:', error);
                 }
             })();
     </script>

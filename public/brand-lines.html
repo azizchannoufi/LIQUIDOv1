@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Linee Prodotti | LIQUIDO</title>
+    <meta name="description" content="Scopri le linee di prodotti esclusive dei nostri marchi partner." />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#F8ED70",
+                        "background-light": "#333333",
+                        "background-dark": "#000000",
+                        "charcoal": "#333333",
+                    },
+                    fontFamily: {
+                        "display": ["Plus Jakarta Sans", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+    <style type="text/tailwindcss">
+        :root {
+            --primary-color: #F8ED70;
+            --bg-dark: #000000;
+        }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .glass-effect {
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+        }
+        .text-bold-modern {
+            font-weight: 800;
+            letter-spacing: -0.02em;
+        }
+        .accent-glow {
+            box-shadow: 0 0 20px rgba(248, 237, 112, 0.2);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        
+        /* Scroll Animations */
+        .scroll-animate {
+            opacity: 0;
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        
+        .scroll-animate.from-left {
+            transform: translateX(-100px);
+        }
+        
+        .scroll-animate.from-right {
+            transform: translateX(100px);
+        }
+        
+        .scroll-animate.from-bottom {
+            transform: translateY(100px);
+        }
+        
+        .scroll-animate.visible {
+            opacity: 1;
+            transform: translateX(0) translateY(0);
+        }
+    </style>
+</head>
+
+<body class="bg-white text-background-dark transition-colors duration-300">
+    <!-- Top navigation and header loaded dynamically via component-loader.js -->
+    <main class="pt-[120px] max-w-[1440px] mx-auto px-6 lg:px-20 py-8">
+
+        <!-- Breadcrumbs -->
+        <div class="flex flex-wrap gap-2 py-4 mb-8">
+            <a class="text-slate-500 text-sm font-medium hover:text-primary transition-colors"
+                href="index.html">Home</a>
+            <span class="text-slate-500 text-sm">/</span>
+            <a class="text-slate-500 text-sm font-medium hover:text-primary transition-colors"
+                href="products.html">Marchi</a>
+            <span class="text-slate-500 text-sm">/</span>
+            <span class="text-background-dark text-sm font-medium" id="breadcrumb-brand">...</span>
+        </div>
+
+        <div class="text-center mb-16 scroll-animate from-bottom">
+            <h2 class="text-4xl lg:text-6xl text-bold-modern uppercase text-background-dark mb-4" id="page-title">
+                Caricamento...</h2>
+            <p class="text-slate-600 max-w-2xl mx-auto font-medium" id="page-subtitle">Scopri le linee esclusive di
+                questo marchio</p>
+        </div>
+
+        <div id="lines-content-container" class="min-h-[400px]">
+            <div class="flex items-center justify-center py-20">
+                <p class="text-slate-400 text-lg">Caricamento linee...</p>
+            </div>
+        </div>
+
+    </main>
+    <!-- Footer loaded dynamically -->
+    <!-- Firebase SDK (Legacy for Realtime Database) -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-analytics-compat.js"></script>
+
+    <!-- Catalog Services -->
+    <!-- Component Loader (must be loaded first) -->
+    <script src="../shared/js/component-loader.js"></script>
+    <script src="../src/js/modules/age-verification.js"></script>
+    <script src="../src/js/services/firebase-config.js"></script>
+    <script src="../src/js/services/firebase-catalog-service.js"></script>
+    <script src="../src/js/services/catalog-service.js"></script>
+    <script src="../src/js/modules/brands-renderer.js"></script>
+    <script src="../src/js/modules/products-renderer.js"></script>
+    <script src="../src/js/modules/catalog-init.js"></script>
+
+    <script>
+            (async function () {
+                try {
+                    // Initialize catalog
+                    if (!window.catalogInit) await new Promise(r => setTimeout(r, 500));
+                    const catalog = await window.catalogInit;
+                    if (!catalog) throw new Error("Catalog init failed");
+
+                    const urlParams = new URLSearchParams(window.location.search);
+                    const brandName = urlParams.get('brand');
+
+                    const titleEl = document.getElementById('page-title');
+                    const breadcrumbEl = document.getElementById('breadcrumb-brand');
+                    const container = document.getElementById('lines-content-container');
+
+                    if (!brandName) {
+                        titleEl.innerText = "Marchio non specificato";
+                        container.innerHTML = '<p class="text-center text-red-500">Nessun marchio specificato.</p>';
+                        return;
+                    }
+
+                    titleEl.innerText = `Linee ${brandName}`;
+                    document.title = `Linee ${brandName} | LIQUIDO`;
+                    breadcrumbEl.innerText = brandName;
+
+                    const { service, brandsRenderer } = catalog;
+
+                    // Get brand data
+                    const brand = await service.getBrandByName(brandName);
+                    if (!brand) {
+                        titleEl.innerText = "Marchio non trovato";
+                        container.innerHTML = '<p class="text-center text-red-500">Impossibile trovare il marchio specificato.</p>';
+                        return;
+                    }
+
+                    // Get lines and decorate them
+                    const lines = brand.lines || [];
+                    // We need to add brandName and brandLogo to each line because renderSpecificLinesZigZag expects it
+                    const decoratedLines = lines.map(line => ({
+                        ...line,
+                        brandName: brand.name,
+                        brandLogo: brand.logo_url
+                    }));
+
+                    if (decoratedLines.length === 0) {
+                        container.innerHTML = '<p class="text-center text-slate-500 py-12">Nessuna linea di prodotti disponibile per questo marchio.</p>';
+                    } else {
+                        brandsRenderer.renderSpecificLinesZigZag(decoratedLines, container);
+                    }
+
+                } catch (err) {
+                    console.error("Error loading brand lines:", err);
+                    document.getElementById('lines-content-container').innerHTML = '<p class="text-center text-red-500">Si è verificato un errore.</p>';
+                }
+            })();
+    </script>
+</body>
+
+</html>
