@@ -63,7 +63,7 @@
 
     <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-analytics-compat.js"></script>
     <script src="../src/js/services/firebase-config.js"></script>
 
@@ -257,14 +257,23 @@
                 updateProgress(20, 'Connexion établie');
                 showStatus('Connexion établie, envoi des données...', 'info');
 
-                // Save to Firebase
-                const catalogRef = database.ref('catalog');
-
+                // Save to Firebase Firestore
                 updateProgress(50, 'Envoi des données...');
 
-                // Save the catalog content directly (not the wrapper)
-                console.log('📤 Saving catalog to Firebase:', catalogData.catalog);
-                await catalogRef.set(catalogData.catalog);
+                // Save individual sections to Firestore 'sections' collection
+                const sections = catalogData.catalog.sections;
+                const batch = database.batch();
+                const sectionsCollection = database.collection('sections');
+
+                console.log(`📤 Saving ${sections.length} sections to Firestore...`);
+
+                sections.forEach(section => {
+                    // Use section.id as the document ID
+                    const docRef = sectionsCollection.doc(section.id);
+                    batch.set(docRef, section);
+                });
+
+                await batch.commit();
 
                 updateProgress(100, 'Terminé !');
                 showStatus('✅ Données initialisées avec succès dans Firebase !', 'success');
@@ -273,7 +282,8 @@
                 resultDiv.className = 'mt-6 p-4 rounded-lg bg-emerald-500/20 border border-emerald-500/30';
 
                 // Count statistics from the new structure
-                const sections = catalogData.catalog.sections;
+                // sections variable already declared above
+
                 const totalBrands = sections.reduce((sum, s) => sum + s.brands.length, 0);
                 const totalLines = sections.reduce((sum, s) =>
                     sum + s.brands.reduce((bSum, b) => bSum + (b.lines?.length || 0), 0), 0);

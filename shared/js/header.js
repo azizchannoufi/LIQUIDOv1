@@ -183,7 +183,7 @@ function initHeaderLogic() {
                             </a>
                         </div>
 
-                        <div class="mt-auto pt-6 border-t border-gray-100">
+                        <div class="mt-auto pt-6 border-t border-gray-100 lg:hidden">
                             <button id="menu-logout-btn" class="flex items-center gap-2 text-red-500 hover:text-red-700 hover:bg-red-50 transition-all text-sm font-bold uppercase tracking-widest w-full justify-center p-4 rounded-lg border border-transparent hover:border-red-100">
                                 <span class="material-symbols-outlined">logout</span>
                                 Logout

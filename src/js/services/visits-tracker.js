@@ -1,6 +1,6 @@
 /**
  * Visits Tracker Service
- * Tracks website visits and stores them in Firebase
+ * Tracks website visits and stores them in Firebase Firestore
  */
 
 class VisitsTracker {
@@ -40,7 +40,7 @@ class VisitsTracker {
             await this.initialize();
 
             const visitData = {
-                timestamp: Date.now(),
+                timestamp: firebase.firestore.FieldValue.serverTimestamp(),
                 date: new Date().toISOString().split('T')[0], // YYYY-MM-DD
                 page: page || window.location.pathname,
                 userAgent: navigator.userAgent,
@@ -48,9 +48,8 @@ class VisitsTracker {
             };
 
             // Record visit in visits collection
-            const visitsRef = this.database.ref('visits');
-            const newVisitRef = visitsRef.push();
-            await newVisitRef.set(visitData);
+            // Change ref('visits').push() to collection('visits').add()
+            await this.database.collection('visits').add(visitData);
 
             // Update daily stats
             await this.updateDailyStats(visitData.date);
@@ -73,15 +72,17 @@ class VisitsTracker {
      */
     async updateDailyStats(date) {
         try {
-            const dailyStatsRef = this.database.ref(`dailyStats/${date}`);
-            const snapshot = await dailyStatsRef.once('value');
-            const currentCount = snapshot.val()?.count || 0;
+            // Change ref('dailyStats').set() to collection('dailyStats').doc(date).set()
+            // Using set with merge or update to increment
+            const dailyStatsRef = this.database.collection('dailyStats').doc(date);
 
+            // We can use increment directly, much better than reading then writing
             await dailyStatsRef.set({
                 date: date,
-                count: currentCount + 1,
-                lastUpdated: Date.now()
-            });
+                count: firebase.firestore.FieldValue.increment(1),
+                lastUpdated: firebase.firestore.FieldValue.serverTimestamp()
+            }, { merge: true });
+
         } catch (error) {
             console.error('Error updating daily stats:', error);
         }
@@ -93,11 +94,14 @@ class VisitsTracker {
      */
     async incrementTotalVisits() {
         try {
-            const totalVisitsRef = this.database.ref('stats/totalVisits');
-            const snapshot = await totalVisitsRef.once('value');
-            const currentTotal = snapshot.val() || 0;
+            // Store total visits in a document stats/general with a field totalVisits
+            const statsRef = this.database.collection('stats').doc('general');
 
-            await totalVisitsRef.set(currentTotal + 1);
+            await statsRef.set({
+                totalVisits: firebase.firestore.FieldValue.increment(1),
+                lastUpdated: firebase.firestore.FieldValue.serverTimestamp()
+            }, { merge: true });
+
         } catch (error) {
             console.error('Error incrementing total visits:', error);
         }
@@ -110,9 +114,13 @@ class VisitsTracker {
     async getTotalVisits() {
         try {
             await this.initialize();
-            const totalVisitsRef = this.database.ref('stats/totalVisits');
-            const snapshot = await totalVisitsRef.once('value');
-            return snapshot.val() || 0;
+            const statsRef = this.database.collection('stats').doc('general');
+            const doc = await statsRef.get();
+
+            if (doc.exists) {
+                return doc.data().totalVisits || 0;
+            }
+            return 0;
         } catch (error) {
             console.error('Error getting total visits:', error);
             return 0;
@@ -128,22 +136,22 @@ class VisitsTracker {
     async getVisitsByDateRange(startDate, endDate) {
         try {
             await this.initialize();
-            const visitsRef = this.database.ref('visits');
-            const snapshot = await visitsRef.once('value');
-            const visits = snapshot.val();
+            // Firestore query
+            const visitsRef = this.database.collection('visits');
+            const snapshot = await visitsRef
+                .where('date', '>=', startDate)
+                .where('date', '<=', endDate)
+                .get();
 
-            if (!visits) {
-                return [];
-            }
-
-            const visitsArray = Object.keys(visits).map(key => ({
-                id: key,
-                ...visits[key]
-            }));
-
-            return visitsArray.filter(visit => {
-                return visit.date >= startDate && visit.date <= endDate;
+            const visitsArray = [];
+            snapshot.forEach(doc => {
+                visitsArray.push({
+                    id: doc.id,
+                    ...doc.data()
+                });
             });
+
+            return visitsArray;
         } catch (error) {
             console.error('Error getting visits by date range:', error);
             return [];

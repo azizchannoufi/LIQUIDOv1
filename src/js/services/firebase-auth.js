@@ -56,12 +56,12 @@ class FirebaseAuthService {
             const userCredential = await this.auth.createUserWithEmailAndPassword(email, password);
             const user = userCredential.user;
 
-            // Save user profile to Realtime Database
+            // Save user profile to Firestore
             const userData = {
                 email: email,
                 name: name,
                 phone: phone,
-                createdAt: firebase.database.ServerValue.TIMESTAMP
+                createdAt: firebase.firestore.FieldValue.serverTimestamp()
             };
 
             await this.saveUserProfile(user.uid, userData);
@@ -154,13 +154,13 @@ class FirebaseAuthService {
             this.initialize().then(() => {
                 return this.auth.onAuthStateChanged(callback);
             });
-            return () => {};
+            return () => { };
         }
         return this.auth.onAuthStateChanged(callback);
     }
 
     /**
-     * Save user profile to Realtime Database
+     * Save user profile to Firestore
      * @param {string} userId - User ID
      * @param {Object} userData - User data to save
      * @returns {Promise<void>}
@@ -169,8 +169,9 @@ class FirebaseAuthService {
         await this.initialize();
 
         try {
-            const userRef = this.database.ref(`users/${userId}`);
-            await userRef.set(userData);
+            const userRef = this.database.collection('users').doc(userId);
+            // Use set with merge true to be safe, or just set if we want overwrite
+            await userRef.set(userData, { merge: true });
         } catch (error) {
             console.error('Error saving user profile:', error);
             throw error;
@@ -178,7 +179,7 @@ class FirebaseAuthService {
     }
 
     /**
-     * Get user profile from Realtime Database
+     * Get user profile from Firestore
      * @param {string} userId - User ID
      * @returns {Promise<Object>} User profile data
      */
@@ -186,9 +187,13 @@ class FirebaseAuthService {
         await this.initialize();
 
         try {
-            const userRef = this.database.ref(`users/${userId}`);
-            const snapshot = await userRef.once('value');
-            return snapshot.val() || null;
+            const userRef = this.database.collection('users').doc(userId);
+            const doc = await userRef.get();
+
+            if (doc.exists) {
+                return doc.data();
+            }
+            return null;
         } catch (error) {
             console.error('Error getting user profile:', error);
             throw error;

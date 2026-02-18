@@ -3,11 +3,11 @@
  * Loads real-time statistics from Firebase
  */
 
-(async function() {
+(async function () {
     'use strict';
-    
+
     let catalogService;
-    
+
     // Wait for Firebase and catalog initialization
     try {
         // Wait for Firebase config to be available
@@ -22,7 +22,7 @@
                 }, 100);
             });
         }
-        
+
         if (window.catalogInit) {
             const catalog = await window.catalogInit;
             catalogService = catalog.service;
@@ -36,12 +36,12 @@
         showErrorState();
         return;
     }
-    
+
     async function loadStatistics() {
         try {
             // Show loading state
             showLoadingState();
-            
+
             // Load catalog data, users, and visits in parallel
             const [sections, usersCount, totalVisits, todayVisits] = await Promise.all([
                 catalogService.getSections(),
@@ -49,35 +49,35 @@
                 getTotalVisits(),
                 getTodayVisits()
             ]);
-            
+
             // Count total products (lines)
             let totalProducts = 0;
             let totalBrands = 0;
             const uniqueBrands = new Set();
-            
+
             for (const section of sections) {
                 const brands = section.brands || [];
                 totalBrands += brands.length;
-                
+
                 for (const brand of brands) {
                     uniqueBrands.add(brand.name);
                     totalProducts += (brand.lines || []).length;
                 }
             }
-            
+
             // Update UI with real data
             updateStatValue('stat-products-value', totalProducts);
             updateStatValue('stat-brands-value', uniqueBrands.size);
             updateStatValue('stat-sections-value', sections.length);
             updateStatValue('stat-users-value', usersCount);
-            
+
             // Update visits display
             updateStatValue('total-visits-display', totalVisits);
             updateStatValue('today-visits-count', todayVisits);
-            
+
             // Load and render visits chart
             await loadVisitsChart(7); // Default to 7 days
-            
+
             // Update trends (for now, just show static info)
             const productsTrend = document.getElementById('stat-products-trend');
             const brandsTrend = document.getElementById('stat-brands-trend');
@@ -85,7 +85,7 @@
             if (productsTrend) productsTrend.textContent = 'Live';
             if (brandsTrend) brandsTrend.textContent = 'Live';
             if (usersTrend) usersTrend.textContent = 'Live';
-            
+
             // Load recent activity
             await loadRecentActivity(sections);
         } catch (error) {
@@ -93,97 +93,106 @@
             showErrorState();
         }
     }
-    
+
     async function getUsersCount() {
         try {
             const { database } = await window.firebaseConfig.initializeFirebase();
-            const usersRef = database.ref('users');
-            const snapshot = await usersRef.once('value');
-            const usersData = snapshot.val();
-            
-            if (!usersData) {
-                return 0;
-            }
-            
-            return Object.keys(usersData).length;
+            const usersRef = database.collection('users');
+            const snapshot = await usersRef.get();
+
+            return snapshot.size;
         } catch (error) {
             console.error('Error fetching users count:', error);
             return 0;
         }
     }
-    
+
     async function getTotalVisits() {
         try {
             if (window.visitsTracker) {
                 return await window.visitsTracker.getTotalVisits();
             }
-            
+
             // Fallback: get from Firebase directly
             const { database } = await window.firebaseConfig.initializeFirebase();
-            const totalVisitsRef = database.ref('stats/totalVisits');
-            const snapshot = await totalVisitsRef.once('value');
-            return snapshot.val() || 0;
+            const statsRef = database.collection('stats').doc('general');
+            const doc = await statsRef.get();
+
+            if (doc.exists) {
+                return doc.data().totalVisits || 0;
+            }
+            return 0;
         } catch (error) {
             console.error('Error fetching total visits:', error);
             return 0;
         }
     }
-    
+
     async function getTodayVisits() {
         try {
             const { database } = await window.firebaseConfig.initializeFirebase();
             const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
-            const dailyStatsRef = database.ref(`dailyStats/${today}`);
-            const snapshot = await dailyStatsRef.once('value');
-            const dailyData = snapshot.val();
-            return dailyData?.count || 0;
+            const dailyStatsRef = database.collection('dailyStats').doc(today);
+            const doc = await dailyStatsRef.get();
+
+            if (doc.exists) {
+                return doc.data().count || 0;
+            }
+            return 0;
         } catch (error) {
             console.error('Error fetching today visits:', error);
             return 0;
         }
     }
-    
+
     let visitsChart = null;
-    
+
     async function loadVisitsChart(days = 7) {
         try {
             const { database } = await window.firebaseConfig.initializeFirebase();
-            
+
             // Calculate date range
             const endDate = new Date();
             const startDate = new Date();
             startDate.setDate(startDate.getDate() - days);
-            
-            // Get all daily stats
-            const dailyStatsRef = database.ref('dailyStats');
-            const snapshot = await dailyStatsRef.once('value');
-            const dailyStats = snapshot.val() || {};
-            
+            const startDateStr = startDate.toISOString().split('T')[0];
+
+            // Get daily stats for the range
+            const dailyStatsRef = database.collection('dailyStats');
+            const snapshot = await dailyStatsRef
+                .where('date', '>=', startDateStr)
+                .get();
+
+            const dailyStats = {};
+            snapshot.forEach(doc => {
+                dailyStats[doc.id] = doc.data();
+            });
+
             // Prepare data for chart
             const labels = [];
             const data = [];
-            
+
             for (let i = days - 1; i >= 0; i--) {
                 const date = new Date();
                 date.setDate(date.getDate() - i);
                 const dateStr = date.toISOString().split('T')[0];
                 const dayLabel = date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-                
+
                 labels.push(dayLabel);
                 data.push(dailyStats[dateStr]?.count || 0);
             }
-            
+
             // Get canvas context
             const canvas = document.getElementById('visits-chart');
             if (!canvas) return;
-            
+
             const ctx = canvas.getContext('2d');
-            
+
             // Destroy existing chart if it exists
             if (visitsChart) {
                 visitsChart.destroy();
             }
-            
+
             // Create new chart
             visitsChart = new Chart(ctx, {
                 type: 'line',
@@ -222,7 +231,7 @@
                                 size: 13
                             },
                             callbacks: {
-                                label: function(context) {
+                                label: function (context) {
                                     return `Visits: ${context.parsed.y}`;
                                 }
                             }
@@ -258,18 +267,18 @@
                     }
                 }
             });
-            
+
             // Update period buttons
             updatePeriodButtons(days);
         } catch (error) {
             console.error('Error loading visits chart:', error);
         }
     }
-    
+
     function updatePeriodButtons(activeDays) {
         const btn7d = document.getElementById('visits-period-7d');
         const btn30d = document.getElementById('visits-period-30d');
-        
+
         if (btn7d && btn30d) {
             if (activeDays === 7) {
                 btn7d.className = 'px-3 py-1 text-xs font-semibold rounded-lg bg-primary text-black hover:bg-primary/90 transition-colors';
@@ -280,77 +289,77 @@
             }
         }
     }
-    
+
     // Period button handlers
     function initPeriodButtons() {
         const btn7d = document.getElementById('visits-period-7d');
         const btn30d = document.getElementById('visits-period-30d');
-        
+
         if (btn7d) {
             btn7d.addEventListener('click', () => {
                 loadVisitsChart(7);
             });
         }
-        
+
         if (btn30d) {
             btn30d.addEventListener('click', () => {
                 loadVisitsChart(30);
             });
         }
     }
-    
+
     // Initialize buttons when DOM is ready
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', initPeriodButtons);
     } else {
         initPeriodButtons();
     }
-    
+
     function showLoadingState() {
         const productsValue = document.getElementById('stat-products-value');
         const brandsValue = document.getElementById('stat-brands-value');
         const sectionsValue = document.getElementById('stat-sections-value');
         const usersValue = document.getElementById('stat-users-value');
-        
+
         if (productsValue) productsValue.textContent = '...';
         if (brandsValue) brandsValue.textContent = '...';
         if (sectionsValue) sectionsValue.textContent = '...';
         if (usersValue) usersValue.textContent = '...';
     }
-    
+
     function showErrorState() {
         const productsValue = document.getElementById('stat-products-value');
         const brandsValue = document.getElementById('stat-brands-value');
         const sectionsValue = document.getElementById('stat-sections-value');
         const usersValue = document.getElementById('stat-users-value');
-        
+
         if (productsValue) productsValue.textContent = 'Error';
         if (brandsValue) brandsValue.textContent = 'Error';
         if (sectionsValue) sectionsValue.textContent = 'Error';
         if (usersValue) usersValue.textContent = 'Error';
     }
-    
+
     function updateStatValue(elementId, value) {
         const element = document.getElementById(elementId);
         if (element) {
             element.textContent = value.toLocaleString();
         }
     }
-    
+
     async function loadRecentActivity(sections) {
         const activityContainer = document.getElementById('recent-activity');
         if (!activityContainer) return;
-        
+
         try {
             // Get all brands with their sections and product lines from Firebase
             const allActivities = [];
-            
+
             for (const section of sections) {
                 const brands = section.brands || [];
                 for (const brand of brands) {
                     const lines = brand.lines || [];
                     const linesCount = lines.length;
-                    
+
                     // Add brand activity
                     allActivities.push({
                         type: 'brand',
@@ -362,7 +371,7 @@
                         website: brand.website || '',
                         timestamp: brand.updatedAt || brand.createdAt || Date.now()
                     });
-                    
+
                     // Add product line activities
                     for (const line of lines) {
                         allActivities.push({
@@ -377,7 +386,7 @@
                     }
                 }
             }
-            
+
             if (allActivities.length === 0) {
                 activityContainer.innerHTML = `
                     <div class="py-8 text-center">
@@ -390,13 +399,13 @@
                 `;
                 return;
             }
-            
+
             // Sort by timestamp (most recent first)
             allActivities.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
-            
+
             // Show last 5 activities
             const recentActivities = allActivities.slice(0, 5);
-            
+
             activityContainer.innerHTML = recentActivities.map(activity => {
                 if (activity.type === 'brand') {
                     return `
@@ -404,10 +413,10 @@
                             <div class="flex items-center justify-between">
                                 <div class="flex items-center gap-3 flex-1 min-w-0">
                                     <div class="size-10 rounded-lg bg-primary/20 flex items-center justify-center flex-shrink-0 overflow-hidden">
-                                        ${activity.logoUrl 
-                                            ? `<img src="${activity.logoUrl}" alt="${activity.name}" class="w-full h-full object-contain" onerror="this.parentElement.innerHTML='<span class=\\'material-symbols-outlined text-primary text-lg\\'>loyalty</span>'"/>`
-                                            : `<span class="material-symbols-outlined text-primary text-lg">loyalty</span>`
-                                        }
+                                        ${activity.logoUrl
+                            ? `<img src="${activity.logoUrl}" alt="${activity.name}" class="w-full h-full object-contain" onerror="this.parentElement.innerHTML='<span class=\\'material-symbols-outlined text-primary text-lg\\'>loyalty</span>'"/>`
+                            : `<span class="material-symbols-outlined text-primary text-lg">loyalty</span>`
+                        }
                                     </div>
                                     <div class="flex-1 min-w-0">
                                         <p class="text-slate-900 dark:text-white text-sm font-bold truncate">${activity.name}</p>
@@ -426,10 +435,10 @@
                             <div class="flex items-center justify-between">
                                 <div class="flex items-center gap-3 flex-1 min-w-0">
                                     <div class="size-10 rounded-lg bg-primary/20 flex items-center justify-center flex-shrink-0 overflow-hidden">
-                                        ${activity.imageUrl 
-                                            ? `<img src="${activity.imageUrl}" alt="${activity.name}" class="w-full h-full object-contain" onerror="this.parentElement.innerHTML='<span class=\\'material-symbols-outlined text-primary text-lg\\'>inventory_2</span>'"/>`
-                                            : `<span class="material-symbols-outlined text-primary text-lg">inventory_2</span>`
-                                        }
+                                        ${activity.imageUrl
+                            ? `<img src="${activity.imageUrl}" alt="${activity.name}" class="w-full h-full object-contain" onerror="this.parentElement.innerHTML='<span class=\\'material-symbols-outlined text-primary text-lg\\'>inventory_2</span>'"/>`
+                            : `<span class="material-symbols-outlined text-primary text-lg">inventory_2</span>`
+                        }
                                     </div>
                                     <div class="flex-1 min-w-0">
                                         <p class="text-slate-900 dark:text-white text-sm font-bold truncate">${activity.name}</p>
@@ -454,7 +463,7 @@
             `;
         }
     }
-    
+
     // Load statistics on page load
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', loadStatistics);
