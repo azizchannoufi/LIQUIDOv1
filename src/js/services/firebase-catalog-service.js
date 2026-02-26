@@ -5,7 +5,7 @@
 
 class FirebaseCatalogService {
     constructor() {
-        this.database = null;
+        this.firestore = null;
         this.initialized = false;
         this.initPromise = null;
     }
@@ -25,8 +25,11 @@ class FirebaseCatalogService {
 
         this.initPromise = (async () => {
             try {
-                const { database } = await window.firebaseConfig.initializeFirebase();
-                this.database = database;
+                const { firestore } = await window.firebaseConfig.initializeFirebase();
+                if (!firestore) {
+                    throw new Error('Firestore is not initialized. Make sure firebase-firestore-compat.js is loaded before this script.');
+                }
+                this.firestore = firestore;
                 this.initialized = true;
             } catch (error) {
                 console.error('Error initializing Firebase Catalog Service:', error);
@@ -48,7 +51,7 @@ class FirebaseCatalogService {
         console.log('🔍 Fetching sections from Firestore collection: sections');
 
         try {
-            const snapshot = await this.database.collection('sections').get();
+            const snapshot = await this.firestore.collection('sections').get();
 
             if (snapshot.empty) {
                 console.warn('⚠️ No sections found in Firestore');
@@ -81,7 +84,7 @@ class FirebaseCatalogService {
         await this.initialize();
 
         try {
-            const doc = await this.database.collection('sections').doc(sectionId).get();
+            const doc = await this.firestore.collection('sections').doc(sectionId).get();
 
             if (doc.exists) {
                 return {
@@ -191,7 +194,7 @@ class FirebaseCatalogService {
         await this.initialize();
 
         try {
-            const sectionRef = this.database.collection('sections').doc(sectionId);
+            const sectionRef = this.firestore.collection('sections').doc(sectionId);
             const doc = await sectionRef.get();
 
             if (!doc.exists) {
@@ -272,7 +275,7 @@ class FirebaseCatalogService {
         await this.initialize();
 
         try {
-            const sectionRef = this.database.collection('sections').doc(sectionId);
+            const sectionRef = this.firestore.collection('sections').doc(sectionId);
             const doc = await sectionRef.get();
 
             if (!doc.exists) {
@@ -309,7 +312,7 @@ class FirebaseCatalogService {
         await this.initialize();
 
         try {
-            const sectionRef = this.database.collection('sections').doc(sectionId);
+            const sectionRef = this.firestore.collection('sections').doc(sectionId);
             const doc = await sectionRef.get();
 
             if (!doc.exists) {
@@ -354,7 +357,7 @@ class FirebaseCatalogService {
      */
     async onCatalogChange(callback) {
         await this.initialize();
-        const collectionRef = this.database.collection('sections');
+        const collectionRef = this.firestore.collection('sections');
 
         const unsubscribe = collectionRef.onSnapshot((snapshot) => {
             const sections = [];
@@ -413,7 +416,7 @@ class FirebaseCatalogService {
         await this.initialize();
 
         try {
-            const doc = await this.database.collection('sections').doc(sectionId).get();
+            const doc = await this.firestore.collection('sections').doc(sectionId).get();
 
             if (!doc.exists) {
                 return [];
@@ -462,7 +465,7 @@ class FirebaseCatalogService {
         await this.initialize();
 
         try {
-            const sectionRef = this.database.collection('sections').doc(sectionId);
+            const sectionRef = this.firestore.collection('sections').doc(sectionId);
             const doc = await sectionRef.get();
 
             if (!doc.exists) {
@@ -534,7 +537,7 @@ class FirebaseCatalogService {
         await this.initialize();
 
         try {
-            const sectionRef = this.database.collection('sections').doc(sectionId);
+            const sectionRef = this.firestore.collection('sections').doc(sectionId);
             const doc = await sectionRef.get();
 
             if (!doc.exists) {
@@ -587,7 +590,7 @@ class FirebaseCatalogService {
         await this.initialize();
 
         try {
-            const doc = await this.database.collection('sections').doc(sectionId).get();
+            const doc = await this.firestore.collection('sections').doc(sectionId).get();
 
             if (!doc.exists) {
                 return [];

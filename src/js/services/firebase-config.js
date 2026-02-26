@@ -46,15 +46,15 @@ function initializeFirebase() {
     try {
         // Initialize Firebase
         firebaseApp = firebase.initializeApp(firebaseConfig);
-        firebaseDatabase = firebase.firestore();
-
+        firebaseDatabase = firebase.database();
+        
         // Initialize Auth (check if available)
         if (firebase.auth) {
             firebaseAuth = firebase.auth();
         } else {
             console.warn('Firebase Auth not loaded. Make sure firebase-auth-compat.js is included.');
         }
-
+        
         // Initialize Analytics (optional)
         if (firebase.analytics) {
             firebaseAnalytics = firebase.analytics();

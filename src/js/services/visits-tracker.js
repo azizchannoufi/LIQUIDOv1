@@ -5,7 +5,7 @@
 
 class VisitsTracker {
     constructor() {
-        this.database = null;
+        this.firestore = null;
         this.initialized = false;
         this.visitRecorded = false;
     }
@@ -16,8 +16,8 @@ class VisitsTracker {
         }
 
         try {
-            const { database } = await window.firebaseConfig.initializeFirebase();
-            this.database = database;
+            const { firestore } = await window.firebaseConfig.initializeFirebase();
+            this.firestore = firestore;
             this.initialized = true;
         } catch (error) {
             console.error('Error initializing Visits Tracker:', error);
@@ -49,7 +49,7 @@ class VisitsTracker {
 
             // Record visit in visits collection
             // Change ref('visits').push() to collection('visits').add()
-            await this.database.collection('visits').add(visitData);
+            await this.firestore.collection('visits').add(visitData);
 
             // Update daily stats
             await this.updateDailyStats(visitData.date);
@@ -74,7 +74,7 @@ class VisitsTracker {
         try {
             // Change ref('dailyStats').set() to collection('dailyStats').doc(date).set()
             // Using set with merge or update to increment
-            const dailyStatsRef = this.database.collection('dailyStats').doc(date);
+            const dailyStatsRef = this.firestore.collection('dailyStats').doc(date);
 
             // We can use increment directly, much better than reading then writing
             await dailyStatsRef.set({
@@ -95,7 +95,7 @@ class VisitsTracker {
     async incrementTotalVisits() {
         try {
             // Store total visits in a document stats/general with a field totalVisits
-            const statsRef = this.database.collection('stats').doc('general');
+            const statsRef = this.firestore.collection('stats').doc('general');
 
             await statsRef.set({
                 totalVisits: firebase.firestore.FieldValue.increment(1),
@@ -114,7 +114,7 @@ class VisitsTracker {
     async getTotalVisits() {
         try {
             await this.initialize();
-            const statsRef = this.database.collection('stats').doc('general');
+            const statsRef = this.firestore.collection('stats').doc('general');
             const doc = await statsRef.get();
 
             if (doc.exists) {
@@ -137,7 +137,7 @@ class VisitsTracker {
         try {
             await this.initialize();
             // Firestore query
-            const visitsRef = this.database.collection('visits');
+            const visitsRef = this.firestore.collection('visits');
             const snapshot = await visitsRef
                 .where('date', '>=', startDate)
                 .where('date', '<=', endDate)

@@ -96,8 +96,8 @@
 
     async function getUsersCount() {
         try {
-            const { database } = await window.firebaseConfig.initializeFirebase();
-            const usersRef = database.collection('users');
+            const { firestore } = await window.firebaseConfig.initializeFirebase();
+            const usersRef = firestore.collection('users');
             const snapshot = await usersRef.get();
 
             return snapshot.size;
@@ -114,8 +114,8 @@
             }
 
             // Fallback: get from Firebase directly
-            const { database } = await window.firebaseConfig.initializeFirebase();
-            const statsRef = database.collection('stats').doc('general');
+            const { firestore } = await window.firebaseConfig.initializeFirebase();
+            const statsRef = firestore.collection('stats').doc('general');
             const doc = await statsRef.get();
 
             if (doc.exists) {
@@ -130,9 +130,9 @@
 
     async function getTodayVisits() {
         try {
-            const { database } = await window.firebaseConfig.initializeFirebase();
+            const { firestore } = await window.firebaseConfig.initializeFirebase();
             const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
-            const dailyStatsRef = database.collection('dailyStats').doc(today);
+            const dailyStatsRef = firestore.collection('dailyStats').doc(today);
             const doc = await dailyStatsRef.get();
 
             if (doc.exists) {
@@ -149,7 +149,7 @@
 
     async function loadVisitsChart(days = 7) {
         try {
-            const { database } = await window.firebaseConfig.initializeFirebase();
+            const { firestore } = await window.firebaseConfig.initializeFirebase();
 
             // Calculate date range
             const endDate = new Date();
@@ -158,7 +158,7 @@
             const startDateStr = startDate.toISOString().split('T')[0];
 
             // Get daily stats for the range
-            const dailyStatsRef = database.collection('dailyStats');
+            const dailyStatsRef = firestore.collection('dailyStats');
             const snapshot = await dailyStatsRef
                 .where('date', '>=', startDateStr)
                 .get();

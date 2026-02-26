@@ -1,7 +1,7 @@
 <header id="main-header"
-    class="fixed w-full z-[60] bg-white/95 backdrop-blur-sm transition-all duration-300 top-0 lg:top-10">
+    class="fixed w-full z-[60] bg-white/95 backdrop-blur-sm transition-all duration-300 top-[37px]">
     <div class="max-w-[1440px] mx-auto w-full px-6 lg:px-20 h-20 lg:h-28 flex items-center justify-between">
-        <!-- Logo très à gauche -->
+        <!-- Logo -->
         <a href="index.html"
             class="flex items-center gap-3 cursor-pointer hover:opacity-80 transition-opacity -ml-2 lg:-ml-4">
             <img src="../assets/images/Logo LIQUIDO/LOGO 15cm WEB Trasparente_02.png" alt="LIQUIDO VAPE SHOP"
@@ -35,7 +35,7 @@
                 </svg>
             </button>
 
-            <!-- Champ de recherche (caché par défaut) -->
+            <!-- Champ de recherche -->
             <div id="search-container"
                 class="absolute top-full right-0 mt-2 w-72 lg:w-80 bg-white shadow-lg rounded-md p-4 hidden">
                 <form id="search-form" class="relative">
@@ -74,47 +74,57 @@
 
 <!-- User Menu Drawer -->
 <div id="user-menu"
-    class="fixed top-0 right-0 h-full w-[300px] bg-white shadow-2xl z-[100] transform translate-x-full transition-transform duration-300 flex flex-col">
-    <div class="p-6 flex justify-between items-center bg-gray-50 border-b border-gray-100">
-        <h3 class="font-bold text-lg uppercase tracking-wide">Menu</h3>
+    class="fixed top-0 right-0 h-full w-[280px] bg-white shadow-2xl z-[100] transform translate-x-full transition-transform duration-300 flex flex-col">
+    <!-- Logo at top of popup -->
+    <div class="px-5 py-4 flex justify-between items-center bg-gray-50 border-b border-gray-100">
+        <img src="../assets/images/Logo LIQUIDO/LOGO 15cm WEB Trasparente_02.png" alt="LIQUIDO"
+            class="h-10 w-auto object-contain" />
         <button id="close-menu-btn" class="hover:text-red-500 transition-colors p-1">
             <span class="material-symbols-outlined">close</span>
         </button>
     </div>
 
     <div class="flex-1 overflow-y-auto flex flex-col">
-        <!-- Mobile Navigation Links -->
-        <nav class="flex flex-col p-6 gap-6 lg:hidden border-b border-gray-100">
-            <a class="text-base font-bold uppercase tracking-widest hover:text-primary transition-colors text-gray-800"
+        <!-- Mobile Navigation Links (compact) -->
+        <nav class="flex flex-col px-5 py-4 gap-4 lg:hidden border-b border-gray-100">
+            <a class="text-sm font-bold uppercase tracking-widest hover:text-primary transition-colors text-gray-800"
                 href="index.html">Home</a>
-            <a class="text-base font-bold uppercase tracking-widest hover:text-primary transition-colors text-gray-800"
+            <a class="text-sm font-bold uppercase tracking-widest hover:text-primary transition-colors text-gray-800"
                 href="products.html">Liquidi</a>
-            <a class="text-base font-bold uppercase tracking-widest hover:text-primary transition-colors text-gray-800"
+            <a class="text-sm font-bold uppercase tracking-widest hover:text-primary transition-colors text-gray-800"
                 href="brands.html">Dispositivi</a>
-            <a class="text-base font-bold uppercase tracking-widest hover:text-primary transition-colors text-gray-800"
+            <a class="text-sm font-bold uppercase tracking-widest hover:text-primary transition-colors text-gray-800"
                 href="about.html">Chi Siamo</a>
-            <a class="text-base font-bold uppercase tracking-widest hover:text-primary transition-colors text-gray-800"
+            <a class="text-sm font-bold uppercase tracking-widest hover:text-primary transition-colors text-gray-800"
                 href="contact.html">Contatti</a>
-            <a class="text-base font-bold uppercase tracking-widest hover:text-primary transition-colors text-gray-800"
+            <a class="text-sm font-bold uppercase tracking-widest hover:text-primary transition-colors text-gray-800"
                 href="faq.html">FAQ</a>
         </nav>
 
         <!-- User Section (Dynamic Content) -->
-        <div id="user-menu-content" class="p-6 flex flex-col gap-6">
+        <div id="user-menu-content" class="px-5 py-4 flex flex-col gap-4">
             <div class="text-center">
-                <p class="text-gray-500 mb-4 text-sm">Accedi per gestire il tuo account</p>
+                <p class="text-gray-500 mb-3 text-sm">Accedi per gestire il tuo account</p>
                 <a href="myliquido.html"
                     class="block w-full bg-primary text-gray-900 py-3 rounded-sm font-bold uppercase text-xs tracking-widest hover:bg-primary/80 transition-colors shadow-sm">
                     Accedi / Registrati
                 </a>
             </div>
         </div>
+
+        <!-- Logout button (shown only if logged in - controlled by JS) -->
+        <div id="user-logout-section" class="px-5 py-3 border-t border-gray-100 hidden">
+            <button id="logout-btn"
+                class="w-full flex items-center gap-2 text-sm font-bold uppercase tracking-widest text-red-500 hover:text-red-700 transition-colors py-2">
+                <span class="material-symbols-outlined text-base">logout</span>
+                Logout
+            </button>
+        </div>
     </div>
 </div>
 
 <!-- Espace réservé pour éviter que le contenu soit caché sous le header fixe -->
 <div id="header-placeholder"></div>
-
 
 
 <!-- CSS pour l'animation -->

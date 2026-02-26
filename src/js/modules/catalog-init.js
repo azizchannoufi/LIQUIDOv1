@@ -5,13 +5,13 @@
  * Usage: Include this script after catalog-service.js, brands-renderer.js, and products-renderer.js
  */
 
-(function() {
+(function () {
     'use strict';
-    
+
     let catalogServiceInstance = null;
     let brandsRendererInstance = null;
     let productsRendererInstance = null;
-    
+
     /**
      * Initialize catalog system
      * @returns {Promise<Object>} Object with service and renderers
@@ -21,34 +21,41 @@
         if (!catalogServiceInstance) {
             catalogServiceInstance = new CatalogService();
         }
-        
+
+        // Pre-warm Firebase so it's ready for renderers
+        try {
+            await catalogServiceInstance.initFirebase();
+        } catch (e) {
+            console.warn('Firebase pre-init warning (non-fatal):', e);
+        }
+
         // Initialize renderers (only if classes are available)
         if (!brandsRendererInstance && typeof BrandsRenderer !== 'undefined') {
             brandsRendererInstance = new BrandsRenderer(catalogServiceInstance);
         }
-        
+
         if (!productsRendererInstance && typeof ProductsRenderer !== 'undefined') {
             productsRendererInstance = new ProductsRenderer(catalogServiceInstance);
         }
-        
+
         const result = {
             service: catalogServiceInstance
         };
-        
+
         if (brandsRendererInstance) {
             result.brandsRenderer = brandsRendererInstance;
         }
-        
+
         if (productsRendererInstance) {
             result.productsRenderer = productsRendererInstance;
         }
-        
+
         return result;
     }
-    
+
     // Make initCatalog available globally
     window.initCatalog = initCatalog;
-    
+
     // Auto-initialize if DOM is ready
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', () => {

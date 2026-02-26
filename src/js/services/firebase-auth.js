@@ -6,7 +6,7 @@
 class FirebaseAuthService {
     constructor() {
         this.auth = null;
-        this.database = null;
+        this.firestore = null;
         this.initialized = false;
         this.initPromise = null;
     }
@@ -26,9 +26,9 @@ class FirebaseAuthService {
 
         this.initPromise = (async () => {
             try {
-                const { auth, database } = await window.firebaseConfig.initializeFirebase();
+                const { auth, firestore } = await window.firebaseConfig.initializeFirebase();
                 this.auth = auth;
-                this.database = database;
+                this.firestore = firestore;
                 this.initialized = true;
             } catch (error) {
                 console.error('Error initializing Firebase Auth Service:', error);
@@ -169,7 +169,7 @@ class FirebaseAuthService {
         await this.initialize();
 
         try {
-            const userRef = this.database.collection('users').doc(userId);
+            const userRef = this.firestore.collection('users').doc(userId);
             // Use set with merge true to be safe, or just set if we want overwrite
             await userRef.set(userData, { merge: true });
         } catch (error) {
@@ -187,7 +187,7 @@ class FirebaseAuthService {
         await this.initialize();
 
         try {
-            const userRef = this.database.collection('users').doc(userId);
+            const userRef = this.firestore.collection('users').doc(userId);
             const doc = await userRef.get();
 
             if (doc.exists) {

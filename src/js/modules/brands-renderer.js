@@ -184,36 +184,41 @@ class BrandsRenderer {
         }
 
         if (!brands || brands.length === 0) {
-            container.innerHTML = '<p class="text-gray-600 dark:text-white/40 text-center">Aucune marque disponible</p>';
+            container.innerHTML = '<p class="text-gray-600 text-center py-4">Nessuna marca disponibile</p>';
             return;
         }
 
-        // Filter brands with valid logos
-        const brandsWithLogos = brands.filter(brand => brand.logo_url && brand.logo_url.trim() !== '');
+        // Use ALL brands; show logo if available, else show name as text
+        const brandsToShow = brands.filter(b => b && b.name);
 
-        if (brandsWithLogos.length === 0) {
-            container.innerHTML = '<p class="text-gray-600 dark:text-white/40 text-center">Aucune marque avec logo disponible</p>';
+        if (brandsToShow.length === 0) {
+            container.innerHTML = '<p class="text-gray-600 text-center py-4">Nessuna marca disponibile</p>';
             return;
         }
 
         // Triple the brands for seamless infinite loop
-        const duplicatedBrands = [...brandsWithLogos, ...brandsWithLogos, ...brandsWithLogos];
+        const duplicatedBrands = [...brandsToShow, ...brandsToShow, ...brandsToShow];
 
         let carouselHTML = `
             <div class="relative">
-                <div class="brands-carousel-wrapper overflow-hidden">
-                    <div class="brands-carousel-track flex">
+                <div class="brands-carousel-wrapper" style="overflow:hidden;">
+                    <div class="brands-carousel-track" id="brands-track-inner" style="display:flex; will-change:transform;">
         `;
 
         duplicatedBrands.forEach(brand => {
+            const hasLogo = brand.logo_url && brand.logo_url.trim() !== '';
             carouselHTML += `
-                <div class="brands-carousel-item flex-shrink-0 flex flex-col items-center justify-center group cursor-pointer hover:opacity-100 transition-opacity mr-8">
-                    <div class="flex items-center justify-center h-[240px] w-[360px]">
-                        <img class="h-full w-full object-contain grayscale brightness-0 opacity-100 transition-all" 
-                             alt="${brand.name} Logo" 
-                             src="${brand.logo_url}" 
-                             onerror="this.style.display='none';"/>
-                    </div>
+                <div class="brands-carousel-item" style="flex-shrink:0; display:flex; flex-direction:column; align-items:center; justify-content:center; width:200px; height:100px; margin-right:48px;">
+                    ${hasLogo
+                    ? `<img style="max-height:80px; max-width:180px; width:auto; height:auto; object-fit:contain; filter:grayscale(1) brightness(0); opacity:0.7; transition:all 0.3s;"
+                               alt="${brand.name}"
+                               src="${brand.logo_url}"
+                               onmouseover="this.style.filter='grayscale(0) brightness(1)'; this.style.opacity='1';"
+                               onmouseout="this.style.filter='grayscale(1) brightness(0)'; this.style.opacity='0.7';"
+                               onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"/>
+                          <span style="display:none; font-weight:900; font-size:1rem; text-transform:uppercase; letter-spacing:0.1em; color:#333;">${brand.name}</span>`
+                    : `<span style="font-weight:900; font-size:1rem; text-transform:uppercase; letter-spacing:0.1em; color:#333; text-align:center; padding:0 8px;">${brand.name}</span>`
+                }
                 </div>
             `;
         });
@@ -228,31 +233,25 @@ class BrandsRenderer {
 
         // Initialize animation after DOM is ready
         setTimeout(() => {
-            const track = container.querySelector('.brands-carousel-track');
+            const track = container.querySelector('#brands-track-inner');
             if (track) {
-                // Calculate the width of one set of brands
-                const itemWidth = 360 + 32; // width + margin (mr-8 = 32px)
-                const totalWidth = itemWidth * brandsWithLogos.length;
+                const itemWidth = 200 + 48; // width + margin
+                const totalWidth = itemWidth * brandsToShow.length;
+                const duration = Math.max(10, brandsToShow.length * 3);
 
-                // Set animation dynamically based on content
-                track.style.animation = `brandsScroll ${brandsWithLogos.length * 2}s linear infinite`;
+                // Use a unique animation name to avoid conflicts with global CSS
+                const animName = 'brandsScrollDynamic';
 
-                // Add CSS animation if not already added
                 if (!document.getElementById('brands-carousel-style')) {
                     const style = document.createElement('style');
                     style.id = 'brands-carousel-style';
                     style.textContent = `
-                        @keyframes brandsScroll {
-                            0% {
-                                transform: translateX(0);
-                            }
-                            100% {
-                                transform: translateX(-${totalWidth}px);
-                            }
+                        @keyframes ${animName} {
+                            0% { transform: translateX(0); }
+                            100% { transform: translateX(-${totalWidth}px); }
                         }
-                        .brands-carousel-wrapper:hover .brands-carousel-track {
-                            animation-play-state: paused;
-                        }
+                        #brands-track-inner { animation: ${animName} ${duration}s linear infinite; }
+                        .brands-carousel-wrapper:hover #brands-track-inner { animation-play-state: paused; }
                     `;
                     document.head.appendChild(style);
                 }
