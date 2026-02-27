@@ -5,7 +5,7 @@
 
 class UsersListService {
     constructor() {
-        this.database = null;
+        this.firestore = null;
         this.initialized = false;
     }
 
@@ -15,8 +15,8 @@ class UsersListService {
         }
 
         try {
-            const { database } = await window.firebaseConfig.initializeFirebase();
-            this.database = database;
+            const { firestore } = await window.firebaseConfig.initializeFirebase();
+            this.firestore = firestore;
             this.initialized = true;
         } catch (error) {
             console.error('Error initializing Users List Service:', error);
@@ -32,24 +32,27 @@ class UsersListService {
         await this.initialize();
 
         try {
-            const usersRef = this.database.ref('users');
-            const snapshot = await usersRef.once('value');
-            const usersData = snapshot.val();
+            const usersRef = this.firestore.collection('users');
+            const snapshot = await usersRef.get();
+            const users = [];
 
-            if (!usersData) {
-                return [];
-            }
-
-            // Convert object to array and add userId
-            const users = Object.keys(usersData).map(userId => ({
-                uid: userId,
-                ...usersData[userId]
-            }));
+            snapshot.forEach(doc => {
+                users.push({
+                    uid: doc.id,
+                    ...doc.data()
+                });
+            });
 
             // Sort by creation date (newest first)
             return users.sort((a, b) => {
-                const dateA = a.createdAt || 0;
-                const dateB = b.createdAt || 0;
+                const getTimestamp = (val) => {
+                    if (!val) return 0;
+                    if (val.toMillis) return val.toMillis();
+                    if (val.seconds) return val.seconds * 1000;
+                    return val;
+                };
+                const dateA = getTimestamp(a.createdAt);
+                const dateB = getTimestamp(b.createdAt);
                 return dateB - dateA;
             });
         } catch (error) {
@@ -65,8 +68,17 @@ class UsersListService {
      */
     formatDate(timestamp) {
         if (!timestamp) return 'N/A';
-        
-        const date = new Date(timestamp);
+
+        let dateVal;
+        if (timestamp.toDate) {
+            dateVal = timestamp.toDate();
+        } else if (timestamp.seconds) {
+            dateVal = new Date(timestamp.seconds * 1000);
+        } else {
+            dateVal = new Date(timestamp);
+        }
+
+        const date = dateVal;
         const now = new Date();
         const diffMs = now - date;
         const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
@@ -108,11 +120,11 @@ class UsersListService {
 
         // Show first 5 users (most recent)
         const displayUsers = users.slice(0, 5);
-        
+
         displayUsers.forEach(user => {
             const userItem = document.createElement('div');
             userItem.className = 'flex flex-col gap-1 p-2 rounded bg-slate-50 dark:bg-[#12120a] border border-slate-200 dark:border-[#393928]';
-            
+
             const name = user.name || 'No name';
             const email = user.email || 'No email';
             const date = this.formatDate(user.createdAt);

@@ -114,10 +114,20 @@
         </div>
 
     </main>
+
+    <!-- Modal for viewing enlarged line image -->
+    <div id="image-modal"
+        class="fixed inset-0 z-50 hidden items-center justify-center bg-black/90 p-4 transition-opacity duration-300 opacity-0">
+        <button id="close-modal"
+            class="absolute top-6 right-6 text-white hover:text-primary material-symbols-outlined text-4xl cursor-pointer">close</button>
+        <img id="modal-image" src="" alt="Linea Ingrandita"
+            class="max-w-[90vw] max-h-[90vh] object-contain shadow-2xl rounded-sm" />
+    </div>
+
     <!-- Footer loaded dynamically -->
     <!-- Firebase SDK (Legacy for Realtime Database) -->
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-analytics-compat.js"></script>
 
     <!-- Catalog Services -->
@@ -178,7 +188,45 @@
                     if (decoratedLines.length === 0) {
                         container.innerHTML = '<p class="text-center text-slate-500 py-12">Nessuna linea di prodotti disponibile per questo marchio.</p>';
                     } else {
-                        brandsRenderer.renderSpecificLinesZigZag(decoratedLines, container);
+                        // Render Grid instead of ZigZag
+                        let html = '<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">';
+                        decoratedLines.forEach(line => {
+                            let imageUrl = line.image_url || '';
+                            // Validate image
+                            if (!imageUrl || typeof imageUrl !== 'string' || imageUrl.trim() === '' || imageUrl.trim() === 'null') return;
+
+                            const brandName = encodeURIComponent(line.brandName);
+                            const lineName = encodeURIComponent(line.name);
+                            const navUrl = `line-products.html?brand=${brandName}&line=${lineName}`;
+
+                            html += `
+                                <div class="group flex flex-col bg-white border border-gray-100 rounded-lg shadow-sm overflow-hidden hover:shadow-xl hover:border-primary/50 transition-all duration-300">
+                                    <div class="relative w-full aspect-square overflow-hidden bg-gray-50 cursor-pointer" onclick="openImageModal('${imageUrl}')">
+                                        <img src="${imageUrl}" alt="${line.name}" class="w-full h-full object-cover transform scale-100 group-hover:scale-110 transition-transform duration-700" />
+                                        <!-- Search Icon Overlay on Hover -->
+                                        <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                                            <span class="material-symbols-outlined text-white text-5xl">zoom_in</span>
+                                        </div>
+                                    </div>
+                                    <div class="p-6 flex flex-col flex-grow text-center">
+                                        <h3 class="text-xl font-black text-background-dark uppercase mb-4 leading-tight">${line.name}</h3>
+                                        <div class="mt-auto">
+                                            <a href="${navUrl}" class="inline-flex w-full justify-center items-center gap-2 px-4 py-3 bg-background-dark text-white uppercase font-bold text-[11px] tracking-widest rounded-sm hover:bg-primary hover:text-black transition-colors">
+                                                Vedi Prodotti
+                                                <span class="material-symbols-outlined text-sm">arrow_forward</span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+                        });
+                        html += '</div>';
+
+                        if (html === '<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8"></div>') {
+                            container.innerHTML = '<p class="text-center text-slate-500 py-12">Nessuna linea associata o le linee non contengono immagini.</p>';
+                        } else {
+                            container.innerHTML = html;
+                        }
                     }
 
                 } catch (err) {
@@ -186,6 +234,45 @@
                     document.getElementById('lines-content-container').innerHTML = '<p class="text-center text-red-500">Si è verificato un errore.</p>';
                 }
             })();
+
+        // Modal Functions
+        const imageModal = document.getElementById('image-modal');
+        const modalImage = document.getElementById('modal-image');
+        const closeModalBtn = document.getElementById('close-modal');
+
+        window.openImageModal = function (url) {
+            modalImage.src = url;
+            imageModal.classList.remove('hidden');
+            imageModal.classList.add('flex');
+
+            // Small delay to allow display flex to apply before opacity transition
+            setTimeout(() => {
+                imageModal.classList.remove('opacity-0');
+                imageModal.classList.add('opacity-100');
+            }, 10);
+
+            document.body.style.overflow = 'hidden'; // Prevent scrolling
+        };
+
+        function closeImageModal() {
+            imageModal.classList.remove('opacity-100');
+            imageModal.classList.add('opacity-0');
+
+            // Wait for transition to finish
+            setTimeout(() => {
+                imageModal.classList.remove('flex');
+                imageModal.classList.add('hidden');
+                modalImage.src = '';
+                document.body.style.overflow = '';
+            }, 300);
+        }
+
+        closeModalBtn.addEventListener('click', closeImageModal);
+        imageModal.addEventListener('click', function (e) {
+            if (e.target === imageModal) {
+                closeImageModal();
+            }
+        });
     </script>
 </body>
 

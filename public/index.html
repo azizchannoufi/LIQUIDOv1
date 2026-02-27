@@ -97,7 +97,7 @@
             }
         }
         .brands-carousel-track {
-            animation: brandsScroll 8s linear infinite;
+            animation: none;
         }
         .brands-carousel-wrapper:hover .brands-carousel-track {
             animation-play-state: paused;
@@ -220,152 +220,164 @@
                 <div class="relative z-10 h-full flex items-center justify-center px-6 lg:px-20 w-full">
                     <div class="w-full flex flex-col items-center gap-10">
                         <h1
-                            class="w-full max-w-[90rem] mx-auto flex flex-col text-4xl sm:text-5xl md:text-7xl lg:text-[9rem] text-bold-modern leading-[0.9] uppercase text-white drop-shadow-2xl font-black tracking-tighter mix-blend-overlay opacity-90 hover:opacity-100 transition-opacity">
+                            class="w-full max-w-[90rem] mx-auto flex flex-col text-7xl sm:text-6xl md:text-7xl lg:text-[9rem] text-bold-modern leading-[0.9] uppercase text-white drop-shadow-2xl font-black tracking-tighter mix-blend-overlay opacity-90 hover:opacity-100 transition-opacity">
                             <span class="self-end text-right mr-2 lg:mr-20">Accendi</span>
-                            <span class="self-start text-left ml-2 lg:ml-20 -mt-1 lg:-mt-6">la tua vibe</span>
-                            <span class="self-end text-right text-primary mr-2 lg:mr-20 -mt-1 lg:-mt-6">ad ogni
+                            <span class="self-start text-left ml-2 lg:ml-20 -mt-3 sm:-mt-1 lg:-mt-6">la tua vibe</span>
+                            <span class="self-end text-right text-primary mr-2 lg:mr-20 -mt-3 sm:-mt-1 lg:-mt-6">ad ogni
                                 hit</span>
                         </h1>
-                        <button
-                            class="bg-primary hover:bg-white text-background-dark px-12 py-6 rounded-sm font-black text-sm uppercase tracking-[0.2em] transition-all accent-glow-strong hover:scale-105 transform duration-300">
-                            Esplora
-                        </button>
                     </div>
                 </div>
             </div>
         </section>
-        <section class="py-20 bg-surface-light scroll-animate scroll-animate-up">
+        <section class="py-10 bg-surface-light scroll-animate scroll-animate-up">
             <div class="max-w-[1440px] mx-auto px-6 lg:px-20">
-                <p class="text-center text-gray-600 uppercase tracking-[0.4em] text-[10px] font-black mb-12">Rivenditore
-                    Autorizzato Per</p>
-                <div id="brands-carousel-container" class="opacity-50 min-h-[120px]">
+                <div id="brands-carousel-container" class="min-h-[80px] transition-opacity duration-700 opacity-0">
                     <!-- Brands carousel will be loaded dynamically from Firebase -->
                 </div>
             </div>
         </section>
-        <section class="relative py-32 overflow-hidden bg-white">
+        <section class="relative py-24 overflow-hidden bg-white">
             <div class="absolute inset-0 z-0">
                 <img class="w-full h-full object-cover opacity-5 grayscale" data-alt="smoky background"
                     src="https://lh3.googleusercontent.com/aida-public/AB6AXuB2W8yzKRqsy4SEqRz1ttIJAAo9IhiFuUWh-Z5k-5KjdxqkWXSU0iV1kY0W0zl9eMm6Llod9_xa93Le_kmTbyU4v4cTOJdd27q16jhUCyoZKKch1KrEpB-aRRa-uMzIOqLybGrY4JJmtJDKf2gzbtAdUfSM97Sz7TQPjr36nYwz-XCOMwdY-ySeBjryC1kGtupEr73Px7YGdMzBfHAiyUnA2rR1MGFe3mGijldkRk_zkV_wktC8riZZhZtx5pgUZ7h2UUVv794TuA0" />
             </div>
+
+            <!-- Keyframe styles for strength icon flip animation -->
+            <style>
+                .strength-icon-box {
+                    width: 80px;
+                    height: 80px;
+                    background: #111;
+                    border-radius: 4px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    margin-bottom: 1.5rem;
+                    transition: background 0.35s cubic-bezier(0.4, 0, 0.2, 1), transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+                    position: relative;
+                    overflow: hidden;
+                }
+
+                .strength-icon-box .material-symbols-outlined {
+                    font-size: 2.2rem;
+                    color: #fff;
+                    transition: color 0.35s cubic-bezier(0.4, 0, 0.2, 1), transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+                    font-variation-settings: 'FILL' 0, 'wght' 300;
+                }
+
+                .strength-card:hover .strength-icon-box {
+                    background: #F8ED70;
+                    transform: translateY(-6px);
+                }
+
+                .strength-card:hover .strength-icon-box .material-symbols-outlined {
+                    color: #111;
+                    transform: scale(1.15);
+                }
+
+                .strength-card {
+                    transition: transform 0.3s ease;
+                }
+
+                .strength-card:hover {
+                    transform: translateY(-4px);
+                }
+            </style>
+
             <div class="relative z-10 max-w-[1440px] mx-auto px-6 lg:px-20">
                 <!-- Section Header -->
-                <div class="text-center mb-20 scroll-animate scroll-animate-left">
-                    <span class="text-primary font-black uppercase tracking-[0.6em] text-[10px] mb-6 block">Perché
-                        Sceglierci</span>
+                <div class="text-center mb-16 scroll-animate scroll-animate-left">
                     <h2
-                        class="text-4xl md:text-5xl lg:text-7xl text-bold-modern tracking-tighter uppercase text-background-dark mb-6">
-                        PUNTI DI FORZA
+                        class="text-3xl md:text-4xl lg:text-6xl text-bold-modern tracking-tighter uppercase text-background-dark mb-0">
+                        PERCHÉ <span class="text-primary"></span>SCEGLIERCI</span>
                     </h2>
-                    <p class="text-xl text-slate-600 max-w-3xl mx-auto leading-relaxed font-medium">
-                        Il nostro negozio di liquidi da inalazione e sigarette elettroniche nasce per offrire
-                        un'esperienza di svapo di alto livello, basata su qualità, competenza e affidabilità.
-                    </p>
                 </div>
 
                 <!-- Strengths Grid -->
-                <!-- Strengths Grid (Horizontal List) -->
-                <div class="flex flex-col md:flex-row justify-between gap-8 lg:gap-6">
+                <div class="flex flex-col md:flex-row justify-between gap-6 lg:gap-4">
                     <!-- Strength 1: Prodotti Certificati -->
-                    <div class="flex-1 flex flex-col items-center text-center group scroll-animate-stagger">
-                        <div
-                            class="size-20 bg-primary/20 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-primary transition-all duration-300 shadow-sm">
-                            <span class="material-symbols-outlined text-4xl text-background-dark">verified</span>
+                    <div class="strength-card flex-1 flex flex-col items-center text-center scroll-animate-stagger">
+                        <div class="strength-icon-box">
+                            <span class="material-symbols-outlined">verified</span>
                         </div>
-                        <h3
-                            class="text-xl font-black uppercase tracking-tight text-background-dark mb-4 group-hover:text-primary-dark transition-colors">
-                            Prodotti Certificati
+                        <h3 class="text-base font-black uppercase tracking-tight text-background-dark mb-3">
+                            Prodotti<br>Certificati
                         </h3>
                         <p class="text-slate-600 leading-relaxed font-medium text-sm">
-                            Selezioniamo esclusivamente prodotti certificati dei migliori marchi, garantendo sicurezza,
-                            prestazioni e gusto autentico.
+                            Offriamo esclusivamente prodotti certificati dei migliori brand internazionali. Ogni
+                            articolo è selezionato per garantire sicurezza, autenticità e un'esperienza di svapo senza
+                            compromessi.
                         </p>
                     </div>
 
                     <!-- Strength 2: Consulenza Personalizzata -->
-                    <div class="flex-1 flex flex-col items-center text-center group scroll-animate-stagger delay-100">
-                        <div
-                            class="size-20 bg-primary/20 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-primary transition-all duration-300 shadow-sm">
-                            <span class="material-symbols-outlined text-4xl text-background-dark">support_agent</span>
+                    <div
+                        class="strength-card flex-1 flex flex-col items-center text-center scroll-animate-stagger delay-100">
+                        <div class="strength-icon-box">
+                            <span class="material-symbols-outlined">support_agent</span>
                         </div>
-                        <h3
-                            class="text-xl font-black uppercase tracking-tight text-background-dark mb-4 group-hover:text-primary-dark transition-colors">
-                            Consulenza Personalizzata
+                        <h3 class="text-base font-black uppercase tracking-tight text-background-dark mb-3">
+                            Consulenza<br>Personalizzata
                         </h3>
                         <p class="text-slate-600 leading-relaxed font-medium text-sm">
-                            Ogni cliente viene seguito con una consulenza personalizzata, pensata sia per chi si
-                            avvicina per la prima volta allo svapo sia per utenti esperti.
+                            Ogni cliente viene seguito con una consulenza personalizzata, pensata per Vapers
+                            principianti e per i più esperti.
                         </p>
                     </div>
 
                     <!-- Strength 3: Ambiente Elegante -->
-                    <div class="flex-1 flex flex-col items-center text-center group scroll-animate-stagger delay-200">
-                        <div
-                            class="size-20 bg-primary/20 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-primary transition-all duration-300 shadow-sm">
-                            <span class="material-symbols-outlined text-4xl text-background-dark">storefront</span>
+                    <div
+                        class="strength-card flex-1 flex flex-col items-center text-center scroll-animate-stagger delay-200">
+                        <div class="strength-icon-box">
+                            <span class="material-symbols-outlined">diamond</span>
                         </div>
-                        <h3
-                            class="text-xl font-black uppercase tracking-tight text-background-dark mb-4 group-hover:text-primary-dark transition-colors">
-                            Ambiente Elegante
+                        <h3 class="text-base font-black uppercase tracking-tight text-background-dark mb-3">
+                            Ambiente<br>Elegante
                         </h3>
                         <p class="text-slate-600 leading-relaxed font-medium text-sm">
-                            L'ambiente è curato, moderno ed elegante, progettato per mettere a proprio agio e
-                            valorizzare ogni scelta.
+                            Ambiente curato, moderno ed elegante, progettato per accogliere calorosamente e valorizzare
+                            ogni esperienza.
                         </p>
                     </div>
 
                     <!-- Strength 4: Servizio Professionale -->
-                    <div class="flex-1 flex flex-col items-center text-center group scroll-animate-stagger delay-300">
-                        <div
-                            class="size-20 bg-primary/20 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-primary transition-all duration-300 shadow-sm">
-                            <span
-                                class="material-symbols-outlined text-4xl text-background-dark">workspace_premium</span>
+                    <div
+                        class="strength-card flex-1 flex flex-col items-center text-center scroll-animate-stagger delay-300">
+                        <div class="strength-icon-box">
+                            <span class="material-symbols-outlined">workspace_premium</span>
                         </div>
-                        <h3
-                            class="text-xl font-black uppercase tracking-tight text-background-dark mb-4 group-hover:text-primary-dark transition-colors">
-                            Servizio Professionale
+                        <h3 class="text-base font-black uppercase tracking-tight text-background-dark mb-3">
+                            Servizio<br>Professionale
                         </h3>
                         <p class="text-slate-600 leading-relaxed font-medium text-sm">
-                            A completare l'esperienza, un assortimento sempre aggiornato e un servizio attento,
-                            trasparente e professionale.
+                            Competenza e attenzione al servizio del cliente per capire e risolvere ogni problema con
+                            trasparenza e professionalità.
                         </p>
                     </div>
                 </div>
 
                 <!-- Call to Action -->
-                <div class="flex flex-col sm:flex-row gap-6 pt-16 justify-center">
-                    <a href="contact.html"
-                        class="bg-primary text-background-dark px-12 py-6 rounded-xl font-black text-xs uppercase tracking-widest hover:bg-white transition-all accent-glow-strong inline-flex items-center justify-center hover:scale-105 transform duration-300">
-                        Visita il Negozio
+                <div class="flex flex-col sm:flex-row gap-4 pt-12 justify-center">
+                    <a href="about.html"
+                        class="bg-primary text-background-dark px-6 py-2.5 rounded-full font-black text-xs uppercase tracking-widest hover:bg-white transition-all accent-glow-strong inline-flex items-center justify-center hover:scale-105 transform duration-300">
+                        CHI SIAMO
                     </a>
-                    <a href="products.html"
-                        class="bg-black/5 border border-black/10 text-background-dark px-12 py-6 rounded-xl font-black text-xs uppercase tracking-widest hover:bg-black/10 transition-all inline-flex items-center justify-center hover:scale-105 transform duration-300">
-                        Scopri i Prodotti
+                    <a href="contact.html"
+                        class="bg-black/5 border border-black/10 text-background-dark px-6 py-2.5 rounded-full font-black text-xs uppercase tracking-widest hover:bg-black/10 transition-all inline-flex items-center justify-center hover:scale-105 transform duration-300">
+                        DOVE SIAMO
                     </a>
                 </div>
             </div>
         </section>
-        <section class="py-32 px-6 lg:px-20 bg-white">
+        <section id="nuovi-arrivi" class="py-20 px-6 lg:px-20 bg-white">
             <div class="max-w-[1440px] mx-auto">
-                <div
-                    class="flex flex-col md:flex-row md:items-end justify-between mb-20 gap-8 scroll-animate scroll-animate-right">
-                    <div class="space-y-4">
-                        <h2 class="text-4xl md:text-5xl lg:text-6xl text-bold-modern uppercase text-background-dark">
-                            Nuovi Arrivi
-                        </h2>
-                        <p class="text-slate-600 max-w-md font-medium">Selezioni accuratamente scelte dell'ultimo
-                            hardware e e-liquid premium da tutto il mondo.</p>
-                    </div>
-                    <div class="flex gap-4">
-                        <button id="nuovi-arrivi-prev"
-                            class="size-14 rounded-sm border border-black/10 flex items-center justify-center hover:bg-primary hover:text-background-dark transition-all text-background-dark">
-                            <span class="material-symbols-outlined">arrow_back</span>
-                        </button>
-                        <button id="nuovi-arrivi-next"
-                            class="size-14 rounded-sm border border-black/10 flex items-center justify-center hover:bg-primary hover:text-background-dark transition-all text-background-dark">
-                            <span class="material-symbols-outlined">arrow_forward</span>
-                        </button>
-                    </div>
+                <div class="text-center mb-8 scroll-animate scroll-animate-up">
+                    <h2 class="text-4xl md:text-5xl lg:text-6xl text-bold-modern uppercase text-background-dark">
+                        Nuovi <span class="text-primary">Arrivi</span>
+                    </h2>
+                    <p class="text-slate-600 font-medium mt-3">Selezioni accuratamente scelte dell'ultimo
+                        hardware e e-liquid premium da tutto il mondo.</p>
                 </div>
                 <!-- Carousel Container -->
                 <div class="relative overflow-hidden">
@@ -383,12 +395,14 @@
             </div>
         </section>
 
-        <!-- NEW GOOGLE REVIEWS SECTION -->
+        <!-- GOOGLE REVIEWS SECTION -->
         <section class="py-20 bg-surface-light border-t border-black/5">
             <div class="max-w-[1440px] mx-auto px-6 lg:px-20">
-                <div class="text-center mb-16 scroll-animate scroll-animate-left">
-
-                    <div class="flex items-center justify-center gap-2 mb-4">
+                <div class="text-center mb-12 scroll-animate scroll-animate-left">
+                    <h2 class="text-3xl md:text-4xl lg:text-5xl text-bold-modern uppercase text-background-dark mb-4">
+                        COSA DICONO <span class="text-primary">DI NOI</span>
+                    </h2>
+                    <div class="flex items-center justify-center gap-3">
                         <span class="text-2xl font-bold text-background-dark">4.9</span>
                         <div class="flex text-[#F8ED70] star-rating">
                             <span class="material-symbols-outlined fill-current">star</span>
@@ -397,180 +411,245 @@
                             <span class="material-symbols-outlined fill-current">star</span>
                             <span class="material-symbols-outlined fill-current">star</span>
                         </div>
-                        <span class="text-slate-500 text-sm font-medium">(su Google Maps)</span>
+                        <a href="https://www.google.com/maps/search/?api=1&query=LIQUIDO+VAPE+SHOP+Monterotondo"
+                            target="_blank"
+                            class="text-slate-500 text-sm font-medium hover:text-primary transition-colors underline underline-offset-2">
+                            Google Maps
+                        </a>
                     </div>
-                    <p class="text-slate-600 max-w-2xl mx-auto font-medium">
-                        La soddisfazione dei nostri clienti è la nostra priorità assoluta. Scopri perché siamo il punto
-                        di riferimento per il vaping a Monterotondo.
-                    </p>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <!-- Review 1 -->
                     <div
-                        class="bg-white p-8 rounded-sm shadow-sm hover:shadow-md transition-shadow border border-black/5 scroll-animate-stagger">
-                        <div class="flex items-center gap-4 mb-4">
+                        class="bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow border border-black/5 scroll-animate-stagger">
+                        <div class="flex items-center gap-3 mb-3">
                             <div
-                                class="size-10 rounded-full bg-slate-100 flex items-center justify-center text-lg font-bold text-slate-400">
-                                M
-                            </div>
+                                class="size-10 rounded-full bg-[#F8ED70] flex items-center justify-center text-sm font-black text-background-dark">
+                                LV</div>
                             <div>
-                                <h4 class="font-bold text-background-dark">Marco R.</h4>
-                                <div class="flex text-[#F8ED70] text-sm star-rating">
-                                    <span class="material-symbols-outlined text-[18px] fill-current">star</span>
-                                    <span class="material-symbols-outlined text-[18px] fill-current">star</span>
-                                    <span class="material-symbols-outlined text-[18px] fill-current">star</span>
-                                    <span class="material-symbols-outlined text-[18px] fill-current">star</span>
-                                    <span class="material-symbols-outlined text-[18px] fill-current">star</span>
+                                <h4 class="font-bold text-background-dark text-sm">Luca Valentini</h4>
+                                <div class="flex text-[#F8ED70] star-rating">
+                                    <span class="material-symbols-outlined text-[16px] fill-current">star</span>
+                                    <span class="material-symbols-outlined text-[16px] fill-current">star</span>
+                                    <span class="material-symbols-outlined text-[16px] fill-current">star</span>
+                                    <span class="material-symbols-outlined text-[16px] fill-current">star</span>
+                                    <span class="material-symbols-outlined text-[16px] fill-current">star</span>
                                 </div>
                             </div>
                         </div>
-                        <p class="text-slate-600 leading-relaxed italic">
-                            "Il miglior vape shop di Monterotondo! Personale super disponibile e vasta scelta di
-                            liquidi. Consigliatissimo per chi cerca qualità."
-                        </p>
+                        <p class="text-slate-600 leading-relaxed italic text-sm">"Il miglior vape shop della zona! Ogni
+                            volta che entro vengo accolto con professionalità. La scelta di liquidi e dispositivi è
+                            incredibile e i prezzi sono onesti."</p>
+                        <p class="text-xs text-slate-400 mt-3">Recensione Google · 2 settimane fa</p>
                     </div>
 
                     <!-- Review 2 -->
                     <div
-                        class="bg-white p-8 rounded-sm shadow-sm hover:shadow-md transition-shadow border border-black/5 scroll-animate-stagger delay-100">
-                        <div class="flex items-center gap-4 mb-4">
+                        class="bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow border border-black/5 scroll-animate-stagger delay-100">
+                        <div class="flex items-center gap-3 mb-3">
                             <div
-                                class="size-10 rounded-full bg-slate-100 flex items-center justify-center text-lg font-bold text-slate-400">
-                                G
-                            </div>
+                                class="size-10 rounded-full bg-[#F8ED70] flex items-center justify-center text-sm font-black text-background-dark">
+                                SR</div>
                             <div>
-                                <h4 class="font-bold text-background-dark">Giulia B.</h4>
-                                <div class="flex text-[#F8ED70] text-sm star-rating">
-                                    <span class="material-symbols-outlined text-[18px] fill-current">star</span>
-                                    <span class="material-symbols-outlined text-[18px] fill-current">star</span>
-                                    <span class="material-symbols-outlined text-[18px] fill-current">star</span>
-                                    <span class="material-symbols-outlined text-[18px] fill-current">star</span>
-                                    <span class="material-symbols-outlined text-[18px] fill-current">star</span>
+                                <h4 class="font-bold text-background-dark text-sm">Sara Rinaldi</h4>
+                                <div class="flex text-[#F8ED70] star-rating">
+                                    <span class="material-symbols-outlined text-[16px] fill-current">star</span>
+                                    <span class="material-symbols-outlined text-[16px] fill-current">star</span>
+                                    <span class="material-symbols-outlined text-[16px] fill-current">star</span>
+                                    <span class="material-symbols-outlined text-[16px] fill-current">star</span>
+                                    <span class="material-symbols-outlined text-[16px] fill-current">star</span>
                                 </div>
                             </div>
                         </div>
-                        <p class="text-slate-600 leading-relaxed italic">
-                            "Competenza e gentilezza uniche. Mi hanno guidato nella scelta del dispositivo perfetto.
-                            Un'esperienza d'acquisto eccellente."
-                        </p>
+                        <p class="text-slate-600 leading-relaxed italic text-sm">"Negozio curatissimo, personale gentile
+                            e molto preparato. Mi hanno consigliato il dispositivo perfetto per me. Lo consiglio
+                            assolutamente a tutti!"</p>
+                        <p class="text-xs text-slate-400 mt-3">Recensione Google · 1 mese fa</p>
                     </div>
 
                     <!-- Review 3 -->
                     <div
-                        class="bg-white p-8 rounded-sm shadow-sm hover:shadow-md transition-shadow border border-black/5 scroll-animate-stagger delay-200">
-                        <div class="flex items-center gap-4 mb-4">
+                        class="bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow border border-black/5 scroll-animate-stagger delay-200">
+                        <div class="flex items-center gap-3 mb-3">
                             <div
-                                class="size-10 rounded-full bg-slate-100 flex items-center justify-center text-lg font-bold text-slate-400">
-                                A
-                            </div>
+                                class="size-10 rounded-full bg-[#F8ED70] flex items-center justify-center text-sm font-black text-background-dark">
+                                FM</div>
                             <div>
-                                <h4 class="font-bold text-background-dark">Alessandro V.</h4>
-                                <div class="flex text-[#F8ED70] text-sm star-rating">
-                                    <span class="material-symbols-outlined text-[18px] fill-current">star</span>
-                                    <span class="material-symbols-outlined text-[18px] fill-current">star</span>
-                                    <span class="material-symbols-outlined text-[18px] fill-current">star</span>
-                                    <span class="material-symbols-outlined text-[18px] fill-current">star</span>
-                                    <span class="material-symbols-outlined text-[18px] fill-current">star</span>
+                                <h4 class="font-bold text-background-dark text-sm">Federico Moretti</h4>
+                                <div class="flex text-[#F8ED70] star-rating">
+                                    <span class="material-symbols-outlined text-[16px] fill-current">star</span>
+                                    <span class="material-symbols-outlined text-[16px] fill-current">star</span>
+                                    <span class="material-symbols-outlined text-[16px] fill-current">star</span>
+                                    <span class="material-symbols-outlined text-[16px] fill-current">star</span>
+                                    <span class="material-symbols-outlined text-[16px] fill-current">star</span>
                                 </div>
                             </div>
                         </div>
-                        <p class="text-slate-600 leading-relaxed italic">
-                            "Negozio fornitissimo e ambiente molto curato. I ragazzi sono preparatissimi e sanno sempre
-                            consigliare il liquido giusto. Top!"
-                        </p>
+                        <p class="text-slate-600 leading-relaxed italic text-sm">"Vengo qui da due anni e non ho mai
+                            avuto motivo di andare altrove. Liquidi di qualità eccellente, staff disponibile e
+                            un'atmosfera davvero unica. 10/10!"</p>
+                        <p class="text-xs text-slate-400 mt-3">Recensione Google · 3 mesi fa</p>
                     </div>
-                </div>
-
-                <div class="text-center">
-                    <a href="https://www.google.com/maps/search/?api=1&query=LIQUIDO+VAPE+SHOP+Monterotondo"
-                        target="_blank"
-                        class="inline-flex items-center gap-2 bg-white border border-black/10 hover:border-black/30 text-background-dark px-8 py-4 rounded-sm font-black text-xs uppercase tracking-widest transition-all hover:bg-slate-50 group">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/a/aa/Google_Maps_icon_%282020%29.svg"
-                            alt="Google Maps" class="w-6 h-6 mr-1">
-                        Leggi su Google Maps
-                        <span
-                            class="material-symbols-outlined group-hover:translate-x-1 transition-transform text-sm">arrow_forward</span>
-                    </a>
                 </div>
             </div>
         </section>
 
-        <section class="py-32 px-6 lg:px-20 bg-white">
+        <section class="py-20 px-6 lg:px-20 bg-white">
             <div class="max-w-[1440px] mx-auto">
-                <div class="text-center mb-16 scroll-animate scroll-animate-right">
-                    <h2 class="text-4xl md:text-5xl lg:text-6xl text-bold-modern uppercase mb-4 text-background-dark">
-                        Domande
-                        Frequenti</h2>
-                    <p class="text-slate-600 max-w-2xl mx-auto font-medium">Trova risposte rapide alle domande più
-                        comuni su liquidi vape, dispositivi vape e servizi a Monterotondo, Roma.</p>
+                <div class="text-center mb-10 scroll-animate scroll-animate-right">
+                    <h2 class="text-4xl md:text-5xl lg:text-6xl text-bold-modern uppercase mb-3 text-background-dark">
+                        Domande <span class="text-primary">Frequenti</span></h2>
+                    <p class="text-slate-600 max-w-2xl mx-auto font-medium">Trova le risposte alle domande più comuni su
+                        liquidi, dispositivi, procedure e curiosità del mondo dello svapo.</p>
                 </div>
-                <div class="max-w-4xl mx-auto space-y-4 mb-12">
-                    <div class="faq-item overflow-hidden">
+                <div class="max-w-4xl mx-auto space-y-4 mb-10">
+                    <!-- FAQ 1: Prodotti sicuri e certificati -->
+                    <div
+                        class="faq-item bg-primary text-black rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all">
                         <div
-                            class="faq-question p-6 flex items-center justify-between cursor-pointer hover:brightness-110 transition-all shadow-sm">
-                            <h3 class="text-lg font-bold">Quali sono i migliori liquidi vape disponibili a Monterotondo?
+                            class="faq-question p-6 flex items-center justify-between cursor-pointer hover:brightness-110 transition-all">
+                            <h3 class="text-lg font-bold">I prodotti di LIQUIDO VAPE SHOP sono sicuri e certificati?
                             </h3>
-                            <span class="material-symbols-outlined faq-icon text-black">expand_more</span>
+                            <span class="material-symbols-outlined faq-icon text-black flex-shrink-0">expand_more</span>
                         </div>
                         <div class="faq-answer">
-                            <div class="px-6 pb-6 text-[#baba9c] dark:text-[#baba9c] text-slate-600 leading-relaxed">
-                                <p>Presso LIQUIDO vape shop a Monterotondo (Roma) troverai una selezione premium di
-                                    liquidi vape delle migliori marche: Dinner Lady, Vaporesso, GeekVape, Voopoo e molti
-                                    altri. Vieni a visitare il nostro negozio in via Adige 43C per scoprire la nostra
-                                    gamma completa.</p>
+                            <div class="px-6 pb-6 text-black leading-relaxed">
+                                <p>Sì, tutti i prodotti presenti in negozio garantiscono i massimi standard di qualità e
+                                    sicurezza.</p>
+                                <ul class="mt-3 space-y-1 list-none">
+                                    <li class="flex items-start gap-2"><span class="font-bold">🇮🇹 100% Made in
+                                            Italy:</span> Ideati, sviluppati e prodotti interamente in Italia</li>
+                                    <li class="flex items-start gap-2"><span class="font-bold">💊 Ingredienti
+                                            farmaceutici:</span> Vendiamo esclusivamente prodotti selezionati di qualità
+                                        farmaceutica</li>
+                                    <li class="flex items-start gap-2"><span class="font-bold">📋 Notificati da
+                                            AAMS:</span> Tutti i prodotti sono notificati all'Agenzia delle Dogane</li>
+                                    <li class="flex items-start gap-2"><span class="font-bold">🇪🇺 Notifica TPD:</span>
+                                        Conformi alla direttiva europea sui prodotti del tabacco</li>
+                                    <li class="flex items-start gap-2"><span class="font-bold">✅ Standard
+                                            rigorosi:</span> Seguiamo rigorosi standard di qualità in fase di scelta
+                                        prodotti</li>
+                                </ul>
                             </div>
                         </div>
                     </div>
-                    <div class="faq-item overflow-hidden">
+                    <!-- FAQ 2: Cosa serve per iniziare -->
+                    <div
+                        class="faq-item bg-primary text-black rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all">
                         <div
-                            class="faq-question p-6 flex items-center justify-between cursor-pointer hover:brightness-110 transition-all shadow-sm">
-                            <h3 class="text-lg font-bold">Offrite servizi di pulizia e manutenzione vape a Monterotondo?
+                            class="faq-question p-6 flex items-center justify-between cursor-pointer hover:brightness-110 transition-all">
+                            <h3 class="text-lg font-bold">Cosa serve per iniziare a svapare per la prima volta?</h3>
+                            <span class="material-symbols-outlined faq-icon text-black flex-shrink-0">expand_more</span>
+                        </div>
+                        <div class="faq-answer">
+                            <div class="px-6 pb-6 text-black leading-relaxed">
+                                <p>Se sei un principiante e vuoi iniziare con la sigaretta elettronica, ecco cosa ti
+                                    serve:</p>
+                                <p class="mt-2 font-bold">Dispositivo — Scegli tra:</p>
+                                <ul class="mt-1 space-y-1 list-disc list-inside">
+                                    <li><span class="font-semibold">Sigaretta usa e getta:</span> Soluzione più
+                                        semplice, pronta all'uso, ideale per provare</li>
+                                    <li><span class="font-semibold">Pod Mod System:</span> Compatte, facili da usare,
+                                        perfette per principianti</li>
+                                    <li><span class="font-semibold">Kit completo:</span> Include batteria, atomizzatore
+                                        e resistenze</li>
+                                </ul>
+                                <p class="mt-2 font-bold">Liquido:</p>
+                                <ul class="mt-1 space-y-1 list-disc list-inside">
+                                    <li><span class="font-semibold">Formato:</span> Liquidi pronti 10ml oppure Mini Mix
+                                        / Shot Mix</li>
+                                    <li><span class="font-semibold">Nicotina:</span> Scegli in base a quante sigarette
+                                        fumavi
+                                        <ul class="ml-4 mt-1 space-y-0.5 list-disc list-inside">
+                                            <li>5–10 sigarette/giorno → 4–8mg</li>
+                                            <li>10–20 sigarette/giorno → 8–12mg</li>
+                                            <li>Oltre 20 sigarette/giorno → 12–18mg</li>
+                                        </ul>
+                                    </li>
+                                    <li><span class="font-semibold">Gusto:</span> Inizia con tabaccosi se vuoi
+                                        sostituire la sigaretta, oppure prova fruttati/cremosi per tantissimi gusti
+                                        squisiti.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- FAQ 3: Svapare aiuta a smettere -->
+                    <div
+                        class="faq-item bg-primary text-black rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all">
+                        <div
+                            class="faq-question p-6 flex items-center justify-between cursor-pointer hover:brightness-110 transition-all">
+                            <h3 class="text-lg font-bold">Svapare aiuta a smettere di fumare le sigarette tradizionali?
                             </h3>
-                            <span class="material-symbols-outlined faq-icon text-black">expand_more</span>
+                            <span class="material-symbols-outlined faq-icon text-black flex-shrink-0">expand_more</span>
                         </div>
                         <div class="faq-answer">
-                            <div class="px-6 pb-6 text-[#baba9c] dark:text-[#baba9c] text-slate-600 leading-relaxed">
-                                <p>Sì, presso il nostro vape shop a Monterotondo offriamo servizi completi di pulizia
-                                    dispositivi vape e manutenzione vape. I nostri servizi includono: pulizia completa
-                                    del dispositivo vape, pulizia del tank, cambio coil, sostituzione del cotone
-                                    dell'atomizzatore. Prenota tramite WhatsApp al +39 379 134 5367.</p>
+                            <div class="px-6 pb-6 text-black leading-relaxed">
+                                <p>Se sei un fumatore di tabacco, sì, svapare è un'abitudine che aiuta a ridurre la
+                                    dipendenza dal fumo, ma è consigliata principalmente ai fumatori adulti.</p>
                             </div>
                         </div>
                     </div>
-                    <div class="faq-item overflow-hidden">
+                    <!-- FAQ 4: Compatibilità liquidi -->
+                    <div
+                        class="faq-item bg-primary text-black rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all">
                         <div
-                            class="faq-question p-6 flex items-center justify-between cursor-pointer hover:brightness-110 transition-all shadow-sm">
-                            <h3 class="text-lg font-bold">Dove si trova il vostro negozio vape a Monterotondo?</h3>
-                            <span class="material-symbols-outlined faq-icon text-black">expand_more</span>
+                            class="faq-question p-6 flex items-center justify-between cursor-pointer hover:brightness-110 transition-all">
+                            <h3 class="text-lg font-bold">I liquidi sono compatibili con tutte le sigarette
+                                elettroniche?</h3>
+                            <span class="material-symbols-outlined faq-icon text-black flex-shrink-0">expand_more</span>
                         </div>
                         <div class="faq-answer">
-                            <div class="px-6 pb-6 text-[#baba9c] dark:text-[#baba9c] text-slate-600 leading-relaxed">
-                                <p>Il nostro vape shop LIQUIDO si trova a Monterotondo (Roma) in via Adige 43C, CAP
-                                    00015. Siamo aperti dal lunedì al venerdì dalle 10:00 alle 21:00, sabato dalle 11:00
-                                    alle 22:00, e domenica dalle 12:00 alle 18:00.</p>
+                            <div class="px-6 pb-6 text-black leading-relaxed">
+                                <p>Sì! Tutti i liquidi sono compatibili con qualsiasi sigaretta elettronica presente sul
+                                    mercato.</p>
+                                <p class="mt-2 font-bold">Compatibilità Universale:</p>
+                                <ul class="mt-1 space-y-1 list-disc list-inside">
+                                    <li>Funzionano con <span class="font-semibold">TUTTE</span> le sigarette
+                                        elettroniche</li>
+                                    <li>Adatti a qualsiasi brand: KIWI, Vaporesso, SMOK, Aspire, Geek Vape, Just Fog,
+                                        Voopoo, Innokin, Eleaf, etc.</li>
+                                    <li>Compatibili con POD MOD, Box Mod, Pen Style, AIO (All In One)</li>
+                                    <li>Perfetti sia per tiro di guancia (MTL) che tiro di polmone (DL)</li>
+                                </ul>
                             </div>
                         </div>
                     </div>
-                    <div class="faq-item overflow-hidden">
+                    <!-- FAQ 5: Quando sostituire la resistenza -->
+                    <div
+                        class="faq-item bg-primary text-black rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all">
                         <div
-                            class="faq-question p-6 flex items-center justify-between cursor-pointer hover:brightness-110 transition-all shadow-sm">
-                            <h3 class="text-lg font-bold">Come conservare correttamente i liquidi vape?</h3>
-                            <span class="material-symbols-outlined faq-icon text-black">expand_more</span>
+                            class="faq-question p-6 flex items-center justify-between cursor-pointer hover:brightness-110 transition-all">
+                            <h3 class="text-lg font-bold">Quando devo sostituire la resistenza di una sigaretta
+                                elettronica?</h3>
+                            <span class="material-symbols-outlined faq-icon text-black flex-shrink-0">expand_more</span>
                         </div>
                         <div class="faq-answer">
-                            <div class="px-6 pb-6 text-[#baba9c] dark:text-[#baba9c] text-slate-600 leading-relaxed">
-                                <p>Per conservare correttamente i liquidi vape, mantienili in un luogo fresco e
-                                    asciutto, lontano dalla luce diretta del sole. La temperatura ideale è tra i 15°C e
-                                    i 25°C. Conserva i liquidi vape in posizione verticale con il tappo ben chiuso per
-                                    evitare l'ossidazione.</p>
+                            <div class="px-6 pb-6 text-black leading-relaxed">
+                                <p>La resistenza è un componente fondamentale della sigaretta elettronica che necessita
+                                    di sostituzione periodica per garantire prestazioni ottimali e un'esperienza di
+                                    svapo soddisfacente.</p>
+                                <p class="mt-2 font-bold">Ogni quanto tempo va sostituita?</p>
+                                <p class="mt-1">In linea di massima è consigliato sostituire la resistenza ogni <span
+                                        class="font-semibold">2 settimane</span>. Tuttavia, questa tempistica può
+                                    variare in base a:</p>
+                                <ul class="mt-1 space-y-1 list-disc list-inside">
+                                    <li><span class="font-semibold">Frequenza d'uso:</span> uno svapo intenso riduce la
+                                        durata della resistenza</li>
+                                    <li><span class="font-semibold">Tipo di liquido:</span> liquidi dolci e densi
+                                        consumano la resistenza più velocemente</li>
+                                    <li><span class="font-semibold">Wattaggio utilizzato:</span> potenze elevate
+                                        accelerano l'usura del cotone</li>
+                                    <li><span class="font-semibold">Qualità dell'e-liquid:</span> liquidi con aromi
+                                        complessi possono depositare più residui</li>
+                                </ul>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="text-center">
                     <a href="faq.html"
-                        class="inline-flex items-center gap-2 bg-primary hover:bg-white text-background-dark px-10 py-5 rounded-sm font-black text-sm uppercase tracking-widest transition-all accent-glow">
+                        class="inline-flex items-center gap-2 bg-primary hover:bg-white text-background-dark px-10 py-5 rounded-xl font-black text-sm uppercase tracking-widest transition-all accent-glow">
                         <span>Vedi tutte le FAQ</span>
                         <span class="material-symbols-outlined">arrow_forward</span>
                     </a>
@@ -588,7 +667,7 @@
     <script src="../src/js/services/seo-schema.js"></script>
     <!-- Firebase SDK (Legacy for Realtime Database) -->
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-analytics-compat.js"></script>
 
     <!-- Catalog Services -->
@@ -600,36 +679,39 @@
     <script src="../src/js/modules/products-renderer.js"></script>
     <script src="../src/js/modules/catalog-init.js"></script>
     <script>
-            <!-- Initialize Brands Carousel -->
+            // Initialize Brands Carousel
             (async function () {
+                const container = document.getElementById('brands-carousel-container');
                 try {
-                    // Wait for catalog initialization
-                    if (!window.catalogInit) {
-                        await new Promise(resolve => {
-                            const checkCatalog = setInterval(() => {
-                                if (window.catalogInit) {
-                                    clearInterval(checkCatalog);
-                                    resolve();
-                                }
-                            }, 100);
-                        });
-                    }
+                    // Wait for catalogInit to be set (it's a Promise assigned after DOMContentLoaded)
+                    await new Promise(resolve => {
+                        const check = setInterval(() => {
+                            if (window.catalogInit instanceof Promise || (window.catalogInit && typeof window.catalogInit.then === 'function')) {
+                                clearInterval(check);
+                                resolve();
+                            }
+                        }, 50);
+                        // Also resolve after 5s max to avoid hanging
+                        setTimeout(() => { clearInterval(check); resolve(); }, 5000);
+                    });
 
                     const catalog = await window.catalogInit;
 
                     if (!catalog || !catalog.brandsRenderer) {
                         console.error('BrandsRenderer not available:', catalog);
+                        if (container) container.style.opacity = '1';
                         return;
                     }
 
                     const { brandsRenderer } = catalog;
-                    const container = document.getElementById('brands-carousel-container');
 
                     if (container && brandsRenderer) {
                         await brandsRenderer.renderBrandsCarouselFromDB(container);
+                        container.style.opacity = '1';
                     }
                 } catch (error) {
                     console.error('Error initializing brands carousel:', error);
+                    if (container) container.style.opacity = '1';
                 }
             })();
     </script>

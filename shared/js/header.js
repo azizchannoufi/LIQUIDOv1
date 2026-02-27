@@ -12,35 +12,27 @@ function initHeaderLogic() {
         return;
     }
 
-    // Set initial placeholder height to match header height (h-28 = 7rem = 112px)
-    if (placeholder) {
-        placeholder.className = 'h-28';
+    // Get top nav height dynamically
+    function getTopNavHeight() {
+        const topNav = document.querySelector('nav.fixed[class*="z-[70]"]');
+        return topNav ? topNav.getBoundingClientRect().height : 0;
     }
 
-    // Scroll logic
-    function handleScroll() {
-        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-
-        if (scrollTop > 0) {
-            // Scrolled down: Move header to top (0px) by negating the top-10 (40px)
-            header.classList.remove('translate-y-0');
-            header.classList.add('-translate-y-10');
-        } else {
-            // At top: Restore header to original position (40px)
-            header.classList.remove('-translate-y-10');
-            header.classList.add('translate-y-0');
-        }
-
-        // Placeholder size remains constant as header height (content-wise) doesn't change
-        // We ensure it stays h-28
-        if (placeholder && !placeholder.classList.contains('h-28')) {
-            placeholder.className = 'h-28';
+    // Update placeholder height: topNav + header
+    function updatePlaceholder() {
+        if (placeholder) {
+            const topNavH = getTopNavHeight();
+            const headerH = header.getBoundingClientRect().height;
+            placeholder.style.height = (topNavH + headerH) + 'px';
+            placeholder.className = '';
         }
     }
 
-    window.addEventListener('scroll', handleScroll);
+    updatePlaceholder();
+
+    window.addEventListener('resize', updatePlaceholder);
     // Trigger once on init
-    handleScroll();
+    updatePlaceholder();
 
     // Gestion de la recherche
     const searchToggle = document.getElementById('search-toggle');
@@ -147,6 +139,20 @@ function initHeaderLogic() {
         closeMenuBtn.addEventListener('click', closeUserMenu);
         menuOverlay.addEventListener('click', closeUserMenu);
 
+        async function handleLogoutClick() {
+            try {
+                if (window.firebaseAuthService) {
+                    await window.firebaseAuthService.signOut();
+                } else {
+                    localStorage.removeItem('liquido_user');
+                }
+                closeUserMenu();
+                window.location.reload();
+            } catch (e) {
+                console.error('Logout failed', e);
+            }
+        }
+
         // Update menu based on Auth State
         function updateUserMenu(user) {
             if (user) {
@@ -195,20 +201,7 @@ function initHeaderLogic() {
                 // Attach logout listener
                 const logoutBtn = document.getElementById('menu-logout-btn');
                 if (logoutBtn) {
-                    logoutBtn.addEventListener('click', async () => {
-                        try {
-                            if (window.firebaseAuthService) {
-                                await window.firebaseAuthService.signOut();
-                            } else {
-                                // Fallback if service not loaded
-                                localStorage.removeItem('liquido_user');
-                            }
-                            closeUserMenu();
-                            window.location.reload();
-                        } catch (e) {
-                            console.error('Logout failed', e);
-                        }
-                    });
+                    logoutBtn.addEventListener('click', handleLogoutClick);
                 }
             } else {
                 // Not Logged In

@@ -134,7 +134,7 @@
 
     <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
     <script src="../src/js/services/firebase-config.js"></script>
 
     <script>
@@ -147,22 +147,28 @@
                 // Initialize Firebase
                 const { database } = await window.firebaseConfig.initializeFirebase();
 
-                // Get sections
-                const catalogRef = database.ref('catalog/sections');
-                const snapshot = await catalogRef.once('value');
-                const sections = snapshot.val();
+                // Get sections from Firestore
+                const sectionsCollection = database.collection('sections');
+                const snapshot = await sectionsCollection.get();
 
-                if (!sections) {
+                if (snapshot.empty) {
                     resultsDiv.innerHTML = `
                         <div class="status error">
-                            ❌ Aucune donnée trouvée dans Firebase !<br>
-                            <small>Veuillez d'abord initialiser Firebase avec init-firebase.html</small>
+                            ❌ Aucune donnée trouvée dans Firestore !<br>
+                            <small>Veuillez d'abord initialiser Firestore avec init-firebase.html</small>
                         </div>
                     `;
                     return;
                 }
 
-                const sectionsArray = Array.isArray(sections) ? sections : Object.values(sections);
+                // Convert snapshot to array
+                const sectionsArray = [];
+                snapshot.forEach(doc => {
+                    sectionsArray.push({
+                        id: doc.id,
+                        ...doc.data()
+                    });
+                });
 
                 // Find Kiwi and Elfbar
                 let kiwiInLiquidi = null;

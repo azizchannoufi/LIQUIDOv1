@@ -59,7 +59,7 @@ class MyLiquidoPage {
     showAuth() {
         const authSection = document.getElementById('auth-section');
         const servicesSection = document.getElementById('services-section');
-        
+
         if (authSection) authSection.classList.remove('hidden');
         if (servicesSection) servicesSection.classList.add('hidden');
     }
@@ -67,21 +67,30 @@ class MyLiquidoPage {
     showServices() {
         const authSection = document.getElementById('auth-section');
         const servicesSection = document.getElementById('services-section');
-        
+        const userDisplayName = document.getElementById('user-display-name');
+
         if (authSection) authSection.classList.add('hidden');
         if (servicesSection) servicesSection.classList.remove('hidden');
+
+        if (userDisplayName && this.currentUser) {
+            userDisplayName.textContent = this.currentUser.name || this.currentUser.email || 'Utente';
+        }
     }
 
     setupModals() {
         const overlay = document.getElementById('modal-overlay');
         const loginModal = document.getElementById('login-modal');
         const signupModal = document.getElementById('signup-modal');
+        const forgotPasswordModal = document.getElementById('forgot-password-modal');
         const btnOpenLogin = document.getElementById('btn-open-login');
         const btnOpenSignup = document.getElementById('btn-open-signup');
         const closeLoginModal = document.getElementById('close-login-modal');
         const closeSignupModal = document.getElementById('close-signup-modal');
+        const closeForgotPasswordModal = document.getElementById('close-forgot-password-modal');
         const switchToSignup = document.getElementById('switch-to-signup');
         const switchToLogin = document.getElementById('switch-to-login');
+        const switchToLoginFromForgot = document.getElementById('switch-to-login-from-forgot');
+        const btnForgotPassword = document.getElementById('btn-forgot-password');
 
         // Open login modal
         if (btnOpenLogin) {
@@ -102,6 +111,10 @@ class MyLiquidoPage {
             closeSignupModal.addEventListener('click', () => this.closeModals());
         }
 
+        if (closeForgotPasswordModal) {
+            closeForgotPasswordModal.addEventListener('click', () => this.closeModals());
+        }
+
         // Switch between modals
         if (switchToSignup) {
             switchToSignup.addEventListener('click', () => {
@@ -114,6 +127,20 @@ class MyLiquidoPage {
             switchToLogin.addEventListener('click', () => {
                 this.closeModals();
                 setTimeout(() => this.openLoginModal(), 150);
+            });
+        }
+
+        if (switchToLoginFromForgot) {
+            switchToLoginFromForgot.addEventListener('click', () => {
+                this.closeModals();
+                setTimeout(() => this.openLoginModal(), 150);
+            });
+        }
+
+        if (btnForgotPassword) {
+            btnForgotPassword.addEventListener('click', () => {
+                this.closeModals();
+                setTimeout(() => this.openForgotPasswordModal(), 150);
             });
         }
 
@@ -138,8 +165,10 @@ class MyLiquidoPage {
         const overlay = document.getElementById('modal-overlay');
         const loginModal = document.getElementById('login-modal');
         const signupModal = document.getElementById('signup-modal');
+        const forgotPasswordModal = document.getElementById('forgot-password-modal');
 
         if (signupModal) signupModal.classList.add('hidden');
+        if (forgotPasswordModal) forgotPasswordModal.classList.add('hidden');
         if (loginModal) loginModal.classList.remove('hidden');
         if (overlay) {
             overlay.classList.add('active');
@@ -154,8 +183,10 @@ class MyLiquidoPage {
         const overlay = document.getElementById('modal-overlay');
         const loginModal = document.getElementById('login-modal');
         const signupModal = document.getElementById('signup-modal');
+        const forgotPasswordModal = document.getElementById('forgot-password-modal');
 
         if (loginModal) loginModal.classList.add('hidden');
+        if (forgotPasswordModal) forgotPasswordModal.classList.add('hidden');
         if (signupModal) signupModal.classList.remove('hidden');
         if (overlay) {
             overlay.classList.add('active');
@@ -166,14 +197,34 @@ class MyLiquidoPage {
         this.clearError('signup-error');
     }
 
+    openForgotPasswordModal() {
+        const overlay = document.getElementById('modal-overlay');
+        const loginModal = document.getElementById('login-modal');
+        const signupModal = document.getElementById('signup-modal');
+        const forgotPasswordModal = document.getElementById('forgot-password-modal');
+
+        if (loginModal) loginModal.classList.add('hidden');
+        if (signupModal) signupModal.classList.add('hidden');
+        if (forgotPasswordModal) forgotPasswordModal.classList.remove('hidden');
+        if (overlay) {
+            overlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Clear errors
+        this.clearError('forgot-password-message');
+    }
+
     closeModals() {
         const overlay = document.getElementById('modal-overlay');
         const loginModal = document.getElementById('login-modal');
         const signupModal = document.getElementById('signup-modal');
+        const forgotPasswordModal = document.getElementById('forgot-password-modal');
 
         if (overlay) overlay.classList.remove('active');
         if (loginModal) loginModal.classList.add('hidden');
         if (signupModal) signupModal.classList.add('hidden');
+        if (forgotPasswordModal) forgotPasswordModal.classList.add('hidden');
         document.body.style.overflow = '';
     }
 
@@ -193,6 +244,15 @@ class MyLiquidoPage {
             signupForm.addEventListener('submit', async (e) => {
                 e.preventDefault();
                 await this.handleSignup();
+            });
+        }
+
+        // Forgot password form
+        const forgotPasswordForm = document.getElementById('forgot-password-form');
+        if (forgotPasswordForm) {
+            forgotPasswordForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                await this.handleForgotPassword();
             });
         }
 
@@ -242,11 +302,19 @@ class MyLiquidoPage {
     }
 
     async handleSignup() {
+        // Required fields
         const name = document.getElementById('signup-name').value;
-        const email = document.getElementById('signup-email').value;
+        const dob = document.getElementById('signup-dob').value;
+        const gender = document.getElementById('signup-gender').value;
         const phone = document.getElementById('signup-phone').value;
+        const city = document.getElementById('signup-city').value;
+        const email = document.getElementById('signup-email').value;
         const password = document.getElementById('signup-password').value;
         const passwordConfirm = document.getElementById('signup-password-confirm').value;
+
+        // Optional preference fields
+        const liquids = document.getElementById('signup-liquids') ? document.getElementById('signup-liquids').value : '';
+        const devices = document.getElementById('signup-devices') ? document.getElementById('signup-devices').value : '';
 
         // Validate passwords match
         if (password !== passwordConfirm) {
@@ -264,13 +332,48 @@ class MyLiquidoPage {
         this.setFormLoading('signup-form', true);
 
         try {
-            await window.firebaseAuthService.signUp(email, password, name, phone);
+            const additionalData = {
+                name,
+                dob,
+                gender,
+                phone,
+                city,
+                preferences: { liquids, devices }
+            };
+
+            await window.firebaseAuthService.signUp(email, password, additionalData);
             this.closeModals();
             this.showSuccess('Registrazione completata con successo!');
         } catch (error) {
             this.showError('signup-error', error.message);
         } finally {
             this.setFormLoading('signup-form', false);
+        }
+    }
+
+    async handleForgotPassword() {
+        const email = document.getElementById('forgot-password-email').value;
+
+        this.clearError('forgot-password-message');
+        this.setFormLoading('forgot-password-form', true);
+
+        try {
+            await window.firebaseAuthService.resetPassword(email);
+            const msgElement = document.getElementById('forgot-password-message');
+            msgElement.textContent = 'Email di ripristino inviata!';
+            msgElement.classList.remove('hidden', 'text-red-400');
+            msgElement.classList.add('text-green-400');
+            setTimeout(() => {
+                this.closeModals();
+                this.openLoginModal();
+            }, 3000);
+        } catch (error) {
+            const msgElement = document.getElementById('forgot-password-message');
+            msgElement.textContent = error.message;
+            msgElement.classList.remove('hidden', 'text-green-400');
+            msgElement.classList.add('text-red-400');
+        } finally {
+            this.setFormLoading('forgot-password-form', false);
         }
     }
 
@@ -281,7 +384,7 @@ class MyLiquidoPage {
         }
 
         const message = document.getElementById('product-message').value.trim();
-        
+
         if (!this.selectedImageFile && !message) {
             this.showError('product-error', 'Inserisci almeno un\'immagine o un messaggio.');
             return;
@@ -297,7 +400,7 @@ class MyLiquidoPage {
             if (this.selectedImageFile) {
                 const progressBar = document.getElementById('progress-bar');
                 const imageProgress = document.getElementById('image-progress');
-                
+
                 if (imageProgress) imageProgress.classList.remove('hidden');
 
                 imageUrl = await window.cloudinaryService.uploadProductImage(

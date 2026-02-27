@@ -1,20 +1,26 @@
 <!DOCTYPE html>
 
-<html class="dark" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>LIQUIDO | Admin Users Management</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
+<html class="dark" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>LIQUIDO | Admin Users Management</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
             theme: {
                 extend: {
                     colors: {
-                        "primary": "#f2f20d",
+                        "primary": "#F8ED70",
                         "background-light": "#f8f8f5",
                         "background-dark": "#181811",
                         "surface-dark": "#222210",
@@ -33,154 +39,283 @@
             },
         }
     </script>
-<style>
+    <style>
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
         }
+
         .material-symbols-outlined {
             font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
         }
+
         .fill-icon {
             font-variation-settings: 'FILL' 1;
         }
+
         .sidebar-active {
             background-color: #393928;
-            border-left: 4px solid #f2f20d;
+            border-left: 4px solid #F8ED70;
         }
     </style>
 </head>
+
 <body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white min-h-screen">
-<div class="flex h-screen overflow-hidden">
-<!-- Sidebar Navigation -->
-<aside class="w-64 bg-background-light dark:bg-[#12120a] border-r border-slate-200 dark:border-[#393928] flex flex-col justify-between py-6 sticky top-0 h-screen">
-<div class="flex flex-col gap-8">
-<!-- Brand Identity -->
-<div class="px-6 flex items-center gap-3">
-<div class="bg-primary rounded-lg size-10 flex items-center justify-center text-background-dark">
-<span class="material-symbols-outlined font-bold">water_drop</span>
-</div>
-<div class="flex flex-col">
-<h1 class="text-lg font-bold leading-tight tracking-tight">LIQUIDO</h1>
-<p class="text-slate-500 dark:text-[#baba9c] text-xs font-medium uppercase tracking-widest">Admin Console</p>
-</div>
-</div>
-<!-- Navigation Links -->
-<nav class="flex flex-col gap-1 px-3">
-<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-[#baba9c] hover:bg-slate-100 dark:hover:bg-[#2a2a1a] transition-colors" href="../dashboard.html">
-<span class="material-symbols-outlined">dashboard</span>
-<p class="text-sm font-medium">Dashboard</p>
-</a>
-<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-[#baba9c] hover:bg-slate-100 dark:hover:bg-[#2a2a1a] transition-colors" href="../products/index.html">
-<span class="material-symbols-outlined">inventory_2</span>
-<p class="text-sm font-medium">Products</p>
-</a>
-<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-[#baba9c] hover:bg-slate-100 dark:hover:bg-[#2a2a1a] transition-colors" href="../brands/index.html">
-<span class="material-symbols-outlined">loyalty</span>
-<p class="text-sm font-medium">Brands</p>
-</a>
-<a class="sidebar-active flex items-center gap-3 px-3 py-2.5 rounded-lg text-primary" href="index.html">
-<span class="material-symbols-outlined">people</span>
-<p class="text-sm font-semibold">Users</p>
-</a>
-<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-[#baba9c] hover:bg-slate-100 dark:hover:bg-[#2a2a1a] transition-colors" href="../orders/index.html">
-<span class="material-symbols-outlined">shopping_cart</span>
-<p class="text-sm font-medium">Orders</p>
-</a>
-<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-[#baba9c] hover:bg-slate-100 dark:hover:bg-[#2a2a1a] transition-colors" href="../services/index.html">
-<span class="material-symbols-outlined">room_service</span>
-<p class="text-sm font-medium">Services</p>
-</a>
-<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-[#baba9c] hover:bg-slate-100 dark:hover:bg-[#2a2a1a] transition-colors" href="../settings.html">
-<span class="material-symbols-outlined">settings</span>
-<p class="text-sm font-medium">Store Settings</p>
-</a>
-</nav>
-</div>
-<!-- Logout Section -->
-<div class="px-4">
-<a href="../index.html" class="flex w-full cursor-pointer items-center justify-center overflow-hidden rounded-lg h-11 bg-primary text-background-dark text-sm font-bold transition-transform hover:scale-[1.02] active:scale-95">
-<span class="material-symbols-outlined mr-2">logout</span>
-<span>Logout</span>
-</a>
-</div>
-</aside>
-<!-- Main Content Area -->
-<main class="flex-1 flex flex-col overflow-y-auto">
-<!-- Header Section -->
-<header class="p-8 pb-4">
-<div class="flex flex-wrap gap-2 mb-2">
-<a class="text-[#baba9c] text-sm font-medium hover:text-white transition-colors" href="../dashboard.html">Dashboard</a>
-<span class="text-[#baba9c] text-sm font-medium">/</span>
-<span class="text-white text-sm font-medium">Users Management</span>
-</div>
-<div class="flex flex-wrap justify-between items-end gap-4">
-<div>
-<h2 class="text-white text-4xl font-black leading-tight tracking-tight">Registered Users</h2>
-<p class="text-[#baba9c] text-sm mt-1">Total: <span id="total-users-count" class="text-primary font-bold">0</span> users</p>
-</div>
-</div>
-</header>
-<!-- Filters and Search -->
-<section class="px-8 py-4">
-<div class="grid grid-cols-1 lg:grid-cols-12 gap-4">
-<!-- Search Bar -->
-<div class="lg:col-span-6">
-<div class="relative h-12">
-<div class="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none text-[#baba9c]">
-<span class="material-symbols-outlined">search</span>
-</div>
-<input id="search-input" class="w-full h-full bg-border-dark border-none rounded-xl pl-12 text-white placeholder:text-[#baba9c] focus:ring-1 focus:ring-primary text-sm" placeholder="Search users by name, email, or phone..." type="text"/>
-</div>
-</div>
-<!-- Stats Cards -->
-<div class="lg:col-span-6 flex flex-wrap gap-4 items-center justify-end">
-<div class="flex items-center gap-2 px-4 py-2 rounded-xl bg-border-dark">
-<span class="material-symbols-outlined text-primary text-lg">people</span>
-<span class="text-white text-sm font-semibold">All Users</span>
-</div>
-</div>
-</div>
-</section>
-<!-- Table Section -->
-<section class="px-8 pb-8 flex-grow">
-<div class="bg-surface-dark border border-border-dark rounded-2xl overflow-hidden">
-<div id="loading-state" class="p-8 text-center">
-<div class="text-[#baba9c]">Loading users...</div>
-</div>
-<div id="error-state" class="p-8 text-center hidden">
-<div class="text-red-500">Error loading users. Please refresh the page.</div>
-</div>
-<table id="users-table" class="w-full text-left border-collapse hidden">
-<thead>
-<tr class="bg-border-dark/30 border-b border-border-dark">
-<th class="px-6 py-4 text-[#baba9c] font-bold text-xs uppercase tracking-widest">User Info</th>
-<th class="px-6 py-4 text-[#baba9c] font-bold text-xs uppercase tracking-widest">Email</th>
-<th class="px-6 py-4 text-[#baba9c] font-bold text-xs uppercase tracking-widest">Phone</th>
-<th class="px-6 py-4 text-[#baba9c] font-bold text-xs uppercase tracking-widest">Registered</th>
-<th class="px-6 py-4 text-[#baba9c] font-bold text-xs uppercase tracking-widest text-right">Actions</th>
-</tr>
-</thead>
-<tbody id="users-tbody" class="divide-y divide-border-dark">
-<!-- Users will be loaded dynamically from Firebase -->
-</tbody>
-</table>
-<div id="empty-state" class="p-12 text-center hidden">
-<span class="material-symbols-outlined text-6xl text-[#baba9c] mb-4">people_outline</span>
-<p class="text-[#baba9c] text-lg font-medium">No users found</p>
-<p class="text-[#baba9c] text-sm mt-2">Users will appear here once they register</p>
-</div>
-</div>
-</section>
-</main>
-</div>
-<!-- Firebase SDK -->
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-analytics-compat.js"></script>
+    <div class="flex h-screen overflow-hidden">
+        <!-- Sidebar Navigation -->
+        <aside
+            class="w-64 bg-background-light dark:bg-[#12120a] border-r border-slate-200 dark:border-[#393928] flex flex-col justify-between py-6 sticky top-0 h-screen">
+            <div class="flex flex-col gap-8">
+                <!-- Brand Identity -->
+                <div class="px-6 flex items-center gap-3">
+                    <div class="bg-primary rounded-lg size-10 flex items-center justify-center text-background-dark">
+                        <span class="material-symbols-outlined font-bold">water_drop</span>
+                    </div>
+                    <div class="flex flex-col">
+                        <h1 class="text-lg font-bold leading-tight tracking-tight">LIQUIDO</h1>
+                        <p class="text-slate-500 dark:text-[#baba9c] text-xs font-medium uppercase tracking-widest">
+                            Admin Console</p>
+                    </div>
+                </div>
+                <!-- Navigation Links -->
+                <nav class="flex flex-col gap-1 px-3">
+                    <a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-[#baba9c] hover:bg-slate-100 dark:hover:bg-[#2a2a1a] transition-colors"
+                        href="../dashboard.html">
+                        <span class="material-symbols-outlined">dashboard</span>
+                        <p class="text-sm font-medium">Dashboard</p>
+                    </a>
+                    <a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-[#baba9c] hover:bg-slate-100 dark:hover:bg-[#2a2a1a] transition-colors"
+                        href="../products/index.html">
+                        <span class="material-symbols-outlined">inventory_2</span>
+                        <p class="text-sm font-medium">Products</p>
+                    </a>
+                    <a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-[#baba9c] hover:bg-slate-100 dark:hover:bg-[#2a2a1a] transition-colors"
+                        href="../brands/index.html">
+                        <span class="material-symbols-outlined">loyalty</span>
+                        <p class="text-sm font-medium">Brands</p>
+                    </a>
+                    <a class="sidebar-active flex items-center gap-3 px-3 py-2.5 rounded-lg text-primary"
+                        href="index.html">
+                        <span class="material-symbols-outlined">people</span>
+                        <p class="text-sm font-semibold">Users</p>
+                    </a>
+                    <a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-[#baba9c] hover:bg-slate-100 dark:hover:bg-[#2a2a1a] transition-colors"
+                        href="../orders/index.html">
+                        <span class="material-symbols-outlined">shopping_cart</span>
+                        <p class="text-sm font-medium">Orders</p>
+                    </a>
+                    <a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-[#baba9c] hover:bg-slate-100 dark:hover:bg-[#2a2a1a] transition-colors"
+                        href="../services/index.html">
+                        <span class="material-symbols-outlined">room_service</span>
+                        <p class="text-sm font-medium">Services</p>
+                    </a>
+                    <a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-[#baba9c] hover:bg-slate-100 dark:hover:bg-[#2a2a1a] transition-colors"
+                        href="../settings.html">
+                        <span class="material-symbols-outlined">settings</span>
+                        <p class="text-sm font-medium">Store Settings</p>
+                    </a>
+                </nav>
+            </div>
+            <!-- Logout Section -->
+            <div class="px-4">
+                <a href="../index.html"
+                    class="flex w-full cursor-pointer items-center justify-center overflow-hidden rounded-lg h-11 bg-primary text-background-dark text-sm font-bold transition-transform hover:scale-[1.02] active:scale-95">
+                    <span class="material-symbols-outlined mr-2">logout</span>
+                    <span>Logout</span>
+                </a>
+            </div>
+        </aside>
+        <!-- Main Content Area -->
+        <main class="flex-1 flex flex-col overflow-y-auto">
+            <!-- Header Section -->
+            <header class="p-8 pb-4">
+                <div class="flex flex-wrap gap-2 mb-2">
+                    <a class="text-[#baba9c] text-sm font-medium hover:text-white transition-colors"
+                        href="../dashboard.html">Dashboard</a>
+                    <span class="text-[#baba9c] text-sm font-medium">/</span>
+                    <span class="text-white text-sm font-medium">Users Management</span>
+                </div>
+                <div class="flex flex-wrap justify-between items-end gap-4">
+                    <div>
+                        <h2 class="text-white text-4xl font-black leading-tight tracking-tight">Registered Users</h2>
+                        <p class="text-[#baba9c] text-sm mt-1">Total: <span id="total-users-count"
+                                class="text-primary font-bold">0</span> users</p>
+                    </div>
+                </div>
+            </header>
+            <!-- Filters and Search -->
+            <section class="px-8 py-4">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-4">
+                    <!-- Search Bar -->
+                    <div class="lg:col-span-6">
+                        <div class="relative h-12">
+                            <div
+                                class="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none text-[#baba9c]">
+                                <span class="material-symbols-outlined">search</span>
+                            </div>
+                            <input id="search-input"
+                                class="w-full h-full bg-border-dark border-none rounded-xl pl-12 text-white placeholder:text-[#baba9c] focus:ring-1 focus:ring-primary text-sm"
+                                placeholder="Search users by name, email, or phone..." type="text" />
+                        </div>
+                    </div>
+                    <!-- Stats Cards -->
+                    <div class="lg:col-span-6 flex flex-wrap gap-4 items-center justify-end">
+                        <div class="flex items-center gap-2 px-4 py-2 rounded-xl bg-border-dark">
+                            <span class="material-symbols-outlined text-primary text-lg">people</span>
+                            <span class="text-white text-sm font-semibold">All Users</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- Table Section -->
+            <section class="px-8 pb-8 flex-grow">
+                <div class="bg-surface-dark border border-border-dark rounded-2xl overflow-hidden">
+                    <div id="loading-state" class="p-8 text-center">
+                        <div class="text-[#baba9c]">Loading users...</div>
+                    </div>
+                    <div id="error-state" class="p-8 text-center hidden">
+                        <div class="text-red-500">Error loading users. Please refresh the page.</div>
+                    </div>
+                    <table id="users-table" class="w-full text-left border-collapse hidden">
+                        <thead>
+                            <tr class="bg-border-dark/30 border-b border-border-dark">
+                                <th class="px-6 py-4 text-[#baba9c] font-bold text-xs uppercase tracking-widest">User
+                                    Info</th>
+                                <th class="px-6 py-4 text-[#baba9c] font-bold text-xs uppercase tracking-widest">Email
+                                </th>
+                                <th class="px-6 py-4 text-[#baba9c] font-bold text-xs uppercase tracking-widest">Phone
+                                </th>
+                                <th class="px-6 py-4 text-[#baba9c] font-bold text-xs uppercase tracking-widest">
+                                    Registered</th>
+                                <th
+                                    class="px-6 py-4 text-[#baba9c] font-bold text-xs uppercase tracking-widest text-right">
+                                    Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="users-tbody" class="divide-y divide-border-dark">
+                            <!-- Users will be loaded dynamically from Firebase -->
+                        </tbody>
+                    </table>
+                    <div id="empty-state" class="p-12 text-center hidden">
+                        <span class="material-symbols-outlined text-6xl text-[#baba9c] mb-4">people_outline</span>
+                        <p class="text-[#baba9c] text-lg font-medium">No users found</p>
+                        <p class="text-[#baba9c] text-sm mt-2">Users will appear here once they register</p>
+                    </div>
+                </div>
+            </section>
 
-<!-- Services -->
-<script src="../../src/js/services/firebase-config.js"></script>
-<script src="../../src/js/admin/users-list-page.js"></script>
-</body></html>
+            <!-- User Details Modal -->
+            <div id="user-details-modal"
+                class="fixed inset-0 z-50 flex items-center justify-center hidden bg-black/60 backdrop-blur-sm transition-opacity">
+                <div
+                    class="bg-surface-dark border border-border-dark rounded-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto m-4 shadow-2xl relative">
+                    <!-- Close button -->
+                    <button id="close-modal-btn"
+                        class="absolute top-6 right-6 text-[#baba9c] hover:text-white transition-colors">
+                        <span class="material-symbols-outlined">close</span>
+                    </button>
 
+                    <div class="p-8">
+                        <div class="flex items-center gap-4 mb-8">
+                            <div class="size-16 rounded-full bg-primary/20 flex items-center justify-center">
+                                <span class="material-symbols-outlined text-primary text-3xl">person</span>
+                            </div>
+                            <div>
+                                <h3 id="modal-user-name" class="text-2xl font-bold text-white"></h3>
+                                <p id="modal-user-id" class="text-sm text-[#baba9c]"></p>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <!-- Contact Info -->
+                            <div class="bg-background-dark/50 p-6 rounded-xl border border-border-dark">
+                                <h4 class="text-white font-semibold mb-4 flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-primary text-sm">contact_page</span>
+                                    Contact Info
+                                </h4>
+                                <div class="flex flex-col gap-3">
+                                    <div>
+                                        <p class="text-xs text-[#baba9c] uppercase tracking-wider mb-1">Email</p>
+                                        <p id="modal-user-email" class="text-sm text-white break-all"></p>
+                                    </div>
+                                    <div>
+                                        <p class="text-xs text-[#baba9c] uppercase tracking-wider mb-1">Phone</p>
+                                        <p id="modal-user-phone" class="text-sm text-white"></p>
+                                    </div>
+                                    <div>
+                                        <p class="text-xs text-[#baba9c] uppercase tracking-wider mb-1">Date of Birth
+                                        </p>
+                                        <p id="modal-user-dob" class="text-sm text-white"></p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Account Info -->
+                            <div class="bg-background-dark/50 p-6 rounded-xl border border-border-dark">
+                                <h4 class="text-white font-semibold mb-4 flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-primary text-sm">manage_accounts</span>
+                                    Account Info
+                                </h4>
+                                <div class="flex flex-col gap-3">
+                                    <div>
+                                        <p class="text-xs text-[#baba9c] uppercase tracking-wider mb-1">Registered At
+                                        </p>
+                                        <p id="modal-user-created" class="text-sm text-white"></p>
+                                    </div>
+                                    <div id="modal-user-extra-container">
+                                        <!-- In case there are more fields -->
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Preferences Info -->
+                            <div id="modal-preferences-section"
+                                class="bg-background-dark/50 p-6 rounded-xl border border-border-dark md:col-span-2 hidden">
+                                <h4 class="text-white font-semibold mb-4 flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-primary text-sm">tune</span>
+                                    Preferences
+                                </h4>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div id="modal-pref-liquids-container" class="hidden">
+                                        <p class="text-xs text-[#baba9c] uppercase tracking-wider mb-1">Liquids</p>
+                                        <p id="modal-pref-liquids"
+                                            class="text-sm text-white bg-surface-dark p-3 rounded-lg border border-border-dark">
+                                        </p>
+                                    </div>
+                                    <div id="modal-pref-devices-container" class="hidden">
+                                        <p class="text-xs text-[#baba9c] uppercase tracking-wider mb-1">Devices</p>
+                                        <p id="modal-pref-devices"
+                                            class="text-sm text-white bg-surface-dark p-3 rounded-lg border border-border-dark">
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-8 pt-6 border-t border-border-dark flex justify-end gap-3">
+                            <button id="modal-whatsapp-btn"
+                                class="flex items-center gap-2 px-4 py-2 rounded-lg bg-green-600 hover:bg-green-700 text-white text-sm font-semibold transition-colors hidden">
+                                <span class="material-symbols-outlined text-sm">chat</span> WhatsApp
+                            </button>
+                            <button id="modal-email-btn"
+                                class="flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold transition-colors hidden">
+                                <span class="material-symbols-outlined text-sm">email</span> Email
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-analytics-compat.js"></script>
+
+    <!-- Services -->
+    <script src="../../src/js/services/firebase-config.js"></script>
+    <script src="../../src/js/admin/users-list-page.js"></script>
+</body>
+
+</html>

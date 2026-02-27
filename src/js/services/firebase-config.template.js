@@ -23,6 +23,7 @@ let firebaseApp = null;
 let firebaseDatabase = null;
 let firebaseAuth = null;
 let firebaseAnalytics = null;
+let firebaseFirestore = null;
 
 /**
  * Initialize Firebase
@@ -34,7 +35,8 @@ function initializeFirebase() {
             app: firebaseApp,
             database: firebaseDatabase,
             auth: firebaseAuth,
-            analytics: firebaseAnalytics
+            analytics: firebaseAnalytics,
+            firestore: firebaseFirestore
         });
     }
 
@@ -46,15 +48,21 @@ function initializeFirebase() {
     try {
         // Initialize Firebase
         firebaseApp = firebase.initializeApp(firebaseConfig);
-        firebaseDatabase = firebase.database();
-        
+        if (firebase.database) {
+            firebaseDatabase = firebase.database();
+        }
+
+        if (firebase.firestore) {
+            firebaseFirestore = firebase.firestore();
+        }
+
         // Initialize Auth (check if available)
         if (firebase.auth) {
             firebaseAuth = firebase.auth();
         } else {
             console.warn('Firebase Auth not loaded. Make sure firebase-auth-compat.js is included.');
         }
-        
+
         // Initialize Analytics (optional)
         if (firebase.analytics) {
             firebaseAnalytics = firebase.analytics();
@@ -64,7 +72,8 @@ function initializeFirebase() {
             app: firebaseApp,
             database: firebaseDatabase,
             auth: firebaseAuth,
-            analytics: firebaseAnalytics
+            analytics: firebaseAnalytics,
+            firestore: firebaseFirestore
         });
     } catch (error) {
         console.error('Error initializing Firebase:', error);

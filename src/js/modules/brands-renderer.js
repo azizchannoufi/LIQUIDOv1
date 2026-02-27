@@ -184,36 +184,41 @@ class BrandsRenderer {
         }
 
         if (!brands || brands.length === 0) {
-            container.innerHTML = '<p class="text-gray-600 dark:text-white/40 text-center">Aucune marque disponible</p>';
+            container.innerHTML = '<p class="text-gray-600 text-center py-4">Nessuna marca disponibile</p>';
             return;
         }
 
-        // Filter brands with valid logos
-        const brandsWithLogos = brands.filter(brand => brand.logo_url && brand.logo_url.trim() !== '');
+        // Use ALL brands; show logo if available, else show name as text
+        const brandsToShow = brands.filter(b => b && b.name);
 
-        if (brandsWithLogos.length === 0) {
-            container.innerHTML = '<p class="text-gray-600 dark:text-white/40 text-center">Aucune marque avec logo disponible</p>';
+        if (brandsToShow.length === 0) {
+            container.innerHTML = '<p class="text-gray-600 text-center py-4">Nessuna marca disponibile</p>';
             return;
         }
 
         // Triple the brands for seamless infinite loop
-        const duplicatedBrands = [...brandsWithLogos, ...brandsWithLogos, ...brandsWithLogos];
+        const duplicatedBrands = [...brandsToShow, ...brandsToShow, ...brandsToShow];
 
         let carouselHTML = `
             <div class="relative">
-                <div class="brands-carousel-wrapper overflow-hidden">
-                    <div class="brands-carousel-track flex">
+                <div class="brands-carousel-wrapper" style="overflow:hidden;">
+                    <div class="brands-carousel-track" id="brands-track-inner" style="display:flex; will-change:transform;">
         `;
 
         duplicatedBrands.forEach(brand => {
+            const hasLogo = brand.logo_url && brand.logo_url.trim() !== '';
             carouselHTML += `
-                <div class="brands-carousel-item flex-shrink-0 flex flex-col items-center justify-center group cursor-pointer hover:opacity-100 transition-opacity mr-8">
-                    <div class="flex items-center justify-center h-[240px] w-[360px]">
-                        <img class="h-full w-full object-contain grayscale brightness-0 opacity-100 transition-all" 
-                             alt="${brand.name} Logo" 
-                             src="${brand.logo_url}" 
-                             onerror="this.style.display='none';"/>
-                    </div>
+                <div class="brands-carousel-item" style="flex-shrink:0; display:flex; flex-direction:column; align-items:center; justify-content:center; width:200px; height:100px; margin-right:48px;">
+                    ${hasLogo
+                    ? `<img style="max-height:80px; max-width:180px; width:auto; height:auto; object-fit:contain; filter:grayscale(1) brightness(0); opacity:0.7; transition:all 0.3s;"
+                               alt="${brand.name}"
+                               src="${brand.logo_url}"
+                               onmouseover="this.style.filter='grayscale(0) brightness(1)'; this.style.opacity='1';"
+                               onmouseout="this.style.filter='grayscale(1) brightness(0)'; this.style.opacity='0.7';"
+                               onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"/>
+                          <span style="display:none; font-weight:900; font-size:1rem; text-transform:uppercase; letter-spacing:0.1em; color:#333;">${brand.name}</span>`
+                    : `<span style="font-weight:900; font-size:1rem; text-transform:uppercase; letter-spacing:0.1em; color:#333; text-align:center; padding:0 8px;">${brand.name}</span>`
+                }
                 </div>
             `;
         });
@@ -228,31 +233,25 @@ class BrandsRenderer {
 
         // Initialize animation after DOM is ready
         setTimeout(() => {
-            const track = container.querySelector('.brands-carousel-track');
+            const track = container.querySelector('#brands-track-inner');
             if (track) {
-                // Calculate the width of one set of brands
-                const itemWidth = 360 + 32; // width + margin (mr-8 = 32px)
-                const totalWidth = itemWidth * brandsWithLogos.length;
+                const itemWidth = 200 + 48; // width + margin
+                const totalWidth = itemWidth * brandsToShow.length;
+                const duration = Math.max(10, brandsToShow.length * 3);
 
-                // Set animation dynamically based on content
-                track.style.animation = `brandsScroll ${brandsWithLogos.length * 2}s linear infinite`;
+                // Use a unique animation name to avoid conflicts with global CSS
+                const animName = 'brandsScrollDynamic';
 
-                // Add CSS animation if not already added
                 if (!document.getElementById('brands-carousel-style')) {
                     const style = document.createElement('style');
                     style.id = 'brands-carousel-style';
                     style.textContent = `
-                        @keyframes brandsScroll {
-                            0% {
-                                transform: translateX(0);
-                            }
-                            100% {
-                                transform: translateX(-${totalWidth}px);
-                            }
+                        @keyframes ${animName} {
+                            0% { transform: translateX(0); }
+                            100% { transform: translateX(-${totalWidth}px); }
                         }
-                        .brands-carousel-wrapper:hover .brands-carousel-track {
-                            animation-play-state: paused;
-                        }
+                        #brands-track-inner { animation: ${animName} ${duration}s linear infinite; }
+                        .brands-carousel-wrapper:hover #brands-track-inner { animation-play-state: paused; }
                     `;
                     document.head.appendChild(style);
                 }
@@ -652,15 +651,15 @@ class BrandsRenderer {
             const allBrands = await this.catalogService.getAllBrands();
 
             // Filter brands (must have a name, maybe a logo but we handle missing logos)
-            // Prioritize brands with lines or liquid brands
-            const brandsToDisplay = allBrands.filter(b => (b.type === 'liquid' || b.lines?.length > 0));
+            // DIsplay liquid brands only as requested
+            const brandsToDisplay = allBrands.filter(b => b.type === 'liquid');
 
             if (brandsToDisplay.length === 0) {
                 container.innerHTML = '<p class="text-center text-gray-500 py-12">Nessun marchio trovato.</p>';
                 return;
             }
 
-            let html = '<div class="flex flex-col gap-20 py-10">';
+            let html = '<div class="flex flex-col gap-8 py-4">';
 
             brandsToDisplay.forEach((brand, index) => {
                 const isEven = index % 2 === 0;
@@ -685,7 +684,7 @@ class BrandsRenderer {
                         <div class="flex-1 w-full lg:w-1/2 scroll-animate ${textSlideClass}">
                              <div class="space-y-6 ${isEven ? 'text-left' : 'text-right'}">
                                 <div class="space-y-2">
-                                    <h3 class="text-primary text-sm font-black uppercase tracking-[0.2em]">Partner Ufficiale</h3>
+                                    <h3 class="text-primary text-sm font-black uppercase tracking-[0.2em]">Brand Liquidi</h3>
                                     <h2 class="text-4xl lg:text-5xl font-black text-background-dark dark:text-white uppercase leading-none">${brandName}</h2>
                                 </div>
                                 <p class="text-slate-600 dark:text-slate-400 font-medium leading-relaxed max-w-lg ${isEven ? 'mr-auto' : 'ml-auto'}">
@@ -693,7 +692,7 @@ class BrandsRenderer {
                                 </p>
                                 <div class="${isEven ? '' : 'flex justify-end'}">
                                     <a href="${navUrl}" class="inline-flex items-center gap-3 px-8 py-4 bg-background-dark text-white hover:bg-primary hover:text-background-dark transition-all duration-300 uppercase font-black tracking-widest text-xs rounded-sm group-btn">
-                                        Vedi Linee
+                                        CATALOGO
                                         <span class="material-symbols-outlined group-btn-hover:translate-x-1 transition-transform">arrow_forward</span>
                                     </a>
                                 </div>
@@ -721,13 +720,121 @@ class BrandsRenderer {
                     }
                          </div>
                          <div class="space-y-4 text-center">
-                            <h3 class="text-primary text-xs font-black uppercase tracking-[0.2em]">Partner Ufficiale</h3>
+                            <h3 class="text-primary text-xs font-black uppercase tracking-[0.2em]">Brand Liquidi</h3>
                             <h2 class="text-3xl font-black text-background-dark dark:text-white uppercase">${brandName}</h2>
                             <p class="text-slate-600 dark:text-slate-400 text-sm font-medium leading-relaxed">
                                 ${description}
                             </p>
                             <a href="${navUrl}" class="inline-flex w-full justify-center items-center gap-2 px-6 py-3 bg-background-dark text-white uppercase font-bold text-xs rounded-sm">
-                                Vedi Linee
+                                CATALOGO
+                                <span class="material-symbols-outlined text-sm">arrow_forward</span>
+                            </a>
+                         </div>
+                    </div>
+                `;
+
+                if (index < brandsToDisplay.length - 1) {
+                    html += `
+                        <div class="w-full h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent my-6 lg:my-8 opacity-30"></div>
+                    `;
+                }
+            });
+
+            html += '</div>';
+            container.innerHTML = html;
+
+            this.initScrollObserver(container);
+
+        } catch (error) {
+            console.error('Error rendering brand logos grid:', error);
+            container.innerHTML = '<p class="text-center text-red-400">Errore nel caricamento dei marchi.</p>';
+        }
+    }
+
+    /**
+     * Render DEVICE brands in a Zig-Zag layout (alternating text-left/right + image-right/left)
+     * Identical to renderBrandsZigZag but filtered on type === 'device'
+     * @param {HTMLElement} container - Container element
+     */
+    async renderDeviceBrandsZigZag(container) {
+        try {
+            const allBrands = await this.catalogService.getAllBrands();
+
+            // Filter: device brands only
+            const brandsToDisplay = allBrands.filter(b => b.type === 'device');
+
+            if (brandsToDisplay.length === 0) {
+                container.innerHTML = '<p class="text-center text-gray-500 py-12">Nessun brand dispositivi trovato.</p>';
+                return;
+            }
+
+            let html = '<div class="flex flex-col gap-20 py-10">';
+
+            brandsToDisplay.forEach((brand, index) => {
+                const isEven = index % 2 === 0;
+                const rowClass = isEven ? 'flex-row' : 'flex-row-reverse';
+                const textSlideClass = isEven ? 'from-left' : 'from-right';
+                const imageSlideClass = isEven ? 'from-right' : 'from-left';
+
+                const brandName = brand.name || 'Brand';
+                const logoUrl = brand.logo_url;
+                const hasLogo = logoUrl && logoUrl.trim() !== '';
+
+                const lineCount = brand.lines ? brand.lines.length : 0;
+                const description = brand.description || `Scopri i dispositivi ${brandName}. ${lineCount > 0 ? `Esplora le nostre ${lineCount} linee disponibili.` : 'Brand ufficiale partner di Liquido.'} Tecnologia avanzata e qualità costruttiva premium.`;
+
+                const navUrl = `brand-lines.html?brand=${encodeURIComponent(brandName)}`;
+
+                html += `
+                    <div class="flex hidden md:flex ${rowClass} items-center justify-between gap-10 lg:gap-20 group relative">
+                        <!-- Text Side -->
+                        <div class="flex-1 w-full lg:w-1/2 scroll-animate ${textSlideClass}">
+                             <div class="space-y-6 ${isEven ? 'text-left' : 'text-right'}">
+                                <div class="space-y-2">
+                                    <h3 class="text-primary text-sm font-black uppercase tracking-[0.2em]">Brand Dispositivi</h3>
+                                    <h2 class="text-4xl lg:text-5xl font-black text-background-dark dark:text-white uppercase leading-none">${brandName}</h2>
+                                </div>
+                                <p class="text-slate-600 dark:text-slate-400 font-medium leading-relaxed max-w-lg ${isEven ? 'mr-auto' : 'ml-auto'}">
+                                    ${description}
+                                </p>
+                                <div class="${isEven ? '' : 'flex justify-end'}">
+                                    <a href="${navUrl}" class="inline-flex items-center gap-3 px-8 py-4 bg-background-dark text-white hover:bg-primary hover:text-background-dark transition-all duration-300 uppercase font-black tracking-widest text-xs rounded-sm">
+                                        CATALOGO
+                                        <span class="material-symbols-outlined transition-transform">arrow_forward</span>
+                                    </a>
+                                </div>
+                             </div>
+                        </div>
+
+                        <!-- Image Side (Brand Logo) -->
+                        <div class="flex-1 w-full lg:w-1/2 scroll-animate ${imageSlideClass}">
+                            <div class="relative aspect-[4/3] w-full overflow-hidden rounded-lg shadow-2xl group-hover:shadow-primary/20 transition-all duration-500 bg-white border border-gray-100 flex items-center justify-center p-12">
+                                ${hasLogo ?
+                        `<img src="${logoUrl}" alt="${brandName}" class="w-2/3 h-2/3 object-contain filter grayscale group-hover:grayscale-0 transition-all duration-500 transform scale-100 group-hover:scale-110">` :
+                        `<div class="flex flex-col items-center justify-center text-gray-300"><span class="material-symbols-outlined text-6xl">image_not_supported</span><span class="mt-4 font-bold uppercase tracking-widest text-xs">Logo non disponibile</span></div>`
+                    }
+                                <div class="absolute inset-0 bg-transparent mix-blend-multiply"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Mobile View (Always Vertical) -->
+                    <div class="flex md:hidden flex-col gap-6 group relative scroll-animate from-bottom">
+                         <div class="relative aspect-[4/3] w-full overflow-hidden rounded-lg shadow-lg bg-white border border-gray-100 flex items-center justify-center p-8">
+                            ${hasLogo ?
+                        `<img src="${logoUrl}" alt="${brandName}" class="w-3/4 h-3/4 object-contain">` :
+                        `<span class="material-symbols-outlined text-4xl text-gray-300">image_not_supported</span>`
+                    }
+                         </div>
+                         <div class="space-y-4 text-center">
+                            <h3 class="text-primary text-xs font-black uppercase tracking-[0.2em]">Brand Dispositivi</h3>
+                            <h2 class="text-3xl font-black text-background-dark dark:text-white uppercase">${brandName}</h2>
+                            <p class="text-slate-600 dark:text-slate-400 text-sm font-medium leading-relaxed">
+                                ${description}
+                            </p>
+                            <a href="${navUrl}" class="inline-flex w-full justify-center items-center gap-2 px-6 py-3 bg-background-dark text-white uppercase font-bold text-xs rounded-sm">
+                                CATALOGO
+                                <span class="material-symbols-outlined text-sm">arrow_forward</span>
                             </a>
                          </div>
                     </div>
@@ -746,8 +853,8 @@ class BrandsRenderer {
             this.initScrollObserver(container);
 
         } catch (error) {
-            console.error('Error rendering brand logos grid:', error);
-            container.innerHTML = '<p class="text-center text-red-400">Errore nel caricamento dei marchi.</p>';
+            console.error('Error rendering device brands zig-zag:', error);
+            container.innerHTML = '<p class="text-center text-red-400">Errore nel caricamento dei brand dispositivi.</p>';
         }
     }
 

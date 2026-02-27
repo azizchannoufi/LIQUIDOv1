@@ -101,7 +101,7 @@
 
     <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
 
     <!-- Firebase Config -->
     <script src="../src/js/services/firebase-config.js"></script>
@@ -134,15 +134,12 @@
             resultsDiv.innerHTML = '<p class="loading">⏳ Test de connexion...</p>';
 
             try {
-                const ref = db.ref('.info/connected');
-                const snapshot = await ref.once('value');
-                const connected = snapshot.val();
+                // In Firestore, we can try to access a collection to test connection
+                // There isn't a direct ".info/connected" equivalent in the same way, but enabling persistence or just a simple read works
+                // We'll just try to read the sections collection, limit 1
+                const snapshot = await db.collection('sections').limit(1).get();
 
-                if (connected) {
-                    resultsDiv.innerHTML = '<p class="success">✅ Connecté à Firebase Realtime Database!</p>';
-                } else {
-                    resultsDiv.innerHTML = '<p class="warning">⚠️ Déconnecté de Firebase</p>';
-                }
+                resultsDiv.innerHTML = '<p class="success">✅ Connecté à Firebase Firestore!</p>';
             } catch (error) {
                 resultsDiv.innerHTML = `<p class="error">❌ Erreur: ${error.message}</p>`;
                 console.error('Connection test error:', error);
@@ -150,53 +147,34 @@
         }
 
         async function fetchCatalog() {
-            resultsDiv.innerHTML = '<p class="loading">⏳ Récupération du catalogue complet...</p>';
-
-            try {
-                const catalogRef = db.ref('catalog');
-                const snapshot = await catalogRef.once('value');
-                const catalog = snapshot.val();
-
-                console.log('📦 Catalog data:', catalog);
-
-                if (!catalog) {
-                    resultsDiv.innerHTML = `
-                        <p class="error">❌ Aucune donnée trouvée à 'catalog'</p>
-                        <p class="warning">⚠️ La base de données est vide. Veuillez initialiser avec init-firebase.html</p>
-                    `;
-                    return;
-                }
-
-                resultsDiv.innerHTML = `
-                    <p class="success">✅ Catalogue récupéré!</p>
-                    <p class="info">📊 Structure trouvée:</p>
-                    <pre>${JSON.stringify(catalog, null, 2)}</pre>
-                `;
-            } catch (error) {
-                resultsDiv.innerHTML = `<p class="error">❌ Erreur: ${error.message}</p>`;
-                console.error('Fetch catalog error:', error);
-            }
+            resultsDiv.innerHTML = '<p class="loading">⏳ Récupération du catalogue...</p>';
+            // In Firestore migration, we moved away from a single "catalog" root object
+            // to a "sections" collection.
+            // We'll just fetch sections.
+            fetchSections();
         }
 
         async function fetchSections() {
             resultsDiv.innerHTML = '<p class="loading">⏳ Récupération des sections...</p>';
 
             try {
-                const sectionsRef = db.ref('catalog/sections');
-                const snapshot = await sectionsRef.once('value');
-                const sections = snapshot.val();
+                const snapshot = await db.collection('sections').get();
 
-                console.log('📂 Sections data:', sections);
-
-                if (!sections) {
+                if (snapshot.empty) {
                     resultsDiv.innerHTML = `
-                        <p class="error">❌ Aucune section trouvée à 'catalog/sections'</p>
-                        <p class="warning">⚠️ Veuillez initialiser Firebase avec init-firebase.html</p>
+                        <p class="error">❌ Aucune section trouvée dans 'sections'</p>
+                        <p class="warning">⚠️ Veuillez initialiser Firestore avec init-firebase.html</p>
                     `;
                     return;
                 }
 
-                const sectionsArray = Array.isArray(sections) ? sections : Object.values(sections);
+                const sectionsArray = [];
+                snapshot.forEach(doc => {
+                    sectionsArray.push({
+                        id: doc.id,
+                        ...doc.data()
+                    });
+                });
 
                 resultsDiv.innerHTML = `
                     <p class="success">✅ ${sectionsArray.length} sections trouvées!</p>
@@ -205,7 +183,7 @@
                         ${sectionsArray.map(s => `<li>${s.name} (${s.id}) - ${s.brands?.length || 0} marques</li>`).join('')}
                     </ul>
                     <p class="info">📄 Données complètes:</p>
-                    <pre>${JSON.stringify(sections, null, 2)}</pre>
+                    <pre>${JSON.stringify(sectionsArray, null, 2)}</pre>
                 `;
             } catch (error) {
                 resultsDiv.innerHTML = `<p class="error">❌ Erreur: ${error.message}</p>`;
@@ -217,16 +195,18 @@
             resultsDiv.innerHTML = '<p class="loading">⏳ Récupération des marques...</p>';
 
             try {
-                const sectionsRef = db.ref('catalog/sections');
-                const snapshot = await sectionsRef.once('value');
-                const sections = snapshot.val();
+                const snapshot = await db.collection('sections').get();
 
-                if (!sections) {
+                if (snapshot.empty) {
                     resultsDiv.innerHTML = `<p class="error">❌ Aucune section trouvée</p>`;
                     return;
                 }
 
-                const sectionsArray = Array.isArray(sections) ? sections : Object.values(sections);
+                const sectionsArray = [];
+                snapshot.forEach(doc => {
+                    sectionsArray.push(doc.data());
+                });
+
                 let allBrands = [];
                 let brandsHtml = '';
 

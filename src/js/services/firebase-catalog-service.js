@@ -5,7 +5,7 @@
 
 class FirebaseCatalogService {
     constructor() {
-        this.database = null;
+        this.firestore = null;
         this.initialized = false;
         this.initPromise = null;
     }
@@ -25,8 +25,11 @@ class FirebaseCatalogService {
 
         this.initPromise = (async () => {
             try {
-                const { database } = await window.firebaseConfig.initializeFirebase();
-                this.database = database;
+                const { firestore } = await window.firebaseConfig.initializeFirebase();
+                if (!firestore) {
+                    throw new Error('Firestore is not initialized. Make sure firebase-firestore-compat.js is loaded before this script.');
+                }
+                this.firestore = firestore;
                 this.initialized = true;
             } catch (error) {
                 console.error('Error initializing Firebase Catalog Service:', error);
@@ -39,59 +42,37 @@ class FirebaseCatalogService {
     }
 
     /**
-     * Get reference to catalog path
-     * @returns {Object} Firebase database reference
-     */
-    getCatalogRef() {
-        if (!this.database) {
-            throw new Error('Firebase not initialized. Call initialize() first.');
-        }
-        return this.database.ref('catalog');
-    }
-
-    /**
      * Get all sections
      * @returns {Promise<Array>} Array of sections
      */
     async getSections() {
         await this.initialize();
-        const catalogRef = this.getCatalogRef();
 
-        console.log('🔍 Fetching sections from Firebase path: catalog/sections');
+        console.log('🔍 Fetching sections from Firestore collection: sections');
 
-        return new Promise((resolve, reject) => {
-            catalogRef.child('sections').once('value')
-                .then((snapshot) => {
-                    const sectionsData = snapshot.val();
-                    console.log('📥 Raw sections data from Firebase:', sectionsData);
+        try {
+            const snapshot = await this.firestore.collection('sections').get();
 
-                    if (!sectionsData) {
-                        console.warn('⚠️ No sections data found in Firebase at catalog/sections');
-                        resolve([]);
-                        return;
-                    }
+            if (snapshot.empty) {
+                console.warn('⚠️ No sections found in Firestore');
+                return [];
+            }
 
-                    // Check if it's an array or object
-                    let sections;
-                    if (Array.isArray(sectionsData)) {
-                        sections = sectionsData;
-                        console.log('✓ Sections is an array with', sections.length, 'items');
-                    } else if (typeof sectionsData === 'object') {
-                        sections = Object.values(sectionsData);
-                        console.log('✓ Sections converted from object to array with', sections.length, 'items');
-                    } else {
-                        console.error('❌ Unexpected sections data type:', typeof sectionsData);
-                        sections = [];
-                    }
+            const sections = snapshot.docs.map(doc => {
+                const data = doc.data();
+                // Ensure ID is included (it should be in document ID, but also maybe in data)
+                return {
+                    id: doc.id,
+                    ...data
+                };
+            });
 
-                    console.log('📤 Returning sections:', sections);
-                    resolve(sections);
-                })
-                .catch((error) => {
-                    console.error('❌ Error fetching sections from Firebase:', error);
-                    reject(error);
-                });
-        });
+            console.log(`✓ Fetched ${sections.length} sections`);
+            return sections;
+        } catch (error) {
+            console.error('❌ Error fetching sections from Firestore:', error);
+            throw error;
+        }
     }
 
     /**
@@ -100,8 +81,22 @@ class FirebaseCatalogService {
      * @returns {Promise<Object|null>} Section object or null
      */
     async getSection(sectionId) {
-        const sections = await this.getSections();
-        return sections.find(section => section.id === sectionId) || null;
+        await this.initialize();
+
+        try {
+            const doc = await this.firestore.collection('sections').doc(sectionId).get();
+
+            if (doc.exists) {
+                return {
+                    id: doc.id,
+                    ...doc.data()
+                };
+            }
+            return null;
+        } catch (error) {
+            console.error(`Error getting section ${sectionId}:`, error);
+            return null;
+        }
     }
 
     /**
@@ -197,39 +192,38 @@ class FirebaseCatalogService {
      */
     async saveBrand(sectionId, brandData) {
         await this.initialize();
-        const catalogRef = this.getCatalogRef();
 
-        // Get current sections
-        const sections = await this.getSections();
-        const sectionIndex = sections.findIndex(s => s.id === sectionId);
+        try {
+            const sectionRef = this.firestore.collection('sections').doc(sectionId);
+            const doc = await sectionRef.get();
 
-        if (sectionIndex === -1) {
-            throw new Error(`Section ${sectionId} not found`);
+            if (!doc.exists) {
+                // Try to create it?, or throw? 
+                // Previous logic threw if index -1.
+                throw new Error(`Section ${sectionId} not found`);
+            }
+
+            const section = doc.data();
+            const brands = section.brands || [];
+
+            // Check if brand already exists
+            const existingBrandIndex = brands.findIndex(b => b.name === brandData.name);
+
+            if (existingBrandIndex !== -1) {
+                // Update existing brand
+                brands[existingBrandIndex] = brandData;
+            } else {
+                // Add new brand
+                brands.push(brandData);
+            }
+
+            // Update section in Firestore
+            await sectionRef.update({ brands: brands });
+
+        } catch (error) {
+            console.error('Error saving brand:', error);
+            throw error;
         }
-
-        const section = sections[sectionIndex];
-        const brands = section.brands || [];
-
-        // Check if brand already exists
-        const existingBrandIndex = brands.findIndex(b => b.name === brandData.name);
-
-        if (existingBrandIndex !== -1) {
-            // Update existing brand
-            brands[existingBrandIndex] = brandData;
-        } else {
-            // Add new brand
-            brands.push(brandData);
-        }
-
-        // Update section
-        section.brands = brands;
-
-        // Save to Firebase
-        return new Promise((resolve, reject) => {
-            catalogRef.child('sections').child(sectionIndex.toString()).set(section)
-                .then(() => resolve())
-                .catch((error) => reject(error));
-        });
     }
 
     /**
@@ -279,23 +273,32 @@ class FirebaseCatalogService {
      */
     async deleteBrand(sectionId, brandName) {
         await this.initialize();
-        const sections = await this.getSections();
-        const sectionIndex = sections.findIndex(s => s.id === sectionId);
 
-        if (sectionIndex === -1) {
-            throw new Error(`Section ${sectionId} not found`);
+        try {
+            const sectionRef = this.firestore.collection('sections').doc(sectionId);
+            const doc = await sectionRef.get();
+
+            if (!doc.exists) {
+                throw new Error(`Section ${sectionId} not found`);
+            }
+
+            const section = doc.data();
+            let brands = section.brands || [];
+
+            // Filter out the brand
+            const initialLength = brands.length;
+            brands = brands.filter(b => b.name !== brandName);
+
+            if (brands.length === initialLength) {
+                // Brand not found, maybe no-op or warning?
+                console.warn(`Brand ${brandName} not found in section ${sectionId} to delete.`);
+            }
+
+            await sectionRef.update({ brands: brands });
+        } catch (error) {
+            console.error('Error deleting brand:', error);
+            throw error;
         }
-
-        const section = sections[sectionIndex];
-        const brands = section.brands || [];
-        section.brands = brands.filter(b => b.name !== brandName);
-
-        const catalogRef = this.getCatalogRef();
-        return new Promise((resolve, reject) => {
-            catalogRef.child('sections').child(sectionIndex.toString()).set(section)
-                .then(() => resolve())
-                .catch((error) => reject(error));
-        });
     }
 
     /**
@@ -307,33 +310,44 @@ class FirebaseCatalogService {
      */
     async deleteProductLine(sectionId, brandName, lineName) {
         await this.initialize();
-        const sections = await this.getSections();
-        const sectionIndex = sections.findIndex(s => s.id === sectionId);
 
-        if (sectionIndex === -1) {
-            throw new Error(`Section ${sectionId} not found`);
+        try {
+            const sectionRef = this.firestore.collection('sections').doc(sectionId);
+            const doc = await sectionRef.get();
+
+            if (!doc.exists) {
+                throw new Error(`Section ${sectionId} not found`);
+            }
+
+            const section = doc.data();
+            const brands = section.brands || [];
+            const brandIndex = brands.findIndex(b => b.name === brandName);
+
+            if (brandIndex === -1) {
+                throw new Error(`Brand ${brandName} not found in section ${sectionId}`);
+            }
+
+            const brand = brands[brandIndex];
+            let lines = brand.lines || [];
+
+            // Filter out the line
+            const initialLength = lines.length;
+            lines = lines.filter(l => l.name !== lineName);
+
+            if (lines.length === initialLength) {
+                console.warn(`Line ${lineName} not found in brand ${brandName}`);
+            }
+
+            brand.lines = lines;
+            brands[brandIndex] = brand;
+
+            section.brands = brands;
+
+            await sectionRef.update({ brands: brands });
+        } catch (error) {
+            console.error('Error deleting product line:', error);
+            throw error;
         }
-
-        const section = sections[sectionIndex];
-        const brands = section.brands || [];
-        const brandIndex = brands.findIndex(b => b.name === brandName);
-
-        if (brandIndex === -1) {
-            throw new Error(`Brand ${brandName} not found in section ${sectionId}`);
-        }
-
-        const brand = brands[brandIndex];
-        const lines = brand.lines || [];
-        brand.lines = lines.filter(l => l.name !== lineName);
-        brands[brandIndex] = brand;
-        section.brands = brands;
-
-        const catalogRef = this.getCatalogRef();
-        return new Promise((resolve, reject) => {
-            catalogRef.child('sections').child(sectionIndex.toString()).set(section)
-                .then(() => resolve())
-                .catch((error) => reject(error));
-        });
     }
 
     /**
@@ -343,14 +357,28 @@ class FirebaseCatalogService {
      */
     async onCatalogChange(callback) {
         await this.initialize();
-        const catalogRef = this.getCatalogRef();
-        const handler = catalogRef.on('value', (snapshot) => {
-            const catalog = snapshot.val();
-            callback(catalog);
+        const collectionRef = this.firestore.collection('sections');
+
+        const unsubscribe = collectionRef.onSnapshot((snapshot) => {
+            const sections = [];
+            snapshot.forEach(doc => {
+                sections.push({
+                    id: doc.id,
+                    ...doc.data()
+                });
+            });
+
+            // Return in the structure expected by the app (object with sections array)
+            // Or if existing app expects the whole catalog object:
+            // The original code was retrieving 'catalog' node.
+            // If the app expects { sections: [...] } we provide that.
+            callback({ sections: sections });
+        }, (error) => {
+            console.error('Error listening to catalog changes:', error);
         });
 
         // Return unsubscribe function
-        return () => catalogRef.off('value', handler);
+        return unsubscribe;
     }
 
     /**
@@ -386,52 +414,43 @@ class FirebaseCatalogService {
      */
     async getProductsByLine(sectionId, brandName, lineName) {
         await this.initialize();
-        const catalogRef = this.getCatalogRef();
 
-        return new Promise((resolve, reject) => {
-            catalogRef.child('sections').once('value')
-                .then((snapshot) => {
-                    const sections = snapshot.val();
-                    if (!sections) {
-                        resolve([]);
-                        return;
-                    }
+        try {
+            const doc = await this.firestore.collection('sections').doc(sectionId).get();
 
-                    const sectionArray = Object.values(sections);
-                    const section = sectionArray.find(s => s.id === sectionId);
-                    if (!section || !section.brands) {
-                        resolve([]);
-                        return;
-                    }
+            if (!doc.exists) {
+                return [];
+            }
 
-                    const brand = section.brands.find(b => b.name === brandName);
-                    if (!brand || !brand.lines) {
-                        resolve([]);
-                        return;
-                    }
+            const section = doc.data();
+            // section.brands should be an array
+            const brands = section.brands || [];
 
-                    const line = brand.lines.find(l => l.name === lineName);
-                    if (!line || !line.products) {
-                        resolve([]);
-                        return;
-                    }
+            const brand = brands.find(b => b.name === brandName);
+            if (!brand || !brand.lines) {
+                return [];
+            }
 
-                    const products = Object.values(line.products).map(product => ({
-                        ...product,
-                        sectionId: sectionId,
-                        sectionName: section.name,
-                        brandName: brandName,
-                        brandLogo: brand.logo_url || '',
-                        lineName: lineName,
-                        lineImage: line.image_url || ''
-                    }));
+            const line = brand.lines.find(l => l.name === lineName);
+            if (!line || !line.products) {
+                return [];
+            }
 
-                    resolve(products);
-                })
-                .catch((error) => {
-                    reject(error);
-                });
-        });
+            const products = Object.values(line.products).map(product => ({
+                ...product,
+                sectionId: sectionId,
+                sectionName: section.name,
+                brandName: brandName,
+                brandLogo: brand.logo_url || '',
+                lineName: lineName,
+                lineImage: line.image_url || ''
+            }));
+
+            return products;
+        } catch (error) {
+            console.error('Error getting products by line:', error);
+            throw error;
+        }
     }
 
     /**
@@ -444,67 +463,66 @@ class FirebaseCatalogService {
      */
     async saveProduct(sectionId, brandName, lineName, productData) {
         await this.initialize();
-        const catalogRef = this.getCatalogRef();
 
-        // Get current sections
-        const sections = await this.getSections();
-        const sectionIndex = sections.findIndex(s => s.id === sectionId);
+        try {
+            const sectionRef = this.firestore.collection('sections').doc(sectionId);
+            const doc = await sectionRef.get();
 
-        if (sectionIndex === -1) {
-            throw new Error(`Section ${sectionId} not found`);
+            if (!doc.exists) {
+                throw new Error(`Section ${sectionId} not found`);
+            }
+
+            const section = doc.data();
+            const brands = section.brands || [];
+            const brandIndex = brands.findIndex(b => b.name === brandName);
+
+            if (brandIndex === -1) {
+                throw new Error(`Brand ${brandName} not found in section ${sectionId}`);
+            }
+
+            const brand = brands[brandIndex];
+            const lines = brand.lines || [];
+            const lineIndex = lines.findIndex(l => l.name === lineName);
+
+            if (lineIndex === -1) {
+                throw new Error(`Line ${lineName} not found in brand ${brandName}`);
+            }
+
+            const line = lines[lineIndex];
+            if (!line.products) {
+                line.products = {};
+            }
+
+            // Generate product ID from name or use existing
+            const productId = productData.id || productData.name.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+
+            // Ensure images array exists
+            const images = productData.images || [];
+            const imageUrl = productData.imageUrl || (images.length > 0 ? images[0] : '');
+
+            // Prepare product data
+            const productToSave = {
+                id: productId,
+                name: productData.name,
+                description: productData.description || '',
+                flavorProfile: productData.flavorProfile || '',
+                imageUrl: imageUrl,
+                images: images
+            };
+
+            // Save product
+            line.products[productId] = productToSave;
+            lines[lineIndex] = line;
+            brand.lines = lines;
+            brands[brandIndex] = brand;
+            section.brands = brands;
+
+            await sectionRef.update({ brands: brands });
+            return productId;
+        } catch (error) {
+            console.error('Error saving product:', error);
+            throw error;
         }
-
-        const section = sections[sectionIndex];
-        const brands = section.brands || [];
-        const brandIndex = brands.findIndex(b => b.name === brandName);
-
-        if (brandIndex === -1) {
-            throw new Error(`Brand ${brandName} not found in section ${sectionId}`);
-        }
-
-        const brand = brands[brandIndex];
-        const lines = brand.lines || [];
-        const lineIndex = lines.findIndex(l => l.name === lineName);
-
-        if (lineIndex === -1) {
-            throw new Error(`Line ${lineName} not found in brand ${brandName}`);
-        }
-
-        const line = lines[lineIndex];
-        if (!line.products) {
-            line.products = {};
-        }
-
-        // Generate product ID from name or use existing
-        const productId = productData.id || productData.name.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
-
-        // Ensure images array exists
-        const images = productData.images || [];
-        const imageUrl = productData.imageUrl || (images.length > 0 ? images[0] : '');
-
-        // Prepare product data
-        const productToSave = {
-            id: productId,
-            name: productData.name,
-            description: productData.description || '',
-            flavorProfile: productData.flavorProfile || '',
-            imageUrl: imageUrl,
-            images: images
-        };
-
-        // Save product
-        line.products[productId] = productToSave;
-        lines[lineIndex] = line;
-        brand.lines = lines;
-        brands[brandIndex] = brand;
-        section.brands = brands;
-
-        // Save to Firebase
-        return new Promise((resolve, reject) => {
-            catalogRef.child('sections').child(sectionIndex.toString()).set(section)
-                .then(() => resolve(productId))
-                .catch((error) => reject(error));
-        });
     }
 
     /**
@@ -517,50 +535,50 @@ class FirebaseCatalogService {
      */
     async deleteProduct(sectionId, brandName, lineName, productId) {
         await this.initialize();
-        const catalogRef = this.getCatalogRef();
 
-        const sections = await this.getSections();
-        const sectionIndex = sections.findIndex(s => s.id === sectionId);
+        try {
+            const sectionRef = this.firestore.collection('sections').doc(sectionId);
+            const doc = await sectionRef.get();
 
-        if (sectionIndex === -1) {
-            throw new Error(`Section ${sectionId} not found`);
-        }
-
-        const section = sections[sectionIndex];
-        const brands = section.brands || [];
-        const brandIndex = brands.findIndex(b => b.name === brandName);
-
-        if (brandIndex === -1) {
-            throw new Error(`Brand ${brandName} not found in section ${sectionId}`);
-        }
-
-        const brand = brands[brandIndex];
-        const lines = brand.lines || [];
-        const lineIndex = lines.findIndex(l => l.name === lineName);
-
-        if (lineIndex === -1) {
-            throw new Error(`Line ${lineName} not found in brand ${brandName}`);
-        }
-
-        const line = lines[lineIndex];
-        if (line.products && line.products[productId]) {
-            delete line.products[productId];
-            // If products object is empty, we can optionally remove it
-            if (Object.keys(line.products).length === 0) {
-                delete line.products;
+            if (!doc.exists) {
+                throw new Error(`Section ${sectionId} not found`);
             }
+
+            const section = doc.data();
+            const brands = section.brands || [];
+            const brandIndex = brands.findIndex(b => b.name === brandName);
+
+            if (brandIndex === -1) {
+                throw new Error(`Brand ${brandName} not found in section ${sectionId}`);
+            }
+
+            const brand = brands[brandIndex];
+            const lines = brand.lines || [];
+            const lineIndex = lines.findIndex(l => l.name === lineName);
+
+            if (lineIndex === -1) {
+                throw new Error(`Line ${lineName} not found in brand ${brandName}`);
+            }
+
+            const line = lines[lineIndex];
+            if (line.products && line.products[productId]) {
+                delete line.products[productId];
+                // If products object is empty, we can optionally remove it
+                if (Object.keys(line.products).length === 0) {
+                    delete line.products;
+                }
+            }
+
+            lines[lineIndex] = line;
+            brand.lines = lines;
+            brands[brandIndex] = brand;
+            section.brands = brands;
+
+            await sectionRef.update({ brands: brands });
+        } catch (error) {
+            console.error('Error deleting product:', error);
+            throw error;
         }
-
-        lines[lineIndex] = line;
-        brand.lines = lines;
-        brands[brandIndex] = brand;
-        section.brands = brands;
-
-        return new Promise((resolve, reject) => {
-            catalogRef.child('sections').child(sectionIndex.toString()).set(section)
-                .then(() => resolve())
-                .catch((error) => reject(error));
-        });
     }
 
     /**
@@ -570,53 +588,46 @@ class FirebaseCatalogService {
      */
     async getAllProductsBySection(sectionId) {
         await this.initialize();
-        const catalogRef = this.getCatalogRef();
 
-        return new Promise((resolve, reject) => {
-            catalogRef.child('sections').once('value')
-                .then((snapshot) => {
-                    const sections = snapshot.val();
-                    if (!sections) {
-                        resolve([]);
-                        return;
-                    }
+        try {
+            const doc = await this.firestore.collection('sections').doc(sectionId).get();
 
-                    const sectionArray = Object.values(sections);
-                    const section = sectionArray.find(s => s.id === sectionId);
-                    if (!section || !section.brands) {
-                        resolve([]);
-                        return;
-                    }
+            if (!doc.exists) {
+                return [];
+            }
 
-                    const allProducts = [];
+            const section = doc.data();
+            // Just returning the internal logic to extract products from brands->lines->products
+            const allProducts = [];
 
-                    for (const brand of section.brands) {
-                        if (!brand.lines) continue;
+            if (section.brands) {
+                for (const brand of section.brands) {
+                    if (!brand.lines) continue;
 
-                        for (const line of brand.lines) {
-                            if (!line.products) continue;
+                    for (const line of brand.lines) {
+                        if (!line.products) continue;
 
-                            const products = Object.values(line.products);
-                            for (const product of products) {
-                                allProducts.push({
-                                    ...product,
-                                    sectionId: sectionId,
-                                    sectionName: section.name,
-                                    brandName: brand.name,
-                                    brandLogo: brand.logo_url || '',
-                                    lineName: line.name,
-                                    lineImage: line.image_url || ''
-                                });
-                            }
+                        const products = Object.values(line.products);
+                        for (const product of products) {
+                            allProducts.push({
+                                ...product,
+                                sectionId: sectionId,
+                                sectionName: section.name,
+                                brandName: brand.name,
+                                brandLogo: brand.logo_url || '',
+                                lineName: line.name,
+                                lineImage: line.image_url || ''
+                            });
                         }
                     }
+                }
+            }
 
-                    resolve(allProducts);
-                })
-                .catch((error) => {
-                    reject(error);
-                });
-        });
+            return allProducts;
+        } catch (error) {
+            console.error('Error getting all products by section:', error);
+            throw error;
+        }
     }
 
     /**

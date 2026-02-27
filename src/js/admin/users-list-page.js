@@ -5,7 +5,7 @@
 
 class UsersListPageService {
     constructor() {
-        this.database = null;
+        this.firestore = null;
         this.initialized = false;
         this.allUsers = [];
         this.filteredUsers = [];
@@ -16,9 +16,11 @@ class UsersListPageService {
             return;
         }
 
+        this.initModal();
+
         try {
-            const { database } = await window.firebaseConfig.initializeFirebase();
-            this.database = database;
+            const { firestore } = await window.firebaseConfig.initializeFirebase();
+            this.firestore = firestore;
             this.initialized = true;
         } catch (error) {
             console.error('Error initializing Users List Page Service:', error);
@@ -34,24 +36,27 @@ class UsersListPageService {
         await this.initialize();
 
         try {
-            const usersRef = this.database.ref('users');
-            const snapshot = await usersRef.once('value');
-            const usersData = snapshot.val();
+            const usersRef = this.firestore.collection('users');
+            const snapshot = await usersRef.get();
+            const users = [];
 
-            if (!usersData) {
-                return [];
-            }
-
-            // Convert object to array and add userId
-            const users = Object.keys(usersData).map(userId => ({
-                uid: userId,
-                ...usersData[userId]
-            }));
+            snapshot.forEach(doc => {
+                users.push({
+                    uid: doc.id,
+                    ...doc.data()
+                });
+            });
 
             // Sort by creation date (newest first)
             return users.sort((a, b) => {
-                const dateA = a.createdAt || 0;
-                const dateB = b.createdAt || 0;
+                const getTimestamp = (val) => {
+                    if (!val) return 0;
+                    if (val.toMillis) return val.toMillis();
+                    if (val.seconds) return val.seconds * 1000;
+                    return val;
+                };
+                const dateA = getTimestamp(a.createdAt);
+                const dateB = getTimestamp(b.createdAt);
                 return dateB - dateA;
             });
         } catch (error) {
@@ -67,8 +72,17 @@ class UsersListPageService {
      */
     formatDate(timestamp) {
         if (!timestamp) return 'N/A';
-        
-        const date = new Date(timestamp);
+
+        let dateVal;
+        if (timestamp.toDate) {
+            dateVal = timestamp.toDate();
+        } else if (timestamp.seconds) {
+            dateVal = new Date(timestamp.seconds * 1000);
+        } else {
+            dateVal = new Date(timestamp);
+        }
+
+        const date = dateVal;
         const now = new Date();
         const diffMs = now - date;
         const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
@@ -85,9 +99,9 @@ class UsersListPageService {
         } else if (diffDays < 7) {
             return `${diffDays} days ago`;
         } else {
-            return date.toLocaleDateString('en-US', { 
-                month: 'short', 
-                day: 'numeric', 
+            return date.toLocaleDateString('en-US', {
+                month: 'short',
+                day: 'numeric',
                 year: 'numeric',
                 hour: '2-digit',
                 minute: '2-digit'
@@ -162,12 +176,129 @@ class UsersListPageService {
                 const name = (user.name || '').toLowerCase();
                 const email = (user.email || '').toLowerCase();
                 const phone = (user.phone || '').toLowerCase();
-                return name.includes(lowerQuery) || 
-                       email.includes(lowerQuery) || 
-                       phone.includes(lowerQuery);
+                return name.includes(lowerQuery) ||
+                    email.includes(lowerQuery) ||
+                    phone.includes(lowerQuery);
             });
         }
         this.renderUsers();
+    }
+
+    /**
+     * Show user details modal
+     * @param {Object} user - User object
+     */
+    showUserDetailsModal(user) {
+        const modal = document.getElementById('user-details-modal');
+        if (!modal) return;
+
+        // Populate basic info
+        document.getElementById('modal-user-name').textContent = user.name || 'No name';
+        document.getElementById('modal-user-id').textContent = `ID: ${user.uid}`;
+
+        // Populate contact info
+        document.getElementById('modal-user-email').textContent = user.email || 'N/A';
+        document.getElementById('modal-user-phone').textContent = user.phone || 'N/A';
+        document.getElementById('modal-user-dob').textContent = user.dob || 'N/A';
+
+        // Populate account info
+        document.getElementById('modal-user-created').textContent = this.formatDate(user.createdAt);
+
+        // Extra info container (render any other fields except the standard ones)
+        const extraContainer = document.getElementById('modal-user-extra-container');
+        extraContainer.innerHTML = '';
+        const standardFields = ['uid', 'name', 'email', 'phone', 'dob', 'createdAt', 'preferences'];
+
+        for (const [key, value] of Object.entries(user)) {
+            if (!standardFields.includes(key) && typeof value !== 'object') {
+                const div = document.createElement('div');
+                div.innerHTML = `
+                    <p class="text-xs text-[#baba9c] uppercase tracking-wider mb-1">${key.replace(/([A-Z])/g, ' $1').trim()}</p>
+                    <p class="text-sm text-white">${value}</p>
+                `;
+                extraContainer.appendChild(div);
+            }
+        }
+
+        // Preferences Info
+        const prefSection = document.getElementById('modal-preferences-section');
+        const prefLiquidsContainer = document.getElementById('modal-pref-liquids-container');
+        const prefLiquids = document.getElementById('modal-pref-liquids');
+        const prefDevicesContainer = document.getElementById('modal-pref-devices-container');
+        const prefDevices = document.getElementById('modal-pref-devices');
+
+        let hasPreferences = false;
+
+        if (user.preferences) {
+            if (user.preferences.liquids && user.preferences.liquids.trim() !== '') {
+                prefLiquids.textContent = user.preferences.liquids;
+                prefLiquidsContainer.classList.remove('hidden');
+                hasPreferences = true;
+            } else {
+                prefLiquidsContainer.classList.add('hidden');
+            }
+
+            if (user.preferences.devices && user.preferences.devices.trim() !== '') {
+                prefDevices.textContent = user.preferences.devices;
+                prefDevicesContainer.classList.remove('hidden');
+                hasPreferences = true;
+            } else {
+                prefDevicesContainer.classList.add('hidden');
+            }
+        } else {
+            prefLiquidsContainer.classList.add('hidden');
+            prefDevicesContainer.classList.add('hidden');
+        }
+
+        if (hasPreferences) {
+            prefSection.classList.remove('hidden');
+        } else {
+            prefSection.classList.add('hidden');
+        }
+
+        // Action buttons
+        const whatsappBtn = document.getElementById('modal-whatsapp-btn');
+        const emailBtn = document.getElementById('modal-email-btn');
+
+        if (user.phone) {
+            whatsappBtn.classList.remove('hidden');
+            whatsappBtn.onclick = () => { this.openWhatsApp(user.phone, user.name); };
+        } else {
+            whatsappBtn.classList.add('hidden');
+        }
+
+        if (user.email) {
+            emailBtn.classList.remove('hidden');
+            emailBtn.onclick = () => { this.openEmail(user.email, user.name); };
+        } else {
+            emailBtn.classList.add('hidden');
+        }
+
+        // Show modal
+        modal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden'; // Prevent background scrolling
+    }
+
+    /**
+     * Initialize modal event listeners
+     */
+    initModal() {
+        const modal = document.getElementById('user-details-modal');
+        const closeBtn = document.getElementById('close-modal-btn');
+
+        if (!modal || !closeBtn) return;
+
+        const closeModal = () => {
+            modal.classList.add('hidden');
+            document.body.style.overflow = '';
+        };
+
+        closeBtn.addEventListener('click', closeModal);
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
     }
 
     /**
@@ -221,7 +352,7 @@ class UsersListPageService {
         // Render each user
         this.filteredUsers.forEach(user => {
             const row = document.createElement('tr');
-            row.className = 'hover:bg-border-dark/20 transition-colors';
+            row.className = 'hover:bg-border-dark/20 transition-colors cursor-pointer';
 
             const name = user.name || 'No name';
             const email = user.email || 'No email';
@@ -287,6 +418,11 @@ class UsersListPageService {
                     </div>
                 </td>
             `;
+
+            row.addEventListener('click', (e) => {
+                if (e.target.closest('button')) return;
+                this.showUserDetailsModal(user);
+            });
 
             // Add event listeners for buttons
             const whatsappBtn = row.querySelector('.whatsapp-btn');

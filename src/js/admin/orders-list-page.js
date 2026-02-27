@@ -6,6 +6,7 @@
 class OrdersListPageService {
     constructor() {
         this.database = null;
+        this.firestore = null;
         this.initialized = false;
         this.allOrders = [];
         this.filteredOrders = [];
@@ -29,14 +30,15 @@ class OrdersListPageService {
                     }, 100);
                 });
             }
-            
-            const { database } = await window.firebaseConfig.initializeFirebase();
-            
-            if (!database) {
-                throw new Error('Database not returned from initializeFirebase');
+
+            const { database, firestore } = await window.firebaseConfig.initializeFirebase();
+
+            if (!database || !firestore) {
+                throw new Error('Database or Firestore not returned from initializeFirebase');
             }
-            
+
             this.database = database;
+            this.firestore = firestore;
             this.initialized = true;
             console.log('✅ Orders List Page Service initialized successfully');
         } catch (error) {
@@ -53,32 +55,39 @@ class OrdersListPageService {
         await this.initialize();
 
         try {
-            const usersRef = this.database.ref('users');
-            const snapshot = await usersRef.once('value');
-            const usersData = snapshot.val();
+            // Get all user profiles from Firestore
+            const fsUsersRef = this.firestore.collection('users');
+            const fsSnapshot = await fsUsersRef.get();
+            const fsUsers = {};
+            fsSnapshot.forEach(doc => {
+                fsUsers[doc.id] = doc.data();
+            });
 
-            if (!usersData) {
+            // Get all orders from Realtime Database
+            const rtdbUsersRef = this.database.ref('users');
+            const rtdbSnapshot = await rtdbUsersRef.once('value');
+            const rtdbUsersData = rtdbSnapshot.val();
+
+            if (!rtdbUsersData) {
                 return [];
             }
 
             const orders = [];
 
-            // Iterate through all users
-            for (const userId of Object.keys(usersData)) {
-                const user = usersData[userId];
-                const ordersRef = this.database.ref(`users/${userId}/orders`);
-                const ordersSnapshot = await ordersRef.once('value');
-                const userOrders = ordersSnapshot.val();
+            // Iterate through all users in RTDB
+            for (const userId of Object.keys(rtdbUsersData)) {
+                const fsUser = fsUsers[userId] || {};
+                const userOrders = rtdbUsersData[userId].orders;
 
                 if (userOrders) {
-                    // Add each order with user info
+                    // Add each order with user info from Firestore
                     for (const orderId of Object.keys(userOrders)) {
                         orders.push({
                             orderId: orderId,
                             userId: userId,
-                            userName: user.name || 'N/A',
-                            userEmail: user.email || 'N/A',
-                            userPhone: user.phone || 'N/A',
+                            userName: fsUser.name || 'N/A',
+                            userEmail: fsUser.email || 'N/A',
+                            userPhone: fsUser.phone || 'N/A',
                             ...userOrders[orderId]
                         });
                     }
@@ -104,11 +113,11 @@ class OrdersListPageService {
      */
     formatDate(timestamp) {
         if (!timestamp) return 'N/A';
-        
+
         const date = new Date(timestamp);
-        return date.toLocaleDateString('en-US', { 
-            month: 'short', 
-            day: 'numeric', 
+        return date.toLocaleDateString('en-US', {
+            month: 'short',
+            day: 'numeric',
             year: 'numeric',
             hour: '2-digit',
             minute: '2-digit'
@@ -142,7 +151,7 @@ class OrdersListPageService {
         const statusFilter = document.getElementById('status-filter').value;
 
         this.filteredOrders = this.allOrders.filter(order => {
-            const matchesSearch = !searchTerm || 
+            const matchesSearch = !searchTerm ||
                 (order.productName && order.productName.toLowerCase().includes(searchTerm)) ||
                 (order.userName && order.userName.toLowerCase().includes(searchTerm)) ||
                 (order.userEmail && order.userEmail.toLowerCase().includes(searchTerm)) ||
@@ -210,8 +219,8 @@ class OrdersListPageService {
                 <td class="px-6 py-4">
                     <div class="flex flex-col">
                         <span class="text-white font-medium">${order.productName || 'N/A'}</span>
-                        ${order.productDetails && Object.keys(order.productDetails).length > 0 ? 
-                            `<span class="text-[#baba9c] text-xs">${Object.entries(order.productDetails).map(([k, v]) => `${k}: ${v}`).join(', ')}</span>` : ''}
+                        ${order.productDetails && Object.keys(order.productDetails).length > 0 ?
+                    `<span class="text-[#baba9c] text-xs">${Object.entries(order.productDetails).map(([k, v]) => `${k}: ${v}`).join(', ')}</span>` : ''}
                     </div>
                 </td>
                 <td class="px-6 py-4">
@@ -248,11 +257,11 @@ class OrdersListPageService {
 
             tbody.appendChild(row);
         });
-        
+
         // Add event listeners for status updates
         this.setupStatusUpdateListeners();
     }
-    
+
     /**
      * Setup event listeners for status updates
      */
@@ -262,25 +271,25 @@ class OrdersListPageService {
             // Remove existing listeners by cloning
             const newBtn = btn.cloneNode(true);
             btn.parentNode.replaceChild(newBtn, btn);
-            
+
             newBtn.addEventListener('click', async (e) => {
                 const orderId = e.currentTarget.dataset.orderId;
                 const userId = e.currentTarget.dataset.userId;
                 const select = document.querySelector(`select[data-order-id="${orderId}"]`);
                 if (!select) return;
-                
+
                 const newStatus = select.value;
                 const currentOrder = this.allOrders.find(o => o.orderId === orderId && o.userId === userId);
-                
+
                 if (!currentOrder || newStatus === currentOrder.status) {
                     return; // No change
                 }
-                
+
                 // Disable button during update
                 newBtn.disabled = true;
                 newBtn.textContent = 'Updating...';
                 newBtn.style.opacity = '0.6';
-                
+
                 try {
                     await this.updateOrderStatus(userId, orderId, newStatus);
                 } catch (error) {
@@ -294,7 +303,7 @@ class OrdersListPageService {
             });
         });
     }
-    
+
     /**
      * Update order status in Firebase
      * @param {string} userId - User ID
@@ -303,15 +312,15 @@ class OrdersListPageService {
      */
     async updateOrderStatus(userId, orderId, newStatus) {
         await this.initialize();
-        
+
         if (!this.database) {
             throw new Error('Database not initialized');
         }
-        
+
         try {
             // Use update() method to update only the status field
             const orderRef = this.database.ref(`users/${userId}/orders/${orderId}`);
-            
+
             // Wrap in Promise to ensure proper async handling
             await new Promise((resolve, reject) => {
                 orderRef.update({ status: newStatus })
@@ -324,22 +333,22 @@ class OrdersListPageService {
                         reject(error);
                     });
             });
-            
+
             // Update local data
             const order = this.allOrders.find(o => o.orderId === orderId && o.userId === userId);
             if (order) {
                 order.status = newStatus;
             }
-            
+
             // Update filtered orders
             const filteredOrder = this.filteredOrders.find(o => o.orderId === orderId && o.userId === userId);
             if (filteredOrder) {
                 filteredOrder.status = newStatus;
             }
-            
+
             // Re-render to show updated status
             this.renderOrders();
-            
+
             // Show success message
             this.showSuccessMessage(`Order status updated to ${newStatus}`);
         } catch (error) {
@@ -348,7 +357,7 @@ class OrdersListPageService {
             throw error;
         }
     }
-    
+
     /**
      * Show success message
      * @param {string} message - Success message
@@ -359,7 +368,7 @@ class OrdersListPageService {
         if (successDiv) {
             successDiv.remove();
         }
-        
+
         // Create new success message
         successDiv = document.createElement('div');
         successDiv.id = 'status-update-success';
@@ -369,7 +378,7 @@ class OrdersListPageService {
             <span>${message}</span>
         `;
         document.body.appendChild(successDiv);
-        
+
         // Animate in
         successDiv.style.opacity = '0';
         successDiv.style.transform = 'translateY(-10px)';
@@ -378,7 +387,7 @@ class OrdersListPageService {
             successDiv.style.opacity = '1';
             successDiv.style.transform = 'translateY(0)';
         }, 10);
-        
+
         // Hide after 3 seconds
         setTimeout(() => {
             successDiv.style.opacity = '0';
