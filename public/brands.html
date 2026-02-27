@@ -4,33 +4,33 @@
 <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <title>Marchi Partner Vape Premium | LIQUIDO Vape Shop</title>
+    <title>I Nostri Brand Dispositivi Vape | LIQUIDO Vape Shop</title>
     <meta name="description"
-        content="Scopri i migliori marchi vape premium disponibili a LIQUIDO: GeekVape, Vaporesso, Dinner Lady, Voopoo, Smok e altri. Marchi vape di alta qualità a Monterotondo, Roma." />
+        content="Scopri i migliori brand di dispositivi vape disponibili a LIQUIDO: GeekVape, Vaporesso, Voopoo, Smok e altri. Brand dispositivi vape di alta qualità a Monterotondo, Roma." />
     <meta name="keywords"
-        content="marchi vape, marchi vape premium, GeekVape, Vaporesso, Dinner Lady, Voopoo, Smok, brand vape, vape shop marchi, marchi vape Italia" />
+        content="brand vape, brand dispositivi vape, GeekVape, Vaporesso, Voopoo, Smok, dispositivi vape, vape shop brand, brand vape Italia" />
     <meta name="author" content="LIQUIDO Vape Shop" />
     <meta name="robots" content="index, follow" />
     <link rel="canonical" href="https://liquido.vapeshop/public/brands.html" />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="Marchi Partner Vape Premium | LIQUIDO Vape Shop" />
+    <meta property="og:title" content="I Nostri Brand Dispositivi Vape | LIQUIDO Vape Shop" />
     <meta property="og:description"
-        content="Scopri i migliori marchi vape premium disponibili a LIQUIDO: GeekVape, Vaporesso, Dinner Lady e altri marchi di alta qualità." />
+        content="Scopri i migliori brand di dispositivi vape disponibili a LIQUIDO: GeekVape, Vaporesso e altri brand di alta qualità." />
     <meta property="og:url" content="https://liquido.vapeshop/public/brands.html" />
     <meta property="og:site_name" content="LIQUIDO Vape Shop" />
     <meta property="og:locale" content="it_IT" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Marchi Partner Vape Premium | LIQUIDO" />
+    <meta name="twitter:title" content="I Nostri Brand Dispositivi Vape | LIQUIDO" />
     <meta name="twitter:description"
-        content="Scopri i migliori marchi vape premium disponibili a LIQUIDO a Monterotondo, Roma." />
+        content="Scopri i migliori brand di dispositivi vape disponibili a LIQUIDO a Monterotondo, Roma." />
     <meta name="geo.region" content="IT-LA" />
     <meta name="geo.placename" content="Monterotondo" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap"
         rel="stylesheet" />
     <link
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
         rel="stylesheet" />
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
@@ -56,263 +56,74 @@
             --bg-dark: #000000;
         }
         body { font-family: 'Plus Jakarta Sans', sans-serif; }
-        .glass-effect {
-            background: rgba(0, 0, 0, 0.85);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-        }
         .text-bold-modern {
             font-weight: 800;
             letter-spacing: -0.02em;
         }
-        .accent-glow {
-            box-shadow: 0 0 20px rgba(248, 237, 112, 0.2);
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
         }
-        .brand-card-hover {
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+
+        /* Scroll Animations */
+        .scroll-animate {
+            opacity: 0;
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
         }
-        .brand-card-hover:hover {
-            transform: translateY(-8px);
-            border-color: var(--primary-color);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
+        .scroll-animate.from-left {
+            transform: translateX(-100px);
         }
-        .text-glow:hover {
-            text-shadow: 0 0 15px rgba(248, 237, 112, 0.4);
+        .scroll-animate.from-right {
+            transform: translateX(100px);
         }
-        @keyframes float {
-            0%, 100% {
-                transform: translateY(0px);
-            }
-            50% {
-                transform: translateY(-20px);
-            }
+        .scroll-animate.from-bottom {
+            transform: translateY(100px);
         }
-        @keyframes fadeInScale {
-            0% {
-                opacity: 0;
-                transform: scale(0.8) translateY(30px);
-            }
-            100% {
-                opacity: 1;
-                transform: scale(1) translateY(0);
-            }
-        }
-        .animate-float {
-            animation: float 6s ease-in-out infinite;
-        }
-        .animate-fade-in-scale {
-            animation: fadeInScale 1.2s ease-out forwards;
-        }
-        
-        /* Carousel Animation */
-        @keyframes scroll {
-            0% {
-                transform: translateX(0);
-            }
-            100% {
-                transform: translateX(-33.33%);
-            }
-        }
-        
-        .animate-scroll {
-            animation: scroll 8s linear infinite;
-        }
-        
-        .animate-scroll:hover {
-            animation-play-state: paused;
+        .scroll-animate.visible {
+            opacity: 1;
+            transform: translateX(0) translateY(0);
         }
     </style>
 </head>
 
 <body class="bg-white text-background-dark transition-colors duration-300">
     <!-- Top navigation and header loaded dynamically via component-loader.js -->
-    <main class="pt-[100px] max-w-[1440px] mx-auto px-6 lg:px-20 pb-16">
-        <!-- Section Image Hero en grand format -->
-        <section class="relative px-6 py-4 md:py-8 overflow-hidden">
-            <div class="absolute inset-0 z-0">
-                <div
-                    class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary/20 blur-[120px] rounded-full">
-                </div>
-            </div>
-            <div class="relative z-10 max-w-6xl mx-auto flex justify-center">
-                <div class="relative animate-fade-in-scale w-full">
-                    <img src="../assets/images/banner_blog_2_-removebg-preview.png" alt="LIQUIDO Premium Brands Banner"
-                        class="w-full h-auto animate-float drop-shadow-2xl" />
-                    <!-- Effet de glow derrière l'image -->
-                    <div class="absolute inset-0 bg-primary/30 blur-3xl -z-10 scale-90"></div>
+    <main>
+        <!-- ===== INTRO SECTION ===== -->
+        <section class="pt-32 pb-20 bg-white scroll-animate from-bottom">
+            <div class="max-w-[1440px] mx-auto px-6 lg:px-20">
+                <div class="text-center mb-16">
+                    <p class="text-center text-gray-600 uppercase tracking-[0.4em] text-[10px] font-black mb-4">Scopri
+                        i Brand</p>
+                    <h1 class="text-5xl lg:text-6xl text-bold-modern uppercase mb-4 text-background-dark">
+                        I Nostri <span class="text-primary">Brand</span>
+                    </h1>
+                    <p class="text-slate-600 max-w-3xl mx-auto font-medium leading-relaxed">
+                        Selezioniamo i brand più affidabili e performanti del settore, scelti per garantire dispositivi
+                        innovativi, sicuri e capaci di offrire prestazioni ai massimi livelli. Ogni prodotto è studiato
+                        per unire qualità costruttiva, tecnologia avanzata e offrire un'esperienza ottimizzata per ogni
+                        gusto.
+                    </p>
                 </div>
             </div>
         </section>
 
-        <!-- Section Partner Brands -->
-        <section class="relative px-6 py-8 md:py-12 text-center overflow-hidden">
-            <div class="relative z-10 max-w-4xl mx-auto space-y-8">
-                <div
-                    class="inline-block px-4 py-1 border-2 border-primary bg-primary/10 text-primary text-[10px] font-bold uppercase tracking-[0.3em] mb-4 shadow-lg shadow-primary/20">
-                    Official Partners</div>
-                <h1 class="text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter leading-none italic uppercase">
-                    Partner <span class="text-primary drop-shadow-[0_0_15px_rgba(248,237,112,0.5)]">Brands</span>
-                </h1>
-                <p class="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed font-light">
-                    Exclusively curated partnerships with industry pioneers. We bring the world's most innovative vaping
-                    technology and refined flavors to the LIQUIDO collection.
-                </p>
-            </div>
-        </section>
-
-        <!-- Brands Carousel Section -->
-        <section class="px-6 mb-16">
-            <div class="relative overflow-hidden">
-                <div id="brands-carousel-track" class="flex gap-6 animate-scroll">
-                    <!-- Brands will be loaded dynamically from Firebase -->
-                    <div class="flex items-center justify-center py-12 w-full">
-                        <p class="text-background-dark/40 text-lg">Caricamento marchi...</p>
+        <!-- ===== ZIG-ZAG BRANDS SECTION ===== -->
+        <!-- Brands shown alternating: brand text left + image right, then text right + image left -->
+        <section class="pb-20 bg-white border-t border-black/5 scroll-animate from-left">
+            <div class="max-w-[1440px] mx-auto px-6 lg:px-20">
+                <div id="brands-zigzag-container" class="min-h-[500px] w-full">
+                    <!-- Brands zig-zag will be loaded dynamically -->
+                    <div class="flex items-center justify-center h-[300px]">
+                        <p class="text-background-dark/40 text-lg">Caricamento brand...</p>
                     </div>
-                </div>
-            </div>
-        </section>
-        <section class="mt-32 px-6">
-            <div
-                class="bg-primary p-12 md:p-20 flex flex-col md:flex-row items-center justify-between gap-12 relative overflow-hidden">
-                <div
-                    class="absolute right-0 top-0 w-96 h-96 bg-black/5 blur-[80px] rounded-full translate-x-1/2 -translate-y-1/2">
-                </div>
-                <div class="relative z-10 max-w-2xl">
-                    <h2 class="text-4xl md:text-5xl font-black text-black italic uppercase mb-6 leading-tight">Partner
-                        with <br /><span class="drop-shadow-[0_0_15px_rgba(0,0,0,0.3)]">LIQUIDO</span> <span
-                            class="text-white drop-shadow-[0_0_10px_rgba(0,0,0,0.4)]">Shop</span></h2>
-                    <p class="text-black/70 font-bold text-lg max-w-lg">We are always expanding our premium network.
-                        Showcase your brand alongside the world's finest.</p>
-                </div>
-                <div class="relative z-10 flex flex-col sm:flex-row gap-4 w-full md:w-auto">
-                    <button
-                        class="px-10 py-5 bg-black text-primary font-black text-[12px] uppercase tracking-[0.2em] hover:scale-105 transition-all shadow-xl shadow-primary/30 hover:shadow-2xl hover:shadow-primary/50">Submit
-                        Request</button>
-                    <button
-                        class="px-10 py-5 bg-transparent border-2 border-black text-black font-black text-[12px] uppercase tracking-[0.2em] hover:bg-black hover:text-primary hover:shadow-xl hover:shadow-primary/30 transition-all">Media
-                        Kit</button>
                 </div>
             </div>
         </section>
     </main>
-    <footer class="bg-charcoal pt-24 pb-12 px-6">
-        <div class="max-w-[1280px] mx-auto">
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-16 mb-20">
-                <div class="lg:col-span-4 space-y-10">
-                    <div class="flex items-center gap-2">
-                        <div class="flex items-baseline">
-                            <span class="text-3xl font-black tracking-tighter text-white italic">LIQUIDO</span>
-                            <div class="ml-1 flex items-center">
-                                <div class="w-3 h-4 bg-primary rounded-full shadow-lg shadow-primary/50"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <p class="text-gray-600 dark:text-white/40 leading-relaxed font-medium max-w-sm">
-                        Defining the premium standard in the vaping industry. We provide access to exclusive hardware
-                        and globally recognized flavor profiles for the discerning enthusiast.
-                    </p>
-                    <div class="space-y-4">
-                        <h4
-                            class="text-[10px] font-black uppercase tracking-[0.3em] text-primary drop-shadow-[0_0_8px_rgba(248,237,112,0.4)]">
-                            Contact Us</h4>
-                        <div class="flex flex-col gap-3 text-sm font-bold text-white/60">
-                            <div class="flex items-center gap-3">
-                                <span class="material-symbols-outlined text-primary text-lg">mail</span>
-                                <span>wholesale@liquido.shop</span>
-                            </div>
-                            <div class="flex items-center gap-3">
-                                <span class="material-symbols-outlined text-primary text-lg">location_on</span>
-                                <span>Los Angeles, CA &amp; London, UK</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="lg:col-span-5 grid grid-cols-2 md:grid-cols-2 gap-12">
-                    <div>
-                        <h4
-                            class="font-black mb-8 text-[11px] uppercase tracking-[0.4em] text-primary drop-shadow-[0_0_8px_rgba(248,237,112,0.4)]">
-                            Explore</h4>
-                        <ul class="space-y-4 text-[11px] font-bold uppercase tracking-[0.2em] text-white/40">
-                            <li><a class="hover:text-primary transition-colors flex items-center gap-2"
-                                    href="index.html">Home</a></li>
-                            <li><a class="text-white hover:text-primary transition-colors flex items-center gap-2"
-                                    href="brands.html">Partner Brands</a></li>
-                            <li><a class="hover:text-primary transition-colors flex items-center gap-2"
-                                    href="products.html">Full Catalog</a></li>
-                            <li><a class="hover:text-primary transition-colors flex items-center gap-2"
-                                    href="about.html">About Liquido</a></li>
-                            <li><a class="hover:text-primary transition-colors flex items-center gap-2"
-                                    href="contact.html">Wholesale Center</a></li>
-                        </ul>
-                    </div>
-                    <div>
-                        <h4
-                            class="font-black mb-8 text-[11px] uppercase tracking-[0.4em] text-primary drop-shadow-[0_0_8px_rgba(248,237,112,0.4)]">
-                            Highlights</h4>
-                        <ul class="space-y-4 text-[11px] font-bold uppercase tracking-[0.2em] text-white/40">
-                            <li><a class="hover:text-primary transition-colors" href="#">New Arrivals</a></li>
-                            <li><a class="hover:text-primary transition-colors" href="#">Limited Editions</a></li>
-                            <li><a class="hover:text-primary transition-colors" href="#">Top Performance Mods</a></li>
-                            <li><a class="hover:text-primary transition-colors" href="#">Best-Selling Liquids</a></li>
-                            <li><a class="hover:text-primary transition-colors" href="#">Award Winners</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="lg:col-span-3 space-y-8">
-                    <h4
-                        class="font-black mb-4 text-[11px] uppercase tracking-[0.4em] text-primary drop-shadow-[0_0_8px_rgba(248,237,112,0.4)]">
-                        Newsletter</h4>
-                    <p class="text-xs text-white/30 font-bold uppercase tracking-wider mb-6">Stay updated with early
-                        access.</p>
-                    <div class="relative">
-                        <input
-                            class="w-full bg-white/5 border border-white/10 px-4 py-4 text-[10px] font-bold tracking-widest focus:border-primary outline-none transition-colors"
-                            placeholder="YOUR EMAIL" type="email" />
-                        <button class="absolute right-2 top-1/2 -translate-y-1/2 bg-primary p-2 text-black">
-                            <span class="material-symbols-outlined text-sm">arrow_forward</span>
-                        </button>
-                    </div>
-                    <div class="pt-4 flex gap-3">
-                        <a class="w-12 h-12 bg-white/5 flex items-center justify-center hover:bg-primary hover:text-black transition-all group"
-                            href="#">
-                            <span class="material-symbols-outlined text-lg">public</span>
-                        </a>
-                        <a class="w-12 h-12 bg-white/5 flex items-center justify-center hover:bg-primary hover:text-black transition-all group"
-                            href="#">
-                            <span class="material-symbols-outlined text-lg">alternate_email</span>
-                        </a>
-                        <a class="w-12 h-12 bg-white/5 flex items-center justify-center hover:bg-primary hover:text-black transition-all group"
-                            href="#">
-                            <span class="material-symbols-outlined text-lg">smart_display</span>
-                        </a>
-                        <a class="w-12 h-12 bg-white/5 flex items-center justify-center hover:bg-primary hover:text-black transition-all group"
-                            href="#">
-                            <span class="material-symbols-outlined text-lg">share</span>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div id="partner-brands-footer"
-                class="border-y border-white/5 py-12 mb-12 flex flex-wrap justify-center md:justify-between items-center gap-12 opacity-30 grayscale hover:grayscale-0 hover:opacity-100 transition-all">
-                <!-- Partner brand logos will be loaded dynamically -->
-            </div>
-            <div
-                class="flex flex-col md:flex-row justify-between items-center gap-8 text-[10px] font-bold uppercase tracking-[0.3em] text-white/20">
-                <div class="flex gap-8">
-                    <p>© 2024 LIQUIDO PREMIUM. ALL RIGHTS RESERVED.</p>
-                </div>
-                <div class="flex gap-12">
-                    <a class="hover:text-primary transition-colors" href="#">Privacy &amp; Legal</a>
-                    <a class="hover:text-primary transition-colors" href="#">Compliance Standards</a>
-                    <a class="hover:text-primary transition-colors" href="#">Shipping &amp; Returns</a>
-                </div>
-            </div>
-            <div class="max-w-[1440px] mx-auto pt-8 flex justify-center">
-                <img src="../assets/images/Logo bianco.png" alt="ADM Logo" class="h-16 object-contain opacity-80">
-            </div>
-        </div>
-    </footer>
-    <!-- Firebase SDK (Legacy for Realtime Database) -->
+
+    <!-- Footer loaded dynamically -->
+
+    <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-analytics-compat.js"></script>
@@ -327,8 +138,9 @@
     <script src="../src/js/modules/brands-renderer.js"></script>
     <script src="../src/js/modules/products-renderer.js"></script>
     <script src="../src/js/modules/catalog-init.js"></script>
+
     <script>
-            // Initialize Brands Carousel - Device Brands Only
+            // Initialize Device Brands Zig-Zag Section
             (async function () {
                 try {
                     // Wait for catalog initialization
@@ -345,77 +157,43 @@
 
                     const catalog = await window.catalogInit;
 
-                    if (!catalog || !catalog.service) {
-                        console.error('Catalog service not available:', catalog);
+                    if (!catalog || !catalog.brandsRenderer) {
+                        console.error('BrandsRenderer not available:', catalog);
                         return;
                     }
 
-                    const { service } = catalog;
-                    const brandsContainer = document.getElementById('brands-carousel-track');
+                    const { brandsRenderer } = catalog;
+                    const brandsContainer = document.getElementById('brands-zigzag-container');
 
-                    if (brandsContainer) {
-                        // Get all brands from all sections
-                        const allBrands = await service.getAllBrands();
-
-                        if (allBrands && allBrands.length > 0) {
-                            // Filter brands to show only "device" type
-                            const deviceBrands = allBrands.filter(brand => brand.type === 'device');
-
-                            if (deviceBrands.length > 0) {
-                                // Create brand cards
-                                const brandCard = (brand) => {
-                                    const logoUrl = brand.logo_url || '';
-                                    return `
-                                    <div class="brand-card-carousel flex-shrink-0 w-80 bg-transparent p-4 flex items-center justify-center hover:scale-110 transition-all duration-300 aspect-[2/1]">
-                                        ${logoUrl ? `
-                                            <img src="${logoUrl}" alt="${brand.name}" class="w-full h-full object-contain filter grayscale" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"/>
-                                        ` : ''}
-                                        <div class="${logoUrl ? 'hidden' : 'flex'} flex-col items-center justify-center text-black w-full h-full">
-                                            <span class="text-2xl font-black uppercase">${brand.name}</span>
-                                        </div>
-                                    </div>
-                                `;
-                                };
-
-                                // Create the brands HTML
-                                const brandsHTML = deviceBrands.map(brandCard).join('');
-
-                                // Duplicate multiple times for seamless infinite scroll (3 copies)
-                                const triplicatedHTML = brandsHTML + brandsHTML + brandsHTML;
-
-                                brandsContainer.innerHTML = triplicatedHTML;
-
-                                // Adjust animation duration based on number of brands
-                                // More brands = longer duration for smooth scrolling
-                                const duration = Math.max(20, deviceBrands.length * 2);
-                                brandsContainer.style.animationDuration = `${duration}s`;
-                            } else {
-                                brandsContainer.innerHTML = `
-                                <div class="flex items-center justify-center py-12 w-full">
-                                    <p class="text-background-dark/40 text-lg">Nessun marchio dispositivi disponibile.</p>
-                                </div>
-                            `;
-                            }
-                        } else {
-                            brandsContainer.innerHTML = `
-                            <div class="flex items-center justify-center py-12 w-full">
-                                <p class="text-background-dark/40 text-lg">Nessun marchio disponibile.</p>
-                            </div>
-                        `;
-                        }
+                    if (brandsContainer && brandsRenderer) {
+                        await brandsRenderer.renderDeviceBrandsZigZag(brandsContainer);
                     }
                 } catch (error) {
-                    console.error('Error initializing brands carousel:', error);
-                    const brandsContainer = document.getElementById('brands-carousel-track');
-                    if (brandsContainer) {
-                        brandsContainer.innerHTML = `
-                        <div class="flex items-center justify-center py-12 w-full">
-                            <p class="text-red-400 text-lg">Errore nel caricamento dei marchi.</p>
-                        </div>
-                    `;
-                    }
+                    console.error('Error initializing device brands zig-zag:', error);
                 }
             })();
+    </script>
+
+    <!-- Scroll Animation Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const observerOptions = {
+                threshold: 0.15,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver(function (entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.scroll-animate').forEach(element => {
+                observer.observe(element);
+            });
+        });
     </script>
 </body>
 

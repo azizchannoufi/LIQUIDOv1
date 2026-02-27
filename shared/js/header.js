@@ -139,6 +139,20 @@ function initHeaderLogic() {
         closeMenuBtn.addEventListener('click', closeUserMenu);
         menuOverlay.addEventListener('click', closeUserMenu);
 
+        async function handleLogoutClick() {
+            try {
+                if (window.firebaseAuthService) {
+                    await window.firebaseAuthService.signOut();
+                } else {
+                    localStorage.removeItem('liquido_user');
+                }
+                closeUserMenu();
+                window.location.reload();
+            } catch (e) {
+                console.error('Logout failed', e);
+            }
+        }
+
         // Update menu based on Auth State
         function updateUserMenu(user) {
             if (user) {
@@ -175,7 +189,7 @@ function initHeaderLogic() {
                             </a>
                         </div>
 
-                        <div class="mt-auto pt-6 border-t border-gray-100 lg:hidden">
+                        <div class="mt-auto pt-6 border-t border-gray-100">
                             <button id="menu-logout-btn" class="flex items-center gap-2 text-red-500 hover:text-red-700 hover:bg-red-50 transition-all text-sm font-bold uppercase tracking-widest w-full justify-center p-4 rounded-lg border border-transparent hover:border-red-100">
                                 <span class="material-symbols-outlined">logout</span>
                                 Logout
@@ -187,20 +201,7 @@ function initHeaderLogic() {
                 // Attach logout listener
                 const logoutBtn = document.getElementById('menu-logout-btn');
                 if (logoutBtn) {
-                    logoutBtn.addEventListener('click', async () => {
-                        try {
-                            if (window.firebaseAuthService) {
-                                await window.firebaseAuthService.signOut();
-                            } else {
-                                // Fallback if service not loaded
-                                localStorage.removeItem('liquido_user');
-                            }
-                            closeUserMenu();
-                            window.location.reload();
-                        } catch (e) {
-                            console.error('Logout failed', e);
-                        }
-                    });
+                    logoutBtn.addEventListener('click', handleLogoutClick);
                 }
             } else {
                 // Not Logged In

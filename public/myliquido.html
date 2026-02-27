@@ -103,10 +103,14 @@
                 <h1 class="text-5xl lg:text-7xl text-bold-modern tracking-tighter uppercase mt-4 mb-6">
                     My<span class="text-primary">Liquido</span>
                 </h1>
-                <p class="text-xl text-[#baba9c] max-w-3xl mx-auto leading-relaxed">
-                    La tua area riservata per servizi esclusivi. Richiedi prodotti speciali e prenota servizi di
-                    manutenzione per la tua vape.
-                </p>
+                <div class="text-xl text-[#baba9c] max-w-4xl mx-auto leading-relaxed space-y-4">
+                    <p>La tua area riservata, dedicata a servizi esclusivi.</p>
+                    <p>Richiedi e prenota prodotti speciali, come liquidi e dispositivi disponibili in negozio o non
+                        presenti in catalogo come articoli che hai visto altrove ma non riesci a trovare.</p>
+                    <p>🧑🏻‍🔧 È inoltre possibile prenotare interventi di manutenzione e rigenerazione per i tuoi
+                        atomizzatori rigenerabili, con gestione programmata dell’assistenza.</p>
+                    <p>💯 Semplice, veloce, su misura per te.</p>
+                </div>
             </div>
         </section>
 
@@ -133,18 +137,32 @@
 
         <!-- Services Section (if logged in) -->
         <section id="services-section" class="hidden">
+            <!-- User Bar -->
+            <div
+                class="bg-[#27271b] border border-[#54543b] rounded-xl p-4 mb-8 flex justify-between items-center shadow-md">
+                <div class="flex items-center gap-3">
+                    <span class="material-symbols-outlined text-primary text-3xl">account_circle</span>
+                    <span id="user-display-name" class="font-bold text-lg text-white">Utente</span>
+                </div>
+                <!-- Logout Button inside Top Bar -->
+                <button id="btn-logout"
+                    class="flex items-center gap-2 text-[#baba9c] hover:text-white text-sm font-medium transition-colors bg-white/5 border border-white/10 px-4 py-2 rounded-lg">
+                    <span class="material-symbols-outlined text-sm">logout</span>
+                    Esci
+                </button>
+            </div>
             <!-- Service 1: Special Product Request -->
             <div id="special-request" class="mb-32">
-                <div class="flex items-center gap-3 mb-4">
-                    <span class="material-symbols-outlined text-primary text-4xl">inventory_2</span>
-                    <h2 class="text-3xl font-bold">Richiedi un Prodotto Speciale</h2>
-                </div>
                 <div class="bg-[#27271b] border border-[#54543b] rounded-xl p-8 lg:p-12">
-                    <div class="mb-8">
+                    <div class="flex flex-col items-center justify-center gap-3 mb-6 text-center">
+                        <span class="material-symbols-outlined text-primary text-5xl drop-shadow-md">inventory_2</span>
+                        <h2 class="text-3xl md:text-4xl font-black uppercase tracking-wider text-white">Richiedi un
+                            Prodotto Speciale</h2>
+                    </div>
+                    <div class="text-center mb-10 max-w-3xl mx-auto">
                         <p class="text-[#baba9c] text-lg leading-relaxed">
                             Hai bisogno di un prodotto specifico che non trovi nel nostro catalogo? Carica un'immagine
-                            del
-                            prodotto che desideri e inviaci un messaggio. Ti aiuteremo a trovarlo e te lo porteremo
+                            del prodotto che desideri e inviaci un messaggio. Ti aiuteremo a trovarlo e te lo porteremo
                             direttamente.
                         </p>
                     </div>
@@ -193,57 +211,51 @@
 
                 <!-- Service 2: Maintenance Service -->
                 <div id="maintenance-service" class="mb-16">
-                    <div class="flex items-center gap-3 mb-4">
-                        <span class="material-symbols-outlined text-primary text-3xl">build</span>
-                        <h2 class="text-3xl font-bold">Servizio di Manutenzione</h2>
-                    </div>
-                    <div class="bg-[#27271b] border border-[#54543b] rounded-xl p-8 lg:p-12">
-                        <div class="mb-8">
-                            <p class="text-[#baba9c] text-lg leading-relaxed">
+                    <div class="bg-primary rounded-2xl p-10 text-center text-background-dark shadow-xl">
+                        <div class="max-w-2xl mx-auto">
+                            <h2 class="text-background-dark text-3xl md:text-4xl font-black mb-6 uppercase">MANUTENZIONE
+                                <span class="text-white drop-shadow-md">???</span>
+                            </h2>
+                            <p class="text-background-dark/80 font-medium leading-relaxed mb-8">
                                 La tua vape ha bisogno di manutenzione? Prenota un appuntamento per cambiare il coil,
-                                sostituire
-                                il cotone dell'atomizzatore o per un servizio di pulizia completo. Scegli la data e
-                                l'ora che
-                                preferisci.
+                                sostituire il cotone dell'atomizzatore o per un servizio di pulizia completo.
                             </p>
-                        </div>
-                        <form id="maintenance-request-form" class="flex flex-col gap-6">
-                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                                <div class="flex flex-col gap-2">
-                                    <label class="text-sm font-semibold text-[#baba9c]">Data</label>
-                                    <input type="date" id="maintenance-date"
-                                        class="bg-[#181811] border border-[#393928] rounded-lg p-3 text-white focus:outline-none focus:border-primary"
-                                        min="" required />
-                                </div>
-                                <div class="flex flex-col gap-2">
-                                    <label class="text-sm font-semibold text-[#baba9c]">Ora</label>
-                                    <input type="time" id="maintenance-time"
-                                        class="bg-[#181811] border border-[#393928] rounded-lg p-3 text-white focus:outline-none focus:border-primary"
-                                        required />
-                                </div>
-                            </div>
-                            <div class="flex flex-col gap-2">
-                                <label class="text-sm font-semibold text-[#baba9c]">Descrizione</label>
-                                <textarea id="maintenance-description" rows="4"
-                                    class="bg-[#181811] border border-[#393928] rounded-lg p-3 text-white focus:outline-none focus:border-primary resize-none"
-                                    placeholder="Descrivi cosa vuoi far fare (es. cambio coil, sostituzione cotone, pulizia completa...)"></textarea>
-                            </div>
-                            <div id="maintenance-error" class="hidden text-red-400 text-sm"></div>
-                            <button type="submit"
-                                class="bg-primary hover:bg-white text-background-dark px-8 py-4 rounded-sm font-black text-xs uppercase tracking-widest transition-all flex items-center justify-center gap-2">
-                                <span>Prenota su WhatsApp</span>
-                                <span class="material-symbols-outlined">calendar_today</span>
-                            </button>
-                        </form>
-                    </div>
 
-                    <!-- Logout Button -->
-                    <div class="text-center">
-                        <button id="btn-logout"
-                            class="text-[#baba9c] hover:text-white text-sm font-medium transition-colors">
-                            Esci
-                        </button>
+                            <form id="maintenance-request-form" class="flex flex-col gap-6 text-left">
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                                    <div class="flex flex-col gap-2">
+                                        <label
+                                            class="text-sm font-black uppercase tracking-wider text-background-dark">Data</label>
+                                        <input type="date" id="maintenance-date"
+                                            class="bg-white/90 border border-black/10 rounded-lg p-3 text-black focus:outline-none focus:ring-2 focus:ring-black"
+                                            min="" required />
+                                    </div>
+                                    <div class="flex flex-col gap-2">
+                                        <label
+                                            class="text-sm font-black uppercase tracking-wider text-background-dark">Ora</label>
+                                        <input type="time" id="maintenance-time"
+                                            class="bg-white/90 border border-black/10 rounded-lg p-3 text-black focus:outline-none focus:ring-2 focus:ring-black"
+                                            required />
+                                    </div>
+                                </div>
+                                <div class="flex flex-col gap-2">
+                                    <label
+                                        class="text-sm font-black uppercase tracking-wider text-background-dark">Descrizione</label>
+                                    <textarea id="maintenance-description" rows="4"
+                                        class="bg-white/90 border border-black/10 rounded-lg p-3 text-black focus:outline-none focus:ring-2 focus:ring-black resize-none"
+                                        placeholder="Descrivi cosa vuoi far fare (es. cambio coil, sostituzione cotone, pulizia completa...)"></textarea>
+                                </div>
+                                <div id="maintenance-error" class="hidden text-red-600 font-bold text-sm text-center">
+                                </div>
+                                <button type="submit"
+                                    class="bg-background-dark hover:bg-black text-primary px-8 py-4 rounded-xl font-black text-xs uppercase tracking-widest transition-all flex items-center justify-center gap-2 mt-2">
+                                    <span>Prenota su WhatsApp</span>
+                                    <span class="material-symbols-outlined">calendar_today</span>
+                                </button>
+                            </form>
+                        </div>
                     </div>
+                </div>
         </section>
     </main>
 
@@ -268,7 +280,13 @@
                             placeholder="email@example.com" required />
                     </div>
                     <div class="flex flex-col gap-2">
-                        <label class="text-sm font-semibold text-[#baba9c]">Password</label>
+                        <div class="flex justify-between items-center">
+                            <label class="text-sm font-semibold text-[#baba9c]">Password</label>
+                            <button type="button" id="btn-forgot-password"
+                                class="text-xs text-primary hover:text-white transition-colors">
+                                Password dimenticata?
+                            </button>
+                        </div>
                         <input type="password" id="login-password"
                             class="bg-[#181811] border border-[#393928] rounded-lg p-3 text-white focus:outline-none focus:border-primary"
                             placeholder="••••••••" required />
@@ -295,39 +313,104 @@
                     <span class="material-symbols-outlined">close</span>
                 </button>
                 <div class="mb-6">
-                    <h2 class="text-2xl font-bold mb-2">Registrati</h2>
-                    <p class="text-[#baba9c] text-sm">Crea un account per accedere ai servizi premium</p>
+                    <h2 class="text-2xl font-bold mb-2 text-primary uppercase text-center">Registrati</h2>
+                    <p class="text-[#baba9c] text-sm text-center">Crea un account per accedere ai servizi premium</p>
                 </div>
-                <form id="signup-form" class="flex flex-col gap-5">
-                    <div class="flex flex-col gap-2">
-                        <label class="text-sm font-semibold text-[#baba9c]">Nome Completo</label>
+                <form id="signup-form" class="flex flex-col gap-4">
+                    <div class="flex flex-col gap-1.5">
+                        <label class="text-sm font-semibold text-[#baba9c]">Nome e Cognome</label>
                         <input type="text" id="signup-name"
                             class="bg-[#181811] border border-[#393928] rounded-lg p-3 text-white focus:outline-none focus:border-primary"
                             placeholder="Mario Rossi" required />
                     </div>
-                    <div class="flex flex-col gap-2">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="flex flex-col gap-1.5">
+                            <label class="text-sm font-semibold text-[#baba9c]">Data di nascita</label>
+                            <input type="date" id="signup-dob"
+                                class="bg-[#181811] border border-[#393928] rounded-lg p-3 text-white focus:outline-none focus:border-primary"
+                                required />
+                        </div>
+                        <div class="flex flex-col gap-1.5">
+                            <label class="text-sm font-semibold text-[#baba9c]">Sesso</label>
+                            <select id="signup-gender"
+                                class="bg-[#181811] border border-[#393928] rounded-lg p-3 text-white focus:outline-none focus:border-primary"
+                                required>
+                                <option value="" disabled selected>Seleziona</option>
+                                <option value="M">Maschio</option>
+                                <option value="F">Femmina</option>
+                                <option value="O">Altro</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="flex flex-col gap-1.5">
+                            <label class="text-sm font-semibold text-[#baba9c]">Telefono</label>
+                            <input type="tel" id="signup-phone"
+                                class="bg-[#181811] border border-[#393928] rounded-lg p-3 text-white focus:outline-none focus:border-primary"
+                                placeholder="+39" required />
+                        </div>
+                        <div class="flex flex-col gap-1.5">
+                            <label class="text-sm font-semibold text-[#baba9c]">Città</label>
+                            <input type="text" id="signup-city"
+                                class="bg-[#181811] border border-[#393928] rounded-lg p-3 text-white focus:outline-none focus:border-primary"
+                                placeholder="Roma" required />
+                        </div>
+                    </div>
+                    <div class="flex flex-col gap-1.5">
                         <label class="text-sm font-semibold text-[#baba9c]">Email</label>
                         <input type="email" id="signup-email"
                             class="bg-[#181811] border border-[#393928] rounded-lg p-3 text-white focus:outline-none focus:border-primary"
                             placeholder="email@example.com" required />
                     </div>
-                    <div class="flex flex-col gap-2">
-                        <label class="text-sm font-semibold text-[#baba9c]">Telefono</label>
-                        <input type="tel" id="signup-phone"
-                            class="bg-[#181811] border border-[#393928] rounded-lg p-3 text-white focus:outline-none focus:border-primary"
-                            placeholder="+39 123 456 7890" required />
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="flex flex-col gap-1.5">
+                            <label class="text-sm font-semibold text-[#baba9c]">Password</label>
+                            <input type="password" id="signup-password"
+                                class="bg-[#181811] border border-[#393928] rounded-lg p-3 text-white focus:outline-none focus:border-primary"
+                                placeholder="••••••••" minlength="6" required />
+                        </div>
+                        <div class="flex flex-col gap-1.5">
+                            <label class="text-sm font-semibold text-[#baba9c]">Conferma Password</label>
+                            <input type="password" id="signup-password-confirm"
+                                class="bg-[#181811] border border-[#393928] rounded-lg p-3 text-white focus:outline-none focus:border-primary"
+                                placeholder="••••••••" minlength="6" required />
+                        </div>
                     </div>
-                    <div class="flex flex-col gap-2">
-                        <label class="text-sm font-semibold text-[#baba9c]">Password</label>
-                        <input type="password" id="signup-password"
-                            class="bg-[#181811] border border-[#393928] rounded-lg p-3 text-white focus:outline-none focus:border-primary"
-                            placeholder="••••••••" minlength="6" required />
-                    </div>
-                    <div class="flex flex-col gap-2">
-                        <label class="text-sm font-semibold text-[#baba9c]">Conferma Password</label>
-                        <input type="password" id="signup-password-confirm"
-                            class="bg-[#181811] border border-[#393928] rounded-lg p-3 text-white focus:outline-none focus:border-primary"
-                            placeholder="••••••••" minlength="6" required />
+
+                    <!-- Pop up Liquidi preferiti e Dispositivi utilizzati -->
+                    <div
+                        class="mt-2 p-3 bg-black/30 border border-primary/20 rounded-lg relative overflow-visible group cursor-pointer hover:bg-black/50 transition-colors">
+                        <div class="flex justify-between items-center text-primary font-bold text-sm">
+                            <div class="flex items-center gap-2">
+                                <span class="material-symbols-outlined text-sm">stars</span>
+                                Le tue Preferenze (Opzionale)
+                            </div>
+                            <span
+                                class="material-symbols-outlined text-sm transition-transform group-hover:rotate-180">expand_more</span>
+                        </div>
+                        <div
+                            class="absolute bottom-full left-0 w-full mb-3 bg-[#1f1f15] border border-primary/40 rounded-xl p-5 shadow-[0_0_20px_rgba(0,0,0,0.8)] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50">
+                            <div class="flex flex-col gap-4">
+                                <div class="flex flex-col gap-1.5">
+                                    <label class="text-xs font-semibold text-primary uppercase tracking-wider">Liquidi
+                                        Preferiti</label>
+                                    <input type="text" id="signup-liquids"
+                                        class="bg-[#111] border border-[#393928] rounded p-3 text-white text-sm focus:outline-none focus:border-primary"
+                                        placeholder="Es. Tabaccosi, Fruttati..." />
+                                </div>
+                                <div class="flex flex-col gap-1.5">
+                                    <label
+                                        class="text-xs font-semibold text-primary uppercase tracking-wider">Dispositivi
+                                        Utilizzati</label>
+                                    <input type="text" id="signup-devices"
+                                        class="bg-[#111] border border-[#393928] rounded p-3 text-white text-sm focus:outline-none focus:border-primary"
+                                        placeholder="Es. Pod Mod, Rigenerabili..." />
+                                </div>
+                            </div>
+                            <div
+                                class="absolute -bottom-2.5 left-1/2 transform -translate-x-1/2 w-5 h-5 bg-[#1f1f15] border-b border-r border-primary/40 rotate-45">
+                            </div>
+                        </div>
                     </div>
                     <div id="signup-error" class="hidden text-red-400 text-sm"></div>
                     <button type="submit"
@@ -337,6 +420,40 @@
                     <p class="text-center text-sm text-[#baba9c]">
                         Hai già un account?
                         <button type="button" id="switch-to-login"
+                            class="text-primary hover:text-white font-medium">Accedi</button>
+                    </p>
+                </form>
+            </div>
+        </div>
+
+        <!-- Forgot Password Modal -->
+        <div id="forgot-password-modal" class="modal-content hidden fixed inset-0 flex items-center justify-center p-4">
+            <div class="bg-[#27271b] border border-[#54543b] rounded-xl p-8 max-w-md w-full relative">
+                <button id="close-forgot-password-modal"
+                    class="absolute top-4 right-4 text-[#baba9c] hover:text-white transition-colors">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+                <div class="mb-6">
+                    <h2 class="text-2xl font-bold mb-2 text-primary uppercase text-center">Reset Password</h2>
+                    <p class="text-[#baba9c] text-sm text-center">Inserisci la tua email per ricevere il link di reset
+                    </p>
+                </div>
+                <form id="forgot-password-form" class="flex flex-col gap-5">
+                    <div class="flex flex-col gap-2">
+                        <label class="text-sm font-semibold text-[#baba9c]">Email</label>
+                        <input type="email" id="forgot-password-email"
+                            class="bg-[#181811] border border-[#393928] rounded-lg p-3 text-white focus:outline-none focus:border-primary"
+                            placeholder="email@example.com" required />
+                    </div>
+                    <div id="forgot-password-message"
+                        class="hidden text-sm text-center px-2 py-3 rounded-lg font-medium"></div>
+                    <button type="submit"
+                        class="bg-primary hover:bg-white text-background-dark px-6 py-3 rounded-sm font-black text-xs uppercase tracking-widest transition-all">
+                        Invia Email di Reset
+                    </button>
+                    <p class="text-center text-sm text-[#baba9c]">
+                        Ti sei ricordato la password?
+                        <button type="button" id="switch-to-login-from-forgot"
                             class="text-primary hover:text-white font-medium">Accedi</button>
                     </p>
                 </form>

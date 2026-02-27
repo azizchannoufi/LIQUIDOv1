@@ -6,6 +6,7 @@
 class ServicesListPageService {
     constructor() {
         this.database = null;
+        this.firestore = null;
         this.initialized = false;
         this.allServices = [];
         this.filteredServices = [];
@@ -29,14 +30,15 @@ class ServicesListPageService {
                     }, 100);
                 });
             }
-            
-            const { database } = await window.firebaseConfig.initializeFirebase();
-            
-            if (!database) {
-                throw new Error('Database not returned from initializeFirebase');
+
+            const { database, firestore } = await window.firebaseConfig.initializeFirebase();
+
+            if (!database || !firestore) {
+                throw new Error('Database or Firestore not returned from initializeFirebase');
             }
-            
+
             this.database = database;
+            this.firestore = firestore;
             this.initialized = true;
             console.log('✅ Services List Page Service initialized successfully');
         } catch (error) {
@@ -53,24 +55,31 @@ class ServicesListPageService {
         await this.initialize();
 
         try {
-            const usersRef = this.database.ref('users');
-            const snapshot = await usersRef.once('value');
-            const usersData = snapshot.val();
+            // Get all user profiles from Firestore
+            const fsUsersRef = this.firestore.collection('users');
+            const fsSnapshot = await fsUsersRef.get();
+            const fsUsers = {};
+            fsSnapshot.forEach(doc => {
+                fsUsers[doc.id] = doc.data();
+            });
 
-            if (!usersData) {
+            // Get all services from Realtime Database
+            const rtdbUsersRef = this.database.ref('users');
+            const rtdbSnapshot = await rtdbUsersRef.once('value');
+            const rtdbUsersData = rtdbSnapshot.val();
+
+            if (!rtdbUsersData) {
                 return [];
             }
 
             const services = [];
 
-            // Iterate through all users
-            for (const userId of Object.keys(usersData)) {
-                const user = usersData[userId];
-                
+            // Iterate through all users in RTDB
+            for (const userId of Object.keys(rtdbUsersData)) {
+                const fsUser = fsUsers[userId] || {};
+
                 // Fetch product requests
-                const productRequestsRef = this.database.ref(`users/${userId}/services/product-requests`);
-                const productRequestsSnapshot = await productRequestsRef.once('value');
-                const productRequests = productRequestsSnapshot.val();
+                const productRequests = rtdbUsersData[userId]?.services?.['product-requests'];
 
                 if (productRequests) {
                     for (const requestId of Object.keys(productRequests)) {
@@ -79,18 +88,16 @@ class ServicesListPageService {
                             userId: userId,
                             serviceType: 'product-request',
                             typeDisplay: 'Product Request',
-                            userName: user.name || 'N/A',
-                            userEmail: user.email || 'N/A',
-                            userPhone: user.phone || 'N/A',
+                            userName: fsUser.name || 'N/A',
+                            userEmail: fsUser.email || 'N/A',
+                            userPhone: fsUser.phone || 'N/A',
                             ...productRequests[requestId]
                         });
                     }
                 }
 
                 // Fetch maintenance requests
-                const maintenanceRequestsRef = this.database.ref(`users/${userId}/services/maintenance-requests`);
-                const maintenanceRequestsSnapshot = await maintenanceRequestsRef.once('value');
-                const maintenanceRequests = maintenanceRequestsSnapshot.val();
+                const maintenanceRequests = rtdbUsersData[userId]?.services?.['maintenance-requests'];
 
                 if (maintenanceRequests) {
                     for (const requestId of Object.keys(maintenanceRequests)) {
@@ -99,9 +106,9 @@ class ServicesListPageService {
                             userId: userId,
                             serviceType: 'maintenance-request',
                             typeDisplay: 'Maintenance Request',
-                            userName: user.name || 'N/A',
-                            userEmail: user.email || 'N/A',
-                            userPhone: user.phone || 'N/A',
+                            userName: fsUser.name || 'N/A',
+                            userEmail: fsUser.email || 'N/A',
+                            userPhone: fsUser.phone || 'N/A',
                             ...maintenanceRequests[requestId]
                         });
                     }
@@ -127,11 +134,11 @@ class ServicesListPageService {
      */
     formatDate(timestamp) {
         if (!timestamp) return 'N/A';
-        
+
         const date = new Date(timestamp);
-        return date.toLocaleDateString('en-US', { 
-            month: 'short', 
-            day: 'numeric', 
+        return date.toLocaleDateString('en-US', {
+            month: 'short',
+            day: 'numeric',
             year: 'numeric',
             hour: '2-digit',
             minute: '2-digit'
@@ -169,8 +176,8 @@ class ServicesListPageService {
         };
 
         const color = typeColors[type] || 'bg-gray-500/20 text-gray-400 border-gray-500/30';
-        const displayType = type === 'product-request' ? 'Product Request' : 
-                           type === 'maintenance-request' ? 'Maintenance' : 'Unknown';
+        const displayType = type === 'product-request' ? 'Product Request' :
+            type === 'maintenance-request' ? 'Maintenance' : 'Unknown';
 
         return `<span class="px-3 py-1 rounded-full text-xs font-semibold border ${color}">${displayType}</span>`;
     }
@@ -187,8 +194,8 @@ class ServicesListPageService {
                 parts.push('Has Image');
             }
             if (service.message) {
-                const messagePreview = service.message.length > 50 
-                    ? service.message.substring(0, 50) + '...' 
+                const messagePreview = service.message.length > 50
+                    ? service.message.substring(0, 50) + '...'
                     : service.message;
                 parts.push(messagePreview);
             }
@@ -202,8 +209,8 @@ class ServicesListPageService {
                 parts.push(`Time: ${service.time}`);
             }
             if (service.description) {
-                const descPreview = service.description.length > 30 
-                    ? service.description.substring(0, 30) + '...' 
+                const descPreview = service.description.length > 30
+                    ? service.description.substring(0, 30) + '...'
                     : service.description;
                 parts.push(descPreview);
             }
@@ -221,7 +228,7 @@ class ServicesListPageService {
         const statusFilter = document.getElementById('status-filter').value;
 
         this.filteredServices = this.allServices.filter(service => {
-            const matchesSearch = !searchTerm || 
+            const matchesSearch = !searchTerm ||
                 (service.userName && service.userName.toLowerCase().includes(searchTerm)) ||
                 (service.userEmail && service.userEmail.toLowerCase().includes(searchTerm)) ||
                 (service.typeDisplay && service.typeDisplay.toLowerCase().includes(searchTerm)) ||
@@ -326,11 +333,11 @@ class ServicesListPageService {
 
             tbody.appendChild(row);
         });
-        
+
         // Add event listeners for status updates
         this.setupStatusUpdateListeners();
     }
-    
+
     /**
      * Setup event listeners for status updates
      */
@@ -340,41 +347,41 @@ class ServicesListPageService {
             // Remove existing listeners by cloning
             const newBtn = btn.cloneNode(true);
             btn.parentNode.replaceChild(newBtn, btn);
-            
+
             newBtn.addEventListener('click', async (e) => {
                 e.preventDefault();
                 e.stopPropagation();
-                
+
                 const serviceId = e.currentTarget.dataset.serviceId;
                 const userId = e.currentTarget.dataset.userId;
                 const serviceType = e.currentTarget.dataset.serviceType;
                 const select = document.querySelector(`select[data-service-id="${serviceId}"]`);
-                
+
                 if (!select) {
                     console.error('Select element not found for service:', serviceId);
                     return;
                 }
-                
+
                 const newStatus = select.value;
                 const currentService = this.allServices.find(s => s.serviceId === serviceId && s.userId === userId);
-                
+
                 if (!currentService) {
                     console.error('Service not found:', serviceId, userId);
                     alert('Service introuvable');
                     return;
                 }
-                
+
                 if (newStatus === currentService.status) {
                     console.log('Status unchanged, skipping update');
                     return; // No change
                 }
-                
+
                 // Disable button during update
                 newBtn.disabled = true;
                 newBtn.textContent = 'Updating...';
                 newBtn.style.opacity = '0.6';
                 newBtn.style.cursor = 'not-allowed';
-                
+
                 try {
                     console.log(`Updating service status: ${userId}/${serviceId} -> ${newStatus}`);
                     await this.updateServiceStatus(userId, serviceId, serviceType, newStatus);
@@ -390,7 +397,7 @@ class ServicesListPageService {
             });
         });
     }
-    
+
     /**
      * Update service status in Firebase
      * @param {string} userId - User ID
@@ -400,19 +407,19 @@ class ServicesListPageService {
      */
     async updateServiceStatus(userId, serviceId, serviceType, newStatus) {
         await this.initialize();
-        
+
         if (!this.database) {
             throw new Error('Database not initialized');
         }
-        
+
         try {
             // Determine the correct path based on service type
-            const servicePath = serviceType === 'product-request' 
+            const servicePath = serviceType === 'product-request'
                 ? `users/${userId}/services/product-requests/${serviceId}`
                 : `users/${userId}/services/maintenance-requests/${serviceId}`;
-            
+
             const serviceRef = this.database.ref(servicePath);
-            
+
             // Wrap in Promise to ensure proper async handling
             await new Promise((resolve, reject) => {
                 serviceRef.update({ status: newStatus })
@@ -425,22 +432,22 @@ class ServicesListPageService {
                         reject(error);
                     });
             });
-            
+
             // Update local data
             const service = this.allServices.find(s => s.serviceId === serviceId && s.userId === userId);
             if (service) {
                 service.status = newStatus;
             }
-            
+
             // Update filtered services
             const filteredService = this.filteredServices.find(s => s.serviceId === serviceId && s.userId === userId);
             if (filteredService) {
                 filteredService.status = newStatus;
             }
-            
+
             // Re-render to show updated status
             this.renderServices();
-            
+
             // Show success message
             this.showSuccessMessage(`Service status updated to ${newStatus}`);
         } catch (error) {
@@ -449,7 +456,7 @@ class ServicesListPageService {
             throw error;
         }
     }
-    
+
     /**
      * Show success message
      * @param {string} message - Success message
@@ -460,7 +467,7 @@ class ServicesListPageService {
         if (successDiv) {
             successDiv.remove();
         }
-        
+
         // Create new success message
         successDiv = document.createElement('div');
         successDiv.id = 'status-update-success';
@@ -470,7 +477,7 @@ class ServicesListPageService {
             <span>${message}</span>
         `;
         document.body.appendChild(successDiv);
-        
+
         // Animate in
         successDiv.style.opacity = '0';
         successDiv.style.transform = 'translateY(-10px)';
@@ -479,7 +486,7 @@ class ServicesListPageService {
             successDiv.style.opacity = '1';
             successDiv.style.transform = 'translateY(0)';
         }, 10);
-        
+
         // Hide after 3 seconds
         setTimeout(() => {
             successDiv.style.opacity = '0';

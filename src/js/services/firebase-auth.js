@@ -44,11 +44,10 @@ class FirebaseAuthService {
      * Sign up a new user
      * @param {string} email - User email
      * @param {string} password - User password
-     * @param {string} name - User name
-     * @param {string} phone - User phone number
+     * @param {Object} additionalData - Additional user data (name, phone, dob, etc.)
      * @returns {Promise<Object>} User object
      */
-    async signUp(email, password, name, phone) {
+    async signUp(email, password, additionalData = {}) {
         await this.initialize();
 
         try {
@@ -59,8 +58,7 @@ class FirebaseAuthService {
             // Save user profile to Firestore
             const userData = {
                 email: email,
-                name: name,
-                phone: phone,
+                ...additionalData,
                 createdAt: firebase.firestore.FieldValue.serverTimestamp()
             };
 
@@ -70,8 +68,7 @@ class FirebaseAuthService {
             const userProfile = {
                 uid: user.uid,
                 email: email,
-                name: name,
-                phone: phone
+                ...additionalData
             };
             localStorage.setItem('liquido_user', JSON.stringify(userProfile));
 
@@ -130,6 +127,22 @@ class FirebaseAuthService {
         } catch (error) {
             console.error('Error signing out:', error);
             throw error;
+        }
+    }
+
+    /**
+     * Send password reset email
+     * @param {string} email - User email
+     * @returns {Promise<void>}
+     */
+    async resetPassword(email) {
+        await this.initialize();
+
+        try {
+            await this.auth.sendPasswordResetEmail(email);
+        } catch (error) {
+            console.error('Error sending reset email:', error);
+            throw this._handleAuthError(error);
         }
     }
 
