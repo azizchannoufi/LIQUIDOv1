@@ -101,6 +101,17 @@
             <span class="text-zinc-500 text-sm">/</span>
             <span class="text-white text-sm font-medium" id="breadcrumb-line"></span>
         </div>
+
+        <!-- Line Gallery Section (hidden by default) -->
+        <div id="line-gallery" class="hidden mb-12">
+            <h2 class="text-2xl font-bold mb-6 text-charcoal dark:text-white uppercase tracking-wider">Galleria Immagini
+            </h2>
+            <div id="line-gallery-container"
+                class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+                <!-- Gallery images will be injected here -->
+            </div>
+        </div>
+
         <div class="flex-1">
             <div class="flex items-center justify-between mb-6">
                 <p class="text-sm text-zinc-500 font-medium">Mostrando <span id="products-count"
@@ -114,6 +125,16 @@
             </div>
         </div>
     </main>
+
+    <!-- Modal for viewing enlarged line image -->
+    <div id="image-modal"
+        class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/90 p-4 transition-opacity duration-300 opacity-0">
+        <button id="close-modal"
+            class="absolute top-6 right-6 text-white hover:text-primary material-symbols-outlined text-4xl cursor-pointer">close</button>
+        <img id="modal-image" src="" alt="Galleria Ingrandita"
+            class="max-w-[90vw] max-h-[90vh] object-contain shadow-2xl rounded-sm" />
+    </div>
+
     <!-- Footer loaded dynamically -->
     <!-- Firebase SDK (Legacy for Realtime Database) -->
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>

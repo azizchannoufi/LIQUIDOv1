@@ -82,8 +82,11 @@
         <div class="mb-10 text-center">
             <h1
                 class="text-background-dark text-5xl md:text-6xl font-black leading-tight tracking-[-0.033em] mb-4 uppercase">
-                DOVE <span class="text-primary">SIAMO</span></h1>
-            <p class="text-slate-600 text-lg max-w-2xl mx-auto">Vivi l'essenza di LIQUIDO. Visita il nostro negozio per
+                <span data-text-key="contact.hero_title">DOVE</span> <span class="text-primary"
+                    data-text-key="contact.hero_title_highlight">SIAMO</span>
+            </h1>
+            <p class="text-slate-600 text-lg max-w-2xl mx-auto" data-text-key="contact.hero_subtitle">Vivi l'essenza di
+                LIQUIDO. Visita il nostro negozio per
                 una consulenza personalizzata o contatta il nostro Team.</p>
         </div>
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
@@ -94,8 +97,10 @@
                     <div>
                         <h3 class="font-black text-background-dark text-base uppercase tracking-wider mb-1">Indirizzo
                         </h3>
-                        <p class="text-background-dark font-bold text-lg">Via Adige 43C</p>
-                        <p class="text-background-dark/70 font-medium">00015 - Monterotondo (RM)</p>
+                        <p class="text-background-dark font-bold text-lg" data-text-key="contact.address_street">Via
+                            Adige 43C</p>
+                        <p class="text-background-dark/70 font-medium" data-text-key="contact.address_city">00015 -
+                            Monterotondo (RM)</p>
                     </div>
                 </div>
 
@@ -111,15 +116,18 @@
                     <div class="divide-y divide-black/10">
                         <div class="flex justify-between px-5 py-3">
                             <span class="text-background-dark font-medium">Lun - Ven</span>
-                            <span class="text-background-dark font-bold">09:00 - 20:15</span>
+                            <span class="text-background-dark font-bold" data-text-key="contact.hours_mon_fri">09:00 -
+                                20:15</span>
                         </div>
                         <div class="flex justify-between px-5 py-3">
                             <span class="text-background-dark font-medium">Sab</span>
-                            <span class="text-background-dark font-bold">10:00 - 19:30</span>
+                            <span class="text-background-dark font-bold" data-text-key="contact.hours_sat">10:00 -
+                                19:30</span>
                         </div>
                         <div class="flex justify-between px-5 py-3 bg-black/5">
                             <span class="text-background-dark font-bold">Dom</span>
-                            <span class="text-background-dark font-bold text-red-700">Chiuso</span>
+                            <span class="text-background-dark font-bold text-red-700"
+                                data-text-key="contact.hours_sun">Chiuso</span>
                         </div>
                     </div>
                 </div>
@@ -132,7 +140,8 @@
                             <div>
                                 <h3 class="font-black text-background-dark text-base uppercase tracking-wider">Contatti
                                 </h3>
-                                <p class="text-background-dark/80 font-medium text-sm">+39 379 134 5367</p>
+                                <p class="text-background-dark/80 font-medium text-sm" data-text-key="contact.phone">+39
+                                    379 134 5367</p>
                             </div>
                         </div>
                         <div class="flex gap-2">
@@ -179,14 +188,17 @@
         </div>
 
         <!-- Partnership Block -->
-        <div class="mt-16 bg-[#111111] rounded-2xl p-10 text-center">
+        <div id="partnership" class="mt-16 bg-[#111111] rounded-2xl p-10 text-center">
             <div class="max-w-2xl mx-auto">
-                <span class="text-primary font-bold uppercase tracking-[0.3em] text-xs mb-4 block">PARTNER WITH
+                <span class="text-primary font-bold uppercase tracking-[0.3em] text-xs mb-4 block"
+                    data-text-key="contact.partnership_label">PARTNER WITH
                     US</span>
-                <h2 class="text-white text-3xl md:text-4xl font-black mb-6 uppercase">COLLABORA CON <span
-                        class="text-primary">LIQUIDO</span>
+                <h2 class="text-white text-3xl md:text-4xl font-black mb-6 uppercase"><span
+                        data-text-key="contact.partnership_title">COLLABORA CON</span> <span class="text-primary"
+                        data-text-key="contact.partnership_title_highlight">LIQUIDO</span>
                 </h2>
-                <p class="text-white leading-relaxed mb-8">Siamo in costante ampliamento delle nostre Partnership
+                <p class="text-white leading-relaxed mb-8" data-text-key="contact.partnership_text">Siamo in costante
+                    ampliamento delle nostre Partnership
                     Premium. Promuovi il tuo marchio insieme ai migliori brand al mondo o semplicemente collabora con
                     noi.</p>
                 <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -207,8 +219,17 @@
         </div>
     </main>
     <!-- Footer loaded dynamically -->
-    <!-- Component Loader (must be loaded first) -->
-    <script src="../shared/js/component-loader.js"></script>
+    <!-- Firebase + Site Texts -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    <script src="../src/js/services/firebase-config.js"></script>
+    <script src="../src/js/services/site-texts-service.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            try { await window.siteTextsService.applyTextsToPage(); }
+            catch (e) { console.warn('Could not load site texts:', e); }
+        });
+    </script>
     <script src="../src/js/modules/age-verification.js"></script>
     <script>
     </script>

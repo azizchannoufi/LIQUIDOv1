@@ -134,34 +134,16 @@
                     </button>
                 </div>
             </div>
-            <div class="flex flex-col md:flex-row gap-8 items-start">
-                <div class="flex flex-col items-center gap-4">
-                    <p class="text-white text-sm font-semibold w-full">Line Image Preview</p>
-                    <div class="size-32 rounded-xl bg-background-dark border-2 border-dashed border-border-dark flex items-center justify-center overflow-hidden group relative" id="line-preview-${lineIndex}">
-                        <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity cursor-pointer">
-                            <span class="material-symbols-outlined text-white text-3xl">edit</span>
-                        </div>
-                        <img id="line-preview-img-${lineIndex}" class="w-full h-full object-contain hidden" alt="Line image preview"/>
-                        <span class="text-muted-dark text-sm">No image</span>
-                    </div>
-                    <p class="text-muted-dark text-xs">SVG, PNG or JPG. Max 2MB.</p>
+            
+            <div class="flex flex-col gap-4 mt-2">
+                <div class="flex justify-between items-center">
+                    <p class="text-white text-sm font-semibold">Line Images</p>
+                    <button type="button" class="add-image-btn px-4 py-2 bg-primary/10 hover:bg-primary/20 text-primary rounded-lg transition-all text-xs font-bold border border-primary/30 flex items-center gap-2">
+                        <span class="material-symbols-outlined text-sm">add_photo_alternate</span>
+                        Add Image
+                    </button>
                 </div>
-                <div class="flex-1 w-full">
-                    <p class="text-white text-sm font-semibold mb-2">Image URL</p>
-                    <input type="text" 
-                           name="lines[${lineIndex}][image_url]" 
-                           id="line-image-url-${lineIndex}"
-                           class="form-input w-full rounded-lg text-white border border-border-dark bg-background-dark/50 focus:border-primary focus:ring-1 focus:ring-primary h-10 px-3 text-sm mb-2" 
-                           placeholder="/images/products/brand/line.jpg"/>
-                    <p class="text-muted-dark text-xs mb-4">Or upload a file:</p>
-                    <div class="w-full border-2 border-dashed border-border-dark rounded-xl p-8 flex flex-col items-center justify-center bg-background-dark/20 hover:bg-background-dark/40 hover:border-primary/50 transition-all cursor-pointer">
-                        <input type="file" id="line-upload-${lineIndex}" accept="image/*" class="hidden"/>
-                        <label for="line-upload-${lineIndex}" class="cursor-pointer text-center">
-                            <span class="material-symbols-outlined text-4xl text-muted-dark mb-2 block">cloud_upload</span>
-                            <p class="text-white text-base font-medium">Click to upload or drag and drop</p>
-                            <p class="text-muted-dark text-sm">Recommended size: 800x800px</p>
-                        </label>
-                    </div>
+                <div class="line-images-container grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4" id="line-images-container-${lineIndex}">
                 </div>
             </div>
         `;
@@ -171,10 +153,62 @@
             lineDiv.remove();
         });
 
-        // Setup image URL preview handler
-        const imageUrlInput = lineDiv.querySelector(`#line-image-url-${lineIndex}`);
-        const imagePreview = lineDiv.querySelector(`#line-preview-img-${lineIndex}`);
-        const previewContainer = lineDiv.querySelector(`#line-preview-${lineIndex}`);
+        const addImageBtn = lineDiv.querySelector('.add-image-btn');
+        const imagesContainer = lineDiv.querySelector(`#line-images-container-${lineIndex}`);
+
+        addImageBtn.addEventListener('click', () => {
+            addLineImage(lineIndex, imagesContainer);
+        });
+
+        // Add an initial empty image by default
+        addLineImage(lineIndex, imagesContainer);
+
+        container.appendChild(lineDiv);
+    }
+
+    function addLineImage(lineIndex, container, imageUrl = '') {
+        const MathRandomStr = Math.floor(Math.random() * 1000000).toString(16);
+        const imageIndex = Date.now().toString(16) + '-' + MathRandomStr;
+        const imgDiv = document.createElement('div');
+        imgDiv.className = 'flex flex-col gap-4 p-4 bg-background-dark/50 rounded-lg border border-border-dark relative';
+
+        imgDiv.innerHTML = `
+            <button type="button" class="remove-image-btn absolute top-2 right-2 size-6 bg-red-500/20 hover:bg-red-500/30 text-red-500 rounded-full flex items-center justify-center transition-all z-10" title="Remove image">
+                <span class="material-symbols-outlined text-xs">close</span>
+            </button>
+            <div class="flex flex-col items-center gap-4 w-full mt-2">
+                <div class="w-full aspect-square rounded-xl bg-background-dark border-2 border-dashed border-border-dark flex items-center justify-center overflow-hidden group relative" id="line-preview-${lineIndex}-${imageIndex}">
+                    <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity cursor-pointer">
+                        <span class="material-symbols-outlined text-white text-3xl">edit</span>
+                    </div>
+                    <img id="line-preview-img-${lineIndex}-${imageIndex}" class="w-full h-full object-contain ${imageUrl ? '' : 'hidden'}" src="${imageUrl}" alt="Preview"/>
+                    <span class="text-muted-dark text-sm ${imageUrl ? 'hidden' : ''}">No image</span>
+                </div>
+            </div>
+            <div class="w-full">
+                <input type="text" 
+                       name="lines[${lineIndex}][images][]" 
+                       id="line-image-url-${lineIndex}-${imageIndex}"
+                       class="line-image-url-input form-input w-full rounded-lg text-white border border-border-dark bg-background-dark/80 focus:border-primary focus:ring-1 focus:ring-primary h-8 px-2 text-xs mb-2" 
+                       placeholder="Image URL" value="${imageUrl}"/>
+                <div class="w-full border-2 border-dashed border-border-dark rounded-lg p-2 flex flex-col items-center justify-center bg-background-dark/20 hover:bg-background-dark/40 hover:border-primary/50 transition-all cursor-pointer">
+                    <input type="file" id="line-upload-${lineIndex}-${imageIndex}" accept="image/*" class="hidden"/>
+                    <label for="line-upload-${lineIndex}-${imageIndex}" class="cursor-pointer text-center w-full">
+                        <span class="material-symbols-outlined text-xl text-muted-dark mb-1 block">cloud_upload</span>
+                        <p class="text-white text-xs font-medium">Upload File</p>
+                    </label>
+                </div>
+            </div>
+        `;
+
+        const removeBtn = imgDiv.querySelector('.remove-image-btn');
+        removeBtn.addEventListener('click', () => {
+            imgDiv.remove();
+        });
+
+        const imageUrlInput = imgDiv.querySelector(`#line-image-url-${lineIndex}-${imageIndex}`);
+        const imagePreview = imgDiv.querySelector(`#line-preview-img-${lineIndex}-${imageIndex}`);
+        const previewContainer = imgDiv.querySelector(`#line-preview-${lineIndex}-${imageIndex}`);
 
         if (imageUrlInput && imagePreview) {
             imageUrlInput.addEventListener('input', (e) => {
@@ -190,83 +224,53 @@
             });
         }
 
-        // Setup Cloudinary upload handler
-        const lineUpload = lineDiv.querySelector(`#line-upload-${lineIndex}`);
+        const lineUpload = imgDiv.querySelector(`#line-upload-${lineIndex}-${imageIndex}`);
         if (lineUpload) {
             lineUpload.addEventListener('change', async function (e) {
                 const file = e.target.files[0];
                 if (!file) return;
 
-                // Show loading state
                 const uploadArea = lineUpload.closest('div');
                 const originalContent = uploadArea?.innerHTML;
                 if (uploadArea) {
-                    uploadArea.innerHTML = '<div class="flex flex-col items-center gap-2"><div class="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div><p class="text-sm text-white">Uploading...</p></div>';
+                    uploadArea.innerHTML = '<div class="flex flex-col items-center gap-1 py-1"><div class="animate-spin rounded-full h-4 w-4 border-b-2 border-primary"></div><p class="text-[10px] text-white">Uploading...</p></div>';
                 }
 
                 try {
-                    // Validate file
-                    if (!file.type.startsWith('image/')) {
-                        throw new Error('Please select an image file');
-                    }
+                    if (!file.type.startsWith('image/')) throw new Error('Please select an image file');
+                    if (!window.cloudinaryService) throw new Error('Cloudinary service not available.');
 
-                    // Ensure Cloudinary is initialized
-                    if (!window.cloudinaryService) {
-                        throw new Error('Cloudinary service not available. Please check configuration.');
-                    }
-
-                    // Get user ID (use a default if not authenticated)
                     const userId = 'admin_line_' + Date.now();
-
-                    // Upload to Cloudinary
-                    const imageUrl = await window.cloudinaryService.uploadProductImage(
-                        file,
-                        userId,
-                        (progress) => {
-                            console.log('Upload progress:', progress + '%');
-                        }
+                    const uploadedImageUrl = await window.cloudinaryService.uploadProductImage(
+                        file, userId, () => { }
                     );
 
-                    // Update preview and URL input
                     if (imagePreview) {
-                        imagePreview.src = imageUrl;
+                        imagePreview.src = uploadedImageUrl;
                         imagePreview.classList.remove('hidden');
                         const noImageSpan = previewContainer.querySelector('span');
                         if (noImageSpan) noImageSpan.classList.add('hidden');
                     }
+                    if (imageUrlInput) imageUrlInput.value = uploadedImageUrl;
 
-                    if (imageUrlInput) {
-                        imageUrlInput.value = imageUrl;
-                    }
-
-                    // Restore upload area
                     if (uploadArea && originalContent) {
                         uploadArea.innerHTML = originalContent;
-                        // Re-attach event listener
-                        const newUpload = document.getElementById(`line-upload-${lineIndex}`);
-                        if (newUpload) {
-                            newUpload.addEventListener('change', arguments.callee);
-                        }
+                        const newUpload = document.getElementById(`line-upload-${lineIndex}-${imageIndex}`);
+                        if (newUpload) newUpload.addEventListener('change', arguments.callee);
                     }
-
-                    alert('✅ Line image uploaded successfully to Cloudinary!');
                 } catch (error) {
                     console.error('Error uploading line image:', error);
                     alert('❌ Error uploading line image: ' + error.message);
-
-                    // Restore upload area
                     if (uploadArea && originalContent) {
                         uploadArea.innerHTML = originalContent;
-                        const newUpload = document.getElementById(`line-upload-${lineIndex}`);
-                        if (newUpload) {
-                            newUpload.addEventListener('change', arguments.callee);
-                        }
+                        const newUpload = document.getElementById(`line-upload-${lineIndex}-${imageIndex}`);
+                        if (newUpload) newUpload.addEventListener('change', arguments.callee);
                     }
                 }
             });
         }
 
-        container.appendChild(lineDiv);
+        container.appendChild(imgDiv);
     }
 
     async function loadExistingData() {
@@ -343,7 +347,7 @@
                         brand.lines.forEach((line, index) => {
                             const lineDiv = document.createElement('div');
                             lineDiv.className = 'flex flex-col gap-4 p-4 bg-background-dark/30 rounded-lg border border-border-dark';
-                            const imageUrl = line.image_url || '';
+
                             lineDiv.innerHTML = `
                                 <div class="flex flex-col md:flex-row gap-4">
                                     <div class="flex-1">
@@ -361,35 +365,15 @@
                                         </button>
                                     </div>
                                 </div>
-                                <div class="flex flex-col md:flex-row gap-8 items-start">
-                                    <div class="flex flex-col items-center gap-4">
-                                        <p class="text-white text-sm font-semibold w-full">Line Image Preview</p>
-                                        <div class="size-32 rounded-xl bg-background-dark border-2 border-dashed border-border-dark flex items-center justify-center overflow-hidden group relative" id="line-preview-${index}">
-                                            <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity cursor-pointer">
-                                                <span class="material-symbols-outlined text-white text-3xl">edit</span>
-                                            </div>
-                                            <img id="line-preview-img-${index}" class="w-full h-full object-contain ${imageUrl ? '' : 'hidden'}" src="${imageUrl}" alt="Line image preview"/>
-                                            <span class="text-muted-dark text-sm ${imageUrl ? 'hidden' : ''}">No image</span>
-                                        </div>
-                                        <p class="text-muted-dark text-xs">SVG, PNG or JPG. Max 2MB.</p>
+                                <div class="flex flex-col gap-4 mt-2">
+                                    <div class="flex justify-between items-center">
+                                        <p class="text-white text-sm font-semibold">Line Images</p>
+                                        <button type="button" class="add-image-btn px-4 py-2 bg-primary/10 hover:bg-primary/20 text-primary rounded-lg transition-all text-xs font-bold border border-primary/30 flex items-center gap-2">
+                                            <span class="material-symbols-outlined text-sm">add_photo_alternate</span>
+                                            Add Image
+                                        </button>
                                     </div>
-                                    <div class="flex-1 w-full">
-                                        <p class="text-white text-sm font-semibold mb-2">Image URL</p>
-                                        <input type="text" 
-                                               name="lines[${index}][image_url]" 
-                                               id="line-image-url-${index}"
-                                               class="form-input w-full rounded-lg text-white border border-border-dark bg-background-dark/50 focus:border-primary focus:ring-1 focus:ring-primary h-10 px-3 text-sm mb-2" 
-                                               placeholder="/images/products/brand/line.jpg"
-                                               value="${imageUrl}"/>
-                                        <p class="text-muted-dark text-xs mb-4">Or upload a file:</p>
-                                        <div class="w-full border-2 border-dashed border-border-dark rounded-xl p-8 flex flex-col items-center justify-center bg-background-dark/20 hover:bg-background-dark/40 hover:border-primary/50 transition-all cursor-pointer">
-                                            <input type="file" id="line-upload-${index}" accept="image/*" class="hidden"/>
-                                            <label for="line-upload-${index}" class="cursor-pointer text-center">
-                                                <span class="material-symbols-outlined text-4xl text-muted-dark mb-2 block">cloud_upload</span>
-                                                <p class="text-white text-base font-medium">Click to upload or drag and drop</p>
-                                                <p class="text-muted-dark text-sm">Recommended size: 800x800px</p>
-                                            </label>
-                                        </div>
+                                    <div class="line-images-container grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4" id="line-images-container-${index}">
                                     </div>
                                 </div>
                             `;
@@ -399,99 +383,22 @@
                                 lineDiv.remove();
                             });
 
-                            // Setup image URL preview handler
-                            const imageUrlInput = lineDiv.querySelector(`#line-image-url-${index}`);
-                            const imagePreview = lineDiv.querySelector(`#line-preview-img-${index}`);
-                            const previewContainer = lineDiv.querySelector(`#line-preview-${index}`);
+                            const addImageBtn = lineDiv.querySelector('.add-image-btn');
+                            const imagesContainer = lineDiv.querySelector(`#line-images-container-${index}`);
 
-                            if (imageUrlInput && imagePreview) {
-                                imageUrlInput.addEventListener('input', (e) => {
-                                    const url = e.target.value;
-                                    if (url) {
-                                        imagePreview.src = url;
-                                        imagePreview.classList.remove('hidden');
-                                        previewContainer.querySelector('span').classList.add('hidden');
-                                    } else {
-                                        imagePreview.classList.add('hidden');
-                                        previewContainer.querySelector('span').classList.remove('hidden');
-                                    }
-                                });
-                            }
+                            addImageBtn.addEventListener('click', () => {
+                                addLineImage(index, imagesContainer);
+                            });
 
-                            // Setup Cloudinary upload handler
-                            const lineUpload = lineDiv.querySelector(`#line-upload-${index}`);
-                            if (lineUpload) {
-                                lineUpload.addEventListener('change', async function (e) {
-                                    const file = e.target.files[0];
-                                    if (!file) return;
+                            // Load existing images
+                            const imagesToLoad = line.images && line.images.length > 0
+                                ? line.images
+                                : (line.image_url ? [line.image_url] : []);
 
-                                    // Show loading state
-                                    const uploadArea = lineUpload.closest('div');
-                                    const originalContent = uploadArea?.innerHTML;
-                                    if (uploadArea) {
-                                        uploadArea.innerHTML = '<div class="flex flex-col items-center gap-2"><div class="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div><p class="text-sm text-white">Uploading...</p></div>';
-                                    }
-
-                                    try {
-                                        // Validate file
-                                        if (!file.type.startsWith('image/')) {
-                                            throw new Error('Please select an image file');
-                                        }
-
-                                        // Ensure Cloudinary is initialized
-                                        if (!window.cloudinaryService) {
-                                            throw new Error('Cloudinary service not available. Please check configuration.');
-                                        }
-
-                                        // Get user ID (use a default if not authenticated)
-                                        const userId = 'admin_line_' + Date.now();
-
-                                        // Upload to Cloudinary
-                                        const uploadedImageUrl = await window.cloudinaryService.uploadProductImage(
-                                            file,
-                                            userId,
-                                            (progress) => {
-                                                console.log('Upload progress:', progress + '%');
-                                            }
-                                        );
-
-                                        // Update preview and URL input
-                                        if (imagePreview) {
-                                            imagePreview.src = uploadedImageUrl;
-                                            imagePreview.classList.remove('hidden');
-                                            const noImageSpan = previewContainer.querySelector('span');
-                                            if (noImageSpan) noImageSpan.classList.add('hidden');
-                                        }
-
-                                        if (imageUrlInput) {
-                                            imageUrlInput.value = uploadedImageUrl;
-                                        }
-
-                                        // Restore upload area
-                                        if (uploadArea && originalContent) {
-                                            uploadArea.innerHTML = originalContent;
-                                            // Re-attach event listener
-                                            const newUpload = document.getElementById(`line-upload-${index}`);
-                                            if (newUpload) {
-                                                newUpload.addEventListener('change', arguments.callee);
-                                            }
-                                        }
-
-                                        alert('✅ Line image uploaded successfully to Cloudinary!');
-                                    } catch (error) {
-                                        console.error('Error uploading line image:', error);
-                                        alert('❌ Error uploading line image: ' + error.message);
-
-                                        // Restore upload area
-                                        if (uploadArea && originalContent) {
-                                            uploadArea.innerHTML = originalContent;
-                                            const newUpload = document.getElementById(`line-upload-${index}`);
-                                            if (newUpload) {
-                                                newUpload.addEventListener('change', arguments.callee);
-                                            }
-                                        }
-                                    }
-                                });
+                            if (imagesToLoad.length > 0) {
+                                imagesToLoad.forEach(imgUrl => addLineImage(index, imagesContainer, imgUrl));
+                            } else {
+                                addLineImage(index, imagesContainer); // default empty
                             }
 
                             container.appendChild(lineDiv);
@@ -631,20 +538,35 @@
             const linesMap = new Map();
 
             lineInputs.forEach((input) => {
-                const match = input.name.match(/lines\[(\d+)\]\[(\w+)\]/);
-                if (match) {
-                    const lineIndex = parseInt(match[1]);
-                    const field = match[2];
+                const matchName = input.name.match(/lines\[(\d+)\]\[name\]/);
+                const matchImageUrl = input.name.match(/lines\[(\d+)\]\[image_url\]/);
+                const matchImages = input.name.match(/lines\[(\d+)\]\[images\]\[\]/);
 
-                    if (!linesMap.has(lineIndex)) {
-                        linesMap.set(lineIndex, {});
-                    }
-                    const line = linesMap.get(lineIndex);
-                    line[field] = input.value.trim();
+                if (matchName) {
+                    const lineIndex = parseInt(matchName[1]);
+                    if (!linesMap.has(lineIndex)) linesMap.set(lineIndex, { images: [] });
+                    linesMap.get(lineIndex).name = input.value.trim();
+                } else if (matchImageUrl) {
+                    const lineIndex = parseInt(matchImageUrl[1]);
+                    if (!linesMap.has(lineIndex)) linesMap.set(lineIndex, { images: [] });
+                    const val = input.value.trim();
+                    if (val) linesMap.get(lineIndex).image_url = val;
+                } else if (matchImages) {
+                    const lineIndex = parseInt(matchImages[1]);
+                    if (!linesMap.has(lineIndex)) linesMap.set(lineIndex, { images: [] });
+                    const val = input.value.trim();
+                    if (val) linesMap.get(lineIndex).images.push(val);
                 }
             });
 
-            const collectedLines = Array.from(linesMap.values()).filter(line => line.name && line.name.trim() !== '');
+            const collectedLines = Array.from(linesMap.values()).map(line => {
+                if (line.images && line.images.length > 0) {
+                    line.image_url = line.images[0]; // For backwards compatibility
+                } else if (line.image_url) {
+                    line.images = [line.image_url];
+                }
+                return line;
+            }).filter(line => line.name && line.name.trim() !== '');
 
             // For device type, use products array; for liquid type, use lines array
             // IMPORTANT: Delete the unused property instead of setting it to undefined

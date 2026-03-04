@@ -7,13 +7,10 @@
                     <img src="../assets/images/Logo LIQUIDO/LOGO 15cm WEB Trasparente_04.png" alt="LIQUIDO Logo"
                         class="h-12 object-contain" />
                 </div>
-                <div class="flex flex-col gap-3 text-sm text-slate-400 leading-relaxed">
-                    <p>Il tuo vape shop di riferimento a Monterotondo (Roma), dove qualità e professionalità si fondono
-                        per offrirti un'esperienza di svapo unica.</p>
-                    <p>Siamo esperti nel mondo del vaping: ti guidiamo nella scelta dei migliori liquidi e dispositivi,
-                        con consulenza personalizzata e prodotti certificati.</p>
-                    <p>Vieni a trovarci in negozio o contattaci su WhatsApp — ti aspettiamo per elevarti l'esperienza di
-                        svapo.</p>
+                <div class="flex flex-col gap-3 text-sm text-white leading-relaxed">
+                    <p data-text-key="footer.description">Il tuo vape shop di riferimento a Monterotondo, dove qualità e
+                        professionalità si fondono per
+                        offrirti un'esperienza di svapo unica.</p>
                 </div>
                 <!-- Social Icons -->
                 <div class="flex gap-5">
@@ -46,18 +43,18 @@
                 </div>
             </div>
 
-            <!-- Column 2: Info -->
+            <!-- Column 2: Dove Siamo + Map -->
             <div class="space-y-6">
                 <h4 class="text-sm font-bold uppercase tracking-widest text-primary">DOVE SIAMO</h4>
                 <div class="flex flex-col gap-4 text-sm font-medium">
                     <a href="https://maps.google.com/?q=Via+Adige+43C,+00015+Monterotondo+(Rm)" target="_blank"
                         class="hover:text-primary transition-colors flex items-start gap-3">
                         <span class="material-symbols-outlined text-primary text-xl">location_on</span>
-                        <span>Via Adige 43C, 00015<br>Monterotondo (Rm)</span>
+                        <span data-text-key="footer.address">Via Adige 43C, 00015 Monterotondo (Rm)</span>
                     </a>
                     <a href="tel:+393791345367" class="hover:text-primary transition-colors flex items-center gap-3">
                         <span class="material-symbols-outlined text-primary text-xl">call</span>
-                        <span>+39 379 134 5367</span>
+                        <span data-text-key="footer.phone">+39 379 134 5367</span>
                     </a>
                     <!-- Clickable Map Image -->
                     <a href="https://maps.google.com/?q=Via+Adige+43C,+00015+Monterotondo+(Rm)" target="_blank"
@@ -96,13 +93,20 @@
                     </li>
                     <li><a class="hover:text-primary transition-colors"
                             href="privacy-policy.html#trattamento">Trattamento dati</a></li>
+                    <li>
+                        <a class="hover:text-primary transition-colors uppercase font-bold flex items-center gap-2"
+                            href="contact.html#partnership">
+                            <span class="material-symbols-outlined text-primary text-base">handshake</span>
+                            Partner with us
+                        </a>
+                    </li>
                 </ul>
                 <div class="mt-4 flex flex-col items-start gap-4">
-                    <!-- ADM Logo (larger, no Cmn code version) -->
+                    <!-- ADM Logo — fixed height h-12 -->
                     <img src="../assets/images/ADM Logo BIANCO.png" alt="ADM Logo"
-                        class="h-16 object-contain opacity-90">
-                    <!-- 18+ Warning with yellow border and font -->
-                    <div class="inline-flex items-center gap-2 border-2 border-primary px-3 py-2 rounded-sm">
+                        class="h-12 object-contain opacity-90">
+                    <!-- 18+ Warning — same height h-12 via padding balance -->
+                    <div class="h-12 inline-flex items-center gap-2 border-2 border-primary px-3 rounded-sm">
                         <span class="material-symbols-outlined text-primary text-base">verified_user</span>
                         <span class="text-[10px] font-black uppercase tracking-wider text-primary">SOLO 18+ | SVAPA
                             RESPONSABILMENTE</span>
@@ -113,7 +117,7 @@
 
         <!-- Bottom Bar -->
         <div class="pt-8 border-t border-white/10 text-center">
-            <p class="text-xs text-slate-500 font-medium">
+            <p class="text-xs text-primary font-medium" data-text-key="footer.copyright">
                 Copyright Vaporoom srl - Liquido Vape Shop 2025 | P.IVA: 18151071000 - REA RM - 1764875. Tutti i diritti
                 riservati.
             </p>
