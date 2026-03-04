@@ -96,7 +96,7 @@ class CatalogService {
         // Try different paths based on current location
         const currentPath = window.location.pathname;
         let basePath = '';
-        
+
         if (currentPath.includes('/admin/')) {
             basePath = '../../';
         } else if (currentPath.includes('/public/')) {
@@ -104,14 +104,14 @@ class CatalogService {
         } else {
             basePath = './';
         }
-        
+
         const paths = [
             `${basePath}src/data/catalog.json`,
             '../src/data/catalog.json',
             'src/data/catalog.json',
             './src/data/catalog.json'
         ];
-        
+
         for (const path of paths) {
             try {
                 const response = await fetch(path);
@@ -125,7 +125,7 @@ class CatalogService {
                 continue;
             }
         }
-        
+
         // If all paths fail, return empty catalog structure
         console.warn('Could not load catalog.json, using empty catalog structure');
         this.catalog = { sections: [] };
@@ -138,7 +138,7 @@ class CatalogService {
      */
     async getSections() {
         await this.loadCatalog();
-        
+
         if (this.useFirebase && this.firebaseService) {
             try {
                 return await this.firebaseService.getSections();
@@ -147,7 +147,7 @@ class CatalogService {
                 return this.catalog?.sections || [];
             }
         }
-        
+
         return this.catalog?.sections || [];
     }
 
@@ -158,7 +158,7 @@ class CatalogService {
      */
     async getSection(sectionId) {
         await this.loadCatalog();
-        
+
         if (this.useFirebase && this.firebaseService) {
             try {
                 return await this.firebaseService.getSection(sectionId);
@@ -168,7 +168,7 @@ class CatalogService {
                 return sections.find(section => section.id === sectionId) || null;
             }
         }
-        
+
         const sections = await this.getSections();
         return sections.find(section => section.id === sectionId) || null;
     }
@@ -180,7 +180,7 @@ class CatalogService {
      */
     async getBrandsBySection(sectionId) {
         await this.loadCatalog();
-        
+
         if (this.useFirebase && this.firebaseService) {
             try {
                 return await this.firebaseService.getBrandsBySection(sectionId);
@@ -190,7 +190,7 @@ class CatalogService {
                 return section ? (section.brands || []) : [];
             }
         }
-        
+
         const section = await this.getSection(sectionId);
         return section ? (section.brands || []) : [];
     }
@@ -201,11 +201,11 @@ class CatalogService {
      */
     async getAllBrands() {
         await this.initFirebase();
-        
+
         if (this.useFirebase && this.firebaseService) {
             return await this.firebaseService.getAllBrands();
         }
-        
+
         const sections = await this.getSections();
         return sections.flatMap(section => section.brands || []);
     }
@@ -254,31 +254,47 @@ class CatalogService {
      */
     async getAllLinesBySection(sectionId) {
         await this.loadCatalog();
-        
+
         if (this.useFirebase && this.firebaseService) {
             try {
                 return await this.firebaseService.getAllLinesBySection(sectionId);
             } catch (error) {
                 console.warn('Error getting lines from Firebase, using cached catalog:', error);
                 const brands = await this.getBrandsBySection(sectionId);
-                return brands.flatMap(brand => 
-                    (brand.lines || []).map(line => ({
+                return brands.flatMap(brand => {
+                    const lines = brand.lines && brand.lines.length > 0
+                        ? brand.lines
+                        : (brand.products && brand.products.length > 0 ? brand.products : []);
+                    return lines.map(line => ({
                         ...line,
                         brandName: brand.name,
-                        brandLogo: brand.logo_url
-                    }))
-                );
+                        brandLogo: brand.logo_url,
+                        brandType: brand.type || 'liquid',
+                        image_url: line.image_url || (line.images && line.images.length > 0 ? line.images[0] : ''),
+                        images: line.images && line.images.length > 0
+                            ? line.images
+                            : (line.image_url ? [line.image_url] : [])
+                    }));
+                });
             }
         }
-        
+
         const brands = await this.getBrandsBySection(sectionId);
-        return brands.flatMap(brand => 
-            (brand.lines || []).map(line => ({
+        return brands.flatMap(brand => {
+            const lines = brand.lines && brand.lines.length > 0
+                ? brand.lines
+                : (brand.products && brand.products.length > 0 ? brand.products : []);
+            return lines.map(line => ({
                 ...line,
                 brandName: brand.name,
-                brandLogo: brand.logo_url
-            }))
-        );
+                brandLogo: brand.logo_url,
+                brandType: brand.type || 'liquid',
+                image_url: line.image_url || (line.images && line.images.length > 0 ? line.images[0] : ''),
+                images: line.images && line.images.length > 0
+                    ? line.images
+                    : (line.image_url ? [line.image_url] : [])
+            }));
+        });
     }
 
     /**
@@ -289,7 +305,7 @@ class CatalogService {
     async searchBrands(query) {
         const brands = await this.getAllBrands();
         const lowerQuery = query.toLowerCase();
-        return brands.filter(brand => 
+        return brands.filter(brand =>
             brand.name.toLowerCase().includes(lowerQuery)
         );
     }
@@ -315,14 +331,14 @@ class CatalogService {
      */
     async getAllLinesFromAllSections() {
         await this.initFirebase();
-        
+
         if (this.useFirebase && this.firebaseService) {
             return await this.firebaseService.getAllLinesFromAllSections();
         }
-        
+
         const sections = await this.getSections();
         const allLines = [];
-        
+
         for (const section of sections) {
             const lines = await this.getAllLinesBySection(section.id);
             for (const line of lines) {
@@ -333,7 +349,7 @@ class CatalogService {
                 });
             }
         }
-        
+
         return allLines;
     }
 
@@ -345,11 +361,11 @@ class CatalogService {
      */
     async saveBrand(sectionId, brandData) {
         await this.initFirebase();
-        
+
         if (!this.useFirebase || !this.firebaseService) {
             throw new Error('Firebase not available. Cannot save brand.');
         }
-        
+
         return await this.firebaseService.saveBrand(sectionId, brandData);
     }
 
@@ -362,11 +378,11 @@ class CatalogService {
      */
     async saveProductLine(sectionId, brandName, lineData) {
         await this.initFirebase();
-        
+
         if (!this.useFirebase || !this.firebaseService) {
             throw new Error('Firebase not available. Cannot save product line.');
         }
-        
+
         return await this.firebaseService.saveProductLine(sectionId, brandName, lineData);
     }
 
@@ -378,11 +394,11 @@ class CatalogService {
      */
     async deleteBrand(sectionId, brandName) {
         await this.initFirebase();
-        
+
         if (!this.useFirebase || !this.firebaseService) {
             throw new Error('Firebase not available. Cannot delete brand.');
         }
-        
+
         return await this.firebaseService.deleteBrand(sectionId, brandName);
     }
 
@@ -395,11 +411,11 @@ class CatalogService {
      */
     async deleteProductLine(sectionId, brandName, lineName) {
         await this.initFirebase();
-        
+
         if (!this.useFirebase || !this.firebaseService) {
             throw new Error('Firebase not available. Cannot delete product line.');
         }
-        
+
         return await this.firebaseService.deleteProductLine(sectionId, brandName, lineName);
     }
 
@@ -412,11 +428,11 @@ class CatalogService {
      */
     async getProductsByLine(sectionId, brandName, lineName) {
         await this.initFirebase();
-        
+
         if (!this.useFirebase || !this.firebaseService) {
             throw new Error('Firebase not available. Cannot get products.');
         }
-        
+
         return await this.firebaseService.getProductsByLine(sectionId, brandName, lineName);
     }
 
@@ -430,11 +446,11 @@ class CatalogService {
      */
     async saveProduct(sectionId, brandName, lineName, productData) {
         await this.initFirebase();
-        
+
         if (!this.useFirebase || !this.firebaseService) {
             throw new Error('Firebase not available. Cannot save product.');
         }
-        
+
         return await this.firebaseService.saveProduct(sectionId, brandName, lineName, productData);
     }
 
@@ -448,11 +464,11 @@ class CatalogService {
      */
     async deleteProduct(sectionId, brandName, lineName, productId) {
         await this.initFirebase();
-        
+
         if (!this.useFirebase || !this.firebaseService) {
             throw new Error('Firebase not available. Cannot delete product.');
         }
-        
+
         return await this.firebaseService.deleteProduct(sectionId, brandName, lineName, productId);
     }
 
@@ -463,11 +479,11 @@ class CatalogService {
      */
     async getAllProductsBySection(sectionId) {
         await this.initFirebase();
-        
+
         if (!this.useFirebase || !this.firebaseService) {
             throw new Error('Firebase not available. Cannot get products.');
         }
-        
+
         return await this.firebaseService.getAllProductsBySection(sectionId);
     }
 
@@ -477,26 +493,26 @@ class CatalogService {
      */
     async getAllProducts() {
         await this.initFirebase();
-        
+
         if (!this.useFirebase || !this.firebaseService) {
             throw new Error('Firebase not available. Cannot get products.');
         }
-        
+
         return await this.firebaseService.getAllProducts();
     }
-    
+
     /**
      * Get all brands from all sections
      * @returns {Promise<Array>} Array of brand objects with section info
      */
     async getAllBrands() {
         await this.initFirebase();
-        
+
         if (!this.useFirebase || !this.firebaseService) {
             const sections = await this.getSections();
             const allBrands = [];
             const seen = new Set();
-            
+
             for (const section of sections) {
                 const brands = await this.getBrandsBySection(section.id);
                 for (const brand of brands) {
@@ -513,7 +529,7 @@ class CatalogService {
             }
             return allBrands;
         }
-        
+
         return await this.firebaseService.getAllBrands();
     }
 }

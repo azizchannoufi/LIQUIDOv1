@@ -187,45 +187,55 @@
                         return;
                     }
 
-                    // Get lines and decorate them
-                    const lines = brand.lines || [];
-                    // We need to add brandName and brandLogo to each line because renderSpecificLinesZigZag expects it
-                    const decoratedLines = lines.map(line => ({
+                    // Get lines — support both brand.lines (liquids & new devices) and brand.products (legacy devices)
+                    const rawLines = brand.lines && brand.lines.length > 0
+                        ? brand.lines
+                        : (brand.products && brand.products.length > 0 ? brand.products : []);
+
+                    const decoratedLines = rawLines.map(line => ({
                         ...line,
                         brandName: brand.name,
-                        brandLogo: brand.logo_url
+                        brandLogo: brand.logo_url,
+                        // Normalise image fields
+                        image_url: line.image_url || (line.images && line.images.length > 0 ? line.images[0] : ''),
+                        images: line.images && line.images.length > 0 ? line.images : (line.image_url ? [line.image_url] : [])
                     }));
 
                     if (decoratedLines.length === 0) {
                         container.innerHTML = '<p class="text-center text-slate-500 py-12">Nessuna linea di prodotti disponibile per questo marchio.</p>';
                     } else {
-                        // Render Grid instead of ZigZag
+                        // Render Grid — show ALL lines, even those without images
                         let html = '<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">';
                         decoratedLines.forEach(line => {
-                            let imageUrl = line.image_url || '';
-                            let images = line.images && line.images.length > 0 ? line.images : (imageUrl ? [imageUrl] : []);
+                            const hasImages = line.images && line.images.length > 0
+                                && line.images[0] && typeof line.images[0] === 'string'
+                                && line.images[0].trim() !== ''
+                                && line.images[0].trim() !== 'null'
+                                && (line.images[0].startsWith('http') || line.images[0].startsWith('/') || line.images[0].startsWith('data:'));
 
-                            // Validate image
-                            if (images.length === 0 || !images[0] || typeof images[0] !== 'string' || images[0].trim() === '' || images[0].trim() === 'null') return;
+                            const imageUrl = hasImages ? line.images[0] : '';
+                            const images = hasImages ? line.images : [];
 
-                            // Use the first valid image as the main imageUrl for thumbnail
-                            imageUrl = images[0];
+                            const brandNameEnc = encodeURIComponent(line.brandName);
+                            const lineNameEnc = encodeURIComponent(line.name);
+                            const navUrl = `line-products.html?brand=${brandNameEnc}&line=${lineNameEnc}`;
 
-                            const brandName = encodeURIComponent(line.brandName);
-                            const lineName = encodeURIComponent(line.name);
-                            const navUrl = `line-products.html?brand=${brandName}&line=${lineName}`;
-
-                            // Prepare JSON string for the onclick handler, preventing HTML attribute break
                             const imagesJson = JSON.stringify(images).replace(/"/g, '&quot;').replace(/'/g, '&apos;');
 
                             html += `
                                 <div class="group flex flex-col bg-white border border-gray-100 rounded-lg shadow-sm overflow-hidden hover:shadow-xl hover:border-primary/50 transition-all duration-300">
-                                    <div class="relative w-full aspect-square overflow-hidden bg-gray-50 cursor-pointer" onclick="openImageGallery('${imagesJson}')">
-                                        <img src="${imageUrl}" alt="${line.name}" class="w-full h-full object-cover transform scale-100 group-hover:scale-110 transition-transform duration-700" />
-                                        <!-- Search Icon Overlay on Hover -->
-                                        <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                                            <span class="material-symbols-outlined text-white text-5xl">zoom_in</span>
-                                        </div>
+                                    <div class="relative w-full aspect-square overflow-hidden ${hasImages ? 'bg-gray-50 cursor-pointer' : 'bg-gray-100'}"
+                                         ${hasImages ? `onclick="openImageGallery('${imagesJson}')"` : ''}>
+                                        ${hasImages
+                                    ? `<img src="${imageUrl}" alt="${line.name}" class="w-full h-full object-cover transform scale-100 group-hover:scale-110 transition-transform duration-700" />
+                                               <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                                                   <span class="material-symbols-outlined text-white text-5xl">zoom_in</span>
+                                               </div>`
+                                    : `<div class="w-full h-full flex flex-col items-center justify-center gap-3 text-gray-300">
+                                                   <span class="material-symbols-outlined text-6xl">image_not_supported</span>
+                                                   <span class="text-xs font-semibold uppercase tracking-widest text-gray-400">Image bientôt</span>
+                                               </div>`
+                                }
                                     </div>
                                     <div class="p-6 flex flex-col flex-grow text-center">
                                         <h3 class="text-xl font-black text-background-dark uppercase mb-4 leading-tight">${line.name}</h3>
@@ -240,12 +250,7 @@
                             `;
                         });
                         html += '</div>';
-
-                        if (html === '<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8"></div>') {
-                            container.innerHTML = '<p class="text-center text-slate-500 py-12">Nessuna linea associata o le linee non contengono immagini.</p>';
-                        } else {
-                            container.innerHTML = html;
-                        }
+                        container.innerHTML = html;
                     }
 
                 } catch (err) {
