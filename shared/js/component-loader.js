@@ -116,6 +116,26 @@ async function loadFooter() {
         } else {
             document.body.insertAdjacentHTML('beforeend', html);
         }
+
+        // Apply dynamic texts to footer if site-texts-service is loaded
+        if (window.siteTextsService) {
+            try {
+                const texts = await window.siteTextsService.loadTexts();
+                document.querySelectorAll('[data-text-key]').forEach(el => {
+                    const key = el.getAttribute('data-text-key');
+                    const parts = key.split('.');
+                    let val = texts;
+                    for (const p of parts) val = val && val[p];
+                    if (val !== undefined && val !== null) {
+                        if (el.hasAttribute('data-text-html')) {
+                            el.innerHTML = String(val).replace(/\n/g, '<br>');
+                        } else {
+                            el.textContent = val;
+                        }
+                    }
+                });
+            } catch (e) { /* silently fail */ }
+        }
     } catch (error) {
         console.error('Error loading footer:', error);
     }

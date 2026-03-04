@@ -768,7 +768,7 @@ class BrandsRenderer {
                 return;
             }
 
-            let html = '<div class="flex flex-col gap-20 py-10">';
+            let html = '<div class="flex flex-col gap-8 py-4">';
 
             brandsToDisplay.forEach((brand, index) => {
                 const isEven = index % 2 === 0;
@@ -791,7 +791,7 @@ class BrandsRenderer {
                         <div class="flex-1 w-full lg:w-1/2 scroll-animate ${textSlideClass}">
                              <div class="space-y-6 ${isEven ? 'text-left' : 'text-right'}">
                                 <div class="space-y-2">
-                                    <h3 class="text-primary text-sm font-black uppercase tracking-[0.2em]">Brand Dispositivi</h3>
+                                    <h3 class="text-primary text-sm font-black uppercase tracking-[0.2em]">DISPOSITIVI</h3>
                                     <h2 class="text-4xl lg:text-5xl font-black text-background-dark dark:text-white uppercase leading-none">${brandName}</h2>
                                 </div>
                                 <p class="text-slate-600 dark:text-slate-400 font-medium leading-relaxed max-w-lg ${isEven ? 'mr-auto' : 'ml-auto'}">
@@ -827,7 +827,7 @@ class BrandsRenderer {
                     }
                          </div>
                          <div class="space-y-4 text-center">
-                            <h3 class="text-primary text-xs font-black uppercase tracking-[0.2em]">Brand Dispositivi</h3>
+                            <h3 class="text-primary text-xs font-black uppercase tracking-[0.2em]">DISPOSITIVI</h3>
                             <h2 class="text-3xl font-black text-background-dark dark:text-white uppercase">${brandName}</h2>
                             <p class="text-slate-600 dark:text-slate-400 text-sm font-medium leading-relaxed">
                                 ${description}
@@ -842,7 +842,7 @@ class BrandsRenderer {
 
                 if (index < brandsToDisplay.length - 1) {
                     html += `
-                        <div class="w-full h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent my-12 lg:my-20 opacity-30"></div>
+                        <div class="w-full h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent my-4 lg:my-6 opacity-30"></div>
                     `;
                 }
             });
