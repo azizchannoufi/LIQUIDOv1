@@ -28,9 +28,24 @@ try {
   console.error('❌ Error loading SumUp routes:', error);
   // Add a fallback route to show error
   app.use('/api/sumup', (req, res) => {
-    res.status(500).json({ 
-      success: false, 
-      error: 'SumUp routes not loaded. Check server logs for details.' 
+    res.status(500).json({
+      success: false,
+      error: 'SumUp routes not loaded. Check server logs for details.'
+    });
+  });
+}
+
+// Google Reviews Route
+try {
+  const googleReviewsRoutes = require('./backend/routes/google-reviews-routes');
+  app.use('/api/google-reviews', googleReviewsRoutes);
+  console.log('✅ Google Reviews routes loaded successfully');
+} catch (error) {
+  console.error('❌ Error loading Google Reviews routes:', error);
+  app.use('/api/google-reviews', (req, res) => {
+    res.status(500).json({
+      success: false,
+      error: 'Google Reviews routes not loaded. Check server logs for details.'
     });
   });
 }

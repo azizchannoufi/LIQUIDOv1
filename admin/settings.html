@@ -774,6 +774,62 @@
                             </div>
                         </div>
                     </section>
+
+                    <!-- ─────────────────────────────────────────── -->
+                    <!-- SECTION: Google Reviews Management         -->
+                    <!-- ─────────────────────────────────────────── -->
+                    <section
+                        class="bg-white dark:bg-card-dark rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden">
+                        <div
+                            class="px-6 py-5 border-b border-slate-200 dark:border-slate-800 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                            <div>
+                                <h3 class="text-lg font-bold flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-primary">reviews</span>
+                                    Recensioni Google Manuali
+                                </h3>
+                                <p class="text-xs text-slate-500 dark:text-[#baba9c] mt-1">Aggiungi, modifica o rimuovi
+                                    manualmente le recensioni Google da mostrare in homepage.</p>
+                            </div>
+                            <button id="add-review-btn"
+                                class="flex items-center gap-1.5 bg-primary hover:bg-primary/90 text-black px-6 py-2 rounded-lg text-sm font-bold transition-all">
+                                <span class="material-symbols-outlined text-sm">add</span>
+                                Aggiungi Recensione
+                            </button>
+                        </div>
+                        <div class="p-6">
+                            <!-- Overall Rating Config -->
+                            <div
+                                class="flex items-center gap-4 mb-6 pb-6 border-b border-slate-200 dark:border-slate-800 flex-wrap">
+                                <div class="space-y-2">
+                                    <label class="text-sm font-semibold dark:text-white">Valutazione Globale (es.
+                                        5.0)</label>
+                                    <input id="overall-rating-input"
+                                        class="w-32 bg-slate-50 dark:bg-[#27271b] border border-slate-200 dark:border-[#54543b] rounded-lg px-4 py-2 text-slate-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all"
+                                        placeholder="5.0" type="number" step="0.1" min="1" max="5" value="5.0" />
+                                </div>
+                                <div class="space-y-2">
+                                    <label class="text-sm font-semibold dark:text-white">Numero Totale
+                                        Recensioni</label>
+                                    <input id="total-reviews-input"
+                                        class="w-32 bg-slate-50 dark:bg-[#27271b] border border-slate-200 dark:border-[#54543b] rounded-lg px-4 py-2 text-slate-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all"
+                                        placeholder="120" type="number" min="0" value="120" />
+                                </div>
+                                <div class="space-y-2 mt-7">
+                                    <button id="save-overall-rating-btn"
+                                        class="flex items-center gap-1.5 bg-slate-200 hover:bg-slate-300 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-900 dark:text-white px-6 py-2.5 rounded-lg text-sm font-bold transition-all">
+                                        Salva Rating
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Reviews List -->
+                            <div id="reviews-list-container" class="space-y-4">
+                                <!-- Reviews will be populated here -->
+                                <div class="text-center py-6 text-slate-500">Caricamento recensioni...</div>
+                            </div>
+                        </div>
+                    </section>
+
                     <!-- Location & GPS -->
                     <section
                         class="bg-white dark:bg-card-dark rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden">
@@ -901,6 +957,7 @@
     <script src="../src/js/services/firebase-config.js"></script>
     <script src="../src/js/services/site-texts-service.js"></script>
     <script src="../src/js/admin/site-texts-admin.js"></script>
+    <script src="../src/js/admin/reviews-admin.js"></script>
 </body>
 
 </html>

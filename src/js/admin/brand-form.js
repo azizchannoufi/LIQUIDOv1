@@ -121,11 +121,11 @@
         lineDiv.innerHTML = `
             <div class="flex flex-col md:flex-row gap-4">
                 <div class="flex-1">
-                    <label class="text-white text-sm font-semibold mb-2 block">Line Name *</label>
+                    <label class="text-white text-sm font-semibold mb-2 block">Line / Product Name *</label>
                     <input type="text" 
                            name="lines[${lineIndex}][name]" 
                            class="form-input w-full rounded-lg text-white border border-border-dark bg-background-dark/50 focus:border-primary focus:ring-1 focus:ring-primary h-10 px-3 text-sm" 
-                           placeholder="e.g. RE-BRAND, FLAVOURBAR" 
+                           placeholder="e.g. RE-BRAND, WENAX M" 
                            required/>
                 </div>
                 <div class="flex items-end">
@@ -137,7 +137,7 @@
             
             <div class="flex flex-col gap-4 mt-2">
                 <div class="flex justify-between items-center">
-                    <p class="text-white text-sm font-semibold">Line Images</p>
+                    <p class="text-white text-sm font-semibold">Line/Product Images</p>
                     <button type="button" class="add-image-btn px-4 py-2 bg-primary/10 hover:bg-primary/20 text-primary rounded-lg transition-all text-xs font-bold border border-primary/30 flex items-center gap-2">
                         <span class="material-symbols-outlined text-sm">add_photo_alternate</span>
                         Add Image
@@ -309,53 +309,25 @@
                         updateAddSectionOptions();
                     }
 
-                    // Load product lines or products based on type
+                    // Load product lines (handle legacy products array for devices)
                     const container = document.getElementById('product-lines-container');
-                    if (brand.type === 'device' && brand.products && brand.products.length > 0) {
-                        // For devices, load products (simpler structure)
-                        brand.products.forEach((product, index) => {
-                            const lineDiv = document.createElement('div');
-                            lineDiv.className = 'flex flex-col gap-4 p-4 bg-background-dark/30 rounded-lg border border-border-dark';
-                            lineDiv.innerHTML = `
-                                <div class="flex flex-col md:flex-row gap-4">
-                                    <div class="flex-1">
-                                        <label class="text-white text-sm font-semibold mb-2 block">Product Name *</label>
-                                        <input type="text" 
-                                               name="lines[${index}][name]" 
-                                               class="form-input w-full rounded-lg text-white border border-border-dark bg-background-dark/50 focus:border-primary focus:ring-1 focus:ring-primary h-10 px-3 text-sm" 
-                                               placeholder="e.g. PEAK 2, WENAX M" 
-                                               value="${product.name || ''}"
-                                               required/>
-                                    </div>
-                                    <div class="flex items-end">
-                                        <button type="button" class="remove-line-btn px-4 py-2 bg-red-500/20 hover:bg-red-500/30 text-red-400 rounded-lg transition-all text-sm font-bold border border-red-500/30">
-                                            <span class="material-symbols-outlined text-sm">delete</span>
-                                        </button>
-                                    </div>
-                                </div>
-                            `;
+                    const linesToLoad = brand.lines && brand.lines.length > 0
+                        ? brand.lines
+                        : (brand.products && brand.products.length > 0 ? brand.products : []);
 
-                            const removeBtn = lineDiv.querySelector('.remove-line-btn');
-                            removeBtn.addEventListener('click', () => {
-                                lineDiv.remove();
-                            });
-
-                            container.appendChild(lineDiv);
-                        });
-                    } else if (brand.lines && brand.lines.length > 0) {
-                        // For liquids, load lines with images
-                        brand.lines.forEach((line, index) => {
+                    if (linesToLoad.length > 0) {
+                        linesToLoad.forEach((line, index) => {
                             const lineDiv = document.createElement('div');
                             lineDiv.className = 'flex flex-col gap-4 p-4 bg-background-dark/30 rounded-lg border border-border-dark';
 
                             lineDiv.innerHTML = `
                                 <div class="flex flex-col md:flex-row gap-4">
                                     <div class="flex-1">
-                                        <label class="text-white text-sm font-semibold mb-2 block">Line Name *</label>
+                                        <label class="text-white text-sm font-semibold mb-2 block">Line / Product Name *</label>
                                         <input type="text" 
                                                name="lines[${index}][name]" 
                                                class="form-input w-full rounded-lg text-white border border-border-dark bg-background-dark/50 focus:border-primary focus:ring-1 focus:ring-primary h-10 px-3 text-sm" 
-                                               placeholder="e.g. RE-BRAND, FLAVOURBAR" 
+                                               placeholder="e.g. RE-BRAND, WENAX M" 
                                                value="${line.name || ''}"
                                                required/>
                                     </div>
@@ -367,7 +339,7 @@
                                 </div>
                                 <div class="flex flex-col gap-4 mt-2">
                                     <div class="flex justify-between items-center">
-                                        <p class="text-white text-sm font-semibold">Line Images</p>
+                                        <p class="text-white text-sm font-semibold">Line/Product Images</p>
                                         <button type="button" class="add-image-btn px-4 py-2 bg-primary/10 hover:bg-primary/20 text-primary rounded-lg transition-all text-xs font-bold border border-primary/30 flex items-center gap-2">
                                             <span class="material-symbols-outlined text-sm">add_photo_alternate</span>
                                             Add Image
@@ -568,16 +540,10 @@
                 return line;
             }).filter(line => line.name && line.name.trim() !== '');
 
-            // For device type, use products array; for liquid type, use lines array
-            // IMPORTANT: Delete the unused property instead of setting it to undefined
-            // Firebase doesn't accept undefined values
-            if (brandData.type === 'device') {
-                brandData.products = collectedLines;
-                delete brandData.lines; // Remove lines property for devices
-            } else {
-                brandData.lines = collectedLines;
-                delete brandData.products; // Remove products property for liquids
-            }
+            // For both device and liquid types, use the lines array
+            brandData.lines = collectedLines;
+            // Also keep products for backwards compatibility if needed, or remove it entirely
+            brandData.products = collectedLines;
 
             // Validate
             if (!brandData.name || !brandData.type || selectedSections.size === 0) {

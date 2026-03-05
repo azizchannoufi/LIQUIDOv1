@@ -780,10 +780,59 @@ class BrandsRenderer {
                 const logoUrl = brand.logo_url;
                 const hasLogo = logoUrl && logoUrl.trim() !== '';
 
-                const lineCount = brand.lines ? brand.lines.length : 0;
+                // Get lines — prefer brand.lines, fallback to brand.products (legacy)
+                const allLines = brand.lines && brand.lines.length > 0
+                    ? brand.lines
+                    : (brand.products && brand.products.length > 0 ? brand.products : []);
+                const lineCount = allLines.length;
+
+                // Pick the first line that has a valid image for the hero visual
+                const heroLine = allLines.find(l => {
+                    const imgs = l.images && l.images.length > 0 ? l.images : (l.image_url ? [l.image_url] : []);
+                    return imgs.length > 0 && imgs[0] && typeof imgs[0] === 'string'
+                        && imgs[0].trim() !== '' && imgs[0].trim() !== 'null'
+                        && (imgs[0].startsWith('http') || imgs[0].startsWith('/') || imgs[0].startsWith('data:'));
+                });
+                const heroImageUrl = heroLine
+                    ? (heroLine.images && heroLine.images.length > 0 ? heroLine.images[0] : heroLine.image_url)
+                    : '';
+                const hasHeroImage = !!heroImageUrl;
+
                 const description = brand.description || `Scopri i dispositivi ${brandName}. ${lineCount > 0 ? `Esplora le nostre ${lineCount} linee disponibili.` : 'Brand ufficiale partner di Liquido.'} Tecnologia avanzata e qualità costruttiva premium.`;
 
                 const navUrl = `brand-lines.html?brand=${encodeURIComponent(brandName)}`;
+
+                // Image side: prefer line image, then logo, then placeholder
+                const desktopImageBlock = hasHeroImage
+                    ? `<div class="relative aspect-[4/3] w-full overflow-hidden rounded-lg shadow-2xl group-hover:shadow-primary/20 transition-all duration-500">
+                           <img src="${heroImageUrl}" alt="${brandName}" class="w-full h-full object-cover transform scale-100 group-hover:scale-110 transition-all duration-500">
+                           ${hasLogo ? `<div class="absolute bottom-4 left-4 bg-white/90 rounded-md p-2"><img src="${logoUrl}" alt="${brandName} logo" class="h-8 object-contain"></div>` : ''}
+                           <div class="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-300"></div>
+                       </div>`
+                    : hasLogo
+                        ? `<div class="relative aspect-[4/3] w-full overflow-hidden rounded-lg shadow-2xl group-hover:shadow-primary/20 transition-all duration-500 bg-white border border-gray-100 flex items-center justify-center p-12">
+                           <img src="${logoUrl}" alt="${brandName}" class="w-2/3 h-2/3 object-contain filter grayscale group-hover:grayscale-0 transition-all duration-500 transform scale-100 group-hover:scale-110">
+                           <div class="absolute inset-0 bg-transparent mix-blend-multiply"></div>
+                       </div>`
+                        : `<div class="relative aspect-[4/3] w-full overflow-hidden rounded-lg shadow-2xl bg-gray-100 flex items-center justify-center">
+                           <div class="flex flex-col items-center justify-center text-gray-300">
+                               <span class="material-symbols-outlined text-6xl">devices</span>
+                               <span class="mt-4 font-bold uppercase tracking-widest text-xs">Image bientôt</span>
+                           </div>
+                       </div>`;
+
+                const mobileImageBlock = hasHeroImage
+                    ? `<div class="relative aspect-[4/3] w-full overflow-hidden rounded-lg shadow-lg">
+                           <img src="${heroImageUrl}" alt="${brandName}" class="w-full h-full object-cover">
+                           ${hasLogo ? `<div class="absolute bottom-3 left-3 bg-white/90 rounded-md p-1.5"><img src="${logoUrl}" alt="${brandName} logo" class="h-6 object-contain"></div>` : ''}
+                       </div>`
+                    : hasLogo
+                        ? `<div class="relative aspect-[4/3] w-full overflow-hidden rounded-lg shadow-lg bg-white border border-gray-100 flex items-center justify-center p-8">
+                           <img src="${logoUrl}" alt="${brandName}" class="w-3/4 h-3/4 object-contain">
+                       </div>`
+                        : `<div class="relative aspect-[4/3] w-full overflow-hidden rounded-lg shadow-lg bg-gray-100 flex items-center justify-center">
+                           <span class="material-symbols-outlined text-4xl text-gray-300">devices</span>
+                       </div>`;
 
                 html += `
                     <div class="flex hidden md:flex ${rowClass} items-center justify-between gap-10 lg:gap-20 group relative">
@@ -806,26 +855,15 @@ class BrandsRenderer {
                              </div>
                         </div>
 
-                        <!-- Image Side (Brand Logo) -->
+                        <!-- Image Side -->
                         <div class="flex-1 w-full lg:w-1/2 scroll-animate ${imageSlideClass}">
-                            <div class="relative aspect-[4/3] w-full overflow-hidden rounded-lg shadow-2xl group-hover:shadow-primary/20 transition-all duration-500 bg-white border border-gray-100 flex items-center justify-center p-12">
-                                ${hasLogo ?
-                        `<img src="${logoUrl}" alt="${brandName}" class="w-2/3 h-2/3 object-contain filter grayscale group-hover:grayscale-0 transition-all duration-500 transform scale-100 group-hover:scale-110">` :
-                        `<div class="flex flex-col items-center justify-center text-gray-300"><span class="material-symbols-outlined text-6xl">image_not_supported</span><span class="mt-4 font-bold uppercase tracking-widest text-xs">Logo non disponibile</span></div>`
-                    }
-                                <div class="absolute inset-0 bg-transparent mix-blend-multiply"></div>
-                            </div>
+                            ${desktopImageBlock}
                         </div>
                     </div>
 
                     <!-- Mobile View (Always Vertical) -->
                     <div class="flex md:hidden flex-col gap-6 group relative scroll-animate from-bottom">
-                         <div class="relative aspect-[4/3] w-full overflow-hidden rounded-lg shadow-lg bg-white border border-gray-100 flex items-center justify-center p-8">
-                            ${hasLogo ?
-                        `<img src="${logoUrl}" alt="${brandName}" class="w-3/4 h-3/4 object-contain">` :
-                        `<span class="material-symbols-outlined text-4xl text-gray-300">image_not_supported</span>`
-                    }
-                         </div>
+                         ${mobileImageBlock}
                          <div class="space-y-4 text-center">
                             <h3 class="text-primary text-xs font-black uppercase tracking-[0.2em]">DISPOSITIVI</h3>
                             <h2 class="text-3xl font-black text-background-dark dark:text-white uppercase">${brandName}</h2>

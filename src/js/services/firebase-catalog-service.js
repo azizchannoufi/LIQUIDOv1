@@ -162,13 +162,24 @@ class FirebaseCatalogService {
      */
     async getAllLinesBySection(sectionId) {
         const brands = await this.getBrandsBySection(sectionId);
-        return brands.flatMap(brand =>
-            (brand.lines || []).map(line => ({
+        return brands.flatMap(brand => {
+            // For backward compat: device brands may still have old `products` array
+            const lines = brand.lines && brand.lines.length > 0
+                ? brand.lines
+                : (brand.products && brand.products.length > 0 ? brand.products : []);
+            return lines.map(line => ({
                 ...line,
                 brandName: brand.name,
-                brandLogo: brand.logo_url
-            }))
-        );
+                brandLogo: brand.logo_url,
+                brandType: brand.type || 'liquid',
+                // Normalize image_url from the first entry in images[] if missing
+                image_url: line.image_url
+                    || (line.images && line.images.length > 0 ? line.images[0] : ''),
+                images: line.images && line.images.length > 0
+                    ? line.images
+                    : (line.image_url ? [line.image_url] : [])
+            }));
+        });
     }
 
     /**
