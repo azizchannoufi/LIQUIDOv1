@@ -153,22 +153,33 @@
     </style>
     <style>
         /* FAQ Accordion Styles */
-        .faq-answer {
-            display: grid;
-            grid-template-rows: 0fr;
-            transition: grid-template-rows 0.3s ease-out;
-            visibility: hidden;
-            /* Hide completely when closed to prevent focus/interaction */
+        .faq-item {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        .faq-answer>div {
+        .faq-question {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .faq-question:hover {
+            opacity: 0.8;
+        }
+
+        .faq-answer {
+            max-height: 0;
             overflow: hidden;
-            min-height: 0;
+            transition: max-height 0.3s ease;
         }
 
         .faq-answer.active {
-            grid-template-rows: 1fr;
-            visibility: visible;
+            max-height: 1000px;
+        }
+
+        /* Text color adaptations */
+        .faq-answer p,
+        .faq-answer div {
+            color: #000000 !important;
         }
 
         .faq-icon {
@@ -177,28 +188,6 @@
 
         .faq-item.active .faq-icon {
             transform: rotate(180deg);
-        }
-
-        .faq-question {
-            background-color: var(--primary-color);
-            color: black;
-            border-radius: 0.5rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .faq-answer>div {
-            background-color: var(--primary-color);
-            color: black;
-            border-radius: 0.5rem;
-            padding: 1.5rem;
-            /* Add padding inside the answer box */
-            margin-bottom: 0.5rem;
-            /* Add spacing below the answer if needed */
-        }
-
-        /* Force text color within answer to be black, overriding any existing classes */
-        .faq-answer p {
-            color: black !important;
         }
 
         /* Star Rating Filled Stars */
@@ -466,11 +455,10 @@
                     <!-- FAQ 1: Prodotti sicuri e certificati -->
                     <div
                         class="faq-item bg-primary text-black rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all">
-                        <div
-                            class="faq-question px-6 py-4 flex items-center justify-between cursor-pointer hover:brightness-110 transition-all">
+                        <div class="faq-question px-6 py-4 flex items-center justify-between">
                             <h3 class="text-lg font-bold">I prodotti di LIQUIDO VAPE SHOP sono sicuri e certificati?
                             </h3>
-                            <span class="material-symbols-outlined faq-icon text-black flex-shrink-0">expand_more</span>
+                            <span class="material-symbols-outlined faq-icon text-black">expand_more</span>
                         </div>
                         <div class="faq-answer">
                             <div class="px-6 pb-6 text-black leading-relaxed">
@@ -496,10 +484,9 @@
                     <!-- FAQ 2: Cosa serve per iniziare -->
                     <div
                         class="faq-item bg-primary text-black rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all">
-                        <div
-                            class="faq-question px-6 py-4 flex items-center justify-between cursor-pointer hover:brightness-110 transition-all">
+                        <div class="faq-question px-6 py-4 flex items-center justify-between">
                             <h3 class="text-lg font-bold">Cosa serve per iniziare a svapare per la prima volta?</h3>
-                            <span class="material-symbols-outlined faq-icon text-black flex-shrink-0">expand_more</span>
+                            <span class="material-symbols-outlined faq-icon text-black">expand_more</span>
                         </div>
                         <div class="faq-answer">
                             <div class="px-6 pb-6 text-black leading-relaxed">
@@ -536,11 +523,10 @@
                     <!-- FAQ 3: Svapare aiuta a smettere -->
                     <div
                         class="faq-item bg-primary text-black rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all">
-                        <div
-                            class="faq-question px-6 py-4 flex items-center justify-between cursor-pointer hover:brightness-110 transition-all">
+                        <div class="faq-question px-6 py-4 flex items-center justify-between">
                             <h3 class="text-lg font-bold">Svapare aiuta a smettere di fumare le sigarette tradizionali?
                             </h3>
-                            <span class="material-symbols-outlined faq-icon text-black flex-shrink-0">expand_more</span>
+                            <span class="material-symbols-outlined faq-icon text-black">expand_more</span>
                         </div>
                         <div class="faq-answer">
                             <div class="px-6 pb-6 text-black leading-relaxed">
@@ -552,11 +538,10 @@
                     <!-- FAQ 4: Compatibilità liquidi -->
                     <div
                         class="faq-item bg-primary text-black rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all">
-                        <div
-                            class="faq-question px-6 py-4 flex items-center justify-between cursor-pointer hover:brightness-110 transition-all">
+                        <div class="faq-question px-6 py-4 flex items-center justify-between">
                             <h3 class="text-lg font-bold">I liquidi sono compatibili con tutte le sigarette
                                 elettroniche?</h3>
-                            <span class="material-symbols-outlined faq-icon text-black flex-shrink-0">expand_more</span>
+                            <span class="material-symbols-outlined faq-icon text-black">expand_more</span>
                         </div>
                         <div class="faq-answer">
                             <div class="px-6 pb-6 text-black leading-relaxed">
@@ -577,11 +562,10 @@
                     <!-- FAQ 5: Quando sostituire la resistenza -->
                     <div
                         class="faq-item bg-primary text-black rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all">
-                        <div
-                            class="faq-question px-6 py-4 flex items-center justify-between cursor-pointer hover:brightness-110 transition-all">
+                        <div class="faq-question px-6 py-4 flex items-center justify-between">
                             <h3 class="text-lg font-bold">Quando devo sostituire la resistenza di una sigaretta
                                 elettronica?</h3>
-                            <span class="material-symbols-outlined faq-icon text-black flex-shrink-0">expand_more</span>
+                            <span class="material-symbols-outlined faq-icon text-black">expand_more</span>
                         </div>
                         <div class="faq-answer">
                             <div class="px-6 pb-6 text-black leading-relaxed">
