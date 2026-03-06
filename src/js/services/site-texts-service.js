@@ -60,7 +60,7 @@ const DEFAULT_SITE_TEXTS = {
 
         store_title: "IL",
         store_title_highlight: "NEGOZIO",
-        store_text1: "Entrare in LIQUIDO è più di una semplice visita: è un'esperienza. Il nostro negozio fisico, concepito come una boutique dello svapo, unisce estetica ricercata e competenza professionale, offrendo un servizio esperto capace di valorizzare ogni scelta e lo stile personale di ogni cliente.",
+        store_text1: "LIQUIDO è un’idea! Il nostro negozio, concepito come una boutique dello svapo, unisce estetica ricercata e competenza professionale, offrendo un servizio esperto capace di valorizzare scelte e stile di ogni cliente",
         store_text2: "Che tu sia un appassionato esperto o nuovo all'esperienza, il nostro personale fornisce consulenze personalizzate in un ambiente rilassato, senza pressioni.\n\nVivi le nostre barre aromi complete e la selezione di dispositivi più adatti a te.",
     },
 

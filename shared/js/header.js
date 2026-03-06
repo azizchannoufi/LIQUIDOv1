@@ -34,58 +34,143 @@ function initHeaderLogic() {
     // Trigger once on init
     updatePlaceholder();
 
-    // Gestion de la recherche
+    // Gestion de la recherche (live dropdown)
     const searchToggle = document.getElementById('search-toggle');
     const searchContainer = document.getElementById('search-container');
     const searchInput = document.getElementById('search-input');
+    const searchForm = document.getElementById('search-form');
+    const searchDropdown = document.getElementById('search-results-dropdown');
+    const searchList = document.getElementById('search-results-list');
+    const searchFooter = document.getElementById('search-results-footer');
+    const searchEmpty = document.getElementById('search-empty');
+    const searchSeeAll = document.getElementById('search-see-all');
+    const searchSpinner = document.getElementById('search-spinner');
 
     if (searchToggle && searchContainer && searchInput) {
-        // Fonction pour afficher/masquer la recherche
-        function toggleSearch() {
-            if (searchContainer.classList.contains('hidden')) {
-                searchContainer.classList.remove('hidden');
-                searchInput.focus();
-            } else {
-                searchContainer.classList.add('hidden');
-            }
+
+        // Determine path to search.html relative to current page
+        function getSearchUrl(q) {
+            const path = window.location.pathname;
+            const inPublic = path.includes('/public/');
+            const prefix = inPublic ? '' : 'public/';
+            return prefix + 'search.html?q=' + encodeURIComponent(q);
         }
 
-        // Écouter le clic sur l'icône de recherche
+        // ── Open / close ─────────────────────────────────────────────────────
+        function openSearch() {
+            searchContainer.classList.remove('hidden');
+            searchInput.focus();
+        }
+        function closeSearch() {
+            searchContainer.classList.add('hidden');
+        }
+
         searchToggle.addEventListener('click', function (e) {
             e.preventDefault();
             e.stopPropagation();
-            toggleSearch();
+            if (searchContainer.classList.contains('hidden')) openSearch();
+            else closeSearch();
         });
 
-        // Fermer la recherche quand on clique ailleurs
         document.addEventListener('click', function (e) {
             if (!searchContainer.contains(e.target) && e.target !== searchToggle) {
-                searchContainer.classList.add('hidden');
+                closeSearch();
             }
         });
 
-        // Empêcher la fermeture quand on clique dans le champ de recherche
-        searchContainer.addEventListener('click', function (e) {
-            e.stopPropagation();
-        });
+        searchContainer.addEventListener('click', function (e) { e.stopPropagation(); });
 
-        // Fermer avec la touche Escape
         document.addEventListener('keydown', function (e) {
-            if (e.key === 'Escape') {
-                searchContainer.classList.add('hidden');
-            }
+            if (e.key === 'Escape') closeSearch();
         });
 
-        // Gérer la soumission du formulaire
-        const searchForm = document.getElementById('search-form');
+        // ── Result helpers ────────────────────────────────────────────────────
+        function typeLabel(type) {
+            return { page: 'Pagina', brand: 'Brand', line: 'Linea', faq: 'FAQ' }[type] || type;
+        }
+        function typeDotClass(type) {
+            return { page: 'bg-blue-400', brand: 'bg-yellow-400', line: 'bg-gray-400', faq: 'bg-green-400' }[type] || 'bg-gray-300';
+        }
+
+        function renderItem(item) {
+            const hasImg = item.image && item.image.trim();
+            const imgPart = hasImg
+                ? `<img src="${item.image}" alt="${item.title}" class="w-8 h-8 object-contain rounded flex-shrink-0" onerror="this.style.display='none'">`
+                : `<span class="material-symbols-outlined text-xl text-primary flex-shrink-0" style="font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24">${item.icon || 'search'}</span>`;
+
+            return `<a href="${item.url}"
+                class="flex items-center gap-3 px-4 py-2.5 hover:bg-gray-50 transition-colors cursor-pointer"
+                onclick="document.getElementById('search-container').classList.add('hidden')">
+                ${imgPart}
+                <div class="min-w-0 flex-1">
+                    <p class="text-sm font-semibold text-gray-900 truncate leading-tight">${item.title}</p>
+                    <p class="text-xs text-gray-400 truncate">${item.description || ''}</p>
+                </div>
+                <span class="flex-shrink-0 flex items-center gap-1">
+                    <span class="w-1.5 h-1.5 rounded-full ${typeDotClass(item.type)}"></span>
+                    <span class="text-[10px] text-gray-400 font-medium uppercase tracking-wide">${typeLabel(item.type)}</span>
+                </span>
+            </a>`;
+        }
+
+        // ── Debounced live search ─────────────────────────────────────────────
+        let debounceTimer;
+
+        async function runLiveSearch(query) {
+            if (!query || query.trim().length < 2) {
+                if (searchDropdown) searchDropdown.classList.add('hidden');
+                return;
+            }
+
+            if (searchSpinner) searchSpinner.classList.remove('hidden');
+            if (searchDropdown) searchDropdown.classList.remove('hidden');
+            if (searchList) searchList.innerHTML = '';
+            if (searchEmpty) searchEmpty.classList.add('hidden');
+            if (searchFooter) searchFooter.classList.add('hidden');
+
+            // Wait for search service to load (it's loaded lazily)
+            let attempts = 0;
+            while (!window.liquidoSearchService && attempts++ < 30) {
+                await new Promise(r => setTimeout(r, 150));
+            }
+
+            let results = [];
+            if (window.liquidoSearchService) {
+                try {
+                    results = await window.liquidoSearchService.search(query.trim(), 6);
+                } catch (e) { console.warn('Live search error', e); }
+            }
+
+            if (searchSpinner) searchSpinner.classList.add('hidden');
+
+            if (results.length === 0) {
+                if (searchList) searchList.innerHTML = '';
+                if (searchEmpty) searchEmpty.classList.remove('hidden');
+                if (searchFooter) searchFooter.classList.add('hidden');
+            } else {
+                if (searchEmpty) searchEmpty.classList.add('hidden');
+                if (searchList) searchList.innerHTML = results.map(renderItem).join('');
+                if (searchSeeAll) searchSeeAll.href = getSearchUrl(query.trim());
+                if (searchFooter) searchFooter.classList.remove('hidden');
+            }
+        }
+
+        searchInput.addEventListener('input', function () {
+            clearTimeout(debounceTimer);
+            const val = searchInput.value;
+            if (!val.trim()) {
+                if (searchDropdown) searchDropdown.classList.add('hidden');
+                return;
+            }
+            debounceTimer = setTimeout(() => runLiveSearch(val), 300);
+        });
+
+        // ── Submit → full search page ─────────────────────────────────────────
         if (searchForm) {
             searchForm.addEventListener('submit', function (e) {
                 e.preventDefault();
-                const query = searchInput.value.trim();
-                if (query) {
-                    // Rediriger vers la page de recherche
-                    window.location.href = `search.html?q=${encodeURIComponent(query)}`;
-                }
+                const q = searchInput.value.trim();
+                if (q) window.location.href = getSearchUrl(q);
             });
         }
     }

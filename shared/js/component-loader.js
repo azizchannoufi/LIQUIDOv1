@@ -93,6 +93,27 @@ async function loadHeader() {
         const script = document.createElement('script');
         script.src = '../shared/js/header.js';
         document.body.appendChild(script);
+
+        // Load search dependencies lazily (for live search dropdown)
+        // Only load if not already present on the page
+        function lazyScript(src) {
+            if (document.querySelector(`script[src="${src}"]`)) return; // already loaded
+            const s = document.createElement('script');
+            s.src = src;
+            s.defer = true;
+            document.body.appendChild(s);
+        }
+
+        // Firebase needs to be loaded first
+        if (typeof firebase === 'undefined') {
+            // Load firebase compat scripts if not present
+            lazyScript('https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js');
+            lazyScript('https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js');
+        }
+        lazyScript('../src/js/services/firebase-config.js');
+        lazyScript('../src/js/services/firebase-catalog-service.js');
+        lazyScript('../src/js/services/search-service.js');
+
     } catch (error) {
         console.error('Error loading header:', error);
     }
