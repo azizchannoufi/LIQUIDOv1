@@ -1,4 +1,4 @@
-(function() {
+(function () {
     'use strict';
 
     const AGE_VERIFICATION_KEY = 'liquido_age_verified';
@@ -12,16 +12,13 @@
 
         const popup = document.createElement('div');
         popup.className = 'bg-white rounded-xl max-w-md w-full p-8 md:p-12 text-center space-y-6';
-        
-        const logoPath = '../assets/images/Goccia LIQUIDO/GOCCIA Y_W.png';
-        
+
+        const logoPath = '../assets/images/Logo LIQUIDO/LOGO 15cm WEB Trasparente_02.png';
+
         popup.innerHTML = `
             <div class="space-y-4">
-                <div class="flex items-center justify-center gap-3 mb-6">
-                    <img src="${logoPath}" alt="LIQUIDO Logo" class="h-12 object-contain"/>
-                    <h2 class="text-3xl font-black tracking-tighter uppercase" style="color: #333333;">
-                        LIQUIDO <span class="font-normal" style="color: #F8ED70;">VAPE SHOP</span>
-                    </h2>
+                <div class="flex justify-center mb-6">
+                    <img src="${logoPath}" alt="LIQUIDO Logo" class="h-20 object-contain"/>
                 </div>
                 
                 <h1 class="text-3xl md:text-4xl font-black leading-tight" style="color: #333333;">
@@ -54,7 +51,7 @@
         const yesButton = document.getElementById('age-verify-yes');
         const noButton = document.getElementById('age-verify-no');
 
-        yesButton.addEventListener('click', function() {
+        yesButton.addEventListener('click', function () {
             localStorage.setItem(AGE_VERIFICATION_KEY, VERIFIED_VALUE);
             overlay.style.opacity = '0';
             overlay.style.transition = 'opacity 0.3s ease-out';
@@ -64,14 +61,14 @@
             }, 300);
         });
 
-        noButton.addEventListener('click', function() {
+        noButton.addEventListener('click', function () {
             alert('Devi essere maggiorenne per accedere a questo sito.');
         });
     }
 
     function checkAgeVerification() {
         const isVerified = localStorage.getItem(AGE_VERIFICATION_KEY) === VERIFIED_VALUE;
-        
+
         if (!isVerified) {
             if (document.readyState === 'loading') {
                 document.addEventListener('DOMContentLoaded', createAgeVerificationPopup);

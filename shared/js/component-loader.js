@@ -17,7 +17,8 @@ async function loadComponent(elementId, componentPath, options = {}) {
             return;
         }
 
-        const response = await fetch(componentPath);
+        const cacheBuster = '?v=' + new Date().getTime();
+        const response = await fetch(componentPath + cacheBuster);
         if (!response.ok) {
             throw new Error(`Failed to load component: ${response.statusText}`);
         }
@@ -57,7 +58,8 @@ async function loadComponentsInParallel(components) {
  */
 async function loadTopNav() {
     try {
-        const response = await fetch('../shared/components/public-top-nav.html');
+        const cacheBuster = '?v=' + new Date().getTime();
+        const response = await fetch('../shared/components/public-top-nav.html' + cacheBuster);
         if (!response.ok) {
             throw new Error(`Failed to load top nav: ${response.statusText}`);
         }
@@ -75,7 +77,8 @@ async function loadTopNav() {
  */
 async function loadHeader() {
     try {
-        const response = await fetch('../shared/components/public-header.html');
+        const cacheBuster = '?v=' + new Date().getTime();
+        const response = await fetch('../shared/components/public-header.html' + cacheBuster);
         if (!response.ok) {
             throw new Error(`Failed to load header: ${response.statusText}`);
         }
@@ -125,7 +128,8 @@ async function loadHeader() {
  */
 async function loadFooter() {
     try {
-        const response = await fetch('../shared/components/public-footer.html');
+        const cacheBuster = '?v=' + new Date().getTime();
+        const response = await fetch('../shared/components/public-footer.html' + cacheBuster);
         if (!response.ok) {
             throw new Error(`Failed to load footer: ${response.statusText}`);
         }
@@ -168,7 +172,8 @@ async function loadFooter() {
  */
 async function loadCookieBanner() {
     try {
-        const response = await fetch('../shared/components/cookie-banner.html');
+        const cacheBuster = '?v=' + new Date().getTime();
+        const response = await fetch('../shared/components/cookie-banner.html' + cacheBuster);
         if (!response.ok) {
             throw new Error(`Failed to load cookie banner: ${response.statusText}`);
         }
