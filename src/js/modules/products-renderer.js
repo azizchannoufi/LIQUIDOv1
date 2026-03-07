@@ -46,9 +46,6 @@ class ProductsRenderer {
                 <div class="p-5">
                     <p class="text-zinc-400 text-[10px] font-bold uppercase tracking-widest mb-2">${brandName}</p>
                     <h3 class="text-base font-bold text-white group-hover:text-primary transition-colors mb-4 line-clamp-2">${line.name}</h3>
-                    <div class="details-btn w-full py-2.5 rounded-lg border border-primary/30 bg-primary/10 text-primary font-bold text-xs tracking-widest transition-all uppercase flex items-center justify-center gap-2 group-hover:bg-primary group-hover:text-black">
-                        Dettagli <span class="material-symbols-outlined text-base">arrow_forward</span>
-                    </div>
                 </div>
             </a>
         `;
@@ -523,9 +520,6 @@ class ProductsRenderer {
                     <p class="text-zinc-400 text-[10px] font-bold uppercase tracking-widest mb-2">${brandName}${lineName ? ` • ${lineName}` : ''}</p>
                     <h3 class="text-base font-bold text-white group-hover:text-primary transition-colors mb-4 line-clamp-2">${productName}</h3>
                     ${product.flavorProfile ? `<p class="text-zinc-500 text-xs mb-3 line-clamp-1">${product.flavorProfile}</p>` : ''}
-                    <div class="details-btn w-full py-2.5 rounded-lg border border-primary/30 bg-primary/10 text-primary font-bold text-xs tracking-widest transition-all uppercase flex items-center justify-center gap-2 group-hover:bg-primary group-hover:text-black">
-                        Dettagli <span class="material-symbols-outlined text-base">arrow_forward</span>
-                    </div>
                 </div>
             </a>
         `;

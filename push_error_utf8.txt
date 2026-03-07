@@ -1,0 +1,41 @@
+﻿git : remote: error: GH013: Repository rule violations found for 
+refs/heads/third-update.        
+Au caractère Ligne:1 : 1
++ git push -u origin third-update 2>&1 | Out-File -Encoding utf8 push_e ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (remote: error: ...update.        :Strin 
+   g) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+remote: 
+remote: - GITHUB PUSH PROTECTION        
+remote:   ÔÇöÔÇöÔÇöÔÇöÔÇöÔÇöÔÇöÔÇöÔÇöÔÇöÔÇöÔÇöÔÇöÔÇöÔÇöÔÇöÔÇöÔÇöÔÇöÔÇöÔÇöÔÇöÔÇöÔÇöÔÇö
+ÔÇöÔÇöÔÇöÔÇöÔÇöÔÇöÔÇöÔÇöÔÇöÔÇöÔÇöÔÇöÔÇöÔÇöÔÇöÔÇö        
+remote:     Resolve the following violations before pushing again        
+remote: 
+remote:     - Push cannot contain secrets        
+remote: 
+remote:             
+remote:      (?) Learn how to resolve a blocked push        
+remote:      https://docs.github.com/code-security/secret-scanning/working-with-secre
+t-scanning-and-push-protection/working-with-push-protection-from-the-command-line#res
+olving-a-blocked-push        
+remote:             
+remote:             
+remote:       ÔÇöÔÇö Mapbox Secret Access Token 
+ÔÇöÔÇöÔÇöÔÇöÔÇöÔÇöÔÇöÔÇöÔÇöÔÇöÔÇöÔÇöÔÇöÔÇöÔÇöÔÇöÔÇöÔÇöÔÇöÔÇöÔÇöÔÇöÔÇöÔÇö        
+remote:        locations:        
+remote:          - commit: daac2f6b8fd5c33f3c2c64d504872d52fe4f1300        
+remote:            path: src/components/common/footer.html:67        
+remote:             
+remote:        (?) To push, remove secret from commit(s) or follow this URL to allow 
+the secret.        
+remote:        https://github.com/azizchannoufi/LIQUIDOv1/security/secret-scanning/un
+block-secret/3Aapo6Q5jQu7Yq7CHdkFKKNE2oy        
+remote:             
+remote: 
+remote: 
+To https://github.com/azizchannoufi/LIQUIDOv1.git
+ ! [remote rejected] third-update -> third-update (push declined due to repository 
+rule violations)
+error: failed to push some refs to 'https://github.com/azizchannoufi/LIQUIDOv1.git'

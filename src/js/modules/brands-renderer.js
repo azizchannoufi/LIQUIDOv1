@@ -604,9 +604,7 @@ class BrandsRenderer {
                         <p class="text-slate-600 dark:text-slate-400 text-sm font-medium leading-relaxed">
                             ${description}
                         </p>
-                        <a href="${navUrl}" class="inline-flex w-full justify-center items-center gap-2 px-6 py-3 bg-background-dark text-white uppercase font-bold text-xs rounded-sm">
-                            Vedi Catalogo
-                        </a>
+                        
                      </div>
                 </div>
             `;
@@ -725,10 +723,7 @@ class BrandsRenderer {
                             <p class="text-slate-600 dark:text-slate-400 text-sm font-medium leading-relaxed">
                                 ${description}
                             </p>
-                            <a href="${navUrl}" class="inline-flex w-full justify-center items-center gap-2 px-6 py-3 bg-background-dark text-white uppercase font-bold text-xs rounded-sm">
-                                CATALOGO
-                                <span class="material-symbols-outlined text-sm">arrow_forward</span>
-                            </a>
+                          
                          </div>
                     </div>
                 `;
@@ -870,10 +865,7 @@ class BrandsRenderer {
                             <p class="text-slate-600 dark:text-slate-400 text-sm font-medium leading-relaxed">
                                 ${description}
                             </p>
-                            <a href="${navUrl}" class="inline-flex w-full justify-center items-center gap-2 px-6 py-3 bg-background-dark text-white uppercase font-bold text-xs rounded-sm">
-                                CATALOGO
-                                <span class="material-symbols-outlined text-sm">arrow_forward</span>
-                            </a>
+                           
                          </div>
                     </div>
                 `;
