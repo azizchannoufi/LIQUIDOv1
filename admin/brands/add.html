@@ -112,11 +112,11 @@
             </div>
             <!-- Logout Section -->
             <div class="px-4">
-                <a href="../index.html"
+                <button onclick="window.adminAuth && window.adminAuth.logout()"
                     class="flex w-full cursor-pointer items-center justify-center overflow-hidden rounded-lg h-11 bg-primary text-background-dark text-sm font-bold transition-transform hover:scale-[1.02] active:scale-95">
                     <span class="material-symbols-outlined mr-2">logout</span>
                     <span>Logout</span>
-                </a>
+                </button>
             </div>
         </aside>
         <!-- Main Content Area -->
@@ -290,6 +290,7 @@
 
     <!-- Catalog Services -->
     <script src="../../src/js/services/firebase-config.js"></script>
+    <script src="../../src/js/admin/admin-auth.js"></script>
     <script src="../../src/js/services/firebase-catalog-service.js"></script>
     <script src="../../src/js/services/catalog-service.js"></script>
     <script src="../../src/js/modules/catalog-init.js"></script>
