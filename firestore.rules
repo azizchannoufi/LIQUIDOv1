@@ -1,0 +1,50 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ─── Sections (catalogue produits) ───────────────────────────────────────
+    // Lecture publique, écriture réservée aux utilisateurs authentifiés (admin)
+    match /sections/{sectionId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+
+    // ─── Utilisateurs ─────────────────────────────────────────────────────────
+    // Chaque utilisateur peut lire et écrire ses propres données uniquement
+    match /users/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+
+    // ─── Commandes (orders) ───────────────────────────────────────────────────
+    // L'utilisateur peut créer ses commandes, un admin (authentifié) peut tout lire
+    match /orders/{orderId} {
+      allow read: if request.auth != null;
+      allow create: if request.auth != null;
+      allow update, delete: if request.auth != null;
+    }
+
+    // ─── Services ─────────────────────────────────────────────────────────────
+    match /services/{serviceId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+
+    // ─── Visites (analytics) ──────────────────────────────────────────────────
+    match /visits/{visitId} {
+      allow read: if request.auth != null;
+      allow write: if true; // Les utilisateurs publics peuvent enregistrer leur visite
+    }
+
+    // ─── Inbox / Messages ─────────────────────────────────────────────────────
+    match /inbox/{messageId} {
+      allow read: if request.auth != null;
+      allow create: if true; // Formulaire public de contact
+      allow update, delete: if request.auth != null;
+    }
+
+    // ─── Tout le reste : bloqué ───────────────────────────────────────────────
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
