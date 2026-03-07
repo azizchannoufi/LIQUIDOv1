@@ -88,7 +88,7 @@ const DEFAULT_SITE_TEXTS = {
 
     // ===== FOOTER =====
     footer: {
-        description: "Il negozio vape di riferimento a Monterotondo (Roma). Prodotti certificati, consulenza professionale e un'esperienza di svapo senza compromessi.",
+        description: "Il tuo vape shop di riferimento a Monterotondo, dove qualità e professionalità si fondono per offrirti un'esperienza di svapo unica.\nTi guidiamo nella scelta dei migliori liquidi e dispositivi, con consulenza personalizzata e prodotti certificati per elevare la tua esperienza di svapo.",
         address: "Via Adige 43C, 00015 Monterotondo (RM)",
         phone: "+39 379 134 5367",
         hours_weekdays: "Lun-Ven: 09:00 – 20:15",

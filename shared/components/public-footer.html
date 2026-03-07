@@ -8,12 +8,14 @@
                         class="h-12 object-contain" />
                 </div>
                 <div class="flex flex-col gap-3 text-sm text-white leading-relaxed">
-                    <p data-text-key="footer.description">Il tuo vape shop di riferimento a Monterotondo, dove qualità e
-                        professionalità si fondono per
-                        offrirti un'esperienza di svapo unica.</p>
+                    <p>Il tuo vape shop di riferimento a Monterotondo, dove qualità e
+                        professionalità si fondono per offrirti un'esperienza di svapo unica.</p>
+                    <p class="text-sm text-white leading-relaxed">Ti guidiamo nella scelta dei migliori liquidi e
+                        dispositivi, con consulenza personalizzata e prodotti certificati per elevare la tua esperienza
+                        di svapo.</p>
                 </div>
-                <!-- Social Icons -->
-                <div class="flex gap-5">
+                <!-- Social Icons — centered under logo -->
+                <div class="flex gap-5 justify-center">
                     <a class="text-white hover:text-primary transition-colors"
                         href="https://www.instagram.com/liquido.vapeshop/" target="_blank" rel="noopener noreferrer"
                         aria-label="Instagram">
@@ -56,13 +58,24 @@
                         <span class="material-symbols-outlined text-primary text-xl">call</span>
                         <span data-text-key="footer.phone">+39 379 134 5367</span>
                     </a>
-                    <!-- Clickable Map Image -->
+                    <!-- Clickable Map Photo -->
                     <a href="https://maps.google.com/?q=Via+Adige+43C,+00015+Monterotondo+(Rm)" target="_blank"
                         rel="noopener noreferrer"
-                        class="block mt-2 rounded-md overflow-hidden border border-white/10 hover:border-primary/50 transition-colors">
-                        <img src="https://maps.googleapis.com/maps/api/staticmap?center=Via+Adige+43C,Monterotondo,RM&zoom=15&size=300x120&maptype=roadmap&markers=color:yellow%7CVia+Adige+43C,Monterotondo&key=AIzaSyD-9tSrke72PouQMnMX-a7eZSW0jkFMBWY"
-                            onerror="this.onerror=null;this.src='https://via.placeholder.com/300x120/1a1a1a/F8ED70?text=📍+Via+Adige+43C,+Monterotondo'"
-                            alt="Mappa LIQUIDO Vape Shop" class="w-full h-[90px] object-cover" />
+                        class="block mt-3 rounded-lg overflow-hidden border border-white/10 hover:border-primary/60 transition-all shadow-lg group">
+                        <div class="relative">
+                            <img src="https://maps.googleapis.com/maps/api/staticmap?center=Via+Adige+43C,Monterotondo,RM&zoom=15&size=400x200&maptype=roadmap&style=feature:all|element:labels.text.fill|color:0xffffff&style=feature:all|element:geometry|color:0x1a1a2e&markers=color:yellow%7CVia+Adige+43C,Monterotondo&key=AIzaSyD-9tSrke72PouQMnMX-a7eZSW0jkFMBWY"
+                                onerror="this.onerror=null;this.src='https://placehold.co/400x200/111827/F8ED70?text=📍+Via+Adige+43C%2C+Monterotondo'"
+                                alt="Mappa LIQUIDO Vape Shop"
+                                class="w-full h-[140px] object-cover group-hover:scale-105 transition-transform duration-300" />
+                            <div
+                                class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent py-2 px-3">
+                                <span
+                                    class="text-[10px] text-white font-bold uppercase tracking-widest flex items-center gap-1">
+                                    <span class="material-symbols-outlined text-primary text-sm">open_in_new</span>
+                                    Apri in Maps
+                                </span>
+                            </div>
+                        </div>
                     </a>
                 </div>
             </div>
@@ -102,14 +115,16 @@
                     </li>
                 </ul>
                 <div class="mt-4 flex flex-col items-start gap-4">
-                    <!-- ADM Logo — fixed height h-12 -->
+                    <!-- ADM Logo — same width as 18+ badge -->
                     <img src="../assets/images/ADM Logo BIANCO.png" alt="ADM Logo"
-                        class="h-12 object-contain opacity-90">
-                    <!-- 18+ Warning — same height h-12 via padding balance -->
-                    <div class="h-12 inline-flex items-center gap-2 border-2 border-primary px-3 rounded-sm">
+                        class="w-[280px] h-auto object-contain object-left opacity-90 block">
+                    <!-- 18+ Warning — same width as ADM logo -->
+                    <div
+                        class="w-[280px] h-12 flex items-center justify-center gap-2 border-2 border-primary px-3 rounded-sm cursor-default">
                         <span class="material-symbols-outlined text-primary text-base">verified_user</span>
-                        <span class="text-[10px] font-black uppercase tracking-wider text-primary">SOLO 18+ | SVAPA
-                            RESPONSABILMENTE</span>
+                        <span
+                            class="text-[10px] font-black uppercase tracking-wider text-primary whitespace-nowrap">SOLO
+                            18+ | SVAPA RESPONSABILMENTE</span>
                     </div>
                 </div>
             </div>
