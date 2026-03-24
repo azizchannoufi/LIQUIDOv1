@@ -132,14 +132,26 @@
             transform: translateX(0) translateY(0);
         }
 
-        /* Stagger animation for grid items */
+        /* Stagger animation for grid items — from bottom */
         .scroll-animate-stagger {
             opacity: 0;
             transform: translateY(30px);
-            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+            transition: opacity 1.1s ease-out, transform 1.1s ease-out;
         }
 
         .scroll-animate-stagger.animate-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Stagger animation for grid items — from top */
+        .scroll-animate-stagger-top {
+            opacity: 0;
+            transform: translateY(-30px);
+            transition: opacity 60.1s ease-out, transform 60.1s ease-out;
+        }
+
+        .scroll-animate-stagger-top.animate-in {
             opacity: 1;
             transform: translateY(0);
         }
@@ -240,20 +252,20 @@
                 .strength-icon-box {
                     width: 80px;
                     height: 80px;
-                    background: #111;
+                    background: #f0f0f0;
                     border-radius: 50%;
                     display: flex;
                     align-items: center;
                     justify-content: center;
                     margin-bottom: 1.5rem;
-                    transition: background 0.35s cubic-bezier(0.4, 0, 0.2, 1), transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+                    transition: background 0.35s cubic-bezier(0.4, 0, 0.2, 1), transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.35s cubic-bezier(0.4, 0, 0.2, 1), outline 0.35s cubic-bezier(0.4, 0, 0.2, 1);
                     position: relative;
                     overflow: hidden;
                 }
 
                 .strength-icon-box .material-symbols-outlined {
                     font-size: 2.2rem;
-                    color: #fff;
+                    color: #000000;
                     transition: color 0.35s cubic-bezier(0.4, 0, 0.2, 1), transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
                     font-variation-settings: 'FILL' 0, 'wght' 300;
                 }
@@ -293,7 +305,7 @@
                 <div class="flex flex-col md:flex-row justify-between gap-6 lg:gap-4">
                     <!-- Strength 1: Prodotti Certificati -->
                     <div
-                        class="strength-card flex-1 flex flex-col items-center text-center scroll-animate-stagger delay-0">
+                        class="strength-card flex-1 flex flex-col items-center text-center scroll-animate-stagger-top delay-0">
                         <div class="strength-icon-box">
                             <span class="material-symbols-outlined">verified</span>
                         </div>
@@ -327,7 +339,7 @@
 
                     <!-- Strength 3: Ambiente Elegante -->
                     <div
-                        class="strength-card flex-1 flex flex-col items-center text-center scroll-animate-stagger delay-200">
+                        class="strength-card flex-1 flex flex-col items-center text-center scroll-animate-stagger-top delay-200">
                         <div class="strength-icon-box">
                             <span class="material-symbols-outlined">diamond</span>
                         </div>
@@ -762,7 +774,7 @@
             const observer = new IntersectionObserver(observerCallback, observerOptions);
 
             // Observe all elements with scroll-animate class
-            const animatedElements = document.querySelectorAll('.scroll-animate, .scroll-animate-stagger');
+            const animatedElements = document.querySelectorAll('.scroll-animate, .scroll-animate-stagger, .scroll-animate-stagger-top');
             animatedElements.forEach(element => {
                 observer.observe(element);
             });

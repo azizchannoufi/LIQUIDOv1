@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <title>LIQUIDO Admin - Store Settings</title>
+    <title>LIQUIDO Admin - Impostazioni Negozio</title>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap"
         rel="stylesheet" />
@@ -62,14 +62,14 @@
             animation: spin 1s linear infinite;
         }
 
-        /* Textarea style */
+        /* Textarea style — dark background (content editor) */
         .text-field {
             width: 100%;
-            background: #27271b;
+            background: #ffffff;
             border: 1px solid #54543b;
             border-radius: 0.5rem;
             padding: 0.75rem 1rem;
-            color: white;
+            color: #000000;
             font-size: 0.875rem;
             outline: none;
             transition: border-color 0.2s, box-shadow 0.2s;
@@ -77,9 +77,45 @@
             resize: vertical;
         }
 
+        /* Textarea style — used for other inputs (e.g. General Info, Security) */
+        .text-field2 {
+            width: 100%;
+            background: #f8f8f5;
+            border: 1px solid #d1d5db;
+            border-radius: 0.5rem;
+            padding: 0.75rem 1rem;
+            color: #ffffff;
+            font-size: 0.875rem;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            resize: vertical;
+        }
+
+        .dark .text-field2 {
+            background: #27271b;
+            border-color: #54543b;
+            color: #ffffff;
+        }
+
         .text-field:focus {
             border-color: #F8ED70;
             box-shadow: 0 0 0 3px rgba(248, 237, 112, 0.15);
+        }
+
+        .text-field::placeholder {
+            color: #6b6b4a;
+            opacity: 1;
+        }
+
+        .text-field2:focus {
+            border-color: #F8ED70;
+            box-shadow: 0 0 0 3px rgba(248, 237, 112, 0.15);
+        }
+
+        .text-field2::placeholder {
+            color: #9a9a7a;
+            opacity: 1;
         }
 
         .text-field-label {
@@ -101,6 +137,17 @@
         .section-divider {
             border-top: 1px solid #393928;
             margin: 1.5rem 0;
+        }
+
+        /* Placeholder colors */
+        ::placeholder {
+            color: #9a9a7a;
+            opacity: 1;
+        }
+
+        input::placeholder,
+        textarea::placeholder {
+            color: #9a9a7a;
         }
 
         .page-badge {
@@ -134,7 +181,7 @@
                     <div class="flex flex-col">
                         <h1 class="text-lg font-bold leading-tight tracking-tight">LIQUIDO</h1>
                         <p class="text-slate-500 dark:text-[#baba9c] text-xs font-medium uppercase tracking-widest">
-                            Admin Console</p>
+                            Console Admin</p>
                     </div>
                 </div>
                 <!-- Navigation Links -->
@@ -147,32 +194,32 @@
                     <a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-[#baba9c] hover:bg-slate-100 dark:hover:bg-[#2a2a1a] transition-colors"
                         href="products/index.html">
                         <span class="material-symbols-outlined">inventory_2</span>
-                        <p class="text-sm font-medium">Products</p>
+                        <p class="text-sm font-medium">Prodotti</p>
                     </a>
                     <a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-[#baba9c] hover:bg-slate-100 dark:hover:bg-[#2a2a1a] transition-colors"
                         href="brands/index.html">
                         <span class="material-symbols-outlined">loyalty</span>
-                        <p class="text-sm font-medium">Brands</p>
+                        <p class="text-sm font-medium">Marchi</p>
                     </a>
                     <a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-[#baba9c] hover:bg-slate-100 dark:hover:bg-[#2a2a1a] transition-colors"
                         href="users/index.html">
                         <span class="material-symbols-outlined">people</span>
-                        <p class="text-sm font-medium">Users</p>
+                        <p class="text-sm font-medium">Utenti</p>
                     </a>
                     <a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-[#baba9c] hover:bg-slate-100 dark:hover:bg-[#2a2a1a] transition-colors"
                         href="orders/index.html">
                         <span class="material-symbols-outlined">shopping_cart</span>
-                        <p class="text-sm font-medium">Orders</p>
+                        <p class="text-sm font-medium">Ordini</p>
                     </a>
                     <a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-[#baba9c] hover:bg-slate-100 dark:hover:bg-[#2a2a1a] transition-colors"
                         href="services/index.html">
                         <span class="material-symbols-outlined">room_service</span>
-                        <p class="text-sm font-medium">Services</p>
+                        <p class="text-sm font-medium">Servizi</p>
                     </a>
                     <a class="sidebar-active flex items-center gap-3 px-3 py-2.5 rounded-lg text-primary"
                         href="settings.html">
                         <span class="material-symbols-outlined">settings</span>
-                        <p class="text-sm font-semibold">Store Settings</p>
+                        <p class="text-sm font-semibold">Impostazioni Negozio</p>
                     </a>
                 </nav>
             </div>
@@ -181,7 +228,7 @@
                 <a href="index.html"
                     class="flex w-full cursor-pointer items-center justify-center overflow-hidden rounded-lg h-11 bg-primary text-background-dark text-sm font-bold transition-transform hover:scale-[1.02] active:scale-95">
                     <span class="material-symbols-outlined mr-2">logout</span>
-                    <span>Logout</span>
+                    <span>Esci</span>
                 </a>
             </div>
         </aside>
@@ -192,13 +239,13 @@
                 <div class="flex items-center gap-2 text-sm text-slate-500 dark:text-[#baba9c] mb-6">
                     <a class="hover:text-primary transition-colors" href="dashboard.html">Dashboard</a>
                     <span class="material-symbols-outlined text-xs">chevron_right</span>
-                    <span class="text-slate-900 dark:text-white font-medium">Store Settings</span>
+                    <span class="text-slate-900 dark:text-white font-medium">Impostazioni Negozio</span>
                 </div>
                 <!-- Page Heading -->
                 <div class="mb-10">
-                    <h2 class="text-4xl font-extrabold tracking-tight dark:text-white">Store Settings</h2>
-                    <p class="mt-2 text-slate-600 dark:text-[#baba9c]">Manage your shop details, location, content and
-                        administrative credentials.</p>
+                    <h2 class="text-4xl font-extrabold tracking-tight dark:text-white">Impostazioni Negozio</h2>
+                    <p class="mt-2 text-slate-600 dark:text-[#baba9c]">Gestisci i dettagli del negozio, la posizione, i contenuti e
+                        le credenziali amministrative.</p>
                 </div>
                 <!-- Settings Sections -->
                 <div class="space-y-12">
@@ -262,20 +309,20 @@
                             <!-- Hero -->
                             <div>
                                 <div class="page-badge"><span
-                                        class="material-symbols-outlined text-xs">movie</span>Section Hero (Vidéo)</div>
+                                        class="material-symbols-outlined text-xs">movie</span>Sezione Hero (Video)</div>
                                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                                     <div class="field-group">
-                                        <label class="text-field-label">Ligne 1 (blanche)</label>
+                                        <label class="text-field-label">Riga 1 (bianca)</label>
                                         <input type="text" class="text-field" data-text-field="home.hero_line1"
                                             placeholder="Accendi" />
                                     </div>
                                     <div class="field-group">
-                                        <label class="text-field-label">Ligne 2 (blanche)</label>
+                                        <label class="text-field-label">Riga 2 (bianca)</label>
                                         <input type="text" class="text-field" data-text-field="home.hero_line2"
                                             placeholder="la tua vibe" />
                                     </div>
                                     <div class="field-group">
-                                        <label class="text-field-label">Ligne 3 (jaune)</label>
+                                        <label class="text-field-label">Riga 3 (gialla)</label>
                                         <input type="text" class="text-field" data-text-field="home.hero_line3"
                                             placeholder="ad ogni hit" />
                                     </div>
@@ -291,12 +338,12 @@
                                     LIQUIDO"</div>
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                                     <div class="field-group">
-                                        <label class="text-field-label">Titre (partie noire)</label>
+                                        <label class="text-field-label">Titolo (parte nera)</label>
                                         <input type="text" class="text-field" data-text-field="home.why_title"
                                             placeholder="PERCHÉ" />
                                     </div>
                                     <div class="field-group">
-                                        <label class="text-field-label">Titre (partie jaune)</label>
+                                        <label class="text-field-label">Titolo (parte gialla)</label>
                                         <input type="text" class="text-field" data-text-field="home.why_title_highlight"
                                             placeholder="LIQUIDO" />
                                     </div>
@@ -304,60 +351,60 @@
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                     <!-- Strength 1 -->
                                     <div class="bg-black/20 rounded-lg p-4 space-y-3">
-                                        <p class="text-xs font-bold text-primary uppercase tracking-widest">Point 1 —
-                                            Produits</p>
+                                        <p class="text-xs font-bold text-primary uppercase tracking-widest">Punto 1 —
+                                            Prodotti</p>
                                         <div class="field-group">
-                                            <label class="text-field-label">Titre</label>
+                                            <label class="text-field-label">Titolo</label>
                                             <input type="text" class="text-field" data-text-field="home.strength1_title"
                                                 placeholder="Prodotti Certificati" />
                                         </div>
                                         <div class="field-group">
-                                            <label class="text-field-label">Description</label>
+                                            <label class="text-field-label">Descrizione</label>
                                             <textarea class="text-field" rows="3"
                                                 data-text-field="home.strength1_desc"></textarea>
                                         </div>
                                     </div>
                                     <!-- Strength 2 -->
                                     <div class="bg-black/20 rounded-lg p-4 space-y-3">
-                                        <p class="text-xs font-bold text-primary uppercase tracking-widest">Point 2 —
-                                            Service</p>
+                                        <p class="text-xs font-bold text-primary uppercase tracking-widest">Punto 2 —
+                                            Servizio</p>
                                         <div class="field-group">
-                                            <label class="text-field-label">Titre</label>
+                                            <label class="text-field-label">Titolo</label>
                                             <input type="text" class="text-field" data-text-field="home.strength2_title"
                                                 placeholder="Customer Care" />
                                         </div>
                                         <div class="field-group">
-                                            <label class="text-field-label">Description</label>
+                                            <label class="text-field-label">Descrizione</label>
                                             <textarea class="text-field" rows="3"
                                                 data-text-field="home.strength2_desc"></textarea>
                                         </div>
                                     </div>
                                     <!-- Strength 3 -->
                                     <div class="bg-black/20 rounded-lg p-4 space-y-3">
-                                        <p class="text-xs font-bold text-primary uppercase tracking-widest">Point 3 —
+                                        <p class="text-xs font-bold text-primary uppercase tracking-widest">Punto 3 —
                                             Ambiente</p>
                                         <div class="field-group">
-                                            <label class="text-field-label">Titre</label>
+                                            <label class="text-field-label">Titolo</label>
                                             <input type="text" class="text-field" data-text-field="home.strength3_title"
                                                 placeholder="Ambiente Elegante" />
                                         </div>
                                         <div class="field-group">
-                                            <label class="text-field-label">Description</label>
+                                            <label class="text-field-label">Descrizione</label>
                                             <textarea class="text-field" rows="3"
                                                 data-text-field="home.strength3_desc"></textarea>
                                         </div>
                                     </div>
                                     <!-- Strength 4 -->
                                     <div class="bg-black/20 rounded-lg p-4 space-y-3">
-                                        <p class="text-xs font-bold text-primary uppercase tracking-widest">Point 4 —
-                                            Professionnalisme</p>
+                                        <p class="text-xs font-bold text-primary uppercase tracking-widest">Punto 4 —
+                                            Professionalità</p>
                                         <div class="field-group">
-                                            <label class="text-field-label">Titre</label>
+                                            <label class="text-field-label">Titolo</label>
                                             <input type="text" class="text-field" data-text-field="home.strength4_title"
                                                 placeholder="Servizio Professionale" />
                                         </div>
                                         <div class="field-group">
-                                            <label class="text-field-label">Description</label>
+                                            <label class="text-field-label">Descrizione</label>
                                             <textarea class="text-field" rows="3"
                                                 data-text-field="home.strength4_desc"></textarea>
                                         </div>
@@ -374,17 +421,17 @@
                                     Arrivi"</div>
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     <div class="field-group">
-                                        <label class="text-field-label">Titre (partie noire)</label>
+                                        <label class="text-field-label">Titolo (parte nera)</label>
                                         <input type="text" class="text-field" data-text-field="home.new_arrivals_title"
                                             placeholder="Nuovi" />
                                     </div>
                                     <div class="field-group">
-                                        <label class="text-field-label">Titre (partie jaune)</label>
+                                        <label class="text-field-label">Titolo (parte gialla)</label>
                                         <input type="text" class="text-field"
                                             data-text-field="home.new_arrivals_title_highlight" placeholder="Arrivi" />
                                     </div>
                                     <div class="field-group md:col-span-2">
-                                        <label class="text-field-label">Sous-titre</label>
+                                        <label class="text-field-label">Sottotitolo</label>
                                         <input type="text" class="text-field"
                                             data-text-field="home.new_arrivals_subtitle" />
                                     </div>
@@ -400,12 +447,12 @@
                                     Noi"</div>
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     <div class="field-group">
-                                        <label class="text-field-label">Titre (partie noire)</label>
+                                        <label class="text-field-label">Titolo (parte nera)</label>
                                         <input type="text" class="text-field" data-text-field="home.reviews_title"
                                             placeholder="COSA DICONO" />
                                     </div>
                                     <div class="field-group">
-                                        <label class="text-field-label">Titre (partie jaune)</label>
+                                        <label class="text-field-label">Titolo (parte gialla)</label>
                                         <input type="text" class="text-field"
                                             data-text-field="home.reviews_title_highlight" placeholder="DI NOI" />
                                     </div>
@@ -420,17 +467,17 @@
                                         class="material-symbols-outlined text-xs">help</span>Section "FAQ" (Home)</div>
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     <div class="field-group">
-                                        <label class="text-field-label">Titre (partie noire)</label>
+                                        <label class="text-field-label">Titolo (parte nera)</label>
                                         <input type="text" class="text-field" data-text-field="home.faq_title"
                                             placeholder="Domande" />
                                     </div>
                                     <div class="field-group">
-                                        <label class="text-field-label">Titre (partie jaune)</label>
+                                        <label class="text-field-label">Titolo (parte gialla)</label>
                                         <input type="text" class="text-field" data-text-field="home.faq_title_highlight"
                                             placeholder="Frequenti" />
                                     </div>
                                     <div class="field-group md:col-span-2">
-                                        <label class="text-field-label">Sous-titre</label>
+                                        <label class="text-field-label">Sottotitolo</label>
                                         <textarea class="text-field" rows="2"
                                             data-text-field="home.faq_subtitle"></textarea>
                                     </div>
@@ -447,17 +494,17 @@
                                         class="material-symbols-outlined text-xs">movie</span>Section Hero</div>
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     <div class="field-group">
-                                        <label class="text-field-label">Titre (partie blanche)</label>
+                                        <label class="text-field-label">Titolo (parte bianca)</label>
                                         <input type="text" class="text-field" data-text-field="about.hero_title"
                                             placeholder="CHI" />
                                     </div>
                                     <div class="field-group">
-                                        <label class="text-field-label">Titre (partie jaune)</label>
+                                        <label class="text-field-label">Titolo (parte gialla)</label>
                                         <input type="text" class="text-field"
                                             data-text-field="about.hero_title_highlight" placeholder="SIAMO" />
                                     </div>
                                     <div class="field-group md:col-span-2">
-                                        <label class="text-field-label">Texte descriptif (sous le titre)</label>
+                                        <label class="text-field-label">Testo descrittivo (sotto il titolo)</label>
                                         <textarea class="text-field" rows="4"
                                             data-text-field="about.hero_subtitle"></textarea>
                                     </div>
@@ -469,21 +516,21 @@
                             <!-- Un punto di riferimento -->
                             <div>
                                 <div class="page-badge"><span
-                                        class="material-symbols-outlined text-xs">groups</span>Section "Chi Siamo" —
-                                    Bloc principal</div>
+                                        class="material-symbols-outlined text-xs">groups</span>Sezione "Chi Siamo" —
+                                    Blocco principale</div>
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     <div class="field-group">
-                                        <label class="text-field-label">Sous-titre (petit — jaune)</label>
+                                        <label class="text-field-label">Sottotitolo (piccolo — giallo)</label>
                                         <input type="text" class="text-field" data-text-field="about.section_subtitle"
                                             placeholder="Chi Siamo" />
                                     </div>
                                     <div class="field-group">
-                                        <label class="text-field-label">Titre principal</label>
+                                        <label class="text-field-label">Titolo principale</label>
                                         <input type="text" class="text-field" data-text-field="about.section_title"
                                             placeholder="Un punto di riferimento affidabile" />
                                     </div>
                                     <div class="field-group md:col-span-2">
-                                        <label class="text-field-label">Texte d'introduction</label>
+                                        <label class="text-field-label">Testo introduttivo</label>
                                         <textarea class="text-field" rows="2"
                                             data-text-field="about.intro_text"></textarea>
                                     </div>
@@ -515,22 +562,22 @@
                                         class="material-symbols-outlined text-xs">store</span>Section "Il Negozio"</div>
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     <div class="field-group">
-                                        <label class="text-field-label">Titre (partie noire)</label>
+                                        <label class="text-field-label">Titolo (parte nera)</label>
                                         <input type="text" class="text-field" data-text-field="about.store_title"
                                             placeholder="IL" />
                                     </div>
                                     <div class="field-group">
-                                        <label class="text-field-label">Titre (partie jaune)</label>
+                                        <label class="text-field-label">Titolo (parte gialla)</label>
                                         <input type="text" class="text-field"
                                             data-text-field="about.store_title_highlight" placeholder="NEGOZIO" />
                                     </div>
                                     <div class="field-group md:col-span-2">
-                                        <label class="text-field-label">Paragraphe 1</label>
+                                        <label class="text-field-label">Paragrafo 1</label>
                                         <textarea class="text-field" rows="3"
                                             data-text-field="about.store_text1"></textarea>
                                     </div>
                                     <div class="field-group md:col-span-2">
-                                        <label class="text-field-label">Paragraphe 2</label>
+                                        <label class="text-field-label">Paragrafo 2</label>
                                         <textarea class="text-field" rows="3"
                                             data-text-field="about.store_text2"></textarea>
                                     </div>
@@ -548,17 +595,17 @@
                                     Siamo"</div>
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     <div class="field-group">
-                                        <label class="text-field-label">Titre (partie noire)</label>
+                                        <label class="text-field-label">Titolo (parte nera)</label>
                                         <input type="text" class="text-field" data-text-field="contact.hero_title"
                                             placeholder="DOVE" />
                                     </div>
                                     <div class="field-group">
-                                        <label class="text-field-label">Titre (partie jaune)</label>
+                                        <label class="text-field-label">Titolo (parte gialla)</label>
                                         <input type="text" class="text-field"
                                             data-text-field="contact.hero_title_highlight" placeholder="SIAMO" />
                                     </div>
                                     <div class="field-group md:col-span-2">
-                                        <label class="text-field-label">Sous-titre</label>
+                                        <label class="text-field-label">Sottotitolo</label>
                                         <textarea class="text-field" rows="2"
                                             data-text-field="contact.hero_subtitle"></textarea>
                                     </div>
@@ -570,41 +617,41 @@
                             <!-- Adresse & Horaires -->
                             <div>
                                 <div class="page-badge"><span
-                                        class="material-symbols-outlined text-xs">home_pin</span>Adresse & Horaires
+                                        class="material-symbols-outlined text-xs">home_pin</span>Indirizzo & Orari
                                 </div>
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     <div class="field-group">
-                                        <label class="text-field-label">Rue</label>
+                                        <label class="text-field-label">Via</label>
                                         <input type="text" class="text-field" data-text-field="contact.address_street"
                                             placeholder="Via Adige 43C" />
                                     </div>
                                     <div class="field-group">
-                                        <label class="text-field-label">Ville / CAP</label>
+                                        <label class="text-field-label">Città / CAP</label>
                                         <input type="text" class="text-field" data-text-field="contact.address_city"
                                             placeholder="00015 - Monterotondo (RM)" />
                                     </div>
                                     <div class="field-group">
-                                        <label class="text-field-label">Horaires Lun - Ven</label>
+                                        <label class="text-field-label">Orari Lun - Ven</label>
                                         <input type="text" class="text-field" data-text-field="contact.hours_mon_fri"
                                             placeholder="09:00 - 20:15" />
                                     </div>
                                     <div class="field-group">
-                                        <label class="text-field-label">Horaires Samedi</label>
+                                        <label class="text-field-label">Orari Sabato</label>
                                         <input type="text" class="text-field" data-text-field="contact.hours_sat"
                                             placeholder="10:00 - 19:30" />
                                     </div>
                                     <div class="field-group">
-                                        <label class="text-field-label">Dimanche</label>
+                                        <label class="text-field-label">Domenica</label>
                                         <input type="text" class="text-field" data-text-field="contact.hours_sun"
                                             placeholder="Chiuso" />
                                     </div>
                                     <div class="field-group">
-                                        <label class="text-field-label">Numéro de téléphone (affiché)</label>
+                                        <label class="text-field-label">Numero di telefono (visualizzato)</label>
                                         <input type="text" class="text-field" data-text-field="contact.phone"
                                             placeholder="+39 379 134 5367" />
                                     </div>
                                     <div class="field-group">
-                                        <label class="text-field-label">Numéro WhatsApp (pour les liens)</label>
+                                        <label class="text-field-label">Numero WhatsApp (per i link)</label>
                                         <input type="text" class="text-field" data-text-field="contact.whatsapp_number"
                                             placeholder="393791345367" />
                                     </div>
@@ -620,23 +667,23 @@
                                     Us"</div>
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     <div class="field-group">
-                                        <label class="text-field-label">Label (petit — jaune)</label>
+                                        <label class="text-field-label">Etichetta (piccola — gialla)</label>
                                         <input type="text" class="text-field"
                                             data-text-field="contact.partnership_label" placeholder="PARTNER WITH US" />
                                     </div>
                                     <div class="field-group">
-                                        <label class="text-field-label">Titre (partie noire)</label>
+                                        <label class="text-field-label">Titolo (parte nera)</label>
                                         <input type="text" class="text-field"
                                             data-text-field="contact.partnership_title" placeholder="COLLABORA CON" />
                                     </div>
                                     <div class="field-group">
-                                        <label class="text-field-label">Titre (partie jaune)</label>
+                                        <label class="text-field-label">Titolo (parte gialla)</label>
                                         <input type="text" class="text-field"
                                             data-text-field="contact.partnership_title_highlight"
                                             placeholder="LIQUIDO" />
                                     </div>
                                     <div class="field-group md:col-span-2">
-                                        <label class="text-field-label">Texte descriptif</label>
+                                        <label class="text-field-label">Testo descrittivo</label>
                                         <textarea class="text-field" rows="3"
                                             data-text-field="contact.partnership_text"></textarea>
                                     </div>
@@ -648,39 +695,39 @@
                         <div data-tab-panel="footer" class="p-6 space-y-6 hidden">
                             <div>
                                 <div class="page-badge"><span class="material-symbols-outlined text-xs">web</span>Footer
-                                    — Informations générales</div>
+                                    — Informazioni generali</div>
                                 <div class="grid grid-cols-1 gap-4">
                                     <div class="field-group">
-                                        <label class="text-field-label">Description du magasin</label>
+                                        <label class="text-field-label">Descrizione del negozio</label>
                                         <textarea class="text-field" rows="3"
                                             data-text-field="footer.description"></textarea>
                                     </div>
                                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                         <div class="field-group">
-                                            <label class="text-field-label">Adresse (footer)</label>
+                                            <label class="text-field-label">Indirizzo (footer)</label>
                                             <input type="text" class="text-field" data-text-field="footer.address" />
                                         </div>
                                         <div class="field-group">
-                                            <label class="text-field-label">Téléphone (footer)</label>
+                                            <label class="text-field-label">Telefono (footer)</label>
                                             <input type="text" class="text-field" data-text-field="footer.phone" />
                                         </div>
                                         <div class="field-group">
-                                            <label class="text-field-label">Horaires Lun-Ven (footer)</label>
+                                            <label class="text-field-label">Orari Lun-Ven (footer)</label>
                                             <input type="text" class="text-field"
                                                 data-text-field="footer.hours_weekdays" />
                                         </div>
                                         <div class="field-group">
-                                            <label class="text-field-label">Horaires Samedi (footer)</label>
+                                            <label class="text-field-label">Orari Sabato (footer)</label>
                                             <input type="text" class="text-field"
                                                 data-text-field="footer.hours_saturday" />
                                         </div>
                                         <div class="field-group">
-                                            <label class="text-field-label">Dimanche (footer)</label>
+                                            <label class="text-field-label">Domenica (footer)</label>
                                             <input type="text" class="text-field"
                                                 data-text-field="footer.hours_sunday" />
                                         </div>
                                         <div class="field-group">
-                                            <label class="text-field-label">Texte copyright</label>
+                                            <label class="text-field-label">Testo copyright</label>
                                             <input type="text" class="text-field" data-text-field="footer.copyright" />
                                         </div>
                                     </div>
@@ -699,47 +746,47 @@
                             class="px-6 py-5 border-b border-slate-200 dark:border-slate-800 flex justify-between items-center">
                             <h3 class="text-lg font-bold flex items-center gap-2">
                                 <span class="material-symbols-outlined text-primary">info</span>
-                                General Shop Information
+                                Informazioni Generali del Negozio
                             </h3>
                             <button
-                                class="bg-primary hover:bg-primary/90 text-black px-6 py-2 rounded-lg text-sm font-bold transition-all">Save
-                                Changes</button>
+                                class="bg-primary hover:bg-primary/90 text-black px-6 py-2 rounded-lg text-sm font-bold transition-all">Salva
+                                Modifiche</button>
                         </div>
                         <div class="p-6">
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div class="space-y-2">
-                                    <label class="text-sm font-semibold dark:text-white">Shop Name</label>
+                                    <label class="text-sm font-semibold dark:text-white">Nome Negozio</label>
                                     <input
                                         class="w-full bg-slate-50 dark:bg-[#27271b] border border-slate-200 dark:border-[#54543b] rounded-lg px-4 py-3 text-slate-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all"
-                                        placeholder="Enter shop name" type="text" value="" />
+                                        placeholder="Inserisci il nome del negozio" type="text" value="" />
                                 </div>
                                 <div class="space-y-2">
-                                    <label class="text-sm font-semibold dark:text-white">Contact Phone</label>
+                                    <label class="text-sm font-semibold dark:text-white">Telefono di Contatto</label>
                                     <input
                                         class="w-full bg-slate-50 dark:bg-[#27271b] border border-slate-200 dark:border-[#54543b] rounded-lg px-4 py-3 text-slate-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all"
-                                        placeholder="+1 000 000 000" type="tel" value="" />
+                                        placeholder="+39 000 000 000" type="tel" value="" />
                                 </div>
                                 <div class="space-y-2">
-                                    <label class="text-sm font-semibold dark:text-white">Email Address</label>
+                                    <label class="text-sm font-semibold dark:text-white">Indirizzo Email</label>
                                     <input
                                         class="w-full bg-slate-50 dark:bg-[#27271b] border border-slate-200 dark:border-[#54543b] rounded-lg px-4 py-3 text-slate-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all"
                                         placeholder="shop@email.com" type="email" value="" />
                                 </div>
                                 <div class="space-y-2">
-                                    <label class="text-sm font-semibold dark:text-white">Street Address</label>
+                                    <label class="text-sm font-semibold dark:text-white">Indirizzo</label>
                                     <input
                                         class="w-full bg-slate-50 dark:bg-[#27271b] border border-slate-200 dark:border-[#54543b] rounded-lg px-4 py-3 text-slate-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all"
-                                        placeholder="Enter full address" type="text" value="" />
+                                        placeholder="Inserisci l'indirizzo completo" type="text" value="" />
                                 </div>
                             </div>
                             <div class="mt-8">
                                 <h4
                                     class="text-sm font-bold uppercase tracking-wider text-slate-500 dark:text-[#baba9c] mb-4">
-                                    Opening Hours</h4>
+                                    Orari di Apertura</h4>
                                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                                     <div
                                         class="p-4 bg-slate-50 dark:bg-white/5 rounded-lg border border-slate-100 dark:border-white/5">
-                                        <p class="text-xs font-bold mb-2">Mon - Fri</p>
+                                        <p class="text-xs font-bold mb-2">Lun - Ven</p>
                                         <div class="flex gap-2">
                                             <input
                                                 class="w-full bg-transparent border-b border-slate-300 dark:border-slate-600 text-sm py-1 outline-none focus:border-primary"
@@ -752,7 +799,7 @@
                                     </div>
                                     <div
                                         class="p-4 bg-slate-50 dark:bg-white/5 rounded-lg border border-slate-100 dark:border-white/5">
-                                        <p class="text-xs font-bold mb-2">Saturday</p>
+                                        <p class="text-xs font-bold mb-2">Sabato</p>
                                         <div class="flex gap-2">
                                             <input
                                                 class="w-full bg-transparent border-b border-slate-300 dark:border-slate-600 text-sm py-1 outline-none focus:border-primary"
@@ -765,9 +812,9 @@
                                     </div>
                                     <div
                                         class="p-4 bg-slate-50 dark:bg-white/5 rounded-lg border border-slate-100 dark:border-white/5">
-                                        <p class="text-xs font-bold mb-2">Sunday</p>
+                                        <p class="text-xs font-bold mb-2">Domenica</p>
                                         <div class="flex items-center text-primary text-xs font-bold py-1">
-                                            <span class="material-symbols-outlined text-sm mr-1">block</span> CLOSED
+                                            <span class="material-symbols-outlined text-sm mr-1">block</span> CHIUSO
                                         </div>
                                     </div>
                                 </div>
@@ -836,36 +883,36 @@
                         <div class="px-6 py-5 border-b border-slate-200 dark:border-slate-800">
                             <h3 class="text-lg font-bold flex items-center gap-2">
                                 <span class="material-symbols-outlined text-primary">location_on</span>
-                                Location &amp; GPS Mapping
+                                Posizione &amp; Mappa GPS
                             </h3>
                         </div>
                         <div class="p-6 grid grid-cols-1 lg:grid-cols-3 gap-6">
                             <div class="lg:col-span-1 space-y-4">
-                                <p class="text-sm text-slate-500 dark:text-[#baba9c]">Update your store's precise
-                                    location for the customer-facing store locator map.</p>
+                                <p class="text-sm text-slate-500 dark:text-[#baba9c]">Aggiorna la posizione precisa
+                                    del negozio per la mappa visibile ai clienti.</p>
                                 <div class="space-y-2">
-                                    <label class="text-xs font-bold uppercase text-slate-400">Latitude</label>
+                                    <label class="text-xs font-bold uppercase text-slate-400">Latitudine</label>
                                     <input
-                                        class="w-full bg-slate-50 dark:bg-[#27271b] border border-slate-200 dark:border-[#54543b] rounded-lg px-4 py-3 text-sm focus:ring-primary outline-none"
+                                        class="w-full bg-slate-50 dark:bg-[#27271b] border border-slate-200 dark:border-[#54543b] rounded-lg px-4 py-3 text-sm text-slate-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all"
                                         type="text" value="34.0522" />
                                 </div>
                                 <div class="space-y-2">
-                                    <label class="text-xs font-bold uppercase text-slate-400">Longitude</label>
+                                    <label class="text-xs font-bold uppercase text-slate-400">Longitudine</label>
                                     <input
-                                        class="w-full bg-slate-50 dark:bg-[#27271b] border border-slate-200 dark:border-[#54543b] rounded-lg px-4 py-3 text-sm focus:ring-primary outline-none"
+                                        class="w-full bg-slate-50 dark:bg-[#27271b] border border-slate-200 dark:border-[#54543b] rounded-lg px-4 py-3 text-sm text-slate-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all"
                                         type="text" value="-118.2437" />
                                 </div>
                                 <button
                                     class="w-full border border-primary text-primary hover:bg-primary/10 px-4 py-3 rounded-lg text-sm font-bold transition-all flex items-center justify-center gap-2">
                                     <span class="material-symbols-outlined text-sm">my_location</span>
-                                    Detect My Location
+                                    Rileva la Mia Posizione
                                 </button>
                             </div>
                             <div
                                 class="lg:col-span-2 min-h-[300px] bg-slate-100 dark:bg-slate-800 rounded-xl relative overflow-hidden group">
                                 <div
                                     class="absolute inset-0 bg-slate-200 dark:bg-slate-700 flex items-center justify-center">
-                                    <span class="text-slate-400 dark:text-slate-500 text-sm">Carte à configurer</span>
+                                    <span class="text-slate-400 dark:text-slate-500 text-sm">Mappa da configurare</span>
                                 </div>
                                 <div class="absolute inset-0 flex items-center justify-center">
                                     <div class="bg-primary p-2 rounded-full shadow-lg shadow-primary/20">
@@ -881,7 +928,7 @@
                         <div class="px-6 py-5 border-b border-slate-200 dark:border-slate-800">
                             <h3 class="text-lg font-bold flex items-center gap-2">
                                 <span class="material-symbols-outlined text-primary">security</span>
-                                Admin Profile &amp; Security
+                                Profilo Admin &amp; Sicurezza
                             </h3>
                         </div>
                         <div class="p-6">
@@ -899,41 +946,41 @@
                                 </div>
                                 <div>
                                     <h4 class="text-xl font-bold">Alex Johnson</h4>
-                                    <p class="text-slate-500 dark:text-[#baba9c]">System Administrator • Since Oct 2023
+                                    <p class="text-slate-500 dark:text-[#baba9c]">Amministratore di sistema • Da Ottobre 2023
                                     </p>
-                                    <button class="mt-2 text-primary text-xs font-bold hover:underline">Change Profile
-                                        Picture</button>
+                                    <button class="mt-2 text-primary text-xs font-bold hover:underline">Cambia Foto
+                                        Profilo</button>
                                 </div>
                             </div>
                             <div class="max-w-2xl space-y-6">
                                 <h4
                                     class="text-sm font-bold uppercase tracking-wider text-slate-500 dark:text-[#baba9c]">
-                                    Change Password</h4>
+                                    Cambia Password</h4>
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     <div class="space-y-2 md:col-span-2">
-                                        <label class="text-xs font-bold uppercase text-slate-400">Current
-                                            Password</label>
+                                        <label class="text-xs font-bold uppercase text-slate-400">Password
+                                            Attuale</label>
                                         <input
-                                            class="w-full bg-slate-50 dark:bg-[#27271b] border border-slate-200 dark:border-[#54543b] rounded-lg px-4 py-3 text-sm focus:ring-primary outline-none"
+                                            class="w-full bg-slate-50 dark:bg-[#27271b] border border-slate-200 dark:border-[#54543b] rounded-lg px-4 py-3 text-sm text-slate-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all"
                                             placeholder="••••••••••••" type="password" />
                                     </div>
                                     <div class="space-y-2">
-                                        <label class="text-xs font-bold uppercase text-slate-400">New Password</label>
+                                        <label class="text-xs font-bold uppercase text-slate-400">Nuova Password</label>
                                         <input
-                                            class="w-full bg-slate-50 dark:bg-[#27271b] border border-slate-200 dark:border-[#54543b] rounded-lg px-4 py-3 text-sm focus:ring-primary outline-none"
-                                            placeholder="Min 8 characters" type="password" />
+                                            class="w-full bg-slate-50 dark:bg-[#27271b] border border-slate-200 dark:border-[#54543b] rounded-lg px-4 py-3 text-sm text-slate-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all"
+                                            placeholder="Min 8 caratteri" type="password" />
                                     </div>
                                     <div class="space-y-2">
-                                        <label class="text-xs font-bold uppercase text-slate-400">Confirm New
+                                        <label class="text-xs font-bold uppercase text-slate-400">Conferma Nuova
                                             Password</label>
                                         <input
-                                            class="w-full bg-slate-50 dark:bg-[#27271b] border border-slate-200 dark:border-[#54543b] rounded-lg px-4 py-3 text-sm focus:ring-primary outline-none"
-                                            placeholder="Repeat new password" type="password" />
+                                            class="w-full bg-slate-50 dark:bg-[#27271b] border border-slate-200 dark:border-[#54543b] rounded-lg px-4 py-3 text-sm text-slate-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all"
+                                            placeholder="Ripeti la nuova password" type="password" />
                                     </div>
                                 </div>
                                 <div class="flex justify-end pt-4">
                                     <button
-                                        class="bg-primary hover:bg-primary/90 text-black px-8 py-3 rounded-lg text-sm font-bold shadow-lg shadow-primary/10 transition-all">Update
+                                        class="bg-primary hover:bg-primary/90 text-black px-8 py-3 rounded-lg text-sm font-bold shadow-lg shadow-primary/10 transition-all">Aggiorna
                                         Password</button>
                                 </div>
                             </div>
@@ -943,8 +990,8 @@
                     <div
                         class="flex items-center gap-4 p-4 rounded-xl bg-yellow-500/10 border border-yellow-500/20 mb-10">
                         <span class="material-symbols-outlined text-yellow-500">warning</span>
-                        <p class="text-sm text-yellow-500/90 font-medium">Changes to Store Settings affect all
-                            user-facing platforms immediately. Please verify all information before saving.</p>
+                        <p class="text-sm text-yellow-500/90 font-medium">Le modifiche alle Impostazioni del Negozio si applicano immediatamente
+                            su tutte le piattaforme visibili agli utenti. Verificare tutte le informazioni prima di salvare.</p>
                     </div>
                 </div>
             </div>
@@ -953,8 +1000,10 @@
 
     <!-- Firebase & Scripts -->
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
     <script src="../src/js/services/firebase-config.js"></script>
+    <script src="../src/js/admin/admin-auth.js"></script>
     <script src="../src/js/services/site-texts-service.js"></script>
     <script src="../src/js/admin/site-texts-admin.js"></script>
     <script src="../src/js/admin/reviews-admin.js"></script>

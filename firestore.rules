@@ -42,6 +42,19 @@ service cloud.firestore {
       allow update, delete: if request.auth != null;
     }
 
+    // ─── Settings (site texts, reviews config) ────────────────────────────────
+    // Lecture publique, écriture réservée aux admins authentifiés
+    match /settings/{docId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+
+    // ─── Reviews (Google reviews manuelles) ───────────────────────────────────
+    match /reviews/{reviewId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+
     // ─── Tout le reste : bloqué ───────────────────────────────────────────────
     match /{document=**} {
       allow read, write: if false;
