@@ -22,7 +22,7 @@
                 </div>
                 
                 <h1 class="text-3xl md:text-4xl font-black leading-tight" style="color: #333333;">
-                    Benvenuto su Liquidovapeshop.it
+                    BENVENUTO!
                 </h1>
                 
                 <p class="text-base leading-relaxed" style="color: #666666;">
