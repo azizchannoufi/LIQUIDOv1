@@ -226,7 +226,7 @@
 
         const lineUpload = imgDiv.querySelector(`#line-upload-${lineIndex}-${imageIndex}`);
         if (lineUpload) {
-            lineUpload.addEventListener('change', async function (e) {
+            const handleLineUpload = async function (e) {
                 const file = e.target.files[0];
                 if (!file) return;
 
@@ -256,7 +256,7 @@
                     if (uploadArea && originalContent) {
                         uploadArea.innerHTML = originalContent;
                         const newUpload = document.getElementById(`line-upload-${lineIndex}-${imageIndex}`);
-                        if (newUpload) newUpload.addEventListener('change', arguments.callee);
+                        if (newUpload) newUpload.addEventListener('change', handleLineUpload);
                     }
                 } catch (error) {
                     console.error('Error uploading line image:', error);
@@ -264,10 +264,11 @@
                     if (uploadArea && originalContent) {
                         uploadArea.innerHTML = originalContent;
                         const newUpload = document.getElementById(`line-upload-${lineIndex}-${imageIndex}`);
-                        if (newUpload) newUpload.addEventListener('change', arguments.callee);
+                        if (newUpload) newUpload.addEventListener('change', handleLineUpload);
                     }
                 }
-            });
+            };
+            lineUpload.addEventListener('change', handleLineUpload);
         }
 
         container.appendChild(imgDiv);
@@ -409,7 +410,7 @@
     // Logo upload handler with Cloudinary
     const logoUpload = document.getElementById('logo-upload');
     if (logoUpload) {
-        logoUpload.addEventListener('change', async function (e) {
+        const handleLogoUpload = async function (e) {
             const file = e.target.files[0];
             if (!file) return;
 
@@ -462,7 +463,7 @@
                     // Re-attach event listener
                     const newUpload = document.getElementById('logo-upload');
                     if (newUpload) {
-                        newUpload.addEventListener('change', arguments.callee);
+                        newUpload.addEventListener('change', handleLogoUpload);
                     }
                 }
 
@@ -476,11 +477,12 @@
                     uploadArea.innerHTML = originalContent;
                     const newUpload = document.getElementById('logo-upload');
                     if (newUpload) {
-                        newUpload.addEventListener('change', arguments.callee);
+                        newUpload.addEventListener('change', handleLogoUpload);
                     }
                 }
             }
-        });
+        };
+        logoUpload.addEventListener('change', handleLogoUpload);
     }
 
     // Form submission handler
