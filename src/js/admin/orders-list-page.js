@@ -294,7 +294,7 @@ class OrdersListPageService {
                     await this.updateOrderStatus(userId, orderId, newStatus);
                 } catch (error) {
                     console.error('Error updating status:', error);
-                    alert('Erreur lors de la mise à jour: ' + error.message);
+                    AdminToast.error('Erreur lors de la mise à jour: ' + error.message);
                 } finally {
                     newBtn.disabled = false;
                     newBtn.textContent = 'Update';
@@ -350,10 +350,10 @@ class OrdersListPageService {
             this.renderOrders();
 
             // Show success message
-            this.showSuccessMessage(`Order status updated to ${newStatus}`);
+            AdminToast.success(`Stato ordine aggiornato: ${newStatus}`);
         } catch (error) {
             console.error('Error updating order status:', error);
-            alert('Erreur lors de la mise à jour du statut: ' + error.message);
+            AdminToast.error('Errore aggiornamento stato: ' + error.message);
             throw error;
         }
     }
@@ -362,43 +362,7 @@ class OrdersListPageService {
      * Show success message
      * @param {string} message - Success message
      */
-    showSuccessMessage(message) {
-        // Remove existing message if any
-        let successDiv = document.getElementById('status-update-success');
-        if (successDiv) {
-            successDiv.remove();
-        }
-
-        // Create new success message
-        successDiv = document.createElement('div');
-        successDiv.id = 'status-update-success';
-        successDiv.className = 'fixed top-4 right-4 z-[200] px-6 py-3 bg-green-500 text-white rounded-lg shadow-lg font-semibold flex items-center gap-2';
-        successDiv.innerHTML = `
-            <span class="material-symbols-outlined">check_circle</span>
-            <span>${message}</span>
-        `;
-        document.body.appendChild(successDiv);
-
-        // Animate in
-        successDiv.style.opacity = '0';
-        successDiv.style.transform = 'translateY(-10px)';
-        setTimeout(() => {
-            successDiv.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
-            successDiv.style.opacity = '1';
-            successDiv.style.transform = 'translateY(0)';
-        }, 10);
-
-        // Hide after 3 seconds
-        setTimeout(() => {
-            successDiv.style.opacity = '0';
-            successDiv.style.transform = 'translateY(-10px)';
-            setTimeout(() => {
-                if (successDiv && successDiv.parentNode) {
-                    successDiv.remove();
-                }
-            }, 300);
-        }, 3000);
-    }
+    // Toast handled by AdminToast global utility (src/js/admin/admin-toast.js)
 
     /**
      * Initialize and load orders

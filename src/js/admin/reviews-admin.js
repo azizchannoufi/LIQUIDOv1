@@ -19,7 +19,7 @@ class ReviewsAdmin {
             this._bindButtons();
         } catch (e) {
             console.error('ReviewsAdmin: init error', e);
-            this._showToast('Errore connessione Firebase (Recensioni)', 'error');
+            AdminToast.error('Errore connessione Firebase (Recensioni)');
         }
     }
 
@@ -57,10 +57,10 @@ class ReviewsAdmin {
                 { overallRating, totalReviews },
                 { merge: true }
             );
-            this._showToast('Valutazione globale salvata!', 'success');
+            AdminToast.success('Valutazione globale salvata!');
         } catch (e) {
             console.error('ReviewsAdmin: save overall rating error', e);
-            this._showToast('Errore salvataggio valutazione', 'error');
+            AdminToast.error('Errore salvataggio valutazione');
         } finally {
             if (btn) { btn.disabled = false; btn.textContent = 'Salva Rating'; }
         }
@@ -169,10 +169,10 @@ class ReviewsAdmin {
             await this.firestore.collection('reviews').doc(id).delete();
             this.reviews = this.reviews.filter(r => r.id !== id);
             this._renderReviews();
-            this._showToast('Recensione eliminata', 'success');
+            AdminToast.success('Recensione eliminata');
         } catch (e) {
             console.error('ReviewsAdmin: delete error', e);
-            this._showToast('Errore eliminazione recensione', 'error');
+            AdminToast.error('Errore eliminazione recensione');
         }
     }
 
@@ -234,7 +234,7 @@ class ReviewsAdmin {
         const text = document.getElementById('rm-text')?.value.trim();
 
         if (!author || !text) {
-            this._showToast('Nome e testo sono obbligatori', 'error');
+            AdminToast.error('Nome e testo sono obbligatori');
             return;
         }
 
@@ -263,10 +263,10 @@ class ReviewsAdmin {
 
             this._renderReviews();
             document.getElementById('review-modal')?.remove();
-            this._showToast(existingId ? 'Recensione aggiornata!' : 'Recensione aggiunta!', 'success');
+            AdminToast.success(existingId ? 'Recensione aggiornata!' : 'Recensione aggiunta!');
         } catch (e) {
             console.error('ReviewsAdmin: save modal error', e);
-            this._showToast('Errore salvataggio recensione', 'error');
+            AdminToast.error('Errore salvataggio recensione');
             if (btn) { btn.disabled = false; btn.textContent = 'Salva'; }
         }
     }
@@ -281,20 +281,7 @@ class ReviewsAdmin {
         if (saveRatingBtn) saveRatingBtn.addEventListener('click', () => this.saveOverallRating());
     }
 
-    _showToast(message, type = 'success') {
-        const existing = document.getElementById('admin-toast');
-        if (existing) existing.remove();
-
-        const colors = { success: 'bg-green-600', error: 'bg-red-600', warning: 'bg-yellow-500 text-black' };
-        const icons = { success: 'check_circle', error: 'error', warning: 'warning' };
-
-        const toast = document.createElement('div');
-        toast.id = 'admin-toast';
-        toast.className = `fixed bottom-6 right-6 z-[9999] flex items-center gap-3 px-5 py-4 rounded-xl shadow-2xl text-white font-semibold text-sm transition-all ${colors[type] || colors.success}`;
-        toast.innerHTML = `<span class="material-symbols-outlined">${icons[type] || 'check_circle'}</span>${message}`;
-        document.body.appendChild(toast);
-        setTimeout(() => toast.remove(), 4000);
-    }
+    // Toast handled by AdminToast global utility (src/js/admin/admin-toast.js)
 }
 
 // Initialize

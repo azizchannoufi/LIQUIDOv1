@@ -17,7 +17,7 @@ class SiteTextsAdmin {
             await this.loadTexts();
         } catch (e) {
             console.error('SiteTextsAdmin: init error', e);
-            this.showToast('Errore di connessione a Firebase', 'error');
+            AdminToast.error('Errore di connessione a Firebase');
         }
     }
 
@@ -35,7 +35,7 @@ class SiteTextsAdmin {
             console.error('SiteTextsAdmin: load error', e);
             this.currentTexts = JSON.parse(JSON.stringify(window.DEFAULT_SITE_TEXTS));
             this.populateForm();
-            this.showToast('Testo predefinito caricato (Firebase non raggiungibile)', 'warning');
+            AdminToast.warning('Testo predefinito caricato (Firebase non raggiungibile)');
         }
     }
 
@@ -73,10 +73,10 @@ class SiteTextsAdmin {
             this.currentTexts = texts;
             this.hasUnsavedChanges = false;
             this.updateSaveButtonState();
-            this.showToast('Testi aggiornati con successo!', 'success');
+            AdminToast.success('Testi aggiornati con successo!');
         } catch (e) {
             console.error('SiteTextsAdmin: save error', e);
-            this.showToast('Errore durante il salvataggio', 'error');
+            AdminToast.error('Errore durante il salvataggio');
         } finally {
             if (btn) {
                 btn.disabled = false;
@@ -92,9 +92,9 @@ class SiteTextsAdmin {
             await this.firestore.collection('settings').doc('siteTexts').set(defaults);
             this.currentTexts = defaults;
             this.populateForm();
-            this.showToast('Testi ripristinati ai valori predefiniti', 'success');
+            AdminToast.success('Testi ripristinati ai valori predefiniti');
         } catch (e) {
-            this.showToast('Errore durante il ripristino', 'error');
+            AdminToast.error('Errore durante il ripristino');
         }
     }
 
@@ -115,24 +115,7 @@ class SiteTextsAdmin {
         }
     }
 
-    showToast(message, type = 'success') {
-        const existing = document.getElementById('admin-toast');
-        if (existing) existing.remove();
-
-        const colors = {
-            success: 'bg-green-600',
-            error: 'bg-red-600',
-            warning: 'bg-yellow-500 text-black',
-        };
-        const icons = { success: 'check_circle', error: 'error', warning: 'warning' };
-
-        const toast = document.createElement('div');
-        toast.id = 'admin-toast';
-        toast.className = `fixed bottom-6 right-6 z-[9999] flex items-center gap-3 px-5 py-4 rounded-xl shadow-2xl text-white font-semibold text-sm transition-all ${colors[type] || colors.success}`;
-        toast.innerHTML = `<span class="material-symbols-outlined">${icons[type] || 'check_circle'}</span>${message}`;
-        document.body.appendChild(toast);
-        setTimeout(() => toast.remove(), 4000);
-    }
+    // Toast handled by AdminToast global utility (src/js/admin/admin-toast.js)
 
     _getNestedValue(obj, path) {
         return path.split('.').reduce((acc, key) => (acc && acc[key] !== undefined ? acc[key] : undefined), obj);
