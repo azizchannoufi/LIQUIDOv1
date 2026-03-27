@@ -238,7 +238,7 @@
                         COSA DICONO <span class="text-primary">DI NOI</span>
                     </h2>
                     <div class="flex items-center justify-center gap-3">
-                        <span class="text-2xl font-bold text-background-dark">4.9</span>
+                        <span id="google-rating-display" class="text-2xl font-bold text-background-dark">4.9</span>
                         <div class="flex text-[#F8ED70] star-rating">
                             <span class="material-symbols-outlined fill-current">star</span>
                             <span class="material-symbols-outlined fill-current">star</span>
@@ -246,6 +246,7 @@
                             <span class="material-symbols-outlined fill-current">star</span>
                             <span class="material-symbols-outlined fill-current">star</span>
                         </div>
+                        <span id="google-ratings-total" class="text-slate-500 text-sm font-medium"></span>
                         <a href="https://www.google.com/maps/search/?api=1&query=LIQUIDO+VAPE+SHOP+Monterotondo"
                             target="_blank"
                             class="text-slate-500 text-sm font-medium hover:text-primary transition-colors underline underline-offset-2">
@@ -254,77 +255,13 @@
                     </div>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
-                    <!-- Review 1 -->
-                    <div
-                        class="bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow border border-black/5 animate-on-scroll fade-in-bottom stagger-delay-1">
-                        <div class="flex items-center gap-3 mb-3">
-                            <div
-                                class="size-10 rounded-full bg-[#F8ED70] flex items-center justify-center text-sm font-black text-background-dark">
-                                LV</div>
-                            <div>
-                                <h4 class="font-bold text-background-dark text-sm">Luca Valentini</h4>
-                                <div class="flex text-[#F8ED70] star-rating">
-                                    <span class="material-symbols-outlined text-[16px] fill-current">star</span>
-                                    <span class="material-symbols-outlined text-[16px] fill-current">star</span>
-                                    <span class="material-symbols-outlined text-[16px] fill-current">star</span>
-                                    <span class="material-symbols-outlined text-[16px] fill-current">star</span>
-                                    <span class="material-symbols-outlined text-[16px] fill-current">star</span>
-                                </div>
+                <div id="google-reviews-grid" class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+                    <div class="col-span-full flex justify-center items-center py-10">
+                        <div class="flex items-center gap-3 text-slate-400">
+                            <div class="w-5 h-5 border-2 border-slate-300 border-t-[#F8ED70] rounded-full animate-spin">
                             </div>
+                            <span class="text-sm font-medium">Caricamento recensioni...</span>
                         </div>
-                        <p class="text-slate-600 leading-relaxed italic text-sm">"Il miglior vape shop della zona! Ogni
-                            volta che entro vengo accolto con professionalità. La scelta di liquidi e dispositivi è
-                            incredibile e i prezzi sono onesti."</p>
-                        <p class="text-xs text-slate-400 mt-3">Recensione Google · 2 settimane fa</p>
-                    </div>
-
-                    <!-- Review 2 -->
-                    <div
-                        class="bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow border border-black/5 animate-on-scroll fade-in-bottom stagger-delay-2">
-                        <div class="flex items-center gap-3 mb-3">
-                            <div
-                                class="size-10 rounded-full bg-[#F8ED70] flex items-center justify-center text-sm font-black text-background-dark">
-                                SR</div>
-                            <div>
-                                <h4 class="font-bold text-background-dark text-sm">Sara Rinaldi</h4>
-                                <div class="flex text-[#F8ED70] star-rating">
-                                    <span class="material-symbols-outlined text-[16px] fill-current">star</span>
-                                    <span class="material-symbols-outlined text-[16px] fill-current">star</span>
-                                    <span class="material-symbols-outlined text-[16px] fill-current">star</span>
-                                    <span class="material-symbols-outlined text-[16px] fill-current">star</span>
-                                    <span class="material-symbols-outlined text-[16px] fill-current">star</span>
-                                </div>
-                            </div>
-                        </div>
-                        <p class="text-slate-600 leading-relaxed italic text-sm">"Negozio curatissimo, personale gentile
-                            e molto preparato. Mi hanno consigliato il dispositivo perfetto per me. Lo consiglio
-                            assolutamente a tutti!"</p>
-                        <p class="text-xs text-slate-400 mt-3">Recensione Google · 1 mese fa</p>
-                    </div>
-
-                    <!-- Review 3 -->
-                    <div
-                        class="bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow border border-black/5 animate-on-scroll fade-in-bottom stagger-delay-3">
-                        <div class="flex items-center gap-3 mb-3">
-                            <div
-                                class="size-10 rounded-full bg-[#F8ED70] flex items-center justify-center text-sm font-black text-background-dark">
-                                FM</div>
-                            <div>
-                                <h4 class="font-bold text-background-dark text-sm">Federico Moretti</h4>
-                                <div class="flex text-[#F8ED70] star-rating">
-                                    <span class="material-symbols-outlined text-[16px] fill-current">star</span>
-                                    <span class="material-symbols-outlined text-[16px] fill-current">star</span>
-                                    <span class="material-symbols-outlined text-[16px] fill-current">star</span>
-                                    <span class="material-symbols-outlined text-[16px] fill-current">star</span>
-                                    <span class="material-symbols-outlined text-[16px] fill-current">star</span>
-                                </div>
-                            </div>
-                        </div>
-                        <p class="text-slate-600 leading-relaxed italic text-sm">"Vengo qui da due anni e non ho mai
-                            avuto motivo di andare altrove. Liquidi di qualità eccellente, staff disponibile e
-                            un'atmosfera davvero unica. 10/10!"</p>
-                        <p class="text-xs text-slate-400 mt-3">Recensione Google · 3 mesi fa</p>
                     </div>
                 </div>
 
@@ -359,6 +296,9 @@
         });
     </script>
     <script src="../src/js/modules/age-verification.js"></script>
+
+    <!-- Google Reviews Service -->
+    <script src="../src/js/services/google-reviews-service.js"></script>
 
     <!-- Scroll Animation Script -->
     <script>
