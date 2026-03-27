@@ -161,17 +161,49 @@
         let totalCount = null;
 
         try {
-            const response = await fetch(API_URL, { method: 'GET' });
-            if (response.ok) {
-                const json = await response.json();
-                if (json.success && json.data) {
-                    reviews = json.data.reviews || [];
-                    rating = json.data.rating;
-                    totalCount = json.data.user_ratings_total;
+            if (typeof window.initializeFirebase === 'function' || (window.firebaseConfig && typeof window.firebaseConfig.initializeFirebase === 'function')) {
+                const initFn = typeof window.initializeFirebase === 'function' ? window.initializeFirebase : window.firebaseConfig.initializeFirebase;
+                const { firestore } = await initFn();
+                
+                // Fetch config
+                try {
+                    const configDoc = await firestore.collection('settings').doc('reviewsConfig').get();
+                    if (configDoc.exists) {
+                        const data = configDoc.data();
+                        rating = data.overallRating;
+                        totalCount = data.totalReviews;
+                    }
+                } catch (e) {
+                    console.warn('Could not fetch reviewsConfig', e);
                 }
+
+                // Fetch reviews
+                const fetchReviews = async (query) => {
+                    const snapshot = await query.get();
+                    snapshot.forEach(doc => {
+                        const data = doc.data();
+                        reviews.push({
+                            id: doc.id,
+                            author_name: data.author || 'Anonimo',
+                            rating: data.rating || 5,
+                            text: data.text || '',
+                            relative_time_description: data.date || '',
+                            profile_photo_url: null
+                        });
+                    });
+                };
+
+                try {
+                    await fetchReviews(firestore.collection('reviews').orderBy('createdAt', 'desc').limit(3));
+                } catch (e) {
+                    console.warn('Could not fetch ordered reviews, falling back to unordered', e);
+                    await fetchReviews(firestore.collection('reviews').limit(3));
+                }
+            } else {
+                console.warn('Firebase initialization function not found');
             }
         } catch (err) {
-            console.warn('Google Reviews API unavailable, using static fallback:', err.message);
+            console.warn('Error load Google Reviews from Firestore, using static fallback:', err.message);
         }
 
         // Fall back to static reviews if API failed or returned nothing
