@@ -748,33 +748,34 @@
                                 <span class="material-symbols-outlined text-primary">info</span>
                                 Informazioni Generali del Negozio
                             </h3>
-                            <button
-                                class="bg-primary hover:bg-primary/90 text-black px-6 py-2 rounded-lg text-sm font-bold transition-all">Salva
-                                Modifiche</button>
+                            <button id="save-store-info-btn"
+                                class="flex items-center gap-1.5 bg-primary hover:bg-primary/90 text-black px-6 py-2 rounded-lg text-sm font-bold transition-all">
+                                <span class="material-symbols-outlined text-sm">save</span>
+                                Salva Modifiche</button>
                         </div>
                         <div class="p-6">
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div class="space-y-2">
                                     <label class="text-sm font-semibold dark:text-white">Nome Negozio</label>
-                                    <input
+                                    <input id="store-info-name"
                                         class="w-full bg-slate-50 dark:bg-[#27271b] border border-slate-200 dark:border-[#54543b] rounded-lg px-4 py-3 text-slate-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all"
                                         placeholder="Inserisci il nome del negozio" type="text" value="" />
                                 </div>
                                 <div class="space-y-2">
                                     <label class="text-sm font-semibold dark:text-white">Telefono di Contatto</label>
-                                    <input
+                                    <input id="store-info-phone"
                                         class="w-full bg-slate-50 dark:bg-[#27271b] border border-slate-200 dark:border-[#54543b] rounded-lg px-4 py-3 text-slate-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all"
                                         placeholder="+39 000 000 000" type="tel" value="" />
                                 </div>
                                 <div class="space-y-2">
                                     <label class="text-sm font-semibold dark:text-white">Indirizzo Email</label>
-                                    <input
+                                    <input id="store-info-email"
                                         class="w-full bg-slate-50 dark:bg-[#27271b] border border-slate-200 dark:border-[#54543b] rounded-lg px-4 py-3 text-slate-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all"
                                         placeholder="shop@email.com" type="email" value="" />
                                 </div>
                                 <div class="space-y-2">
                                     <label class="text-sm font-semibold dark:text-white">Indirizzo</label>
-                                    <input
+                                    <input id="store-info-address"
                                         class="w-full bg-slate-50 dark:bg-[#27271b] border border-slate-200 dark:border-[#54543b] rounded-lg px-4 py-3 text-slate-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all"
                                         placeholder="Inserisci l'indirizzo completo" type="text" value="" />
                                 </div>
@@ -788,11 +789,11 @@
                                         class="p-4 bg-slate-50 dark:bg-white/5 rounded-lg border border-slate-100 dark:border-white/5">
                                         <p class="text-xs font-bold mb-2">Lun - Ven</p>
                                         <div class="flex gap-2">
-                                            <input
+                                            <input id="store-info-mon-fri-open"
                                                 class="w-full bg-transparent border-b border-slate-300 dark:border-slate-600 text-sm py-1 outline-none focus:border-primary"
                                                 type="text" value="09:00" />
                                             <span class="text-slate-400">-</span>
-                                            <input
+                                            <input id="store-info-mon-fri-close"
                                                 class="w-full bg-transparent border-b border-slate-300 dark:border-slate-600 text-sm py-1 outline-none focus:border-primary"
                                                 type="text" value="21:00" />
                                         </div>
@@ -801,11 +802,11 @@
                                         class="p-4 bg-slate-50 dark:bg-white/5 rounded-lg border border-slate-100 dark:border-white/5">
                                         <p class="text-xs font-bold mb-2">Sabato</p>
                                         <div class="flex gap-2">
-                                            <input
+                                            <input id="store-info-sat-open"
                                                 class="w-full bg-transparent border-b border-slate-300 dark:border-slate-600 text-sm py-1 outline-none focus:border-primary"
                                                 type="text" value="10:00" />
                                             <span class="text-slate-400">-</span>
-                                            <input
+                                            <input id="store-info-sat-close"
                                                 class="w-full bg-transparent border-b border-slate-300 dark:border-slate-600 text-sm py-1 outline-none focus:border-primary"
                                                 type="text" value="19:00" />
                                         </div>
@@ -1008,6 +1009,7 @@
     <script src="../src/js/admin/admin-toast.js"></script>
     <script src="../src/js/admin/site-texts-admin.js"></script>
     <script src="../src/js/admin/reviews-admin.js"></script>
+    <script src="../src/js/admin/store-info-admin.js"></script>
 </body>
 
 </html>

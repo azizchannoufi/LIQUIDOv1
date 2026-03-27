@@ -100,10 +100,8 @@
                     <div>
                         <h3 class="font-black text-background-dark text-base uppercase tracking-wider mb-1">Indirizzo
                         </h3>
-                        <p class="text-background-dark font-bold text-lg" data-text-key="contact.address_street">Via
-                            Adige 43C</p>
-                        <p class="text-background-dark/70 font-medium" data-text-key="contact.address_city">00015 -
-                            Monterotondo (RM)</p>
+                        <p class="text-background-dark font-bold text-lg" id="store-display-address" data-text-key="contact.address_street">Via
+                            Adige 43C, 00015 - Monterotondo (RM)</p>
                     </div>
                 </div>
 
@@ -119,12 +117,12 @@
                     <div class="divide-y divide-black/10">
                         <div class="flex justify-between px-5 py-3">
                             <span class="text-background-dark font-medium">Lun - Ven</span>
-                            <span class="text-background-dark font-bold" data-text-key="contact.hours_mon_fri">09:00 -
+                            <span class="text-background-dark font-bold" id="store-display-mon-fri" data-text-key="contact.hours_mon_fri">09:00 -
                                 20:15</span>
                         </div>
                         <div class="flex justify-between px-5 py-3">
                             <span class="text-background-dark font-medium">Sab</span>
-                            <span class="text-background-dark font-bold" data-text-key="contact.hours_sat">10:00 -
+                            <span class="text-background-dark font-bold" id="store-display-sat" data-text-key="contact.hours_sat">10:00 -
                                 19:30</span>
                         </div>
                         <div class="flex justify-between px-5 py-3 bg-black/5">
@@ -143,7 +141,7 @@
                             <div>
                                 <h3 class="font-black text-background-dark text-base uppercase tracking-wider">Contatti
                                 </h3>
-                                <p class="text-background-dark/80 font-medium text-sm" data-text-key="contact.phone">+39
+                                <p class="text-background-dark/80 font-medium text-sm" id="store-display-phone" data-text-key="contact.phone">+39
                                     379 134 5367</p>
                             </div>
                         </div>
@@ -228,10 +226,20 @@
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
     <script src="../src/js/services/firebase-config.js"></script>
     <script src="../src/js/services/site-texts-service.js"></script>
+    <script src="../src/js/services/store-info-service.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', async () => {
-            try { await window.siteTextsService.applyTextsToPage(); }
-            catch (e) { console.warn('Could not load site texts:', e); }
+            try { 
+                await window.siteTextsService.applyTextsToPage(); 
+            } catch (e) { 
+                console.warn('Could not load site texts:', e); 
+            }
+            try { 
+                await window.storeInfoService.init(); 
+                window.storeInfoService.applyToPage(); 
+            } catch (e) { 
+                console.warn('Could not load store info:', e); 
+            }
         });
     </script>
     <script src="../src/js/modules/age-verification.js"></script>
