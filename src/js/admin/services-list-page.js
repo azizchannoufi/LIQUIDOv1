@@ -55,65 +55,26 @@ class ServicesListPageService {
         await this.initialize();
 
         try {
-            // Get all user profiles from Firestore
-            const fsUsersRef = this.firestore.collection('users');
-            const fsSnapshot = await fsUsersRef.get();
-            const fsUsers = {};
-            fsSnapshot.forEach(doc => {
-                fsUsers[doc.id] = doc.data();
-            });
-
-            // Get all services from Realtime Database
-            const rtdbUsersRef = this.database.ref('users');
-            const rtdbSnapshot = await rtdbUsersRef.once('value');
-            const rtdbUsersData = rtdbSnapshot.val();
-
-            if (!rtdbUsersData) {
-                return [];
-            }
-
+            // Get all services from Firestore
+            const servicesRef = this.firestore.collection('services');
+            const servicesSnapshot = await servicesRef.get();
             const services = [];
 
-            // Iterate through all users in RTDB
-            for (const userId of Object.keys(rtdbUsersData)) {
-                const fsUser = fsUsers[userId] || {};
-
-                // Fetch product requests
-                const productRequests = rtdbUsersData[userId]?.services?.['product-requests'];
-
-                if (productRequests) {
-                    for (const requestId of Object.keys(productRequests)) {
-                        services.push({
-                            serviceId: requestId,
-                            userId: userId,
-                            serviceType: 'product-request',
-                            typeDisplay: 'Product Request',
-                            userName: fsUser.name || 'N/A',
-                            userEmail: fsUser.email || 'N/A',
-                            userPhone: fsUser.phone || 'N/A',
-                            ...productRequests[requestId]
-                        });
-                    }
-                }
-
-                // Fetch maintenance requests
-                const maintenanceRequests = rtdbUsersData[userId]?.services?.['maintenance-requests'];
-
-                if (maintenanceRequests) {
-                    for (const requestId of Object.keys(maintenanceRequests)) {
-                        services.push({
-                            serviceId: requestId,
-                            userId: userId,
-                            serviceType: 'maintenance-request',
-                            typeDisplay: 'Maintenance Request',
-                            userName: fsUser.name || 'N/A',
-                            userEmail: fsUser.email || 'N/A',
-                            userPhone: fsUser.phone || 'N/A',
-                            ...maintenanceRequests[requestId]
-                        });
-                    }
-                }
-            }
+            servicesSnapshot.forEach(doc => {
+                const data = doc.data();
+                
+                services.push({
+                    serviceId: doc.id,
+                    userId: data.userId,
+                    serviceType: data.serviceType,
+                    typeDisplay: data.serviceType === 'product-request' ? 'Product Request' : 'Maintenance Request',
+                    userName: data.userName || 'N/A',
+                    userEmail: data.userEmail || 'N/A',
+                    userPhone: data.userPhone || 'N/A',
+                    ...data,
+                    createdAt: data.createdAt ? (data.createdAt.toMillis ? data.createdAt.toMillis() : data.createdAt) : 0
+                });
+            });
 
             // Sort by creation date (newest first)
             return services.sort((a, b) => {
@@ -408,30 +369,15 @@ class ServicesListPageService {
     async updateServiceStatus(userId, serviceId, serviceType, newStatus) {
         await this.initialize();
 
-        if (!this.database) {
-            throw new Error('Database not initialized');
+        if (!this.firestore) {
+            throw new Error('Firestore not initialized');
         }
 
         try {
-            // Determine the correct path based on service type
-            const servicePath = serviceType === 'product-request'
-                ? `users/${userId}/services/product-requests/${serviceId}`
-                : `users/${userId}/services/maintenance-requests/${serviceId}`;
+            const serviceRef = this.firestore.collection('services').doc(serviceId);
 
-            const serviceRef = this.database.ref(servicePath);
-
-            // Wrap in Promise to ensure proper async handling
-            await new Promise((resolve, reject) => {
-                serviceRef.update({ status: newStatus })
-                    .then(() => {
-                        console.log(`✅ Service status updated successfully: ${userId}/${serviceId} -> ${newStatus}`);
-                        resolve();
-                    })
-                    .catch((error) => {
-                        console.error('❌ Error updating service status:', error);
-                        reject(error);
-                    });
-            });
+            await serviceRef.update({ status: newStatus });
+            console.log(`✅ Service status updated successfully: ${serviceId} -> ${newStatus}`);
 
             // Update local data
             const service = this.allServices.find(s => s.serviceId === serviceId && s.userId === userId);

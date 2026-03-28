@@ -55,44 +55,24 @@ class OrdersListPageService {
         await this.initialize();
 
         try {
-            // Get all user profiles from Firestore
-            const fsUsersRef = this.firestore.collection('users');
-            const fsSnapshot = await fsUsersRef.get();
-            const fsUsers = {};
-            fsSnapshot.forEach(doc => {
-                fsUsers[doc.id] = doc.data();
-            });
-
-            // Get all orders from Realtime Database
-            const rtdbUsersRef = this.database.ref('users');
-            const rtdbSnapshot = await rtdbUsersRef.once('value');
-            const rtdbUsersData = rtdbSnapshot.val();
-
-            if (!rtdbUsersData) {
-                return [];
-            }
-
+            // Get all orders from Firestore
+            const ordersRef = this.firestore.collection('orders');
+            const ordersSnapshot = await ordersRef.get();
             const orders = [];
 
-            // Iterate through all users in RTDB
-            for (const userId of Object.keys(rtdbUsersData)) {
-                const fsUser = fsUsers[userId] || {};
-                const userOrders = rtdbUsersData[userId].orders;
-
-                if (userOrders) {
-                    // Add each order with user info from Firestore
-                    for (const orderId of Object.keys(userOrders)) {
-                        orders.push({
-                            orderId: orderId,
-                            userId: userId,
-                            userName: fsUser.name || 'N/A',
-                            userEmail: fsUser.email || 'N/A',
-                            userPhone: fsUser.phone || 'N/A',
-                            ...userOrders[orderId]
-                        });
-                    }
-                }
-            }
+            ordersSnapshot.forEach(doc => {
+                const data = doc.data();
+                
+                orders.push({
+                    orderId: doc.id,
+                    userId: data.userId,
+                    userName: data.userName || 'N/A',
+                    userEmail: data.userEmail || 'N/A',
+                    userPhone: data.userPhone || 'N/A',
+                    ...data,
+                    createdAt: data.createdAt ? (data.createdAt.toMillis ? data.createdAt.toMillis() : data.createdAt) : 0
+                });
+            });
 
             // Sort by creation date (newest first)
             return orders.sort((a, b) => {
@@ -313,26 +293,15 @@ class OrdersListPageService {
     async updateOrderStatus(userId, orderId, newStatus) {
         await this.initialize();
 
-        if (!this.database) {
-            throw new Error('Database not initialized');
+        if (!this.firestore) {
+            throw new Error('Firestore not initialized');
         }
 
         try {
-            // Use update() method to update only the status field
-            const orderRef = this.database.ref(`users/${userId}/orders/${orderId}`);
+            const orderRef = this.firestore.collection('orders').doc(orderId);
 
-            // Wrap in Promise to ensure proper async handling
-            await new Promise((resolve, reject) => {
-                orderRef.update({ status: newStatus })
-                    .then(() => {
-                        console.log(`✅ Status updated successfully: ${userId}/${orderId} -> ${newStatus}`);
-                        resolve();
-                    })
-                    .catch((error) => {
-                        console.error('❌ Error updating status:', error);
-                        reject(error);
-                    });
-            });
+            await orderRef.update({ status: newStatus });
+            console.log(`✅ Status updated successfully: ${orderId} -> ${newStatus}`);
 
             // Update local data
             const order = this.allOrders.find(o => o.orderId === orderId && o.userId === userId);
