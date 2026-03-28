@@ -206,13 +206,16 @@ class BrandsRenderer {
         `;
 
         duplicatedBrands.forEach(brand => {
-            const hasLogo = brand.logo_url && brand.logo_url.trim() !== '';
+            // Prefer loop_logo_url if available, else fallback to logo_url
+            const displayLogoUrl = brand.loop_logo_url || brand.logo_url;
+            const hasLogo = displayLogoUrl && displayLogoUrl.trim() !== '';
+            
             carouselHTML += `
                 <div class="brands-carousel-item" style="flex-shrink:0; display:flex; flex-direction:column; align-items:center; justify-content:center; width:200px; height:100px; margin-right:48px;">
                     ${hasLogo
                     ? `<img style="max-height:80px; max-width:180px; width:auto; height:auto; object-fit:contain; filter:grayscale(1) brightness(0); opacity:0.7; transition:all 0.3s;"
                                alt="${brand.name}"
-                               src="${brand.logo_url}"
+                               src="${displayLogoUrl}"
                                onmouseover="this.style.filter='grayscale(0) brightness(1)'; this.style.opacity='1';"
                                onmouseout="this.style.filter='grayscale(1) brightness(0)'; this.style.opacity='0.7';"
                                onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"/>
@@ -699,9 +702,9 @@ class BrandsRenderer {
 
                         <!-- Image Side (Brand Logo/Image) -->
                         <div class="flex-1 w-full lg:w-1/2 scroll-animate ${imageSlideClass}">
-                            <div class="relative aspect-[4/3] w-full overflow-hidden rounded-lg shadow-2xl group-hover:shadow-primary/20 transition-all duration-500 bg-white border border-gray-100 flex items-center justify-center p-12">
+                            <div class="relative aspect-[4/3] w-full overflow-hidden rounded-lg shadow-2xl group-hover:shadow-primary/20 transition-all duration-500 bg-white border border-gray-100 flex items-center justify-center">
                                 ${hasLogo ?
-                        `<img src="${logoUrl}" alt="${brandName}" class="w-2/3 h-2/3 object-contain filter grayscale group-hover:grayscale-0 transition-all duration-500 transform scale-100 group-hover:scale-110">` :
+                        `<img src="${logoUrl}" alt="${brandName}" class="w-full h-full object-cover transition-all duration-500 transform scale-100 group-hover:scale-110">` :
                         `<div class="flex flex-col items-center justify-center text-gray-300"><span class="material-symbols-outlined text-6xl">image_not_supported</span><span class="mt-4 font-bold uppercase tracking-widest text-xs">Logo non disponibile</span></div>`
                     }
                                 <div class="absolute inset-0 bg-transparent mix-blend-multiply"></div>
@@ -711,9 +714,9 @@ class BrandsRenderer {
 
                     <!-- Mobile View (Always Vertical) -->
                     <div class="flex md:hidden flex-col gap-6 group relative scroll-animate from-bottom">
-                         <div class="relative aspect-[4/3] w-full overflow-hidden rounded-lg shadow-lg bg-white border border-gray-100 flex items-center justify-center p-8">
+                         <div class="relative aspect-[4/3] w-full overflow-hidden rounded-lg shadow-lg bg-white border border-gray-100 flex items-center justify-center">
                             ${hasLogo ?
-                        `<img src="${logoUrl}" alt="${brandName}" class="w-3/4 h-3/4 object-contain filter grayscale-0">` :
+                        `<img src="${logoUrl}" alt="${brandName}" class="w-full h-full object-cover">` :
                         `<span class="material-symbols-outlined text-4xl text-gray-300">image_not_supported</span>`
                     }
                          </div>
