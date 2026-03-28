@@ -26,8 +26,8 @@ class MyLiquidoServices {
 
         this.initPromise = (async () => {
             try {
-                const { database } = await window.firebaseConfig.initializeFirebase();
-                this.database = database;
+                const { firestore } = await window.firebaseConfig.initializeFirebase();
+                this.firestore = firestore;
                 this.initialized = true;
             } catch (error) {
                 console.error('Error initializing MyLiquido Services:', error);
@@ -51,16 +51,21 @@ class MyLiquidoServices {
         await this.initialize();
 
         try {
-            // Save request to Firebase
+            // Save request to Firestore
             const requestData = {
+                userId: userId,
+                userName: userProfile.name || userProfile.email || 'N/A',
+                userEmail: userProfile.email || 'N/A',
+                userPhone: userProfile.phone || 'N/A',
+                serviceType: 'product-request',
                 productImage: productImageUrl,
                 message: message,
-                createdAt: firebase.database.ServerValue.TIMESTAMP,
+                createdAt: firebase.firestore.FieldValue.serverTimestamp(),
                 status: 'pending'
             };
 
-            const requestRef = this.database.ref(`users/${userId}/services/product-requests`).push();
-            await requestRef.set(requestData);
+            const requestRef = this.firestore.collection('services');
+            await requestRef.add(requestData);
 
             // Generate WhatsApp message
             const whatsappMessage = this._formatProductRequestMessage(
@@ -92,17 +97,22 @@ class MyLiquidoServices {
         await this.initialize();
 
         try {
-            // Save request to Firebase
+            // Save request to Firestore
             const requestData = {
+                userId: userId,
+                userName: userProfile.name || userProfile.email || 'N/A',
+                userEmail: userProfile.email || 'N/A',
+                userPhone: userProfile.phone || 'N/A',
+                serviceType: 'maintenance-request',
                 date: date,
                 time: time,
                 description: description,
-                createdAt: firebase.database.ServerValue.TIMESTAMP,
+                createdAt: firebase.firestore.FieldValue.serverTimestamp(),
                 status: 'pending'
             };
 
-            const requestRef = this.database.ref(`users/${userId}/services/maintenance-requests`).push();
-            await requestRef.set(requestData);
+            const requestRef = this.firestore.collection('services');
+            await requestRef.add(requestData);
 
             // Generate WhatsApp message
             const whatsappMessage = this._formatMaintenanceRequestMessage(
@@ -135,18 +145,22 @@ class MyLiquidoServices {
         await this.initialize();
 
         try {
-            // Save order to Firebase
+            // Save order to Firestore
             const orderData = {
+                userId: userId,
+                userName: userProfile.name || userProfile.email || 'N/A',
+                userEmail: userProfile.email || 'N/A',
+                userPhone: userProfile.phone || 'N/A',
                 productName: productInfo.name || 'N/A',
                 productDetails: productInfo.details || {},
                 date: date,
                 time: time,
-                createdAt: firebase.database.ServerValue.TIMESTAMP,
+                createdAt: firebase.firestore.FieldValue.serverTimestamp(),
                 status: 'pending'
             };
 
-            const orderRef = this.database.ref(`users/${userId}/orders`).push();
-            await orderRef.set(orderData);
+            const orderRef = this.firestore.collection('orders');
+            await orderRef.add(orderData);
 
             // Generate WhatsApp message
             const whatsappMessage = this._formatProductOrderMessage(
