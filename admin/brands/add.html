@@ -175,36 +175,69 @@
                             <span class="material-symbols-outlined text-primary">image</span>
                             Brand Assets
                         </h2>
-                        <div class="flex flex-col md:flex-row gap-8 items-start">
-                            <div class="flex flex-col items-center gap-4">
-                                <p class="text-white text-sm font-semibold w-full">Logo Preview</p>
-                                <div class="size-32 rounded-xl bg-background-dark border-2 border-dashed border-border-dark flex items-center justify-center overflow-hidden group relative"
-                                    id="logo-preview">
-                                    <div
-                                        class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity cursor-pointer">
-                                        <span class="material-symbols-outlined text-white text-3xl">edit</span>
+                        <div class="flex flex-col gap-8">
+                            <!-- Main Logo -->
+                            <div class="flex flex-col md:flex-row gap-8 items-start pb-6 border-b border-white/10">
+                                <div class="flex flex-col items-center gap-4 w-full md:w-auto">
+                                    <p class="text-white text-sm font-semibold w-full text-center md:text-left">Main Logo (Admin/Catalog)</p>
+                                    <div class="size-32 rounded-xl bg-background-dark border-2 border-dashed border-border-dark flex items-center justify-center overflow-hidden group relative"
+                                        id="logo-preview">
+                                        <div
+                                            class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity cursor-pointer">
+                                            <span class="material-symbols-outlined text-white text-3xl">edit</span>
+                                        </div>
+                                        <img id="logo-preview-img" class="w-24 h-24 object-contain hidden"
+                                            alt="Brand logo preview" />
+                                        <span class="text-muted-dark text-sm">No logo</span>
                                     </div>
-                                    <img id="logo-preview-img" class="w-24 h-24 object-contain hidden"
-                                        alt="Brand logo preview" />
-                                    <span class="text-muted-dark text-sm">No logo</span>
+                                    <p class="text-muted-dark text-xs">SVG, PNG or JPG. Max 2MB.</p>
                                 </div>
-                                <p class="text-muted-dark text-xs">SVG, PNG or JPG. Max 2MB.</p>
+                                <div class="flex-1 w-full">
+                                    <p class="text-white text-sm font-semibold mb-2">Logo URL</p>
+                                    <input type="text" name="logo-url" id="logo-url"
+                                        class="w-full rounded-lg text-white border border-border-dark bg-background-dark focus:border-primary focus:ring-1 focus:ring-primary h-12 px-4 text-base font-normal placeholder:text-muted-dark mb-2"
+                                        placeholder="/images/brands/brand_logo.png" />
+                                    <p class="text-muted-dark text-xs mb-4">Or upload a file:</p>
+                                    <div
+                                        class="w-full border-2 border-dashed border-border-dark rounded-xl p-8 flex flex-col items-center justify-center bg-background-dark/20 hover:bg-background-dark/40 hover:border-primary/50 transition-all cursor-pointer">
+                                        <input type="file" id="logo-upload" accept="image/*" class="hidden" />
+                                        <label for="logo-upload" class="cursor-pointer text-center w-full">
+                                            <span
+                                                class="material-symbols-outlined text-4xl text-muted-dark mb-2 block">cloud_upload</span>
+                                            <p class="text-white text-base font-medium">Click to upload main logo</p>
+                                        </label>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="flex-1 w-full">
-                                <p class="text-white text-sm font-semibold mb-2">Logo URL</p>
-                                <input type="text" name="logo-url" id="logo-url"
-                                    class="w-full rounded-lg text-white border border-border-dark bg-background-dark focus:border-primary focus:ring-1 focus:ring-primary h-12 px-4 text-base font-normal placeholder:text-muted-dark mb-2"
-                                    placeholder="/images/brands/brand_logo.png" />
-                                <p class="text-muted-dark text-xs mb-4">Or upload a file:</p>
-                                <div
-                                    class="w-full border-2 border-dashed border-border-dark rounded-xl p-8 flex flex-col items-center justify-center bg-background-dark/20 hover:bg-background-dark/40 hover:border-primary/50 transition-all cursor-pointer">
-                                    <input type="file" id="logo-upload" accept="image/*" class="hidden" />
-                                    <label for="logo-upload" class="cursor-pointer text-center">
-                                        <span
-                                            class="material-symbols-outlined text-4xl text-muted-dark mb-2 block">cloud_upload</span>
-                                        <p class="text-white text-base font-medium">Click to upload or drag and drop</p>
-                                        <p class="text-muted-dark text-sm">Recommended size: 512x512px</p>
-                                    </label>
+                            <!-- Loop Logo -->
+                            <div class="flex flex-col md:flex-row gap-8 items-start">
+                                <div class="flex flex-col items-center gap-4 w-full md:w-auto">
+                                    <p class="text-white text-sm font-semibold w-full text-center md:text-left">Home Loop Logo</p>
+                                    <div class="w-48 h-20 md:w-32 md:h-32 rounded-xl bg-background-dark border-2 border-dashed border-border-dark flex items-center justify-center overflow-hidden group relative"
+                                        id="loop-logo-preview">
+                                        <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity cursor-pointer">
+                                            <span class="material-symbols-outlined text-white text-3xl">edit</span>
+                                        </div>
+                                        <img id="loop-logo-preview-img" class="w-full h-full object-contain hidden p-2"
+                                            alt="Home loop logo preview" />
+                                        <span class="text-muted-dark text-sm text-center px-2">No loop logo</span>
+                                    </div>
+                                    <p class="text-muted-dark text-xs text-center">Horizontal SVG/PNG recommended.</p>
+                                </div>
+                                <div class="flex-1 w-full">
+                                    <p class="text-white text-sm font-semibold mb-2">Loop Logo URL</p>
+                                    <input type="text" name="loop-logo-url" id="loop-logo-url"
+                                        class="w-full rounded-lg text-white border border-border-dark bg-background-dark focus:border-primary focus:ring-1 focus:ring-primary h-12 px-4 text-base font-normal placeholder:text-muted-dark mb-2"
+                                        placeholder="/images/brands/brand_loop_logo.png" />
+                                    <p class="text-muted-dark text-xs mb-4">Or upload a file:</p>
+                                    <div
+                                        class="w-full border-2 border-dashed border-border-dark rounded-xl p-8 flex flex-col items-center justify-center bg-background-dark/20 hover:bg-background-dark/40 hover:border-primary/50 transition-all cursor-pointer">
+                                        <input type="file" id="loop-logo-upload" accept="image/*" class="hidden" />
+                                        <label for="loop-logo-upload" class="cursor-pointer text-center w-full">
+                                            <span class="material-symbols-outlined text-4xl text-muted-dark mb-2 block">cloud_upload</span>
+                                            <p class="text-white text-base font-medium">Click to upload loop logo</p>
+                                        </label>
+                                    </div>
                                 </div>
                             </div>
                         </div>

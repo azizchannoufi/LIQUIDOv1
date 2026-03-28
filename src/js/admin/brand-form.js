@@ -291,6 +291,7 @@
                     document.getElementById('website').value = brand.website || '';
                     document.getElementById('description').value = brand.description || '';
                     document.getElementById('logo-url').value = brand.logo_url || '';
+                    if(document.getElementById('loop-logo-url')) document.getElementById('loop-logo-url').value = brand.loop_logo_url || '';
 
                     // Update logo preview
                     const logoPreview = document.getElementById('logo-preview-img');
@@ -298,6 +299,14 @@
                         logoPreview.src = brand.logo_url;
                         logoPreview.classList.remove('hidden');
                         logoPreview.parentElement.querySelector('span').classList.add('hidden');
+                    }
+
+                    // Update loop logo preview
+                    const loopLogoPreview = document.getElementById('loop-logo-preview-img');
+                    if (loopLogoPreview && brand.loop_logo_url) {
+                        loopLogoPreview.src = brand.loop_logo_url;
+                        loopLogoPreview.classList.remove('hidden');
+                        loopLogoPreview.parentElement.querySelector('span').classList.add('hidden');
                     }
 
                     // Set primary section
@@ -407,6 +416,23 @@
         });
     }
 
+    // Loop Logo URL preview handler
+    const loopLogoUrlInput = document.getElementById('loop-logo-url');
+    const loopLogoPreview = document.getElementById('loop-logo-preview-img');
+    if (loopLogoUrlInput && loopLogoPreview) {
+        loopLogoUrlInput.addEventListener('input', (e) => {
+            const url = e.target.value;
+            if (url) {
+                loopLogoPreview.src = url;
+                loopLogoPreview.classList.remove('hidden');
+                loopLogoPreview.parentElement.querySelector('span').classList.add('hidden');
+            } else {
+                loopLogoPreview.classList.add('hidden');
+                loopLogoPreview.parentElement.querySelector('span').classList.remove('hidden');
+            }
+        });
+    }
+
     // Logo upload handler with Cloudinary
     const logoUpload = document.getElementById('logo-upload');
     if (logoUpload) {
@@ -485,6 +511,59 @@
         logoUpload.addEventListener('change', handleLogoUpload);
     }
 
+    // Loop Logo upload handler with Cloudinary
+    const loopLogoUpload = document.getElementById('loop-logo-upload');
+    if (loopLogoUpload) {
+        const handleLoopLogoUpload = async function (e) {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            // Show loading state
+            const uploadArea = loopLogoUpload.closest('div');
+            const originalContent = uploadArea?.innerHTML;
+            if (uploadArea) {
+                uploadArea.innerHTML = '<div class="flex flex-col items-center gap-2"><div class="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div><p class="text-sm text-white">Uploading...</p></div>';
+            }
+
+            try {
+                if (!file.type.startsWith('image/')) throw new Error('Please select an image file');
+                if (!window.cloudinaryService) throw new Error('Cloudinary service not available. Please check configuration.');
+
+                const userId = 'admin_brand_loop_' + Date.now();
+                const imageUrl = await window.cloudinaryService.uploadProductImage(file, userId, () => {});
+
+                if (loopLogoPreview) {
+                    loopLogoPreview.src = imageUrl;
+                    loopLogoPreview.classList.remove('hidden');
+                    const noLogoSpan = loopLogoPreview.parentElement.querySelector('span');
+                    if (noLogoSpan) noLogoSpan.classList.add('hidden');
+                }
+
+                if (loopLogoUrlInput) {
+                    loopLogoUrlInput.value = imageUrl;
+                }
+
+                if (uploadArea && originalContent) {
+                    uploadArea.innerHTML = originalContent;
+                    const newUpload = document.getElementById('loop-logo-upload');
+                    if (newUpload) newUpload.addEventListener('change', handleLoopLogoUpload);
+                }
+
+                alert('✅ Loop Logo uploaded successfully to Cloudinary!');
+            } catch (error) {
+                console.error('Error uploading loop logo:', error);
+                alert('❌ Error uploading loop logo: ' + error.message);
+
+                if (uploadArea && originalContent) {
+                    uploadArea.innerHTML = originalContent;
+                    const newUpload = document.getElementById('loop-logo-upload');
+                    if (newUpload) newUpload.addEventListener('change', handleLoopLogoUpload);
+                }
+            }
+        };
+        loopLogoUpload.addEventListener('change', handleLoopLogoUpload);
+    }
+
     // Form submission handler
     const form = document.getElementById('brand-form') || document.querySelector('form');
     if (form) {
@@ -495,15 +574,16 @@
             const brandTypeInput = document.getElementById('brand-type');
             const websiteInput = document.getElementById('website');
             const descriptionInput = document.getElementById('description');
-            const logoUrlInput = document.getElementById('logo-url');
-
+            const logoUrlInputForm = document.getElementById('logo-url');
+            const loopLogoUrlInputForm = document.getElementById('loop-logo-url');
 
             const brandData = {
                 name: brandNameInput?.value.trim() || '',
                 type: brandTypeInput?.value.trim() || '',
                 website: websiteInput?.value.trim() || '',
                 description: descriptionInput?.value.trim() || '',
-                logo_url: logoUrlInput?.value.trim() || ''
+                logo_url: logoUrlInputForm?.value.trim() || '',
+                loop_logo_url: loopLogoUrlInputForm?.value.trim() || ''
                 // Note: lines or products will be added later based on type
             };
 
