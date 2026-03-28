@@ -178,6 +178,8 @@
                 }
 
                 // Fetch reviews
+                const isAboutPage = window.location.pathname.includes('about');
+                
                 const fetchReviews = async (query) => {
                     const snapshot = await query.get();
                     snapshot.forEach(doc => {
@@ -194,10 +196,16 @@
                 };
 
                 try {
-                    await fetchReviews(firestore.collection('reviews').orderBy('createdAt', 'desc').limit(3));
+                    const query = isAboutPage 
+                        ? firestore.collection('reviews').orderBy('createdAt', 'desc')
+                        : firestore.collection('reviews').orderBy('createdAt', 'desc').limit(3);
+                    await fetchReviews(query);
                 } catch (e) {
                     console.warn('Could not fetch ordered reviews, falling back to unordered', e);
-                    await fetchReviews(firestore.collection('reviews').limit(3));
+                    const fallbackQuery = isAboutPage
+                        ? firestore.collection('reviews')
+                        : firestore.collection('reviews').limit(3);
+                    await fetchReviews(fallbackQuery);
                 }
             } else {
                 console.warn('Firebase initialization function not found');
@@ -211,8 +219,9 @@
             reviews = FALLBACK_REVIEWS;
         }
 
-        // Only show top 3
-        const displayReviews = reviews.slice(0, 3);
+        // Only show top 3 on homepage, all on about page
+        const isAboutPage = window.location.pathname.includes('about');
+        const displayReviews = isAboutPage ? reviews : reviews.slice(0, 3);
 
         // Update rating in header
         if (rating) updateRatingDisplay(rating, totalCount);
