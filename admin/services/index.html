@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html class="dark" lang="en">
+<html class="dark" lang="it">
 
 <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <title>LIQUIDO | Admin Services Management</title>
+    <title>LIQUIDO | Admin Gestione Servizi</title>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap"
         rel="stylesheet" />
@@ -72,7 +72,7 @@
                     <div class="flex flex-col">
                         <h1 class="text-lg font-bold leading-tight tracking-tight">LIQUIDO</h1>
                         <p class="text-slate-500 dark:text-[#baba9c] text-xs font-medium uppercase tracking-widest">
-                            Admin Console</p>
+                            Console Admin</p>
                     </div>
                 </div>
                 <!-- Navigation Links -->
@@ -80,37 +80,37 @@
                     <a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-[#baba9c] hover:bg-slate-100 dark:hover:bg-[#2a2a1a] transition-colors"
                         href="../dashboard.html">
                         <span class="material-symbols-outlined">dashboard</span>
-                        <p class="text-sm font-medium">Dashboard</p>
+                        <p class="text-sm font-medium">Pannello</p>
                     </a>
                     <a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-[#baba9c] hover:bg-slate-100 dark:hover:bg-[#2a2a1a] transition-colors"
                         href="../products/index.html">
                         <span class="material-symbols-outlined">inventory_2</span>
-                        <p class="text-sm font-medium">Products</p>
+                        <p class="text-sm font-medium">Prodotti</p>
                     </a>
                     <a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-[#baba9c] hover:bg-slate-100 dark:hover:bg-[#2a2a1a] transition-colors"
                         href="../brands/index.html">
                         <span class="material-symbols-outlined">loyalty</span>
-                        <p class="text-sm font-medium">Brands</p>
+                        <p class="text-sm font-medium">Marchi</p>
                     </a>
                     <a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-[#baba9c] hover:bg-slate-100 dark:hover:bg-[#2a2a1a] transition-colors"
                         href="../users/index.html">
                         <span class="material-symbols-outlined">people</span>
-                        <p class="text-sm font-medium">Users</p>
+                        <p class="text-sm font-medium">Utenti</p>
                     </a>
                     <a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-[#baba9c] hover:bg-slate-100 dark:hover:bg-[#2a2a1a] transition-colors"
                         href="../orders/index.html">
                         <span class="material-symbols-outlined">shopping_cart</span>
-                        <p class="text-sm font-medium">Orders</p>
+                        <p class="text-sm font-medium">Ordini</p>
                     </a>
                     <a class="sidebar-active flex items-center gap-3 px-3 py-2.5 rounded-lg text-primary"
                         href="index.html">
                         <span class="material-symbols-outlined">room_service</span>
-                        <p class="text-sm font-semibold">Services</p>
+                        <p class="text-sm font-semibold">Servizi</p>
                     </a>
                     <a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-[#baba9c] hover:bg-slate-100 dark:hover:bg-[#2a2a1a] transition-colors"
                         href="../settings.html">
                         <span class="material-symbols-outlined">settings</span>
-                        <p class="text-sm font-medium">Store Settings</p>
+                        <p class="text-sm font-medium">Impostazioni Negozio</p>
                     </a>
                 </nav>
             </div>
@@ -119,7 +119,7 @@
                 <a href="../index.html"
                     class="flex w-full cursor-pointer items-center justify-center overflow-hidden rounded-lg h-11 bg-primary text-background-dark text-sm font-bold transition-transform hover:scale-[1.02] active:scale-95">
                     <span class="material-symbols-outlined mr-2">logout</span>
-                    <span>Logout</span>
+                    <span>Disconnetti</span>
                 </a>
             </div>
         </aside>
@@ -129,15 +129,15 @@
             <header class="p-8 pb-4">
                 <div class="flex flex-wrap gap-2 mb-2">
                     <a class="text-[#baba9c] text-sm font-medium hover:text-white transition-colors"
-                        href="../dashboard.html">Dashboard</a>
+                        href="../dashboard.html">Pannello</a>
                     <span class="text-[#baba9c] text-sm font-medium">/</span>
-                    <span class="text-white text-sm font-medium">Services Management</span>
+                    <span class="text-white text-sm font-medium">Gestione Servizi</span>
                 </div>
                 <div class="flex flex-wrap justify-between items-end gap-4">
                     <div>
-                        <h2 class="text-white text-4xl font-black leading-tight tracking-tight">Customer Services</h2>
-                        <p class="text-[#baba9c] text-sm mt-1">Total: <span id="total-services-count"
-                                class="text-primary font-bold">0</span> service requests</p>
+                        <h2 class="text-white text-4xl font-black leading-tight tracking-tight">Servizi Clienti</h2>
+                        <p class="text-[#baba9c] text-sm mt-1">Totale: <span id="total-services-count"
+                                class="text-primary font-bold">0</span> richieste di servizio</p>
                     </div>
                 </div>
             </header>
@@ -153,24 +153,24 @@
                             </div>
                             <input id="search-input"
                                 class="w-full h-full bg-border-dark border-none rounded-xl pl-12 text-white placeholder:text-[#baba9c] focus:ring-1 focus:ring-primary text-sm"
-                                placeholder="Search services by customer, type, or description..." type="text" />
+                                placeholder="Cerca servizi per cliente, tipo o descrizione..." type="text" />
                         </div>
                     </div>
                     <!-- Type Filter -->
                     <div class="lg:col-span-6 flex flex-wrap gap-4 items-center justify-end">
                         <select id="type-filter"
                             class="px-4 py-2 rounded-xl bg-border-dark border-none text-white text-sm focus:ring-1 focus:ring-primary">
-                            <option value="all">All Types</option>
-                            <option value="product-request">Product Request</option>
-                            <option value="maintenance-request">Maintenance Request</option>
+                            <option value="all">Tutti i Tipi</option>
+                            <option value="product-request">Richiesta Prodotto</option>
+                            <option value="maintenance-request">Richiesta Manutenzione</option>
                         </select>
                         <select id="status-filter"
                             class="px-4 py-2 rounded-xl bg-border-dark border-none text-white text-sm focus:ring-1 focus:ring-primary">
-                            <option value="all">All Status</option>
-                            <option value="pending">Pending</option>
-                            <option value="confirmed">Confirmed</option>
-                            <option value="completed">Completed</option>
-                            <option value="cancelled">Cancelled</option>
+                            <option value="all">Tutti gli Stati</option>
+                            <option value="pending">In Attesa</option>
+                            <option value="confirmed">Confermato</option>
+                            <option value="completed">Completato</option>
+                            <option value="cancelled">Annullato</option>
                         </select>
                     </div>
                 </div>
@@ -179,40 +179,39 @@
             <section class="px-8 pb-8 flex-grow">
                 <div class="bg-surface-dark border border-border-dark rounded-2xl overflow-hidden">
                     <div id="loading-state" class="p-8 text-center">
-                        <div class="text-[#baba9c]">Loading services...</div>
+                        <div class="text-[#baba9c]">Caricamento servizi...</div>
                     </div>
                     <div id="error-state" class="p-8 text-center hidden">
-                        <div class="text-red-500">Error loading services. Please refresh the page.</div>
+                        <div class="text-red-500">Errore nel caricamento dei servizi. Aggiorna la pagina.</div>
                     </div>
                     <table id="services-table" class="w-full text-left border-collapse hidden">
                         <thead>
                             <tr class="bg-border-dark/30 border-b border-border-dark">
-                                <th class="px-6 py-4 text-[#baba9c] font-bold text-xs uppercase tracking-widest">Service
-                                    Info</th>
+                                <th class="px-6 py-4 text-[#baba9c] font-bold text-xs uppercase tracking-widest">Info
+                                    Servizio</th>
                                 <th class="px-6 py-4 text-[#baba9c] font-bold text-xs uppercase tracking-widest">
-                                    Customer</th>
-                                <th class="px-6 py-4 text-[#baba9c] font-bold text-xs uppercase tracking-widest">Type
+                                    Cliente</th>
+                                <th class="px-6 py-4 text-[#baba9c] font-bold text-xs uppercase tracking-widest">Tipo
                                 </th>
-                                <th class="px-6 py-4 text-[#baba9c] font-bold text-xs uppercase tracking-widest">Details
+                                <th class="px-6 py-4 text-[#baba9c] font-bold text-xs uppercase tracking-widest">Dettagli
                                 </th>
-                                <th class="px-6 py-4 text-[#baba9c] font-bold text-xs uppercase tracking-widest">Status
+                                <th class="px-6 py-4 text-[#baba9c] font-bold text-xs uppercase tracking-widest">Stato
                                 </th>
-                                <th class="px-6 py-4 text-[#baba9c] font-bold text-xs uppercase tracking-widest">Created
+                                <th class="px-6 py-4 text-[#baba9c] font-bold text-xs uppercase tracking-widest">Data Creazione
                                 </th>
                                 <th
                                     class="px-6 py-4 text-[#baba9c] font-bold text-xs uppercase tracking-widest text-right">
-                                    Actions</th>
+                                    Azioni</th>
                             </tr>
                         </thead>
                         <tbody id="services-tbody" class="divide-y divide-border-dark">
-                            <!-- Services will be loaded dynamically from Firebase -->
+                            <!-- I servizi verranno caricati dinamicamente da Firebase -->
                         </tbody>
                     </table>
                     <div id="empty-state" class="p-12 text-center hidden">
                         <span class="material-symbols-outlined text-6xl text-[#baba9c] mb-4">room_service</span>
-                        <p class="text-[#baba9c] text-lg font-medium">No services found</p>
-                        <p class="text-[#baba9c] text-sm mt-2">Service requests will appear here once customers submit
-                            them</p>
+                        <p class="text-[#baba9c] text-lg font-medium">Nessun servizio trovato</p>
+                        <p class="text-[#baba9c] text-sm mt-2">Le richieste di servizio appariranno qui una volta che i clienti le invieranno</p>
                     </div>
                 </div>
             </section>

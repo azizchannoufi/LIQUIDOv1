@@ -67,7 +67,7 @@ class ServicesListPageService {
                     serviceId: doc.id,
                     userId: data.userId,
                     serviceType: data.serviceType,
-                    typeDisplay: data.serviceType === 'product-request' ? 'Product Request' : 'Maintenance Request',
+                    typeDisplay: data.serviceType === 'product-request' ? 'Richiesta Prodotto' : 'Richiesta Manutenzione',
                     userName: data.userName || 'N/A',
                     userEmail: data.userEmail || 'N/A',
                     userPhone: data.userPhone || 'N/A',
@@ -97,7 +97,7 @@ class ServicesListPageService {
         if (!timestamp) return 'N/A';
 
         const date = new Date(timestamp);
-        return date.toLocaleDateString('en-US', {
+        return date.toLocaleDateString('it-IT', {
             month: 'short',
             day: 'numeric',
             year: 'numeric',
@@ -119,8 +119,15 @@ class ServicesListPageService {
             'cancelled': 'bg-red-500/20 text-red-400 border-red-500/30'
         };
 
+        const statusLabels = {
+            'pending': 'In Attesa',
+            'confirmed': 'Confermato',
+            'completed': 'Completato',
+            'cancelled': 'Annullato'
+        };
+
         const color = statusColors[status] || 'bg-gray-500/20 text-gray-400 border-gray-500/30';
-        const displayStatus = status ? status.charAt(0).toUpperCase() + status.slice(1) : 'Unknown';
+        const displayStatus = statusLabels[status] || (status ? status.charAt(0).toUpperCase() + status.slice(1) : 'Sconosciuto');
 
         return `<span class="px-3 py-1 rounded-full text-xs font-semibold border ${color}">${displayStatus}</span>`;
     }
@@ -136,9 +143,13 @@ class ServicesListPageService {
             'maintenance-request': 'bg-indigo-500/20 text-indigo-400 border-indigo-500/30'
         };
 
+        const typeLabels = {
+            'product-request': 'Richiesta Prodotto',
+            'maintenance-request': 'Richiesta Manutenzione'
+        };
+
         const color = typeColors[type] || 'bg-gray-500/20 text-gray-400 border-gray-500/30';
-        const displayType = type === 'product-request' ? 'Product Request' :
-            type === 'maintenance-request' ? 'Maintenance' : 'Unknown';
+        const displayType = typeLabels[type] || 'Sconosciuto';
 
         return `<span class="px-3 py-1 rounded-full text-xs font-semibold border ${color}">${displayType}</span>`;
     }
@@ -152,7 +163,7 @@ class ServicesListPageService {
         if (service.serviceType === 'product-request') {
             const parts = [];
             if (service.productImage) {
-                parts.push('Has Image');
+                parts.push('Ha Immagine');
             }
             if (service.message) {
                 const messagePreview = service.message.length > 50
@@ -160,14 +171,14 @@ class ServicesListPageService {
                     : service.message;
                 parts.push(messagePreview);
             }
-            return parts.length > 0 ? parts.join(' • ') : 'No details';
+            return parts.length > 0 ? parts.join(' • ') : 'Nessun dettaglio';
         } else if (service.serviceType === 'maintenance-request') {
             const parts = [];
             if (service.date) {
-                parts.push(`Date: ${service.date}`);
+                parts.push(`Data: ${service.date}`);
             }
             if (service.time) {
-                parts.push(`Time: ${service.time}`);
+                parts.push(`Ora: ${service.time}`);
             }
             if (service.description) {
                 const descPreview = service.description.length > 30
@@ -175,7 +186,7 @@ class ServicesListPageService {
                     : service.description;
                 parts.push(descPreview);
             }
-            return parts.length > 0 ? parts.join(' • ') : 'No details';
+            return parts.length > 0 ? parts.join(' • ') : 'Nessun dettaglio';
         }
         return 'N/A';
     }
@@ -261,7 +272,7 @@ class ServicesListPageService {
                 <td class="px-6 py-4">
                     <div class="flex flex-col">
                         <span class="text-white text-sm">${details}</span>
-                        ${service.productImage ? `<a href="${service.productImage}" target="_blank" class="text-primary text-xs hover:underline mt-1">View Image</a>` : ''}
+                        ${service.productImage ? `<a href="${service.productImage}" target="_blank" class="text-primary text-xs hover:underline mt-1">Visualizza Immagine</a>` : ''}
                     </div>
                 </td>
                 <td class="px-6 py-4">
@@ -272,10 +283,10 @@ class ServicesListPageService {
                                 data-user-id="${service.userId}"
                                 data-service-type="${service.serviceType}"
                                 value="${service.status || 'pending'}">
-                            <option value="pending" ${service.status === 'pending' ? 'selected' : ''}>Pending</option>
-                            <option value="confirmed" ${service.status === 'confirmed' ? 'selected' : ''}>Confirmed</option>
-                            <option value="completed" ${service.status === 'completed' ? 'selected' : ''}>Completed</option>
-                            <option value="cancelled" ${service.status === 'cancelled' ? 'selected' : ''}>Cancelled</option>
+                            <option value="pending" ${service.status === 'pending' ? 'selected' : ''}>In Attesa</option>
+                            <option value="confirmed" ${service.status === 'confirmed' ? 'selected' : ''}>Confermato</option>
+                            <option value="completed" ${service.status === 'completed' ? 'selected' : ''}>Completato</option>
+                            <option value="cancelled" ${service.status === 'cancelled' ? 'selected' : ''}>Annullato</option>
                         </select>
                     </div>
                 </td>
@@ -287,7 +298,7 @@ class ServicesListPageService {
                             data-service-id="${service.serviceId}" 
                             data-user-id="${service.userId}"
                             data-service-type="${service.serviceType}">
-                        Update
+                        Aggiorna
                     </button>
                 </td>
             `;
@@ -328,7 +339,7 @@ class ServicesListPageService {
 
                 if (!currentService) {
                     console.error('Service not found:', serviceId, userId);
-                    AdminToast.error('Service introuvable');
+                    AdminToast.error('Servizio non trovato');
                     return;
                 }
 
@@ -339,7 +350,7 @@ class ServicesListPageService {
 
                 // Disable button during update
                 newBtn.disabled = true;
-                newBtn.textContent = 'Updating...';
+                newBtn.textContent = 'Aggiornamento...';
                 newBtn.style.opacity = '0.6';
                 newBtn.style.cursor = 'not-allowed';
 
@@ -348,10 +359,10 @@ class ServicesListPageService {
                     await this.updateServiceStatus(userId, serviceId, serviceType, newStatus);
                 } catch (error) {
                     console.error('Error updating status:', error);
-                    AdminToast.error('Erreur lors de la mise à jour: ' + error.message);
+                    AdminToast.error('Errore durante l\'aggiornamento: ' + error.message);
                 } finally {
                     newBtn.disabled = false;
-                    newBtn.textContent = 'Update';
+                    newBtn.textContent = 'Aggiorna';
                     newBtn.style.opacity = '1';
                     newBtn.style.cursor = 'pointer';
                 }
@@ -395,7 +406,14 @@ class ServicesListPageService {
             this.renderServices();
 
             // Show success message
-            AdminToast.success(`Stato servizio aggiornato: ${newStatus}`);
+            const statusLabels = {
+                'pending': 'In Attesa',
+                'confirmed': 'Confermato',
+                'completed': 'Completato',
+                'cancelled': 'Annullato'
+            };
+            const displayStatus = statusLabels[newStatus] || newStatus;
+            AdminToast.success(`Stato servizio aggiornato: ${displayStatus}`);
         } catch (error) {
             console.error('Error updating service status:', error);
             AdminToast.error('Errore aggiornamento stato servizio: ' + error.message);
