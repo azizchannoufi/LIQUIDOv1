@@ -28,10 +28,10 @@
     <meta name="geo.placename" content="Monterotondo" />
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link
-        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;display=swap"
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
         rel="stylesheet" />
     <link
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
         rel="stylesheet" />
     <script id="tailwind-config">
         tailwind.config = {
@@ -138,10 +138,17 @@
         .stagger-delay-3 {
             transition-delay: 0.3s;
         }
-        
+
         /* Star Rating Filled Stars */
         .star-rating .material-symbols-outlined {
             font-variation-settings: 'FILL' 1;
+        }
+
+        /* =============================================
+           RESPONSIVE FIXES
+        ============================================= */
+        html, body {
+            overflow-x: hidden;
         }
     </style>
     <link rel="icon" type="image/png" href="../assets/images/Goccia%20LIQUIDO/GOCCIA%20Y_W.png" />
@@ -152,15 +159,15 @@
     <main>
         <!-- Hero Section -->
         <section class="relative">
-            <div class="flex min-h-[50vh] flex-col gap-6 bg-cover bg-fixed bg-center bg-no-repeat items-center justify-center p-8 text-center"
+            <div class="flex min-h-[50vh] flex-col gap-6 bg-cover bg-center bg-no-repeat items-center justify-center px-4 sm:px-8 py-16 text-center"
                 data-alt="Premium lifestyle vaping aesthetic in dark lounge"
-                style='background-image: linear-gradient(rgba(0, 0, 0, 0.75) 0%, rgba(0, 0, 0, 0.85) 100%), url("https://lh3.googleusercontent.com/aida-public/AB6AXuCQ58EpPEoSjHKLLI06laD1Y0O0AWjSmQPzxaDtsIaGqBDcI-Gcvi-9ceqPi7yTKVGR-Sn2SST0cULQUC3GKriiNwz4r_h3ABCa_LqKO3UYZs2lFXJqtO1qr7E-PmQAKEC1IcT0kay2mEuoIcl-uO-rdnIw3pgqE8seD2QnE6Ca-I3FfauTXj2eeCgvx5_yuhETOOmkRI1ujMECY4Xoo4_mdCxEHeIsa2zzq2Aj6aUwZgGBYA-M_uhhGmS2pLSurECFV2zoFJcLCyg");'>
-                <div class="flex flex-col gap-4 max-w-3xl">
-                    <h1 class="text-white text-5xl md:text-7xl font-black leading-tight tracking-tight uppercase"><span
+                style='background-image: linear-gradient(rgba(0, 0, 0, 0.75) 0%, rgba(0, 0, 0, 0.85) 100%), url("https://lh3.googleusercontent.com/aida-public/AB6AXuCQ58EpPEoSjHKLLI06laD1Y0O0AWjSmQPzxaDtsIaGqBDcI-Gcvi-9ceqPi7yTKVGR-Sn2SST0cULQUC3GKriiNwz4r_h3ABCa_LqKO3UYZs2lFXJqtO1qr7E-PmQAKEC1IcT0kay2mEuoIcl-uO-rdnIw3pgqE8seD2QnE6Ca-I3FfauTXj2eeCgvx5_yuhETOOmkRI1ujMECY4Xoo4_mdCxEHeIsa2zzq2Aj6aUwZgGBYA-M_uhhGmS2pLSurECFV2zoFJcLCyg"); background-size: cover;'>
+                <div class="flex flex-col gap-4 max-w-3xl w-full">
+                    <h1 class="text-white text-4xl sm:text-5xl md:text-7xl font-black leading-tight tracking-tight uppercase"><span
                             data-text-key="about.hero_title">CHI</span>
                         <span class="text-primary" data-text-key="about.hero_title_highlight">SIAMO</span>
                     </h1>
-                    <p class="text-white/80 font-light leading-relaxed"
+                    <p class="text-white/80 font-light leading-relaxed text-sm sm:text-base"
                         data-text-key="about.hero_subtitle">
                         LIQUIDO nasce come il punto di riferimento per chi cerca chiarezza in un mercato spesso
                         frammentato e confuso. In un panorama saturo di informazioni contrastanti, la nostra missione è
@@ -174,30 +181,30 @@
         </section>
 
         <!-- Il Negozio Section -->
-        <section class="max-w-7xl mx-auto px-6 py-20 lg:py-28">
-            <div class="flex flex-col md:flex-row gap-12 items-center">
+        <section class="max-w-7xl mx-auto px-4 sm:px-6 py-16 sm:py-20 lg:py-28">
+            <div class="flex flex-col md:flex-row gap-10 sm:gap-12 items-center">
                 <div class="w-full md:w-1/2 order-2 md:order-1 animate-on-scroll fade-in-left">
-                    <div class="grid grid-cols-2 gap-4">
-                        <img alt="Interno del Negozio LIQUIDO" class="rounded-xl w-full h-48 object-cover"
+                    <div class="grid grid-cols-2 gap-3 sm:gap-4">
+                        <img alt="Interno del Negozio LIQUIDO" class="rounded-xl w-full h-36 sm:h-48 object-cover"
                             src="../assets/images/store_interior.png" data-img-key="about.store_img1" />
-                        <img alt="Barra Aromi LIQUIDO" class="rounded-xl w-full h-48 object-cover"
+                        <img alt="Barra Aromi LIQUIDO" class="rounded-xl w-full h-36 sm:h-48 object-cover"
                             src="../assets/images/store_aroma_bar.png" data-img-key="about.store_img2" />
-                        <img alt="Dispositivi Premium LIQUIDO" class="rounded-xl w-full h-64 object-cover col-span-2"
+                        <img alt="Dispositivi Premium LIQUIDO" class="rounded-xl w-full h-48 sm:h-64 object-cover col-span-2"
                             src="../assets/images/store_devices.png" data-img-key="about.store_img3" />
                     </div>
                 </div>
                 <div class="w-full md:w-1/2 order-1 md:order-2 flex flex-col gap-6 animate-on-scroll fade-in-right">
-                    <h2 class="text-4xl md:text-5xl font-black"><span data-text-key="about.store_title">LIQUIDO</span>
-                        <span class="text-primary" data-text-key="about.store_title_highlight">è un’idea!</span>
+                    <h2 class="text-3xl sm:text-4xl md:text-5xl font-black"><span data-text-key="about.store_title">LIQUIDO</span>
+                        <span class="text-primary" data-text-key="about.store_title_highlight">è un'idea!</span>
                     </h2>
                     <p class="text-slate-600 leading-relaxed font-medium" data-text-key="about.store_text1">
                         Il nostro negozio, concepito come una boutique dello svapo, unisce estetica ricercata e
                         competenza professionale, offrendo un servizio esperto capace di valorizzare scelte e stile di
                         ogni cliente.
                     </p>
-                    <div class="pt-4">
+                    <div class="pt-2 sm:pt-4">
                         <a href="contact.html"
-                            class="inline-flex items-center gap-2 px-8 py-4 bg-background-dark text-white font-black text-xs uppercase tracking-widest rounded-xl hover:bg-primary hover:text-background-dark hover:shadow-[0_0_20px_rgba(248,237,112,0.6)] transition-all shadow-md">
+                            class="inline-flex items-center gap-2 px-6 sm:px-8 py-3 sm:py-4 bg-background-dark text-white font-black text-xs uppercase tracking-widest rounded-xl hover:bg-primary hover:text-background-dark hover:shadow-[0_0_20px_rgba(248,237,112,0.6)] transition-all shadow-md">
                             <span class="material-symbols-outlined text-sm">location_on</span>
                             Vieni a trovarci
                         </a>
@@ -207,20 +214,20 @@
         </section>
 
         <!-- Un Punto di Riferimento Affidabile Section -->
-        <section class="max-w-7xl mx-auto px-6 py-20">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center animate-on-scroll fade-in-bottom">
-                <div class="flex flex-col gap-8 animate-on-scroll fade-in-left">
+        <section class="max-w-7xl mx-auto px-4 sm:px-6 py-16 sm:py-20">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 sm:gap-16 items-center animate-on-scroll fade-in-bottom">
+                <div class="flex flex-col gap-6 sm:gap-8 animate-on-scroll fade-in-left">
                     <div>
                         <h2 class="text-primary font-bold text-sm tracking-widest uppercase mb-3"
                             data-text-key="about.section_subtitle">Chi Siamo</h2>
-                        <h3 class="text-3xl md:text-5xl font-black leading-tight" data-text-key="about.section_title">Un
+                        <h3 class="text-2xl sm:text-3xl md:text-5xl font-black leading-tight" data-text-key="about.section_title">Un
                             punto di riferimento affidabile
                         </h3>
                     </div>
                     <p class="text-slate-500 leading-relaxed animate-on-scroll fade-in-bottom stagger-delay-1">
                         <span class="font-semibold text-background-dark">VISION:</span>
-                        <span data-text-key="about.vision_text">Ci impegniamo a diffondere la cultura del vaping attraverso un’informazione trasparente e
-                            un’assistenza dedicata. Crediamo fermamente che il vapore rappresenti l'alternativa più
+                        <span data-text-key="about.vision_text">Ci impegniamo a diffondere la cultura del vaping attraverso un'informazione trasparente e
+                            un'assistenza dedicata. Crediamo fermamente che il vapore rappresenti l'alternativa più
                             concreta, efficace e gratificante oggi disponibile sul mercato.</span>
                     </p>
                     <p class="text-slate-500 leading-relaxed animate-on-scroll fade-in-bottom stagger-delay-2">
@@ -243,7 +250,7 @@
                         class="absolute -inset-4 bg-primary/10 rounded-2xl blur-xl group-hover:bg-primary/20 transition duration-500">
                     </div>
                     <img alt="Luxury vaping hardware display"
-                        class="relative rounded-2xl object-cover w-full h-[500px] shadow-2xl"
+                        class="relative rounded-2xl object-cover w-full h-[280px] sm:h-[380px] lg:h-[500px] shadow-2xl"
                         data-alt="Close up shot of high-end metallic vape device"
                         src="https://lh3.googleusercontent.com/aida-public/AB6AXuCdyUZIIXwCEgpyrDjoRf19rPiQdhAJwFkGP1ar7ThySbCmZbWvu-v5Lt6Idps77o6W5q7Uzp5a-YxtPlNNGff6DVKX39KwGuCUX0amnaz0lvgyXg1NY9TNkcMR-101s4mOU8BqEsA_4YUIk75FH8WYTmSAkLrxTRmq7jXKwIZG50KqVCMFnXjLdQPEXVz4xnK7CSygN_ZpodGCeGgghG-Y2tETbAswDZhJsRu40CNs8VLl0U0hF5rhuD1iqVTm2i703Qw00A5NLpY" />
                 </div>
@@ -251,14 +258,14 @@
         </section>
 
         <!-- Google Reviews Section -->
-        <section class="py-20 bg-surface-light border-t border-black/5">
-            <div class="max-w-[1440px] mx-auto px-6 lg:px-20">
+        <section class="py-16 sm:py-20 bg-surface-light border-t border-black/5">
+            <div class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-20">
                 <div class="text-center mb-12 animate-on-scroll fade-in-bottom">
                     <h2 class="text-3xl md:text-4xl lg:text-5xl text-bold-modern uppercase text-background-dark mb-4">
                         <span data-text-key="home.reviews_title">COSA DICONO</span> <span class="text-primary"
                             data-text-key="home.reviews_title_highlight">DI NOI</span>
                     </h2>
-                    <div class="flex items-center justify-center gap-3">
+                    <div class="flex flex-wrap items-center justify-center gap-2 sm:gap-3">
                         <span id="google-rating-display" class="text-2xl font-bold text-background-dark">4.9</span>
                         <div class="flex text-[#F8ED70] star-rating">
                             <span class="material-symbols-outlined fill-current">star</span>
@@ -290,7 +297,6 @@
     </main>
     <!-- Detailed Footer -->
     <!-- Footer loaded dynamically -->
-    </div>
     <!-- Component Loader (must be loaded first) -->
     <script src="../shared/js/component-loader.js"></script>
     <!-- Firebase + Site Texts -->
