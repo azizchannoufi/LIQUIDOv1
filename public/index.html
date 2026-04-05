@@ -28,10 +28,10 @@
     <meta name="geo.position" content="42.0500;12.6167" />
     <meta name="ICBM" content="42.0500, 12.6167" />
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap"
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
         rel="stylesheet" />
     <link
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
         rel="stylesheet" />
     <script id="tailwind-config">
         tailwind.config = {
@@ -206,6 +206,38 @@
         .star-rating .material-symbols-outlined {
             font-variation-settings: 'FILL' 1;
         }
+
+        /* =============================================
+           RESPONSIVE FIXES
+        ============================================= */
+
+        /* Prevent horizontal overflow globally */
+        html, body {
+            overflow-x: hidden;
+        }
+
+        /* Hero section: prevent text overflow on mobile */
+        .hero-title-wrap {
+            width: 100%;
+            overflow: hidden;
+        }
+
+        /* Strength cards: on mobile stack nicely */
+        @media (max-width: 767px) {
+            .strength-card {
+                padding: 1.25rem 0;
+                border-bottom: 1px solid #f0f0f0;
+            }
+            .strength-card:last-child {
+                border-bottom: none;
+            }
+        }
+
+        /* FAQ questions: wrap text properly on small screens */
+        .faq-question h3 {
+            word-break: break-word;
+            hyphens: auto;
+        }
     </style>
     <link rel="icon" type="image/png" href="../assets/images/Goccia%20LIQUIDO/GOCCIA%20Y_W.png" />
 </head>
@@ -213,6 +245,7 @@
 <body class="bg-white text-background-dark transition-colors duration-300">
     <!-- Top navigation and header loaded dynamically via component-loader.js -->
     <main>
+        <!-- HERO SECTION -->
         <section
             class="relative min-h-[90vh] flex items-center overflow-hidden bg-gradient-to-b from-surface-light to-white">
             <div class="relative w-full h-[90vh]">
@@ -220,29 +253,33 @@
                     <source src="../assets/video/Copia di vapore-denso-geometrie.mp4" type="video/mp4">
                 </video>
                 <div class="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-transparent"></div>
-                <div class="relative z-10 h-full flex items-center justify-center px-6 lg:px-20 w-full">
-                    <div class="w-full flex flex-col items-center gap-10">
+                <div class="relative z-10 h-full flex items-center justify-center px-4 sm:px-6 lg:px-20 w-full overflow-hidden">
+                    <div class="w-full flex flex-col items-center gap-10 hero-title-wrap">
                         <h1
-                            class="w-full max-w-[90rem] mx-auto flex flex-col text-7xl sm:text-6xl md:text-7xl lg:text-[9rem] text-bold-modern leading-[0.9] uppercase text-white drop-shadow-2xl font-black tracking-tighter mix-blend-overlay opacity-90 hover:opacity-100 transition-opacity">
-                            <span class="self-end text-right mr-2 lg:mr-20"
+                            class="w-full max-w-[90rem] mx-auto flex flex-col text-[2.8rem] xs:text-5xl sm:text-6xl md:text-7xl lg:text-[9rem] text-bold-modern leading-[0.9] uppercase text-white drop-shadow-2xl font-black tracking-tighter mix-blend-overlay opacity-90 hover:opacity-100 transition-opacity">
+                            <span class="self-end text-right pr-2 sm:pr-4 lg:pr-20"
                                 data-text-key="home.hero_line1">Accendi</span>
-                            <span class="self-start text-left ml-2 lg:ml-20 -mt-3 sm:-mt-1 lg:-mt-6"
+                            <span class="self-start text-left pl-2 sm:pl-4 lg:pl-20 -mt-2 sm:-mt-3 lg:-mt-6"
                                 data-text-key="home.hero_line2">la tua vibe</span>
-                            <span class="self-end text-right text-primary mr-2 lg:mr-20 -mt-3 sm:-mt-1 lg:-mt-6"
+                            <span class="self-end text-right text-primary pr-2 sm:pr-4 lg:pr-20 -mt-2 sm:-mt-3 lg:-mt-6"
                                 data-text-key="home.hero_line3">ad ogni hit</span>
                         </h1>
                     </div>
                 </div>
             </div>
         </section>
+
+        <!-- BRANDS CAROUSEL -->
         <section class="py-10 bg-surface-light scroll-animate scroll-animate-up">
-            <div class="max-w-[1440px] mx-auto px-6 lg:px-20">
+            <div class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-20">
                 <div id="brands-carousel-container" class="min-h-[80px] transition-opacity duration-700 opacity-0">
                     <!-- Brands carousel will be loaded dynamically from Firebase -->
                 </div>
             </div>
         </section>
-        <section class="relative py-24 overflow-hidden bg-white">
+
+        <!-- PERCHÉ LIQUIDO SECTION -->
+        <section class="relative py-16 sm:py-24 overflow-hidden bg-white">
             <div class="absolute inset-0 z-0">
                 <img class="w-full h-full object-cover opacity-5 grayscale" data-alt="smoky background"
                     src="https://lh3.googleusercontent.com/aida-public/AB6AXuB2W8yzKRqsy4SEqRz1ttIJAAo9IhiFuUWh-Z5k-5KjdxqkWXSU0iV1kY0W0zl9eMm6Llod9_xa93Le_kmTbyU4v4cTOJdd27q16jhUCyoZKKch1KrEpB-aRRa-uMzIOqLybGrY4JJmtJDKf2gzbtAdUfSM97Sz7TQPjr36nYwz-XCOMwdY-ySeBjryC1kGtupEr73Px7YGdMzBfHAiyUnA2rR1MGFe3mGijldkRk_zkV_wktC8riZZhZtx5pgUZ7h2UUVv794TuA0" />
@@ -292,9 +329,9 @@
                 }
             </style>
 
-            <div class="relative z-10 max-w-[1440px] mx-auto px-6 lg:px-20">
+            <div class="relative z-10 max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-20">
                 <!-- Section Header -->
-                <div class="text-center mb-16 scroll-animate scroll-animate-left">
+                <div class="text-center mb-12 sm:mb-16 scroll-animate scroll-animate-left">
                     <h2
                         class="text-3xl md:text-4xl lg:text-6xl text-bold-modern tracking-tighter uppercase text-background-dark mb-0">
                         <span data-text-key="home.why_title">PERCHÉ</span> <span class="text-primary"
@@ -303,10 +340,10 @@
                 </div>
 
                 <!-- Strengths Grid -->
-                <div class="flex flex-col md:flex-row justify-between gap-6 lg:gap-4">
+                <div class="grid grid-cols-2 md:flex md:flex-row justify-between gap-6 lg:gap-4">
                     <!-- Strength 1: Prodotti Certificati -->
                     <div
-                        class="strength-card flex-1 flex flex-col items-center text-center scroll-animate-stagger-top delay-0">
+                        class="strength-card flex flex-col items-center text-center scroll-animate-stagger-top delay-0">
                         <div class="strength-icon-box">
                             <span class="material-symbols-outlined">verified</span>
                         </div>
@@ -323,7 +360,7 @@
 
                     <!-- Strength 2: Customer Care -->
                     <div
-                        class="strength-card flex-1 flex flex-col items-center text-center scroll-animate-stagger delay-100">
+                        class="strength-card flex flex-col items-center text-center scroll-animate-stagger delay-100">
                         <div class="strength-icon-box">
                             <span class="material-symbols-outlined">support_agent</span>
                         </div>
@@ -340,7 +377,7 @@
 
                     <!-- Strength 3: Ambiente Elegante -->
                     <div
-                        class="strength-card flex-1 flex flex-col items-center text-center scroll-animate-stagger-top delay-200">
+                        class="strength-card flex flex-col items-center text-center scroll-animate-stagger-top delay-200">
                         <div class="strength-icon-box">
                             <span class="material-symbols-outlined">diamond</span>
                         </div>
@@ -357,7 +394,7 @@
 
                     <!-- Strength 4: Servizio Professionale -->
                     <div
-                        class="strength-card flex-1 flex flex-col items-center text-center scroll-animate-stagger delay-300">
+                        class="strength-card flex flex-col items-center text-center scroll-animate-stagger delay-300">
                         <div class="strength-icon-box">
                             <span class="material-symbols-outlined">workspace_premium</span>
                         </div>
@@ -386,7 +423,9 @@
                 </div>
             </div>
         </section>
-        <section id="nuovi-arrivi" class="py-20 px-6 lg:px-20 bg-white">
+
+        <!-- NUOVI ARRIVI -->
+        <section id="nuovi-arrivi" class="py-16 sm:py-20 px-4 sm:px-6 lg:px-20 bg-white">
             <div class="max-w-[1440px] mx-auto">
                 <div class="text-center mb-8 scroll-animate scroll-animate-up">
                     <h2 class="text-4xl md:text-5xl lg:text-6xl text-bold-modern uppercase text-background-dark">
@@ -413,14 +452,14 @@
         </section>
 
         <!-- GOOGLE REVIEWS SECTION -->
-        <section class="py-20 bg-surface-light border-t border-black/5">
-            <div class="max-w-[1440px] mx-auto px-6 lg:px-20">
+        <section class="py-16 sm:py-20 bg-surface-light border-t border-black/5">
+            <div class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-20">
                 <div class="text-center mb-12 scroll-animate scroll-animate-left">
                     <h2 class="text-3xl md:text-4xl lg:text-5xl text-bold-modern uppercase text-background-dark mb-4">
                         <span data-text-key="home.reviews_title">COSA DICONO</span> <span class="text-primary"
                             data-text-key="home.reviews_title_highlight">DI NOI</span>
                     </h2>
-                    <div class="flex items-center justify-center gap-3">
+                    <div class="flex flex-wrap items-center justify-center gap-2 sm:gap-3">
                         <span id="google-rating-display" class="text-2xl font-bold text-background-dark">4.9</span>
                         <div class="flex text-[#F8ED70] star-rating">
                             <span class="material-symbols-outlined fill-current">star</span>
@@ -452,9 +491,8 @@
             </div>
         </section>
 
-
-
-        <section class="py-20 px-6 lg:px-20 bg-white">
+        <!-- FAQ SECTION -->
+        <section class="py-16 sm:py-20 px-4 sm:px-6 lg:px-20 bg-white">
             <div class="max-w-[1440px] mx-auto">
                 <div class="text-center mb-10 scroll-animate scroll-animate-right">
                     <h2 class="text-4xl md:text-5xl lg:text-6xl text-bold-modern uppercase mb-3 text-background-dark">
@@ -469,13 +507,13 @@
                     <!-- FAQ 1: Prodotti sicuri e certificati -->
                     <div
                         class="faq-item bg-primary text-black rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all">
-                        <div class="faq-question px-6 py-4 flex items-center justify-between">
-                            <h3 class="text-lg font-bold">I prodotti di LIQUIDO VAPE SHOP sono sicuri e certificati?
+                        <div class="faq-question px-4 sm:px-6 py-4 flex items-center justify-between gap-3">
+                            <h3 class="text-base sm:text-lg font-bold">I prodotti di LIQUIDO VAPE SHOP sono sicuri e certificati?
                             </h3>
-                            <span class="material-symbols-outlined faq-icon text-black">expand_more</span>
+                            <span class="material-symbols-outlined faq-icon text-black flex-shrink-0">expand_more</span>
                         </div>
                         <div class="faq-answer">
-                            <div class="px-6 pb-6 text-black leading-relaxed">
+                            <div class="px-4 sm:px-6 pb-6 text-black leading-relaxed">
                                 <p>Sì, tutti i prodotti presenti in negozio garantiscono i massimi standard di qualità e
                                     sicurezza.</p>
                                 <ul class="mt-3 space-y-1 list-none">
@@ -498,12 +536,12 @@
                     <!-- FAQ 2: Cosa serve per iniziare -->
                     <div
                         class="faq-item bg-primary text-black rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all">
-                        <div class="faq-question px-6 py-4 flex items-center justify-between">
-                            <h3 class="text-lg font-bold">Cosa serve per iniziare a svapare per la prima volta?</h3>
-                            <span class="material-symbols-outlined faq-icon text-black">expand_more</span>
+                        <div class="faq-question px-4 sm:px-6 py-4 flex items-center justify-between gap-3">
+                            <h3 class="text-base sm:text-lg font-bold">Cosa serve per iniziare a svapare per la prima volta?</h3>
+                            <span class="material-symbols-outlined faq-icon text-black flex-shrink-0">expand_more</span>
                         </div>
                         <div class="faq-answer">
-                            <div class="px-6 pb-6 text-black leading-relaxed">
+                            <div class="px-4 sm:px-6 pb-6 text-black leading-relaxed">
                                 <p>Se sei un principiante e vuoi iniziare con la sigaretta elettronica, ecco cosa ti
                                     serve:</p>
                                 <p class="mt-2 font-bold">Dispositivo — Scegli tra:</p>
@@ -537,13 +575,13 @@
                     <!-- FAQ 3: Svapare aiuta a smettere -->
                     <div
                         class="faq-item bg-primary text-black rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all">
-                        <div class="faq-question px-6 py-4 flex items-center justify-between">
-                            <h3 class="text-lg font-bold">Svapare aiuta a smettere di fumare le sigarette tradizionali?
+                        <div class="faq-question px-4 sm:px-6 py-4 flex items-center justify-between gap-3">
+                            <h3 class="text-base sm:text-lg font-bold">Svapare aiuta a smettere di fumare le sigarette tradizionali?
                             </h3>
-                            <span class="material-symbols-outlined faq-icon text-black">expand_more</span>
+                            <span class="material-symbols-outlined faq-icon text-black flex-shrink-0">expand_more</span>
                         </div>
                         <div class="faq-answer">
-                            <div class="px-6 pb-6 text-black leading-relaxed">
+                            <div class="px-4 sm:px-6 pb-6 text-black leading-relaxed">
                                 <p>Se sei un fumatore di tabacco, sì, svapare è un'abitudine che aiuta a ridurre la
                                     dipendenza dal fumo, ma è consigliata principalmente ai fumatori adulti.</p>
                             </div>
@@ -552,13 +590,13 @@
                     <!-- FAQ 4: Compatibilità liquidi -->
                     <div
                         class="faq-item bg-primary text-black rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all">
-                        <div class="faq-question px-6 py-4 flex items-center justify-between">
-                            <h3 class="text-lg font-bold">I liquidi sono compatibili con tutte le sigarette
+                        <div class="faq-question px-4 sm:px-6 py-4 flex items-center justify-between gap-3">
+                            <h3 class="text-base sm:text-lg font-bold">I liquidi sono compatibili con tutte le sigarette
                                 elettroniche?</h3>
-                            <span class="material-symbols-outlined faq-icon text-black">expand_more</span>
+                            <span class="material-symbols-outlined faq-icon text-black flex-shrink-0">expand_more</span>
                         </div>
                         <div class="faq-answer">
-                            <div class="px-6 pb-6 text-black leading-relaxed">
+                            <div class="px-4 sm:px-6 pb-6 text-black leading-relaxed">
                                 <p>Sì! Tutti i liquidi sono compatibili con qualsiasi sigaretta elettronica presente sul
                                     mercato.</p>
                                 <p class="mt-2 font-bold">Compatibilità Universale:</p>
@@ -576,13 +614,13 @@
                     <!-- FAQ 5: Quando sostituire la resistenza -->
                     <div
                         class="faq-item bg-primary text-black rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all">
-                        <div class="faq-question px-6 py-4 flex items-center justify-between">
-                            <h3 class="text-lg font-bold">Quando devo sostituire la resistenza di una sigaretta
+                        <div class="faq-question px-4 sm:px-6 py-4 flex items-center justify-between gap-3">
+                            <h3 class="text-base sm:text-lg font-bold">Quando devo sostituire la resistenza di una sigaretta
                                 elettronica?</h3>
-                            <span class="material-symbols-outlined faq-icon text-black">expand_more</span>
+                            <span class="material-symbols-outlined faq-icon text-black flex-shrink-0">expand_more</span>
                         </div>
                         <div class="faq-answer">
-                            <div class="px-6 pb-6 text-black leading-relaxed">
+                            <div class="px-4 sm:px-6 pb-6 text-black leading-relaxed">
                                 <p>La resistenza è un componente fondamentale della sigaretta elettronica che necessita
                                     di sostituzione periodica per garantire prestazioni ottimali e un'esperienza di
                                     svapo soddisfacente.</p>
