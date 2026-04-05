@@ -62,6 +62,9 @@ const DEFAULT_SITE_TEXTS = {
         store_title_highlight: "NEGOZIO",
         store_text1: "LIQUIDO è un’idea! Il nostro negozio, concepito come una boutique dello svapo, unisce estetica ricercata e competenza professionale, offrendo un servizio esperto capace di valorizzare scelte e stile di ogni cliente",
         store_text2: "Che tu sia un appassionato esperto o nuovo all'esperienza, il nostro personale fornisce consulenze personalizzate in un ambiente rilassato, senza pressioni.\n\nVivi le nostre barre aromi complete e la selezione di dispositivi più adatti a te.",
+        store_img1: "../assets/images/store_interior.png",
+        store_img2: "../assets/images/store_aroma_bar.png",
+        store_img3: "../assets/images/store_devices.png",
     },
 
     // ===== CONTACT PAGE =====
@@ -160,6 +163,18 @@ class SiteTextsService {
                     el.innerHTML = String(value).replace(/\n/g, '<br>');
                 } else {
                     el.textContent = value;
+                }
+            }
+        });
+
+        document.querySelectorAll('[data-img-key]').forEach(el => {
+            const key = el.getAttribute('data-img-key');
+            const value = this._getNestedValue(texts, key);
+            if (value) {
+                if (el.tagName.toLowerCase() === 'img') {
+                    el.src = value;
+                } else {
+                    el.style.backgroundImage = `url('${value}')`;
                 }
             }
         });

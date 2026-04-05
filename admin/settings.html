@@ -556,30 +556,40 @@
 
                             <div class="section-divider"></div>
 
-                            <!-- IL NEGOZIO -->
+                            <!-- LIQUIDO E UN'IDEA -->
                             <div>
                                 <div class="page-badge"><span
-                                        class="material-symbols-outlined text-xs">store</span>Section "Il Negozio"</div>
+                                        class="material-symbols-outlined text-xs">store</span>Section "LIQUIDO è un'idea"</div>
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     <div class="field-group">
                                         <label class="text-field-label">Titolo (parte nera)</label>
                                         <input type="text" class="text-field" data-text-field="about.store_title"
-                                            placeholder="IL" />
+                                            placeholder="LIQUIDO" />
                                     </div>
                                     <div class="field-group">
                                         <label class="text-field-label">Titolo (parte gialla)</label>
                                         <input type="text" class="text-field"
-                                            data-text-field="about.store_title_highlight" placeholder="NEGOZIO" />
+                                            data-text-field="about.store_title_highlight" placeholder="è un’idea!" />
                                     </div>
                                     <div class="field-group md:col-span-2">
-                                        <label class="text-field-label">Paragrafo 1</label>
+                                        <label class="text-field-label">Testo descrittivo</label>
                                         <textarea class="text-field" rows="3"
                                             data-text-field="about.store_text1"></textarea>
                                     </div>
+                                    <div class="field-group">
+                                        <label class="text-field-label">Immagine 1 (In alto a sinistra)</label>
+                                        <input type="text" class="text-field text-xs text-slate-500 mb-2" data-text-field="about.store_img1" id="store_img1_input" readonly />
+                                        <button type="button" class="bg-slate-200 hover:bg-slate-300 dark:bg-slate-800 dark:hover:bg-slate-700 text-xs px-3 py-1.5 rounded dark:text-white" onclick="uploadStoreImg(1)">Modifica Immagine 1</button>
+                                    </div>
+                                    <div class="field-group">
+                                        <label class="text-field-label">Immagine 2 (In alto a destra)</label>
+                                        <input type="text" class="text-field text-xs text-slate-500 mb-2" data-text-field="about.store_img2" id="store_img2_input" readonly />
+                                        <button type="button" class="bg-slate-200 hover:bg-slate-300 dark:bg-slate-800 dark:hover:bg-slate-700 text-xs px-3 py-1.5 rounded dark:text-white" onclick="uploadStoreImg(2)">Modifica Immagine 2</button>
+                                    </div>
                                     <div class="field-group md:col-span-2">
-                                        <label class="text-field-label">Paragrafo 2</label>
-                                        <textarea class="text-field" rows="3"
-                                            data-text-field="about.store_text2"></textarea>
+                                        <label class="text-field-label">Immagine 3 (Sotto - Larga)</label>
+                                        <input type="text" class="text-field text-xs text-slate-500 mb-2" data-text-field="about.store_img3" id="store_img3_input" readonly />
+                                        <button type="button" class="bg-slate-200 hover:bg-slate-300 dark:bg-slate-800 dark:hover:bg-slate-700 text-xs px-3 py-1.5 rounded dark:text-white" onclick="uploadStoreImg(3)">Modifica Immagine 3</button>
                                     </div>
                                 </div>
                             </div>
@@ -1003,6 +1013,11 @@
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    <!-- Cloudinary Services -->
+    <script src="https://widget.cloudinary.com/v2.0/global/all.js" type="text/javascript"></script>
+    <script src="../src/js/services/cloudinary-config.js"></script>
+    <script src="../src/js/services/cloudinary-service.js"></script>
+
     <script src="../src/js/services/firebase-config.js"></script>
     <script src="../src/js/admin/admin-auth.js"></script>
     <script src="../src/js/services/site-texts-service.js"></script>
@@ -1010,6 +1025,34 @@
     <script src="../src/js/admin/site-texts-admin.js"></script>
     <script src="../src/js/admin/reviews-admin.js"></script>
     <script src="../src/js/admin/store-info-admin.js"></script>
+
+    <script>
+        function uploadStoreImg(index) {
+            if (!window.cloudinaryConfig) {
+                AdminToast.error('Cloudinary config missing');
+                return;
+            }
+            cloudinary.createUploadWidget({
+                cloudName: window.cloudinaryConfig.cloudName,
+                uploadPreset: window.cloudinaryConfig.uploadPreset,
+                sources: ['local', 'url'],
+                multiple: false
+            }, (error, result) => {
+                if (!error && result && result.event === "success") {
+                    const inputInfo = document.getElementById('store_img' + index + '_input');
+                    if (inputInfo) {
+                        inputInfo.value = result.info.secure_url;
+                        // Trigger input event to mark as unsaved
+                        inputInfo.dispatchEvent(new Event('input', { bubbles: true }));
+                        AdminToast.success("Immagine pronta per il salvataggio!");
+                    }
+                } else if (error) {
+                    console.error("Cloudinary error:", error);
+                    AdminToast.error("Si è verificato un errore");
+                }
+            }).open();
+        }
+    </script>
 </body>
 
 </html>
