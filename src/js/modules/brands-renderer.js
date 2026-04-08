@@ -148,8 +148,11 @@ class BrandsRenderer {
      */
     async renderAllBrands(container) {
         try {
-            const sections = await this.catalogService.getSections();
-            const allBrands = await this.catalogService.getAllBrands();
+            const allBrandsRaw = await this.catalogService.getAllBrands();
+            // Filter inactive brands and sort by order
+            const allBrands = allBrandsRaw
+                .filter(b => b.active !== false)
+                .sort((a, b) => (a.order !== undefined ? a.order : 99) - (b.order !== undefined ? b.order : 99));
             this.renderBrandsGrid(allBrands, '', container);
         } catch (error) {
             console.error('Error rendering all brands:', error);
@@ -277,7 +280,11 @@ class BrandsRenderer {
      */
     async renderBrandsCarouselFromDB(container) {
         try {
-            const brands = await this.catalogService.getAllBrands();
+            const allBrands = await this.catalogService.getAllBrands();
+            // Filter inactive brands and sort by order for the homepage carousel
+            const brands = allBrands
+                .filter(b => b.active !== false)
+                .sort((a, b) => (a.order !== undefined ? a.order : 99) - (b.order !== undefined ? b.order : 99));
             this.renderBrandsCarousel(brands, container);
         } catch (error) {
             console.error('Error loading brands for carousel:', error);
@@ -651,9 +658,10 @@ class BrandsRenderer {
         try {
             const allBrands = await this.catalogService.getAllBrands();
 
-            // Filter brands (must have a name, maybe a logo but we handle missing logos)
-            // DIsplay liquid brands only as requested
-            const brandsToDisplay = allBrands.filter(b => b.type === 'liquid');
+            // Filter: liquid brands only, active only, sorted by order
+            const brandsToDisplay = allBrands
+                .filter(b => b.type === 'liquid' && b.active !== false)
+                .sort((a, b) => (a.order !== undefined ? a.order : 99) - (b.order !== undefined ? b.order : 99));
 
             if (brandsToDisplay.length === 0) {
                 container.innerHTML = '<p class="text-center text-gray-500 py-12">Nessun marchio trovato.</p>';
@@ -758,8 +766,10 @@ class BrandsRenderer {
         try {
             const allBrands = await this.catalogService.getAllBrands();
 
-            // Filter: device brands only
-            const brandsToDisplay = allBrands.filter(b => b.type === 'device');
+            // Filter: device brands only, active only, sorted by order
+            const brandsToDisplay = allBrands
+                .filter(b => b.type === 'device' && b.active !== false)
+                .sort((a, b) => (a.order !== undefined ? a.order : 99) - (b.order !== undefined ? b.order : 99));
 
             if (brandsToDisplay.length === 0) {
                 container.innerHTML = '<p class="text-center text-gray-500 py-12">Nessun brand dispositivi trovato.</p>';
@@ -784,32 +794,14 @@ class BrandsRenderer {
                     : (brand.products && brand.products.length > 0 ? brand.products : []);
                 const lineCount = allLines.length;
 
-                // Pick the first line that has a valid image for the hero visual
-                const heroLine = allLines.find(l => {
-                    const imgs = l.images && l.images.length > 0 ? l.images : (l.image_url ? [l.image_url] : []);
-                    return imgs.length > 0 && imgs[0] && typeof imgs[0] === 'string'
-                        && imgs[0].trim() !== '' && imgs[0].trim() !== 'null'
-                        && (imgs[0].startsWith('http') || imgs[0].startsWith('/') || imgs[0].startsWith('data:'));
-                });
-                const heroImageUrl = heroLine
-                    ? (heroLine.images && heroLine.images.length > 0 ? heroLine.images[0] : heroLine.image_url)
-                    : '';
-                const hasHeroImage = !!heroImageUrl;
-
                 const description = brand.description || `Scopri i dispositivi ${brandName}. ${lineCount > 0 ? `Esplora le nostre ${lineCount} linee disponibili.` : 'Brand ufficiale partner di Liquido.'} Tecnologia avanzata e qualità costruttiva premium.`;
 
                 const navUrl = `brand-lines.html?brand=${encodeURIComponent(brandName)}`;
 
-                // Image side: prefer line image, then logo, then placeholder
-                const desktopImageBlock = hasHeroImage
-                    ? `<div class="relative aspect-[4/3] w-full overflow-hidden rounded-lg shadow-2xl group-hover:shadow-primary/20 transition-all duration-500">
-                           <img src="${heroImageUrl}" alt="${brandName}" class="w-full h-full object-cover transform scale-100 group-hover:scale-110 transition-all duration-500">
-                           ${hasLogo ? `<div class="absolute bottom-4 left-4 bg-white/90 rounded-md p-2"><img src="${logoUrl}" alt="${brandName} logo" class="h-8 object-contain"></div>` : ''}
-                           <div class="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-300"></div>
-                       </div>`
-                    : hasLogo
-                        ? `<div class="relative aspect-[4/3] w-full overflow-hidden rounded-lg shadow-2xl group-hover:shadow-primary/20 transition-all duration-500 bg-white border border-gray-100 flex items-center justify-center p-12">
-                           <img src="${logoUrl}" alt="${brandName}" class="w-2/3 h-2/3 object-contain filter grayscale group-hover:grayscale-0 transition-all duration-500 transform scale-100 group-hover:scale-110">
+                // Image side: prefer logo, then placeholder
+                const desktopImageBlock = hasLogo
+                        ? `<div class="relative aspect-[4/3] w-full overflow-hidden rounded-lg shadow-2xl group-hover:shadow-primary/20 transition-all duration-500 bg-white border border-gray-100 flex items-center justify-center">
+                           <img src="${logoUrl}" alt="${brandName}" class="w-full h-full object-cover transition-all duration-500 transform scale-100 group-hover:scale-110">
                            <div class="absolute inset-0 bg-transparent mix-blend-multiply"></div>
                        </div>`
                         : `<div class="relative aspect-[4/3] w-full overflow-hidden rounded-lg shadow-2xl bg-gray-100 flex items-center justify-center">
@@ -819,14 +811,9 @@ class BrandsRenderer {
                            </div>
                        </div>`;
 
-                const mobileImageBlock = hasHeroImage
-                    ? `<div class="relative aspect-[4/3] w-full overflow-hidden rounded-lg shadow-lg">
-                           <img src="${heroImageUrl}" alt="${brandName}" class="w-full h-full object-cover">
-                           ${hasLogo ? `<div class="absolute bottom-3 left-3 bg-white/90 rounded-md p-1.5"><img src="${logoUrl}" alt="${brandName} logo" class="h-6 object-contain"></div>` : ''}
-                       </div>`
-                    : hasLogo
-                        ? `<div class="relative aspect-[4/3] w-full overflow-hidden rounded-lg shadow-lg bg-white border border-gray-100 flex items-center justify-center p-8">
-                           <img src="${logoUrl}" alt="${brandName}" class="w-3/4 h-3/4 object-contain">
+                const mobileImageBlock = hasLogo
+                        ? `<div class="relative aspect-[4/3] w-full overflow-hidden rounded-lg shadow-lg bg-white border border-gray-100 flex items-center justify-center">
+                           <img src="${logoUrl}" alt="${brandName}" class="w-full h-full object-cover">
                        </div>`
                         : `<div class="relative aspect-[4/3] w-full overflow-hidden rounded-lg shadow-lg bg-gray-100 flex items-center justify-center">
                            <span class="material-symbols-outlined text-4xl text-gray-300">devices</span>

@@ -90,7 +90,17 @@
                             Arrivi</a></li>
                     <li><a class="hover:text-primary transition-colors uppercase" href="myliquido.html">MyLiquido</a>
                     </li>
-                    <li><a class="hover:text-primary transition-colors uppercase" href="contact.html">Riparazioni</a>
+                    <li>
+                        <a class="hover:text-primary transition-colors uppercase" href="myliquido.html"
+                            id="footer-riparazioni-link"
+                            onclick="(function(e){
+                                e.preventDefault();
+                                var user = (typeof firebase !== 'undefined' && firebase.auth && firebase.auth().currentUser);
+                                var base = window.location.pathname.includes('/public/') ? '' : 'public/';
+                                window.location.href = user
+                                    ? base + 'myliquido.html#maintenance-service'
+                                    : base + 'myliquido.html';
+                            })(event)">Riparazioni</a>
                     </li>
                     <li><a class="hover:text-primary transition-colors uppercase" href="contact.html">Contatti</a></li>
                     <li><a class="hover:text-primary transition-colors uppercase" href="faq.html">FAQ</a></li>

@@ -403,6 +403,23 @@ class CatalogService {
     }
 
     /**
+     * Update specific fields of a brand (active status, display order, etc.)
+     * @param {string} sectionId - Section ID
+     * @param {string} brandName - Brand name
+     * @param {Object} fields - Fields to update (e.g. { active: false, order: 2 })
+     * @returns {Promise<void>}
+     */
+    async updateBrandField(sectionId, brandName, fields) {
+        await this.initFirebase();
+
+        if (!this.useFirebase || !this.firebaseService) {
+            throw new Error('Firebase not available. Cannot update brand.');
+        }
+
+        return await this.firebaseService.updateBrandField(sectionId, brandName, fields);
+    }
+
+    /**
      * Delete product line from Firebase
      * @param {string} sectionId - Section ID
      * @param {string} brandName - Brand name

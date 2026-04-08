@@ -277,6 +277,42 @@ class FirebaseCatalogService {
     }
 
     /**
+     * Update specific fields of a brand (e.g. active status, display order)
+     * @param {string} sectionId - Section ID
+     * @param {string} brandName - Brand name
+     * @param {Object} fields - Fields to update (e.g. { active: false, order: 2 })
+     * @returns {Promise<void>}
+     */
+    async updateBrandField(sectionId, brandName, fields) {
+        await this.initialize();
+
+        try {
+            const sectionRef = this.firestore.collection('sections').doc(sectionId);
+            const doc = await sectionRef.get();
+
+            if (!doc.exists) {
+                throw new Error(`Section ${sectionId} not found`);
+            }
+
+            const section = doc.data();
+            const brands = section.brands || [];
+            const brandIndex = brands.findIndex(b => b.name === brandName);
+
+            if (brandIndex === -1) {
+                throw new Error(`Brand ${brandName} not found in section ${sectionId}`);
+            }
+
+            // Merge new fields into the existing brand object
+            brands[brandIndex] = { ...brands[brandIndex], ...fields };
+
+            await sectionRef.update({ brands: brands });
+        } catch (error) {
+            console.error('Error updating brand field:', error);
+            throw error;
+        }
+    }
+
+    /**
      * Delete a brand
      * @param {string} sectionId - Section ID
      * @param {string} brandName - Brand name

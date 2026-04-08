@@ -100,6 +100,9 @@
 
             console.log(`✅ Total brands loaded: ${allBrands.length}`, allBrands);
 
+            // Sort by order field (default 99 for brands without order set)
+            allBrands.sort((a, b) => (a.order !== undefined ? a.order : 99) - (b.order !== undefined ? b.order : 99));
+
             filteredBrands = allBrands;
             renderBrands(filteredBrands);
             updateCount(filteredBrands.length);
@@ -186,10 +189,14 @@
                         ` : ''}
                     </div>
                     <div class="flex items-center gap-4">
-                        <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-500/10 text-emerald-400 text-xs font-bold uppercase tracking-wider border border-emerald-500/20">
-                            <span class="size-1.5 rounded-full bg-emerald-400"></span>
-                            Active
-                        </span>
+                        <button class="toggle-active-btn inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider border transition-all cursor-pointer ${brand.active === false ? 'bg-red-500/10 text-red-400 border-red-500/20' : 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20'}" data-brand="${brand.name}" data-section="${brand.sectionId || ''}" data-active="${brand.active !== false}" title="Cliquer pour basculer">
+                            <span class="size-1.5 rounded-full ${brand.active === false ? 'bg-red-400' : 'bg-emerald-400'}"></span>
+                            ${brand.active === false ? 'Inactif' : 'Actif'}
+                        </button>
+                        <div class="flex items-center gap-1 bg-[#393928] rounded-lg px-2 py-1" title="Ordre d'affichage">
+                            <span class="material-symbols-outlined text-[#baba9c] text-[14px]">swap_vert</span>
+                            <input type="number" min="0" class="order-input w-12 bg-transparent text-white text-xs text-center outline-none" value="${brand.order !== undefined ? brand.order : 99}" data-brand="${brand.name}" data-section="${brand.sectionId || ''}" title="Ordre d'affichage" />
+                        </div>
                         <div class="flex gap-2">
                             <a href="add.html?section=${encodeURIComponent(brand.sectionId || '')}&brand=${encodeURIComponent(brand.name)}" class="p-2 rounded-lg text-[#baba9c] hover:text-primary hover:bg-primary/10 transition-colors" title="Éditer">
                                 <span class="material-symbols-outlined text-[20px]">edit</span>
@@ -246,10 +253,14 @@
                             ` : ''}
                         </div>
                         <div class="flex items-center justify-between pt-2 border-t border-border-dark">
-                            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-400 text-xs font-bold uppercase tracking-wider border border-emerald-500/20">
-                                <span class="size-1.5 rounded-full bg-emerald-400"></span>
-                                Active
-                            </span>
+                            <button class="toggle-active-btn inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold uppercase tracking-wider border transition-all cursor-pointer ${brand.active === false ? 'bg-red-500/10 text-red-400 border-red-500/20' : 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20'}" data-brand="${brand.name}" data-section="${brand.sectionId || ''}" data-active="${brand.active !== false}" title="Cliquer pour activer/désactiver">
+                                <span class="size-1.5 rounded-full ${brand.active === false ? 'bg-red-400' : 'bg-emerald-400'}"></span>
+                                ${brand.active === false ? 'Inactif' : 'Actif'}
+                            </button>
+                            <div class="flex items-center gap-1" title="Ordre d'affichage">
+                                <span class="material-symbols-outlined text-[#baba9c] text-[14px]">swap_vert</span>
+                                <input type="number" min="0" class="order-input w-10 bg-[#393928] text-white text-xs text-center rounded px-1 py-0.5 outline-none border border-border-dark focus:border-primary/60" value="${brand.order !== undefined ? brand.order : 99}" data-brand="${brand.name}" data-section="${brand.sectionId || ''}" title="Ordre" />
+                            </div>
                             ${brand.website ? `
                                 <a href="${brand.website.startsWith('http') ? brand.website : 'https://' + brand.website}" target="_blank" rel="noopener" class="text-[#baba9c] hover:text-primary transition-colors" title="Visiter le site">
                                     <span class="material-symbols-outlined text-[18px]">open_in_new</span>
@@ -281,6 +292,71 @@
                         alert('Erreur lors de la suppression: ' + error.message);
                     }
                 }
+            });
+        });
+
+        // Toggle active/inactive handlers
+        brandsGrid.querySelectorAll('.toggle-active-btn').forEach(btn => {
+            btn.addEventListener('click', async (e) => {
+                const brandName = e.currentTarget.dataset.brand;
+                const sectionId = e.currentTarget.dataset.section;
+                const currentlyActive = e.currentTarget.dataset.active === 'true';
+                const newActive = !currentlyActive;
+
+                try {
+                    btn.disabled = true;
+                    btn.style.opacity = '0.5';
+
+                    await catalogService.updateBrandField(sectionId, brandName, { active: newActive });
+
+                    // Update local brand state
+                    const brand = allBrands.find(b => b.name === brandName && b.sectionId === sectionId);
+                    if (brand) brand.active = newActive;
+
+                    // Re-render without reloading Firebase
+                    renderBrands(filteredBrands);
+                    updateCount(filteredBrands.length);
+                } catch (error) {
+                    console.error('Error toggling brand status:', error);
+                    alert('Erreur: ' + error.message);
+                    btn.disabled = false;
+                    btn.style.opacity = '1';
+                }
+            });
+        });
+
+        // Order input handlers (save on blur or Enter)
+        brandsGrid.querySelectorAll('.order-input').forEach(input => {
+            const saveOrder = async () => {
+                const brandName = input.dataset.brand;
+                const sectionId = input.dataset.section;
+                const newOrder = parseInt(input.value, 10);
+
+                if (isNaN(newOrder)) return;
+
+                try {
+                    input.style.borderColor = '#F8ED70';
+                    await catalogService.updateBrandField(sectionId, brandName, { order: newOrder });
+
+                    // Update local state
+                    const brand = allBrands.find(b => b.name === brandName && b.sectionId === sectionId);
+                    if (brand) brand.order = newOrder;
+
+                    // Re-sort and re-render
+                    allBrands.sort((a, b) => (a.order !== undefined ? a.order : 99) - (b.order !== undefined ? b.order : 99));
+                    applyFilters(searchInput?.value.toLowerCase().trim() || '', currentTypeFilter);
+
+                    setTimeout(() => { input.style.borderColor = ''; }, 800);
+                } catch (error) {
+                    console.error('Error saving order:', error);
+                    input.style.borderColor = '#ef4444';
+                    setTimeout(() => { input.style.borderColor = ''; }, 1500);
+                }
+            };
+
+            input.addEventListener('blur', saveOrder);
+            input.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') { input.blur(); }
             });
         });
     }
