@@ -19,11 +19,20 @@ function initHeaderLogic() {
     }
 
     // Update placeholder height: topNav + header
+    // On non-home pages, reduce the gap so content sits closer to the header.
+    function isHomePage() {
+        const path = window.location.pathname;
+        return path === '/' ||
+               path.endsWith('/index.html') ||
+               path.endsWith('/public/index.html');
+    }
+
     function updatePlaceholder() {
         if (placeholder) {
             const topNavH = getTopNavHeight();
             const headerH = header.getBoundingClientRect().height;
-            placeholder.style.height = (topNavH + headerH) + 'px';
+            const reduction = isHomePage() ? 0 : 40; // px removed on inner pages
+            placeholder.style.height = (topNavH + headerH - reduction) + 'px';
             placeholder.className = '';
         }
     }

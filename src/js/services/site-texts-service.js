@@ -42,6 +42,8 @@ const DEFAULT_SITE_TEXTS = {
         faq_title: "Domande",
         faq_title_highlight: "Frequenti",
         faq_subtitle: "Trova le risposte alle domande più comuni su liquidi, dispositivi, procedure e curiosità del mondo dello svapo.",
+
+        why_bg_img: "https://lh3.googleusercontent.com/aida-public/AB6AXuB2W8yzKRqsy4SEqRz1ttIJAAo9IhiFuUWh-Z5k-5KjdxqkWXSU0iV1kY0W0zl9eMm6Llod9_xa93Le_kmTbyU4v4cTOJdd27q16jhUCyoZKKch1KrEpB-aRRa-uMzIOqLybGrY4JJmtJDKf2gzbtAdUfSM97Sz7TQPjr36nYwz-XCOMwdY-ySeBjryC1kGtupEr73Px7YGdMzBfHAiyUnA2rR1MGFe3mGijldkRk_zkV_wktC8riZZhZtx5pgUZ7h2UUVv794TuA0",
     },
 
     // ===== ABOUT PAGE =====

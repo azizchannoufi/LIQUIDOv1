@@ -5,12 +5,9 @@
 <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <title>Admin Brand Management | LIQUIDO</title>
+    <title>Gestione Brand | LIQUIDO Admin</title>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap"
-        rel="stylesheet" />
-    <link
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
         rel="stylesheet" />
     <link
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
@@ -53,13 +50,37 @@
             background-color: #393928;
             border-left: 4px solid #F8ED70;
         }
+
+        /* Drag handle cursor for order items */
+        .order-row {
+            transition: background 0.15s, box-shadow 0.15s;
+        }
+        .order-row:hover {
+            background: #2a2a1a !important;
+        }
+        .order-row.saving {
+            opacity: 0.5;
+            pointer-events: none;
+        }
+        .order-row.saved {
+            border-color: #F8ED70 !important;
+        }
+
+        /* Tab styles */
+        .tab-btn { transition: all 0.2s; }
+        .tab-btn.active {
+            background: #393928;
+            color: #F8ED70;
+            border-bottom: 2px solid #F8ED70;
+        }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
     </style>
     <link rel="icon" type="image/png" href="../../assets/images/Goccia%20LIQUIDO/GOCCIA%20Y_W.png" />
 </head>
 
 <body class="bg-background-light dark:bg-background-dark min-h-screen text-slate-900 dark:text-white">
     <div class="flex h-screen overflow-hidden">
-        <!-- Side Navigation -->
         <!-- Sidebar Navigation -->
         <aside
             class="w-64 bg-background-light dark:bg-[#12120a] border-r border-slate-200 dark:border-[#393928] flex flex-col justify-between py-6 sticky top-0 h-screen">
@@ -85,32 +106,32 @@
                     <a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-[#baba9c] hover:bg-slate-100 dark:hover:bg-[#2a2a1a] transition-colors"
                         href="../products/index.html">
                         <span class="material-symbols-outlined">inventory_2</span>
-                        <p class="text-sm font-medium">Products</p>
+                        <p class="text-sm font-medium">Prodotti</p>
                     </a>
                     <a class="sidebar-active flex items-center gap-3 px-3 py-2.5 rounded-lg text-primary"
                         href="index.html">
                         <span class="material-symbols-outlined">loyalty</span>
-                        <p class="text-sm font-semibold">Brands</p>
+                        <p class="text-sm font-semibold">Brand</p>
                     </a>
                     <a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-[#baba9c] hover:bg-slate-100 dark:hover:bg-[#2a2a1a] transition-colors"
                         href="../users/index.html">
                         <span class="material-symbols-outlined">people</span>
-                        <p class="text-sm font-medium">Users</p>
+                        <p class="text-sm font-medium">Utenti</p>
                     </a>
                     <a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-[#baba9c] hover:bg-slate-100 dark:hover:bg-[#2a2a1a] transition-colors"
                         href="../orders/index.html">
                         <span class="material-symbols-outlined">shopping_cart</span>
-                        <p class="text-sm font-medium">Orders</p>
+                        <p class="text-sm font-medium">Ordini</p>
                     </a>
                     <a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-[#baba9c] hover:bg-slate-100 dark:hover:bg-[#2a2a1a] transition-colors"
                         href="../services/index.html">
                         <span class="material-symbols-outlined">room_service</span>
-                        <p class="text-sm font-medium">Services</p>
+                        <p class="text-sm font-medium">Servizi</p>
                     </a>
                     <a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-[#baba9c] hover:bg-slate-100 dark:hover:bg-[#2a2a1a] transition-colors"
                         href="../settings.html">
                         <span class="material-symbols-outlined">settings</span>
-                        <p class="text-sm font-medium">Store Settings</p>
+                        <p class="text-sm font-medium">Impostazioni</p>
                     </a>
                 </nav>
             </div>
@@ -119,101 +140,184 @@
                 <button onclick="window.adminAuth && window.adminAuth.logout()"
                     class="flex w-full cursor-pointer items-center justify-center overflow-hidden rounded-lg h-11 bg-primary text-background-dark text-sm font-bold transition-transform hover:scale-[1.02] active:scale-95">
                     <span class="material-symbols-outlined mr-2">logout</span>
-                    <span>Logout</span>
+                    <span>Esci</span>
                 </button>
             </div>
         </aside>
+
         <!-- Main Content Area -->
         <main class="flex-1 flex flex-col overflow-y-auto bg-background-light dark:bg-background-dark">
-            <!-- Content Container -->
             <div class="p-8 max-w-7xl mx-auto w-full">
+
                 <!-- Page Heading -->
                 <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8">
                     <div class="space-y-2">
-                        <h1 class="text-white text-4xl font-black tracking-tight leading-none">Brand Management</h1>
-                        <p class="text-[#baba9c] text-lg font-normal">Manage and monitor your partner brand
-                            relationships across all regions.</p>
+                        <h1 class="text-white text-4xl font-black tracking-tight leading-none">Gestione Brand</h1>
+                        <p class="text-[#baba9c] text-lg font-normal">Gestisci i tuoi brand partner e il loro ordine di visualizzazione sul sito.</p>
                     </div>
                     <a href="add.html"
                         class="flex items-center justify-center gap-2 px-6 h-12 bg-primary text-background-dark rounded-xl font-bold shadow-lg shadow-primary/10 hover:scale-[1.02] active:scale-[0.98] transition-all">
                         <span class="material-symbols-outlined font-bold">add</span>
-                        <span>Add New Brand</span>
+                        <span>Aggiungi Brand</span>
                     </a>
                 </div>
-                <!-- Filters & View Switcher -->
-                <div class="flex flex-col lg:flex-row gap-4 mb-8">
-                    <!-- Search Bar -->
-                    <div class="flex-1">
-                        <div class="relative group">
-                            <div
-                                class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-[#baba9c] group-focus-within:text-primary transition-colors">
-                                <span class="material-symbols-outlined">search</span>
+
+                <!-- Tab Navigation -->
+                <div class="flex gap-1 mb-8 border-b border-border-dark">
+                    <button id="tab-gestion" class="tab-btn active flex items-center gap-2 px-5 py-3 text-sm font-semibold text-white rounded-t-lg">
+                        <span class="material-symbols-outlined text-sm">grid_view</span>
+                        Gestione Brand
+                    </button>
+                    <button id="tab-ordre" class="tab-btn flex items-center gap-2 px-5 py-3 text-sm font-semibold text-[#baba9c] rounded-t-lg hover:text-white">
+                        <span class="material-symbols-outlined text-sm">swap_vert</span>
+                        Ordine di Visualizzazione
+                    </button>
+                </div>
+
+                <!-- ===== TAB 1: GESTION ===== -->
+                <div id="content-gestion" class="tab-content active">
+                    <!-- Filters & View Switcher -->
+                    <div class="flex flex-col lg:flex-row gap-4 mb-8">
+                        <!-- Search Bar -->
+                        <div class="flex-1">
+                            <div class="relative group">
+                                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-[#baba9c] group-focus-within:text-primary transition-colors">
+                                    <span class="material-symbols-outlined">search</span>
+                                </div>
+                                <input id="brand-search-input"
+                                    class="w-full h-14 pl-12 pr-4 rounded-xl bg-surface-dark border-none text-white focus:ring-2 focus:ring-primary/50 placeholder:text-[#baba9c] text-base transition-all"
+                                    placeholder="Cerca un brand per nome, categoria..." type="text" />
                             </div>
-                            <input id="brand-search-input"
-                                class="w-full h-14 pl-12 pr-4 rounded-xl bg-surface-dark border-none text-white focus:ring-2 focus:ring-primary/50 placeholder:text-[#baba9c] text-base transition-all"
-                                placeholder="Search partner brands by name, category or ID..." type="text" />
+                        </div>
+                        <!-- Type Filter -->
+                        <div class="flex items-center gap-2 bg-surface-dark p-1.5 rounded-xl border border-border-dark">
+                            <button id="filter-all-btn"
+                                class="flex items-center gap-2 px-4 py-2 rounded-lg bg-border-dark text-white text-sm font-semibold transition-all"
+                                data-filter="all">
+                                <span class="material-symbols-outlined text-sm">category</span>
+                                <span>Tutti</span>
+                            </button>
+                            <button id="filter-liquid-btn"
+                                class="flex items-center gap-2 px-4 py-2 rounded-lg text-[#baba9c] hover:text-white text-sm font-semibold transition-all"
+                                data-filter="liquid">
+                                <span class="material-symbols-outlined text-sm">water_drop</span>
+                                <span>Liquidi</span>
+                            </button>
+                            <button id="filter-device-btn"
+                                class="flex items-center gap-2 px-4 py-2 rounded-lg text-[#baba9c] hover:text-white text-sm font-semibold transition-all"
+                                data-filter="device">
+                                <span class="material-symbols-outlined text-sm">devices</span>
+                                <span>Dispositivi</span>
+                            </button>
+                        </div>
+                        <!-- View Switcher -->
+                        <div class="flex items-center gap-2 bg-surface-dark p-1.5 rounded-xl border border-border-dark">
+                            <button id="grid-view-btn"
+                                class="flex items-center gap-2 px-4 py-2 rounded-lg bg-border-dark text-white text-sm font-semibold transition-all">
+                                <span class="material-symbols-outlined text-sm">grid_view</span>
+                                <span>Griglia</span>
+                            </button>
+                            <button id="list-view-btn"
+                                class="flex items-center gap-2 px-4 py-2 rounded-lg text-[#baba9c] hover:text-white text-sm font-semibold transition-all">
+                                <span class="material-symbols-outlined text-sm">format_list_bulleted</span>
+                                <span>Lista</span>
+                            </button>
                         </div>
                     </div>
-                    <!-- Type Filter -->
-                    <div class="flex items-center gap-2 bg-surface-dark p-1.5 rounded-xl border border-border-dark">
-                        <button id="filter-all-btn"
-                            class="flex items-center gap-2 px-4 py-2 rounded-lg bg-border-dark text-white text-sm font-semibold transition-all"
-                            data-filter="all">
-                            <span class="material-symbols-outlined text-sm">category</span>
-                            <span>Tous</span>
-                        </button>
-                        <button id="filter-liquid-btn"
-                            class="flex items-center gap-2 px-4 py-2 rounded-lg text-[#baba9c] hover:text-white text-sm font-semibold transition-all"
-                            data-filter="liquid">
-                            <span class="material-symbols-outlined text-sm">water_drop</span>
-                            <span>Liquides</span>
-                        </button>
-                        <button id="filter-device-btn"
-                            class="flex items-center gap-2 px-4 py-2 rounded-lg text-[#baba9c] hover:text-white text-sm font-semibold transition-all"
-                            data-filter="device">
-                            <span class="material-symbols-outlined text-sm">devices</span>
-                            <span>Dispositifs</span>
-                        </button>
-                    </div>
-                    <!-- Action Bar / View Switcher -->
-                    <div class="flex items-center gap-2 bg-surface-dark p-1.5 rounded-xl border border-border-dark">
-                        <button id="grid-view-btn"
-                            class="flex items-center gap-2 px-4 py-2 rounded-lg bg-border-dark text-white text-sm font-semibold transition-all">
-                            <span class="material-symbols-outlined text-sm">grid_view</span>
-                            <span>Grid View</span>
-                        </button>
-                        <button id="list-view-btn"
-                            class="flex items-center gap-2 px-4 py-2 rounded-lg text-[#baba9c] hover:text-white text-sm font-semibold transition-all">
-                            <span class="material-symbols-outlined text-sm">format_list_bulleted</span>
-                            <span>List View</span>
-                        </button>
-                    </div>
-                </div>
-                <!-- Loading State -->
-                <div id="brands-loading" class="flex items-center justify-center py-20">
-                    <div class="flex flex-col items-center gap-4">
-                        <div class="size-12 border-4 border-primary/20 border-t-primary rounded-full animate-spin">
+
+                    <!-- Loading State -->
+                    <div id="brands-loading" class="flex items-center justify-center py-20">
+                        <div class="flex flex-col items-center gap-4">
+                            <div class="size-12 border-4 border-primary/20 border-t-primary rounded-full animate-spin"></div>
+                            <p class="text-[#baba9c] text-sm font-medium">Caricamento brand...</p>
                         </div>
-                        <p class="text-[#baba9c] text-sm font-medium">Chargement des marques...</p>
+                    </div>
+
+                    <!-- Brands Grid -->
+                    <div id="admin-brands-grid"
+                        class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 hidden">
+                    </div>
+
+                    <!-- Pagination -->
+                    <div id="brands-pagination"
+                        class="mt-12 flex items-center justify-between border-t border-border-dark pt-6 hidden">
+                        <p class="text-[#baba9c] text-sm">Visualizzazione di <span id="brands-count" class="text-white font-bold">0</span> brand</p>
+                        <div class="flex items-center gap-2" id="pagination-controls"></div>
                     </div>
                 </div>
-                <!-- Brands Grid -->
-                <div id="admin-brands-grid"
-                    class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 hidden">
-                    <!-- Brands will be loaded dynamically from Firebase -->
-                </div>
-                <!-- Pagination -->
-                <div id="brands-pagination"
-                    class="mt-12 flex items-center justify-between border-t border-border-dark pt-6 hidden">
-                    <p class="text-[#baba9c] text-sm">Showing <span id="brands-count"
-                            class="text-white font-bold">0</span> brands</p>
-                    <div class="flex items-center gap-2" id="pagination-controls">
-                        <!-- Pagination will be added dynamically if needed -->
+
+                <!-- ===== TAB 2: ORDRE D'AFFICHAGE ===== -->
+                <div id="content-ordre" class="tab-content">
+                    <!-- Info banner -->
+                    <div class="flex items-start gap-3 bg-primary/5 border border-primary/20 rounded-xl p-4 mb-8">
+                        <span class="material-symbols-outlined text-primary mt-0.5 flex-shrink-0">info</span>
+                        <div>
+                            <p class="text-white text-sm font-semibold mb-1">Come funziona?</p>
+                            <p class="text-[#baba9c] text-xs leading-relaxed">
+                                Usa i pulsanti <strong class="text-white">↑ ↓</strong> per spostare un brand verso l'alto o verso il basso.<br>
+                                L'ordine viene salvato automaticamente su Firebase dopo ogni spostamento.<br>
+                                I brand con numero più basso appaiono per primi sul sito.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Loading ordre -->
+                    <div id="ordre-loading" class="flex items-center justify-center py-20">
+                        <div class="flex flex-col items-center gap-4">
+                            <div class="size-12 border-4 border-primary/20 border-t-primary rounded-full animate-spin"></div>
+                            <p class="text-[#baba9c] text-sm font-medium">Caricamento...</p>
+                        </div>
+                    </div>
+
+                    <div id="ordre-content" class="hidden grid grid-cols-1 lg:grid-cols-2 gap-8">
+
+                        <!-- Liquides -->
+                        <div class="flex flex-col gap-4">
+                            <div class="flex items-center gap-3 pb-3 border-b border-border-dark">
+                                <div class="w-8 h-8 rounded-lg bg-blue-500/10 border border-blue-500/20 flex items-center justify-center">
+                                    <span class="material-symbols-outlined text-blue-400 text-sm">water_drop</span>
+                                </div>
+                                <div>
+                                    <h2 class="text-white font-bold text-lg leading-none">Brand Liquidi</h2>
+                                    <p class="text-[#baba9c] text-xs mt-0.5">Ordine di visualizzazione — pagina Liquidi</p>
+                                </div>
+                            </div>
+                            <div id="order-list-liquid" class="flex flex-col gap-2">
+                                <!-- populated by JS -->
+                            </div>
+                        </div>
+
+                        <!-- Dispositifs -->
+                        <div class="flex flex-col gap-4">
+                            <div class="flex items-center gap-3 pb-3 border-b border-border-dark">
+                                <div class="w-8 h-8 rounded-lg bg-purple-500/10 border border-purple-500/20 flex items-center justify-center">
+                                    <span class="material-symbols-outlined text-purple-400 text-sm">devices</span>
+                                </div>
+                                <div>
+                                    <h2 class="text-white font-bold text-lg leading-none">Brand Dispositivi</h2>
+                                    <p class="text-[#baba9c] text-xs mt-0.5">Ordine di visualizzazione — pagina Dispositivi</p>
+                                </div>
+                            </div>
+                            <div id="order-list-device" class="flex flex-col gap-2">
+                                <!-- populated by JS -->
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Toast notification -->
+                    <div id="ordre-toast" class="fixed bottom-6 right-6 z-50 hidden">
+                        <div class="flex items-center gap-3 bg-[#222210] border border-primary/30 rounded-xl px-5 py-3 shadow-2xl shadow-primary/10">
+                            <span class="material-symbols-outlined text-primary text-sm">check_circle</span>
+                            <span id="ordre-toast-msg" class="text-white text-sm font-semibold"></span>
+                        </div>
                     </div>
                 </div>
+
             </div>
         </main>
     </div>
+
     <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
@@ -225,6 +329,41 @@
     <script src="../../src/js/services/catalog-service.js"></script>
     <script src="../../src/js/modules/catalog-init.js"></script>
     <script src="../../src/js/admin/brands-list.js"></script>
+    <script src="../../src/js/admin/brands-order.js"></script>
+
+    <!-- Tab switching logic -->
+    <script>
+        const tabGestion = document.getElementById('tab-gestion');
+        const tabOrdre = document.getElementById('tab-ordre');
+        const contentGestion = document.getElementById('content-gestion');
+        const contentOrdre = document.getElementById('content-ordre');
+
+        let ordreLoaded = false;
+
+        tabGestion.addEventListener('click', () => {
+            tabGestion.classList.add('active');
+            tabOrdre.classList.remove('active');
+            tabGestion.classList.remove('text-[#baba9c]');
+            tabOrdre.classList.add('text-[#baba9c]');
+            contentGestion.classList.add('active');
+            contentOrdre.classList.remove('active');
+        });
+
+        tabOrdre.addEventListener('click', () => {
+            tabOrdre.classList.add('active');
+            tabGestion.classList.remove('active');
+            tabOrdre.classList.remove('text-[#baba9c]');
+            tabGestion.classList.add('text-[#baba9c]');
+            contentOrdre.classList.add('active');
+            contentGestion.classList.remove('active');
+
+            // Load ordre tab only once
+            if (!ordreLoaded && window.brandsOrderManager) {
+                window.brandsOrderManager.load();
+                ordreLoaded = true;
+            }
+        });
+    </script>
 </body>
 
 </html>
