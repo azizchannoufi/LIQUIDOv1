@@ -14,7 +14,8 @@ function initHeaderLogic() {
 
     // Get top nav height dynamically
     function getTopNavHeight() {
-        const topNav = document.querySelector('nav.fixed[class*="z-[70]"]');
+        const topNav = document.getElementById('public-top-nav') ||
+                       document.querySelector('nav.fixed[class*="z-[70]"]');
         return topNav ? topNav.getBoundingClientRect().height : 0;
     }
 
@@ -28,8 +29,10 @@ function initHeaderLogic() {
     }
 
     function updatePlaceholder() {
+        const topNavH = getTopNavHeight();
+        // Position the header flush against the bottom of the topbar
+        header.style.top = topNavH + 'px';
         if (placeholder) {
-            const topNavH = getTopNavHeight();
             const headerH = header.getBoundingClientRect().height;
             const reduction = isHomePage() ? 0 : 40; // px removed on inner pages
             placeholder.style.height = (topNavH + headerH - reduction) + 'px';

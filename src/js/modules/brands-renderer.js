@@ -734,7 +734,12 @@ class BrandsRenderer {
                             <p class="text-slate-600 dark:text-slate-400 text-sm font-medium leading-relaxed">
                                 ${description}
                             </p>
-                          
+                            <div class="flex justify-center">
+                                <a href="${navUrl}" class="inline-flex items-center gap-3 px-8 py-4 bg-background-dark text-white hover:bg-primary hover:text-background-dark transition-all duration-300 uppercase font-black tracking-widest text-xs rounded-sm">
+                                    CATALOGO
+                                    <span class="material-symbols-outlined transition-transform">arrow_forward</span>
+                                </a>
+                            </div>
                          </div>
                     </div>
                 `;
@@ -855,7 +860,12 @@ class BrandsRenderer {
                             <p class="text-slate-600 dark:text-slate-400 text-sm font-medium leading-relaxed">
                                 ${description}
                             </p>
-                           
+                            <div class="flex justify-center">
+                                <a href="${navUrl}" class="inline-flex items-center gap-3 px-8 py-4 bg-background-dark text-white hover:bg-primary hover:text-background-dark transition-all duration-300 uppercase font-black tracking-widest text-xs rounded-sm">
+                                    CATALOGO
+                                    <span class="material-symbols-outlined transition-transform">arrow_forward</span>
+                                </a>
+                            </div>
                          </div>
                     </div>
                 `;
