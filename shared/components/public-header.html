@@ -148,6 +148,12 @@
 
 <!-- CSS pour l'animation -->
 <style>
+    /* Prevent browser dark-mode forced inversion on header */
+    #main-header,
+    #user-menu {
+        color-scheme: light;
+    }
+
     #search-container {
         animation: fadeIn 0.2s ease-out;
         z-index: 70;

@@ -1,15 +1,12 @@
 /**
  * Google Reviews Service
- * Fetches real Google reviews from the backend proxy (/api/google-reviews)
- * and renders them into the reviews section on the homepage.
+ * Fetches reviews from Firestore and renders them in a horizontal scrollable carousel.
  */
 
 (function () {
     'use strict';
 
-    const API_URL = '/api/google-reviews';
-
-    // Static fallback reviews (shown if API call fails)
+    // Static fallback reviews (shown if Firestore fetch fails)
     const FALLBACK_REVIEWS = [
         {
             author_name: 'Luca Valentini',
@@ -31,12 +28,24 @@
             text: 'Vengo qui da due anni e non ho mai avuto motivo di andare altrove. Liquidi di qualità eccellente, staff disponibile e un\'atmosfera davvero unica. 10/10!',
             relative_time_description: '3 mesi fa',
             profile_photo_url: null
+        },
+        {
+            author_name: 'Giada Esposito',
+            rating: 5,
+            text: 'Personale super disponibile e competente. Mi hanno aiutato a scegliere il liquido giusto per le mie esigenze senza fretta. Tornerò sicuramente!',
+            relative_time_description: '2 mesi fa',
+            profile_photo_url: null
+        },
+        {
+            author_name: 'Marco Bianchi',
+            rating: 5,
+            text: 'Assortimento vasto e prezzi competitivi. Ho trovato tutto quello che cercavo e anche qualcosa in più. Staff molto preparato e cordiale.',
+            relative_time_description: '1 settimana fa',
+            profile_photo_url: null
         }
     ];
 
-    /**
-     * Get initials from a name (e.g. "Mario Rossi" → "MR")
-     */
+    /** Get initials from a name (e.g. "Mario Rossi" → "MR") */
     function getInitials(name) {
         if (!name) return '?';
         const parts = name.trim().split(/\s+/);
@@ -44,9 +53,7 @@
         return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
     }
 
-    /**
-     * Renders star icons for a given rating (1-5)
-     */
+    /** Renders star icons for a given rating (1-5) */
     function renderStars(rating) {
         const full = Math.round(rating);
         let stars = '';
@@ -59,9 +66,7 @@
         return stars;
     }
 
-    /**
-     * Generates a consistent avatar color based on name
-     */
+    /** Generates a consistent pastel avatar color based on name */
     function getAvatarColor(name) {
         const colors = [
             '#F8ED70', '#FFB347', '#87CEEB', '#98FB98', '#DDA0DD',
@@ -74,33 +79,21 @@
         return colors[Math.abs(hash) % colors.length];
     }
 
-    /**
-     * Returns text color for an avatar background
-     */
-    function getAvatarTextColor(bgColor) {
-        // For yellow, use dark text
-        if (bgColor === '#F8ED70' || bgColor === '#F0E68C') return '#111111';
-        return '#111111';
-    }
-
-    /**
-     * Renders a single review card HTML
-     */
-    function renderReviewCard(review, delayClass = '') {
+    /** Renders a single review card as a carousel slide */
+    function renderReviewCard(review) {
         const initials = getInitials(review.author_name);
         const stars = renderStars(review.rating);
         const avatarBg = getAvatarColor(review.author_name);
-        const avatarText = getAvatarTextColor(avatarBg);
-        const text = review.text ? review.text.slice(0, 280) + (review.text.length > 280 ? '...' : '') : '';
+        const text = review.text ? review.text.slice(0, 320) + (review.text.length > 320 ? '...' : '') : '';
         const timeDesc = review.relative_time_description || '';
 
         const avatarHtml = review.profile_photo_url
             ? `<img src="${review.profile_photo_url}" alt="${review.author_name}" class="size-10 rounded-full object-cover" onerror="this.onerror=null;this.style.display='none';this.nextElementSibling.style.display='flex';">
-               <div class="size-10 rounded-full flex items-center justify-center text-sm font-black" style="background:${avatarBg};color:${avatarText};display:none;">${initials}</div>`
-            : `<div class="size-10 rounded-full flex items-center justify-center text-sm font-black" style="background:${avatarBg};color:${avatarText};">${initials}</div>`;
+               <div class="size-10 rounded-full flex items-center justify-center text-sm font-black" style="background:${avatarBg};color:#111;display:none;">${initials}</div>`
+            : `<div class="size-10 rounded-full flex items-center justify-center text-sm font-black" style="background:${avatarBg};color:#111;">${initials}</div>`;
 
         return `
-            <div class="review-card bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition-all duration-300 border border-black/5 scroll-animate-stagger ${delayClass} hover:-translate-y-1 transform">
+            <div class="review-carousel-card bg-white p-6 rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 border border-black/5 hover:-translate-y-1 transform" style="height:auto;">
                 <div class="flex items-center gap-3 mb-3">
                     <div class="relative flex-shrink-0">
                         ${avatarHtml}
@@ -119,37 +112,101 @@
                     </div>
                 </div>
                 <p class="text-slate-600 leading-relaxed italic text-sm">"${text}"</p>
-                <div class="flex items-center justify-between mt-3">
+                <div class="mt-3">
                     <p class="text-xs text-slate-400">${timeDesc ? 'Recensione Google · ' + timeDesc : 'Recensione Google'}</p>
                 </div>
             </div>`;
     }
 
-    /**
-     * Updates the rating display in the section header
-     */
+    /** Updates the rating display in the section header */
     function updateRatingDisplay(rating, totalCount) {
         const ratingDisplay = document.getElementById('google-rating-display');
         const totalDisplay = document.getElementById('google-ratings-total');
-
-        if (ratingDisplay && rating) {
-            ratingDisplay.textContent = rating.toFixed(1);
-        }
-        if (totalDisplay && totalCount) {
-            totalDisplay.textContent = `(${totalCount} recensioni)`;
-        }
+        if (ratingDisplay && rating) ratingDisplay.textContent = rating.toFixed(1);
+        if (totalDisplay && totalCount) totalDisplay.textContent = `(${totalCount} recensioni)`;
     }
 
-    /**
-     * Main function: fetches reviews and renders them
-     */
+    /** Sets up drag-to-scroll and arrow nav buttons */
+    function initCarouselInteractions(track) {
+        if (!track) return;
+
+        // --- Drag to scroll ---
+        let isDown = false;
+        let startX = 0;
+        let scrollLeft = 0;
+
+        track.addEventListener('mousedown', (e) => {
+            isDown = true;
+            track.classList.add('is-dragging');
+            startX = e.pageX - track.offsetLeft;
+            scrollLeft = track.scrollLeft;
+        });
+        document.addEventListener('mouseup', () => {
+            isDown = false;
+            track.classList.remove('is-dragging');
+        });
+        track.addEventListener('mouseleave', () => {
+            isDown = false;
+            track.classList.remove('is-dragging');
+        });
+        track.addEventListener('mousemove', (e) => {
+            if (!isDown) return;
+            e.preventDefault();
+            const x = e.pageX - track.offsetLeft;
+            const walk = (x - startX) * 1.5;
+            track.scrollLeft = scrollLeft - walk;
+        });
+
+        // --- Arrow buttons ---
+        const prevBtn = document.getElementById('reviews-prev-btn');
+        const nextBtn = document.getElementById('reviews-next-btn');
+        const SCROLL_AMOUNT = 340;
+
+        if (prevBtn) {
+            prevBtn.addEventListener('click', () => {
+                track.scrollBy({ left: -SCROLL_AMOUNT, behavior: 'smooth' });
+            });
+        }
+        if (nextBtn) {
+            nextBtn.addEventListener('click', () => {
+                track.scrollBy({ left: SCROLL_AMOUNT, behavior: 'smooth' });
+            });
+        }
+
+        // --- Auto-scroll (pause on hover/drag) ---
+        let autoScrollTimer = null;
+        let isPaused = false;
+
+        function startAutoScroll() {
+            autoScrollTimer = setInterval(() => {
+                if (isPaused) return;
+                // If at the end, jump back to start
+                if (track.scrollLeft + track.clientWidth >= track.scrollWidth - 10) {
+                    track.scrollTo({ left: 0, behavior: 'smooth' });
+                } else {
+                    track.scrollBy({ left: SCROLL_AMOUNT, behavior: 'smooth' });
+                }
+            }, 4000);
+        }
+
+        track.addEventListener('mouseenter', () => { isPaused = true; });
+        track.addEventListener('mouseleave', () => { isPaused = false; });
+        track.addEventListener('touchstart', () => { isPaused = true; }, { passive: true });
+        track.addEventListener('touchend', () => {
+            setTimeout(() => { isPaused = false; }, 2000);
+        });
+
+        startAutoScroll();
+    }
+
+    /** Main function: fetches reviews from Firestore and renders carousel */
     async function loadAndRenderReviews() {
         const container = document.getElementById('google-reviews-grid');
         if (!container) return;
 
-        // Show loading skeleton
+        // Show loader
         container.innerHTML = `
-            <div class="col-span-full flex justify-center items-center py-10">
+            <div style="min-width:100%;display:flex;align-items:center;justify-content:center;padding:2.5rem 0;">
                 <div class="flex items-center gap-3 text-slate-400">
                     <div class="w-5 h-5 border-2 border-slate-300 border-t-primary rounded-full animate-spin"></div>
                     <span class="text-sm font-medium">Caricamento recensioni...</span>
@@ -161,11 +218,16 @@
         let totalCount = null;
 
         try {
-            if (typeof window.initializeFirebase === 'function' || (window.firebaseConfig && typeof window.firebaseConfig.initializeFirebase === 'function')) {
-                const initFn = typeof window.initializeFirebase === 'function' ? window.initializeFirebase : window.firebaseConfig.initializeFirebase;
+            const initFn = typeof window.initializeFirebase === 'function'
+                ? window.initializeFirebase
+                : (window.firebaseConfig && typeof window.firebaseConfig.initializeFirebase === 'function'
+                    ? window.firebaseConfig.initializeFirebase
+                    : null);
+
+            if (initFn) {
                 const { firestore } = await initFn();
-                
-                // Fetch config
+
+                // Fetch config (overall rating + total count)
                 try {
                     const configDoc = await firestore.collection('settings').doc('reviewsConfig').get();
                     if (configDoc.exists) {
@@ -177,11 +239,9 @@
                     console.warn('Could not fetch reviewsConfig', e);
                 }
 
-                // Fetch reviews
-                const isAboutPage = window.location.pathname.includes('about');
-                
-                const fetchReviews = async (query) => {
-                    const snapshot = await query.get();
+                // Fetch ALL reviews (no limit) ordered by date descending
+                try {
+                    const snapshot = await firestore.collection('reviews').orderBy('createdAt', 'desc').get();
                     snapshot.forEach(doc => {
                         const data = doc.data();
                         reviews.push({
@@ -193,50 +253,45 @@
                             profile_photo_url: null
                         });
                     });
-                };
-
-                try {
-                    const query = isAboutPage 
-                        ? firestore.collection('reviews').orderBy('createdAt', 'desc')
-                        : firestore.collection('reviews').orderBy('createdAt', 'desc').limit(3);
-                    await fetchReviews(query);
                 } catch (e) {
-                    console.warn('Could not fetch ordered reviews, falling back to unordered', e);
-                    const fallbackQuery = isAboutPage
-                        ? firestore.collection('reviews')
-                        : firestore.collection('reviews').limit(3);
-                    await fetchReviews(fallbackQuery);
+                    console.warn('Could not fetch ordered reviews, trying unordered:', e);
+                    try {
+                        const snapshot = await firestore.collection('reviews').get();
+                        snapshot.forEach(doc => {
+                            const data = doc.data();
+                            reviews.push({
+                                id: doc.id,
+                                author_name: data.author || 'Anonimo',
+                                rating: data.rating || 5,
+                                text: data.text || '',
+                                relative_time_description: data.date || '',
+                                profile_photo_url: null
+                            });
+                        });
+                    } catch (e2) {
+                        console.warn('Unordered fetch also failed:', e2);
+                    }
                 }
             } else {
                 console.warn('Firebase initialization function not found');
             }
         } catch (err) {
-            console.warn('Error load Google Reviews from Firestore, using static fallback:', err.message);
+            console.warn('Error loading reviews from Firestore, using fallback:', err.message);
         }
 
-        // Fall back to static reviews if API failed or returned nothing
+        // Fall back to static if nothing returned
         if (!reviews || reviews.length === 0) {
             reviews = FALLBACK_REVIEWS;
         }
 
-        // Only show top 3 on homepage, all on about page
-        const isAboutPage = window.location.pathname.includes('about');
-        const displayReviews = isAboutPage ? reviews : reviews.slice(0, 3);
-
-        // Update rating in header
+        // Update header rating
         if (rating) updateRatingDisplay(rating, totalCount);
 
-        // Render review cards
-        const delayClasses = ['delay-0', 'delay-100', 'delay-200'];
-        container.innerHTML = displayReviews
-            .map((r, i) => renderReviewCard(r, delayClasses[i] || ''))
-            .join('');
+        // Render all cards as carousel slides
+        container.innerHTML = reviews.map(r => renderReviewCard(r)).join('');
 
-        // Trigger scroll animations for newly inserted cards
-        container.querySelectorAll('.scroll-animate-stagger').forEach(el => {
-            // Small delay so the browser repaints before adding class
-            setTimeout(() => el.classList.add('animate-in'), 100);
-        });
+        // Boot carousel interactions after render
+        initCarouselInteractions(container);
     }
 
     // Expose globally
