@@ -411,6 +411,13 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="grid grid-cols-1 mt-4">
+                                    <div class="field-group">
+                                        <label class="text-field-label">Immagine di Sfondo</label>
+                                        <input type="text" class="text-field text-xs text-slate-500 mb-2" data-text-field="home.why_bg_img" id="home_why_bg_img_input" readonly />
+                                        <button type="button" class="bg-slate-200 hover:bg-slate-300 dark:bg-slate-800 dark:hover:bg-slate-700 text-xs px-3 py-1.5 rounded dark:text-white max-w-xs" onclick="uploadStoreImg('home_why_bg_img')">Modifica Immagine Sfondo</button>
+                                    </div>
+                                </div>
                             </div>
 
                             <div class="section-divider"></div>
@@ -509,6 +516,11 @@
                                         <textarea class="text-field" rows="4"
                                             data-text-field="about.hero_subtitle"></textarea>
                                     </div>
+                                    <div class="field-group md:col-span-2">
+                                        <label class="text-field-label">Immagine di Sfondo (scuro)</label>
+                                        <input type="text" class="text-field text-xs text-slate-500 mb-2" data-text-field="about.hero_bg_img" id="about_hero_bg_img_input" readonly />
+                                        <button type="button" class="bg-slate-200 hover:bg-slate-300 dark:bg-slate-800 dark:hover:bg-slate-700 text-xs px-3 py-1.5 rounded dark:text-white max-w-xs" onclick="uploadStoreImg('about_hero_bg_img')">Modifica Sfondo Hero</button>
+                                    </div>
                                 </div>
                             </div>
 
@@ -551,6 +563,11 @@
                                         <label class="text-field-label text-yellow-400">VALUES</label>
                                         <textarea class="text-field" rows="3"
                                             data-text-field="about.values_text"></textarea>
+                                    </div>
+                                    <div class="bg-black/20 rounded-lg p-4 field-group">
+                                        <label class="text-field-label text-yellow-400">IMMAGINE GRANDE (AFFIANCO E SOTTO I TESTI)</label>
+                                        <input type="text" class="text-field text-xs text-slate-500 mb-2" data-text-field="about.reference_img" id="about_reference_img_input" readonly />
+                                        <button type="button" class="bg-slate-200 hover:bg-slate-300 dark:bg-slate-800 dark:hover:bg-slate-700 text-xs px-3 py-1.5 rounded dark:text-white max-w-xs" onclick="uploadStoreImg('about_reference_img')">Modifica Immagine</button>
                                     </div>
                                 </div>
                             </div>
@@ -1040,9 +1057,14 @@
                 multiple: false
             }, (error, result) => {
                 if (!error && result && result.event === "success") {
-                    const inputInfo = document.getElementById('store_img' + index + '_input');
+                    const inputId = typeof index === 'number' ? 'store_img' + index + '_input' : index + '_input';
+                    const inputInfo = document.getElementById(inputId);
                     if (inputInfo) {
-                        inputInfo.value = result.info.secure_url;
+                        let urlToSave = result.info.secure_url;
+                        if (index === 'about_hero_bg_img') {
+                           urlToSave = `linear-gradient(rgba(0, 0, 0, 0.75) 0%, rgba(0, 0, 0, 0.85) 100%), url("${result.info.secure_url}")`;
+                        }
+                        inputInfo.value = urlToSave;
                         // Trigger input event to mark as unsaved
                         inputInfo.dispatchEvent(new Event('input', { bubbles: true }));
                         AdminToast.success("Immagine pronta per il salvataggio!");

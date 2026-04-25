@@ -67,6 +67,8 @@ const DEFAULT_SITE_TEXTS = {
         store_img1: "../assets/images/store_interior.png",
         store_img2: "../assets/images/store_aroma_bar.png",
         store_img3: "../assets/images/store_devices.png",
+        reference_img: "https://lh3.googleusercontent.com/aida-public/AB6AXuCdyUZIIXwCEgpyrDjoRf19rPiQdhAJwFkGP1ar7ThySbCmZbWvu-v5Lt6Idps77o6W5q7Uzp5a-YxtPlNNGff6DVKX39KwGuCUX0amnaz0lvgyXg1NY9TNkcMR-101s4mOU8BqEsA_4YUIk75FH8WYTmSAkLrxTRmq7jXKwIZG50KqVCMFnXjLdQPEXVz4xnK7CSygN_ZpodGCeGgghG-Y2tETbAswDZhJsRu40CNs8VLl0U0hF5rhuD1iqVTm2i703Qw00A5NLpY",
+        hero_bg_img: 'linear-gradient(rgba(0, 0, 0, 0.75) 0%, rgba(0, 0, 0, 0.85) 100%), url("https://lh3.googleusercontent.com/aida-public/AB6AXuCQ58EpPEoSjHKLLI06laD1Y0O0AWjSmQPzxaDtsIaGqBDcI-Gcvi-9ceqPi7yTKVGR-Sn2SST0cULQUC3GKriiNwz4r_h3ABCa_LqKO3UYZs2lFXJqtO1qr7E-PmQAKEC1IcT0kay2mEuoIcl-uO-rdnIw3pgqE8seD2QnE6Ca-I3FfauTXj2eeCgvx5_yuhETOOmkRI1ujMECY4Xoo4_mdCxEHeIsa2zzq2Aj6aUwZgGBYA-M_uhhGmS2pLSurECFV2zoFJcLCyg")',
     },
 
     // ===== CONTACT PAGE =====
@@ -176,7 +178,11 @@ class SiteTextsService {
                 if (el.tagName.toLowerCase() === 'img') {
                     el.src = value;
                 } else {
-                    el.style.backgroundImage = `url('${value}')`;
+                    if (value.includes('url(') || value.includes('gradient(')) {
+                        el.style.backgroundImage = value;
+                    } else {
+                        el.style.backgroundImage = `url('${value}')`;
+                    }
                 }
             }
         });
