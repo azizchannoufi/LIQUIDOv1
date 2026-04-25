@@ -384,7 +384,7 @@ class BrandsRenderer {
                     <a href="${navUrl}" class="group lines-carousel-item block cursor-pointer w-full mb-0">
                         <div class="relative overflow-hidden bg-gradient-to-br from-zinc-800 to-zinc-900 border-0 hover:border-primary/50 transition-all duration-300">
                             <div class="aspect-[16/9] md:aspect-[21/9] lg:aspect-[24/9] relative overflow-hidden w-full">
-                                <img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" 
+                                <img class="w-full h-full object-cover transition-transform duration-700" 
                                      alt="${lineName} - ${brandName}" 
                                      src="${imageUrl}" 
                                      onerror="this.parentElement.parentElement.parentElement.style.display='none';"/>
@@ -597,7 +597,7 @@ class BrandsRenderer {
                     <!-- Image Side -->
                     <div class="flex-1 w-full lg:w-1/2 scroll-animate ${imageSlideClass}">
                         <div class="relative aspect-[4/3] w-full overflow-hidden rounded-lg shadow-2xl group-hover:shadow-primary/20 transition-all duration-500">
-                            <img src="${imageUrl}" alt="${lineName}" class="w-full h-full object-cover transform scale-100 group-hover:scale-110 transition-transform duration-700">
+                            <img src="${imageUrl}" alt="${lineName}" class="w-full h-full object-cover transition-transform duration-700">
                             <div class="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-300"></div>
                         </div>
                     </div>
@@ -712,7 +712,7 @@ class BrandsRenderer {
                         <div class="flex-1 w-full lg:w-1/2 scroll-animate ${imageSlideClass}">
                             <div class="relative aspect-[4/3] w-full overflow-hidden rounded-lg shadow-2xl group-hover:shadow-primary/20 transition-all duration-500 bg-white border border-gray-100 flex items-center justify-center">
                                 ${hasLogo ?
-                        `<img src="${logoUrl}" alt="${brandName}" class="w-full h-full object-cover transition-all duration-500 transform scale-100 group-hover:scale-110">` :
+                        `<img src="${logoUrl}" alt="${brandName}" class="w-full h-full object-cover transition-all duration-500">` :
                         `<div class="flex flex-col items-center justify-center text-gray-300"><span class="material-symbols-outlined text-6xl">image_not_supported</span><span class="mt-4 font-bold uppercase tracking-widest text-xs">Logo non disponibile</span></div>`
                     }
                                 <div class="absolute inset-0 bg-transparent mix-blend-multiply"></div>
@@ -806,7 +806,7 @@ class BrandsRenderer {
                 // Image side: prefer logo, then placeholder
                 const desktopImageBlock = hasLogo
                         ? `<div class="relative aspect-[4/3] w-full overflow-hidden rounded-lg shadow-2xl group-hover:shadow-primary/20 transition-all duration-500 bg-white border border-gray-100 flex items-center justify-center">
-                           <img src="${logoUrl}" alt="${brandName}" class="w-full h-full object-cover transition-all duration-500 transform scale-100 group-hover:scale-110">
+                           <img src="${logoUrl}" alt="${brandName}" class="w-full h-full object-cover transition-all duration-500">
                            <div class="absolute inset-0 bg-transparent mix-blend-multiply"></div>
                        </div>`
                         : `<div class="relative aspect-[4/3] w-full overflow-hidden rounded-lg shadow-2xl bg-gray-100 flex items-center justify-center">

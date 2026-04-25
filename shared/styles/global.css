@@ -1,5 +1,16 @@
 /* LIQUIDO Global Styles */
 
+/* =============================================
+   PREVENT FORCED DARK MODE (Chrome/Android)
+   Tells the browser this site is light-only.
+   Protects logo and all colors from inversion.
+   Reference: https://developer.mozilla.org/en-US/docs/Web/CSS/color-scheme
+   ============================================= */
+:root,
+html {
+    color-scheme: light;
+}
+
 /* CSS Variables */
 :root {
     --primary-color: #F8ED70;
