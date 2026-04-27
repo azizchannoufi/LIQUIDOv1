@@ -26,7 +26,7 @@
 </div>
 
 <script>
-    document.addEventListener('DOMContentLoaded', () => {
+    (function initCookieBanner() {
         // Function to set a cookie
         function setCookie(name, value, days) {
             let expires = "";
@@ -50,23 +50,39 @@
             return null;
         }
 
-        const banner = document.getElementById('cookie-banner');
-        const acceptBtn = document.getElementById('btn-accept-cookies');
+        function checkBanner() {
+            const banner = document.getElementById('cookie-banner');
+            const acceptBtn = document.getElementById('btn-accept-cookies');
 
-        // Check if cookie exists
-        if (!getCookie('liquido_cookies_accepted')) {
-            // Show banner with a slight delay
-            setTimeout(() => {
-                banner.classList.remove('translate-y-full');
-            }, 1000);
-        }
+            if (!banner) return;
 
-        // Handle acceptance
-        if (acceptBtn) {
-            acceptBtn.addEventListener('click', () => {
-                setCookie('liquido_cookies_accepted', 'true', 365); // Expires in 1 year
-                banner.classList.add('translate-y-full');
-            });
+            // Check if cookie exists
+            if (!getCookie('liquido_cookies_accepted')) {
+                // Show banner with a slight delay
+                setTimeout(() => {
+                    banner.classList.remove('translate-y-full');
+                }, 1000);
+            }
+
+            // Handle acceptance
+            if (acceptBtn) {
+                // Removed previous listeners to avoid duplicates if re-evaluated
+                acceptBtn.replaceWith(acceptBtn.cloneNode(true));
+                const newAcceptBtn = document.getElementById('btn-accept-cookies');
+                
+                newAcceptBtn.addEventListener('click', () => {
+                    setCookie('liquido_cookies_accepted', 'true', 365); // Expires in 1 year
+                    banner.classList.add('translate-y-full');
+                });
+            }
         }
-    });
+        
+        // Let UI render first before applying DOM updates
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', checkBanner);
+        } else {
+            // Give the browser a tick to finish inserting the HTML elements
+            setTimeout(checkBanner, 50);
+        }
+    })();
 </script>
