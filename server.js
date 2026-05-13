@@ -55,6 +55,97 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', message: 'LIQUIDO server is running' });
 });
 
+const fs = require('fs');
+const admin = require('firebase-admin');
+
+// 1. Initialize Firebase Admin
+if (!admin.apps.length) {
+  try {
+    admin.initializeApp();
+    console.log('✅ Firebase Admin initialized');
+  } catch (error) {
+    console.warn('⚠️ Could not initialize Firebase Admin:', error.message);
+  }
+}
+const db = admin.firestore();
+
+// SSR Route for Products
+app.get('/produit/:slug', async (req, res) => {
+  try {
+    const slug = req.params.slug;
+    let product = null;
+
+    // Fetch all sections to find the product
+    const snapshot = await db.collection('sections').get();
+    snapshot.forEach(doc => {
+      const section = doc.data();
+      const brands = section.brands || [];
+      brands.forEach(brand => {
+        const lines = brand.lines || [];
+        lines.forEach(line => {
+          if (line.products) {
+            Object.values(line.products).forEach(p => {
+              if (p.id === slug || p.slug === slug || (p.name && p.name.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '') === slug)) {
+                product = { ...p, brandName: brand.name, lineName: line.name };
+              }
+            });
+          }
+        });
+      });
+    });
+
+    // If product not found, you could serve a 404 page or redirect
+    if (!product) {
+      console.warn(`Product not found for slug: ${slug}`);
+      return res.status(404).send('Produit introuvable');
+    }
+
+    // Read the HTML template
+    const htmlPath = path.join(__dirname, 'public', 'product-detail.html');
+    let htmlContent = fs.readFileSync(htmlPath, 'utf8');
+
+    const imageUrl = product.imageUrl || (product.images && product.images.length > 0 ? product.images[0] : '');
+    const productPrice = product.price || 0; // Replace with actual price if available
+
+    // Generate JSON-LD
+    const jsonLd = {
+      "@context": "https://schema.org/",
+      "@type": "Product",
+      "name": product.name,
+      "image": [imageUrl],
+      "description": product.description || product.flavorProfile || "",
+      "brand": {
+        "@type": "Brand",
+        "name": product.brandName || "LIQUIDO"
+      },
+      "offers": {
+        "@type": "Offer",
+        "url": `https://liquido.vapeshop/produit/${slug}`,
+        "priceCurrency": "EUR",
+        "price": productPrice,
+        "availability": "https://schema.org/InStock"
+      }
+    };
+
+    // Inject SEO tags
+    htmlContent = htmlContent
+      .replace(/<title>.*<\/title>/, `<title>${product.name} | LIQUIDO Vape Shop</title>`)
+      .replace(/<meta name="description" content=".*">/, `<meta name="description" content="${(product.description || product.flavorProfile || '').substring(0, 155)}...">`)
+      .replace(/<head>/, `<head>\n<meta property="og:title" content="${product.name}">\n<meta property="og:description" content="${(product.description || product.flavorProfile || '').substring(0, 155)}...">\n<meta property="og:image" content="${imageUrl}">\n<meta property="og:url" content="https://liquido.vapeshop/produit/${slug}">`)
+      .replace('</head>', `\n<script type="application/ld+json">\n${JSON.stringify(jsonLd)}\n</script>\n</head>`);
+
+    // Inject Initial Data for frontend hydration
+    const initialDataScript = `<script>window.__INITIAL_PRODUCT_DATA__ = ${JSON.stringify(product)};</script>`;
+    htmlContent = htmlContent.replace('</head>', `${initialDataScript}\n</head>`);
+
+    res.send(htmlContent);
+
+  } catch (error) {
+    console.error('Erreur SSR Produit:', error);
+    res.status(500).send('Erreur Serveur');
+  }
+});
+
 // Fallback: serve index.html for SPA routing
 app.get('*', (req, res) => {
   // Don't serve HTML for API routes
