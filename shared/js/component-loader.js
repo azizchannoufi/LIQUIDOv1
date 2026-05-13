@@ -142,6 +142,27 @@ async function loadFooter() {
             document.body.insertAdjacentHTML('beforeend', html);
         }
 
+        // Ensure site-texts-service is loaded
+        if (!window.siteTextsService) {
+            await new Promise(resolve => {
+                let attempts = 0;
+                const checkDeps = setInterval(() => {
+                    attempts++;
+                    if (typeof firebase !== 'undefined' && typeof initializeFirebase === 'function') {
+                        clearInterval(checkDeps);
+                        const script = document.createElement('script');
+                        script.src = '../src/js/services/site-texts-service.js';
+                        script.onload = () => resolve();
+                        script.onerror = () => resolve();
+                        document.body.appendChild(script);
+                    } else if (attempts > 50) {
+                        clearInterval(checkDeps);
+                        resolve();
+                    }
+                }, 100);
+            });
+        }
+
         // Apply dynamic texts to footer if site-texts-service is loaded
         if (window.siteTextsService) {
             try {
