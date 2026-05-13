@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="it">
 
 <head>
@@ -94,17 +94,17 @@
             <a class="text-[#baba9c] dark:text-[#baba9c] text-slate-600 text-sm font-medium hover:text-primary transition-colors"
                 href="#">E-Liquids</a>
             <span class="text-[#baba9c] dark:text-[#baba9c] text-slate-600 text-sm">/</span>
-            <span class="text-background-dark dark:text-white text-sm font-medium">Reserve Edition Mango Mint</span>
+            <span id="breadcrumb-name" class="text-background-dark dark:text-white text-sm font-medium">...</span>
         </div>
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
             <div class="flex flex-col gap-4">
                 <div
                     class="relative group aspect-[4/5] w-full rounded-xl overflow-hidden bg-surface-dark dark:bg-surface-dark bg-surface-alt border border-white/5 dark:border-white/5 border-black/10 flex items-center justify-center p-8">
                     <div class="absolute inset-0 bg-primary/5 blur-3xl rounded-full scale-75"></div>
-                    <img src="../assets/images/Goccia LIQUIDO/GOCCIA Y_W.png" alt="LIQUIDO Goccia"
+                    <img id="main-product-image" src="" alt="Prodotto"
                         class="w-full h-full object-contain relative z-10" />
                 </div>
-                <div class="grid grid-cols-4 gap-4">
+                <div id="product-thumbnails" class="grid grid-cols-4 gap-4">
                     <div class="aspect-square rounded-lg bg-surface-dark dark:bg-surface-dark bg-surface-alt border border-primary/20 dark:border-primary/20 p-2 cursor-pointer hover:border-primary transition-all overflow-hidden"
                         data-alt="Alternate product view front">
                         <img src="../assets/images/Goccia LIQUIDO/GOCCIA B_Y.png" alt="LIQUIDO Goccia"
@@ -130,53 +130,22 @@
             <div class="flex flex-col gap-8">
                 <div class="flex flex-col gap-2">
                     <div class="flex items-center gap-2">
-                        <span
-                            class="bg-primary/20 text-primary text-[10px] font-bold uppercase tracking-widest px-2 py-1 rounded">New
-                            Arrival</span>
-                        <span
-                            class="text-[#baba9c] dark:text-[#baba9c] text-slate-600 text-sm font-medium tracking-wide uppercase">LIQUIDO
-                            Reserve Edition</span>
+                        <span id="product-brand-tag"
+                            class="bg-primary/20 text-primary text-[10px] font-bold uppercase tracking-widest px-2 py-1 rounded hidden">Brand</span>
+                        <span id="product-line-tag"
+                            class="text-[#baba9c] dark:text-[#baba9c] text-slate-600 text-sm font-medium tracking-wide uppercase">Linea</span>
                     </div>
-                    <h1 class="text-background-dark dark:text-white text-5xl font-black leading-tight tracking-tight">
-                        Sweet Mango &amp; Cooling Mint</h1>
+                    <h1 id="product-name" class="text-background-dark dark:text-white text-5xl font-black leading-tight tracking-tight">
+                        Caricamento...</h1>
                 </div>
                 <div class="space-y-4">
-                    <p
+                    <p id="product-description"
                         class="text-background-dark/80 dark:text-white/80 text-lg leading-relaxed font-normal border-l-4 border-primary pl-6 py-2">
-                        A masterfully crafted blend of sun-ripened tropical mangoes finished with a crisp, refreshing
-                        menthol exhale. Designed for the discerning vaper who seeks a balanced all-day sensory
-                        experience.
+                        ...
                     </p>
                 </div>
-                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                    <div
-                        class="bg-surface-dark/50 dark:bg-surface-dark/50 bg-surface-alt/50 border border-white/5 dark:border-white/5 border-black/10 p-5 rounded-xl flex flex-col gap-2">
-                        <div class="flex items-center gap-2 text-primary">
-                            <span class="material-symbols-outlined text-xl">science</span>
-                            <span
-                                class="text-[10px] uppercase font-bold tracking-widest text-[#baba9c] dark:text-[#baba9c] text-slate-600">Ratio</span>
-                        </div>
-                        <p class="text-background-dark dark:text-white text-xl font-bold">30/70 PG/VG</p>
-                    </div>
-                    <div
-                        class="bg-surface-dark/50 dark:bg-surface-dark/50 bg-surface-alt/50 border border-white/5 dark:border-white/5 border-black/10 p-5 rounded-xl flex flex-col gap-2">
-                        <div class="flex items-center gap-2 text-primary">
-                            <span class="material-symbols-outlined text-xl">opacity</span>
-                            <span
-                                class="text-[10px] uppercase font-bold tracking-widest text-[#baba9c] dark:text-[#baba9c] text-slate-600">Nicotine</span>
-                        </div>
-                        <p class="text-background-dark dark:text-white text-xl font-bold">0, 3, 6 mg</p>
-                    </div>
-                    <div
-                        class="bg-surface-dark/50 dark:bg-surface-dark/50 bg-surface-alt/50 border border-white/5 dark:border-white/5 border-black/10 p-5 rounded-xl flex flex-col gap-2">
-                        <div class="flex items-center gap-2 text-primary">
-                            <span class="material-symbols-outlined text-xl">straighten</span>
-                            <span
-                                class="text-[10px] uppercase font-bold tracking-widest text-[#baba9c] dark:text-[#baba9c] text-slate-600">Bottle
-                                Size</span>
-                        </div>
-                        <p class="text-background-dark dark:text-white text-xl font-bold">60ml Glass</p>
-                    </div>
+                <div id="product-details-grid" class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <!-- Details will be injected here -->
                 </div>
                 <div
                     class="flex flex-col sm:flex-row gap-4 pt-4 border-t border-white/5 dark:border-white/5 border-black/10">
@@ -460,6 +429,8 @@
     <!-- Firebase Services -->
     <script src="../src/js/services/firebase-config.js"></script>
     <script src="../src/js/services/firebase-auth.js"></script>
+    <script src="../src/js/services/firebase-catalog-service.js"></script>
+    <script src="../src/js/services/catalog-service.js"></script>
     <script src="../src/js/modules/myliquido-services.js"></script>
 
     <!-- Page Scripts -->
