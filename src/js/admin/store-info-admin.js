@@ -19,10 +19,14 @@ class StoreInfoAdmin {
             { id: 'store-info-phone',           key: 'phone' },
             { id: 'store-info-email',           key: 'email' },
             { id: 'store-info-address',         key: 'address' },
-            { id: 'store-info-mon-fri-open',    key: 'hours_mon_fri_open' },
-            { id: 'store-info-mon-fri-close',   key: 'hours_mon_fri_close' },
-            { id: 'store-info-sat-open',        key: 'hours_sat_open' },
-            { id: 'store-info-sat-close',       key: 'hours_sat_close' },
+            { id: 'store-info-mon-fri-morning-open',    key: 'hours_mon_fri_morning_open' },
+            { id: 'store-info-mon-fri-morning-close',   key: 'hours_mon_fri_morning_close' },
+            { id: 'store-info-mon-fri-afternoon-open',  key: 'hours_mon_fri_afternoon_open' },
+            { id: 'store-info-mon-fri-afternoon-close', key: 'hours_mon_fri_afternoon_close' },
+            { id: 'store-info-sat-morning-open',        key: 'hours_sat_morning_open' },
+            { id: 'store-info-sat-morning-close',       key: 'hours_sat_morning_close' },
+            { id: 'store-info-sat-afternoon-open',      key: 'hours_sat_afternoon_open' },
+            { id: 'store-info-sat-afternoon-close',     key: 'hours_sat_afternoon_close' },
         ];
     }
 

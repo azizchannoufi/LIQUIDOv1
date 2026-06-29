@@ -46,14 +46,65 @@ class StoreInfoService {
 
         // Apply Mon-Fri Hours
         const monFriEl = document.getElementById('store-display-mon-fri');
-        if (monFriEl && this.storeInfo.hours_mon_fri_open && this.storeInfo.hours_mon_fri_close) {
-            monFriEl.textContent = `${this.storeInfo.hours_mon_fri_open} - ${this.storeInfo.hours_mon_fri_close}`;
+        if (monFriEl) {
+            let hoursText = [];
+            if (this.storeInfo.hours_mon_fri_morning_open && this.storeInfo.hours_mon_fri_morning_close) {
+                hoursText.push(`${this.storeInfo.hours_mon_fri_morning_open} - ${this.storeInfo.hours_mon_fri_morning_close}`);
+            }
+            if (this.storeInfo.hours_mon_fri_afternoon_open && this.storeInfo.hours_mon_fri_afternoon_close) {
+                hoursText.push(`${this.storeInfo.hours_mon_fri_afternoon_open} - ${this.storeInfo.hours_mon_fri_afternoon_close}`);
+            }
+            if (hoursText.length > 0) {
+                monFriEl.textContent = hoursText.join(' / ');
+            }
         }
 
         // Apply Sat Hours
         const satEl = document.getElementById('store-display-sat');
-        if (satEl && this.storeInfo.hours_sat_open && this.storeInfo.hours_sat_close) {
-            satEl.textContent = `${this.storeInfo.hours_sat_open} - ${this.storeInfo.hours_sat_close}`;
+        if (satEl) {
+            let hoursText = [];
+            if (this.storeInfo.hours_sat_morning_open && this.storeInfo.hours_sat_morning_close) {
+                hoursText.push(`${this.storeInfo.hours_sat_morning_open} - ${this.storeInfo.hours_sat_morning_close}`);
+            }
+            if (this.storeInfo.hours_sat_afternoon_open && this.storeInfo.hours_sat_afternoon_close) {
+                hoursText.push(`${this.storeInfo.hours_sat_afternoon_open} - ${this.storeInfo.hours_sat_afternoon_close}`);
+            }
+            if (hoursText.length > 0) {
+                satEl.textContent = hoursText.join(' / ');
+            }
+        }
+
+        // Apply Top Nav Hours
+        const topNavEl = document.getElementById('store-display-top-nav-hours');
+        if (topNavEl) {
+            let topNavText = ': ';
+            let hasMonFri = false;
+            
+            if (this.storeInfo.hours_mon_fri_morning_open && this.storeInfo.hours_mon_fri_morning_close) {
+                topNavText += `${this.storeInfo.hours_mon_fri_morning_open}-${this.storeInfo.hours_mon_fri_morning_close}`;
+                hasMonFri = true;
+            }
+            if (this.storeInfo.hours_mon_fri_afternoon_open && this.storeInfo.hours_mon_fri_afternoon_close) {
+                if (hasMonFri) topNavText += ' / ';
+                topNavText += `${this.storeInfo.hours_mon_fri_afternoon_open}-${this.storeInfo.hours_mon_fri_afternoon_close}`;
+            }
+
+            let hasSat = false;
+            let satText = '';
+            if (this.storeInfo.hours_sat_morning_open && this.storeInfo.hours_sat_morning_close) {
+                satText += `${this.storeInfo.hours_sat_morning_open}-${this.storeInfo.hours_sat_morning_close}`;
+                hasSat = true;
+            }
+            if (this.storeInfo.hours_sat_afternoon_open && this.storeInfo.hours_sat_afternoon_close) {
+                if (hasSat) satText += ' / ';
+                satText += `${this.storeInfo.hours_sat_afternoon_open}-${this.storeInfo.hours_sat_afternoon_close}`;
+            }
+
+            if (satText) {
+                topNavText += ` Sab: ${satText}`;
+            }
+            
+            topNavEl.textContent = topNavText;
         }
 
         // Apply Phone Text
