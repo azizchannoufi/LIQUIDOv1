@@ -1,0 +1,383 @@
+﻿<!DOCTYPE html>
+<html lang="it">
+
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-Z6LRG6ZKXY"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-Z6LRG6ZKXY');
+</script>
+    <meta charset="utf-8" />
+    <meta name="color-scheme" content="light" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Linee Prodotti | LIQUIDO</title>
+    <meta name="description"
+        content="Liquido Vape Shop a Monterotondo (Roma): In negozio trovi i migliori dispositivi e aromi di qualità certificata premium. Tabaccosi, fruttati, cremosi, estratti di frutta e tabacco, mixology e ghiacciati ce ne sono per tutti i gusti! Quale accende la tua vibe? Vieni a conoscerci! Negozio svapo a Monterotondo: liquidi aromatizzati e dispositivi di qualità, anche senza nicotina. Servizio esperto per trovare la soluzione giusta per te." />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#F8ED70",
+                        "background-light": "#333333",
+                        "background-dark": "#000000",
+                        "charcoal": "#333333",
+                    },
+                    fontFamily: {
+                        "display": ["Plus Jakarta Sans", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+    <style type="text/tailwindcss">
+        :root {
+            --primary-color: #F8ED70;
+            --bg-dark: #000000;
+        }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .glass-effect {
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+        }
+        .text-bold-modern {
+            font-weight: 800;
+            letter-spacing: -0.02em;
+        }
+        .accent-glow {
+            box-shadow: 0 0 20px rgba(248, 237, 112, 0.2);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        
+        /* Scroll Animations */
+        .scroll-animate {
+            opacity: 0;
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        
+        .scroll-animate.from-left {
+            transform: translateX(-100px);
+        }
+        
+        .scroll-animate.from-right {
+            transform: translateX(100px);
+        }
+        
+        .scroll-animate.from-bottom {
+            transform: translateY(100px);
+        }
+        
+        .scroll-animate.visible {
+            opacity: 1;
+            transform: translateX(0) translateY(0);
+        }
+    </style>
+    <link rel="icon" type="image/png" href="./assets/images/Goccia%20LIQUIDO/GOCCIA%20Y_W.png" />
+</head>
+
+<body class="bg-white text-background-dark transition-colors duration-300">
+    <!-- Top navigation and header loaded dynamically via component-loader.js -->
+    <main class="pt-[80px] max-w-[1440px] mx-auto px-6 lg:px-20 pb-8">
+
+        <!-- Breadcrumbs -->
+        <div class="flex flex-wrap gap-2 py-3 mb-4">
+            <a class="text-slate-500 text-sm font-medium hover:text-primary transition-colors"
+                href="/">Home</a>
+            <span class="text-slate-500 text-sm">/</span>
+            <a class="text-slate-500 text-sm font-medium hover:text-primary transition-colors"
+                href="/liquidi">Marchi</a>
+            <span class="text-slate-500 text-sm">/</span>
+            <span class="text-background-dark text-sm font-medium" id="breadcrumb-brand">...</span>
+        </div>
+
+        <div class="text-center mb-8 scroll-animate from-bottom">
+            <h2 class="text-4xl lg:text-6xl text-bold-modern uppercase text-background-dark mb-4" id="page-title">
+                Caricamento...</h2>
+            <p class="text-slate-600 max-w-2xl mx-auto font-medium" id="page-subtitle">Scopri le linee esclusive di
+                questo marchio</p>
+        </div>
+
+        <div id="lines-content-container" class="min-h-[400px]">
+            <div class="flex items-center justify-center py-20">
+                <p class="text-slate-400 text-lg">Caricamento linee...</p>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Modal for viewing enlarged line image -->
+    <div id="image-modal"
+        class="fixed inset-0 z-[200] hidden items-center justify-center bg-black/90 p-4 transition-opacity duration-300 opacity-0 group">
+        <button id="close-modal"
+            class="absolute top-6 right-6 z-50 text-white hover:text-primary material-symbols-outlined text-4xl cursor-pointer">close</button>
+
+        <button id="prev-image"
+            class="absolute left-4 lg:left-10 top-1/2 -translate-y-1/2 z-50 text-white hover:text-primary material-symbols-outlined text-5xl lg:text-7xl cursor-pointer hidden transition-colors duration-300 drop-shadow-lg">chevron_left</button>
+        <button id="next-image"
+            class="absolute right-4 lg:right-10 top-1/2 -translate-y-1/2 z-50 text-white hover:text-primary material-symbols-outlined text-5xl lg:text-7xl cursor-pointer hidden transition-colors duration-300 drop-shadow-lg">chevron_right</button>
+
+        <div class="relative flex items-center justify-center w-full h-full max-w-7xl max-h-[90vh]">
+            <img id="modal-image" src="" alt="Linea Ingrandita"
+                class="max-w-full max-h-full object-contain shadow-2xl rounded-sm transition-opacity duration-300" />
+            <div id="image-counter"
+                class="absolute bottom-[-40px] left-1/2 -translate-x-1/2 text-white/70 font-medium text-sm hidden">1 / 1
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer loaded dynamically -->
+    <!-- Firebase SDK (Legacy for Realtime Database) -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-analytics-compat.js"></script>
+
+    <!-- Catalog Services -->
+    <!-- Component Loader (must be loaded first) -->
+    <script src="./shared/js/component-loader.js"></script>
+    <script src="./src/js/modules/age-verification.js"></script>
+    <script src="./src/js/services/firebase-config.js"></script>
+    <script src="./src/js/services/firebase-catalog-service.js"></script>
+    <script src="./src/js/services/catalog-service.js"></script>
+    <script src="./src/js/modules/brands-renderer.js"></script>
+    <!-- <script src="./src/js/modules/products-renderer.js"></script> -->
+    <script src="./src/js/modules/catalog-init.js"></script>
+
+    <script>
+            (async function () {
+                try {
+                    // Initialize catalog
+                    if (!window.catalogInit) await new Promise(r => setTimeout(r, 500));
+                    const catalog = await window.catalogInit;
+                    if (!catalog) throw new Error("Catalog init failed");
+
+                    const urlParams = new URLSearchParams(window.location.search);
+                    const brandName = urlParams.get('brand');
+
+                    const titleEl = document.getElementById('page-title');
+                    const breadcrumbEl = document.getElementById('breadcrumb-brand');
+                    const container = document.getElementById('lines-content-container');
+
+                    if (!brandName) {
+                        titleEl.innerText = "Marchio non specificato";
+                        container.innerHTML = '<p class="text-center text-red-500">Nessun marchio specificato.</p>';
+                        return;
+                    }
+
+                    titleEl.innerText = `Linee ${brandName}`;
+                    document.title = `Linee ${brandName} | LIQUIDO`;
+                    breadcrumbEl.innerText = brandName;
+
+                    const { service, brandsRenderer } = catalog;
+
+                    // Get brand data
+                    const brand = await service.getBrandByName(brandName);
+                    if (!brand) {
+                        titleEl.innerText = "Marchio non trovato";
+                        container.innerHTML = '<p class="text-center text-red-500">Impossibile trovare il marchio specificato.</p>';
+                        return;
+                    }
+
+                    // Get lines — support both brand.lines (liquids & new devices) and brand.products (legacy devices)
+                    const rawLines = brand.lines && brand.lines.length > 0
+                        ? brand.lines
+                        : (brand.products && brand.products.length > 0 ? brand.products : []);
+
+                    const decoratedLines = rawLines.map(line => ({
+                        ...line,
+                        brandName: brand.name,
+                        brandLogo: brand.logo_url,
+                        // Normalise image fields
+                        image_url: line.image_url || (line.images && line.images.length > 0 ? line.images[0] : ''),
+                        images: line.images && line.images.length > 0 ? line.images : (line.image_url ? [line.image_url] : [])
+                    }));
+
+                    if (decoratedLines.length === 0) {
+                        container.innerHTML = '<p class="text-center text-slate-500 py-12">Nessuna linea di prodotti disponibile per questo marchio.</p>';
+                    } else {
+                        // Render Grid — show ALL lines, even those without images
+                        let html = '<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">';
+                        decoratedLines.forEach(line => {
+                            const hasImages = line.images && line.images.length > 0
+                                && line.images[0] && typeof line.images[0] === 'string'
+                                && line.images[0].trim() !== ''
+                                && line.images[0].trim() !== 'null'
+                                && (line.images[0].startsWith('http') || line.images[0].startsWith('/') || line.images[0].startsWith('data:'));
+
+                            const imageUrl = hasImages ? line.images[0] : '';
+                            const images = hasImages ? line.images : [];
+
+                            const brandNameEnc = encodeURIComponent(line.brandName);
+                            const lineNameEnc = encodeURIComponent(line.name);
+                            const navUrl = `line-products.html?brand=${brandNameEnc}&line=${lineNameEnc}`;
+
+                            const imagesJson = JSON.stringify(images).replace(/"/g, '&quot;').replace(/'/g, '&apos;');
+
+                            html += `
+                                <div class="group flex flex-col bg-white border border-gray-100 rounded-lg shadow-sm overflow-hidden hover:shadow-xl hover:border-primary/50 transition-all duration-300">
+                                    <div class="relative w-full aspect-square overflow-hidden ${hasImages ? 'bg-gray-50 cursor-pointer' : 'bg-gray-100'}"
+                                         ${hasImages ? `onclick="openImageGallery('${imagesJson}')"` : ''}>
+                                        ${hasImages
+                                    ? `<img src="${imageUrl}" alt="${line.name}" class="w-full h-full object-cover transform scale-100 group-hover:scale-110 transition-transform duration-700" />
+                                               <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                                                   <span class="material-symbols-outlined text-white text-5xl">zoom_in</span>
+                                               </div>`
+                                    : `<div class="w-full h-full flex flex-col items-center justify-center gap-3 text-gray-300">
+                                                   <span class="material-symbols-outlined text-6xl">image_not_supported</span>
+                                                   <span class="text-xs font-semibold uppercase tracking-widest text-gray-400">Image bientôt</span>
+                                               </div>`
+                                }
+                                    </div>
+                                    <div class="p-6 flex flex-col flex-grow text-center">
+                                        <h3 class="text-xl font-black text-background-dark uppercase mb-4 leading-tight">${line.name}</h3>
+
+                                    </div>
+                                </div>
+                            `;
+                        });
+                        html += '</div>';
+                        container.innerHTML = html;
+                    }
+
+                } catch (err) {
+                    console.error("Error loading brand lines:", err);
+                    document.getElementById('lines-content-container').innerHTML = '<p class="text-center text-red-500">Si è verificato un errore.</p>';
+                }
+            })();
+
+        // Modal Functions
+        const imageModal = document.getElementById('image-modal');
+        const modalImage = document.getElementById('modal-image');
+        const closeModalBtn = document.getElementById('close-modal');
+        const prevImageBtn = document.getElementById('prev-image');
+        const nextImageBtn = document.getElementById('next-image');
+        const imageCounter = document.getElementById('image-counter');
+
+        let currentImageGallery = [];
+        let currentImageIndex = 0;
+
+        window.openImageGallery = function (imagesJson, index = 0) {
+            try {
+                // If it is already parsed somehow or single string
+                currentImageGallery = typeof imagesJson === 'string' ? JSON.parse(imagesJson) : imagesJson;
+            } catch (e) {
+                currentImageGallery = [imagesJson]; // Fallback
+            }
+
+            // Filter out invalid images
+            if (Array.isArray(currentImageGallery)) {
+                currentImageGallery = currentImageGallery.filter(img => img && typeof img === 'string' && img.trim() !== '' && img.trim() !== 'null');
+            } else {
+                currentImageGallery = [];
+            }
+
+            if (currentImageGallery.length === 0) return;
+
+            currentImageIndex = index;
+            updateModalImage();
+
+            imageModal.classList.remove('hidden');
+            imageModal.classList.add('flex');
+
+            // Small delay to allow display flex to apply before opacity transition
+            setTimeout(() => {
+                imageModal.classList.remove('opacity-0');
+                imageModal.classList.add('opacity-100');
+            }, 10);
+
+            document.body.style.overflow = 'hidden'; // Prevent scrolling
+        };
+
+        function updateModalImage() {
+            modalImage.style.opacity = '0';
+            setTimeout(() => {
+                modalImage.src = currentImageGallery[currentImageIndex];
+                modalImage.style.opacity = '1';
+
+                // Show/hide navigation
+                if (currentImageGallery.length > 1) {
+                    prevImageBtn.classList.remove('hidden');
+                    nextImageBtn.classList.remove('hidden');
+                    imageCounter.classList.remove('hidden');
+                    imageCounter.textContent = `${currentImageIndex + 1} / ${currentImageGallery.length}`;
+                } else {
+                    prevImageBtn.classList.add('hidden');
+                    nextImageBtn.classList.add('hidden');
+                    imageCounter.classList.add('hidden');
+                }
+            }, 150);
+        }
+
+        function showNextImage(e) {
+            if (e) e.stopPropagation();
+            if (currentImageGallery.length <= 1) return;
+            currentImageIndex = (currentImageIndex + 1) % currentImageGallery.length;
+            updateModalImage();
+        }
+
+        function showPrevImage(e) {
+            if (e) e.stopPropagation();
+            if (currentImageGallery.length <= 1) return;
+            currentImageIndex = (currentImageIndex - 1 + currentImageGallery.length) % currentImageGallery.length;
+            updateModalImage();
+        }
+
+        // Backward compatibility
+        window.openImageModal = function (url) {
+            window.openImageGallery(JSON.stringify([url]), 0);
+        };
+
+        function closeImageModal() {
+            imageModal.classList.remove('opacity-100');
+            imageModal.classList.add('opacity-0');
+
+            setTimeout(() => {
+                imageModal.classList.remove('flex');
+                imageModal.classList.add('hidden');
+                modalImage.src = '';
+                document.body.style.overflow = '';
+            }, 300);
+        }
+
+        closeModalBtn.addEventListener('click', closeImageModal);
+        prevImageBtn.addEventListener('click', showPrevImage);
+        nextImageBtn.addEventListener('click', showNextImage);
+
+        imageModal.addEventListener('click', function (e) {
+            // Close if clicking outside the image and buttons
+            if (e.target === imageModal || e.target.closest('.relative.flex.items-center.justify-center.w-full') === e.target) {
+                closeImageModal();
+            }
+        });
+
+        document.addEventListener('keydown', function (e) {
+            if (imageModal.classList.contains('hidden')) return;
+            if (e.key === 'Escape') closeImageModal();
+            else if (e.key === 'ArrowRight') showNextImage();
+            else if (e.key === 'ArrowLeft') showPrevImage();
+        });
+    </script>
+</body>
+
+</html>

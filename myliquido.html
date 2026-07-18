@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-Z6LRG6ZKXY"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-Z6LRG6ZKXY');
+</script>
+    <meta charset="utf-8" />
+    <meta name="color-scheme" content="light" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>MyLiquido | Area clienti: Prenotazione Prodotti e Assistenza Svapo</title>
+    <meta name="description"
+        content="Area riservata ai clienti: prenota prodotti in anteprima e fissa appuntamenti per la manutenzione del tuo dispositivo. Servizio esclusivo Liquido Vape Shop Monterotondo." />
+    <meta name="keywords"
+        content="MyLiquido, servizi vape, pulizia dispositivi vape, manutenzione vape, servizi premium vape, prenotazione vape, assistenza vape Monterotondo" />
+    <meta name="author" content="LIQUIDO Vape Shop" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://www.liquidovapeshop.it/myliquido" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="MyLiquido | Area clienti: Prenotazione Prodotti e Assistenza Svapo" />
+    <meta property="og:description"
+        content="Area riservata ai clienti: prenota prodotti in anteprima e fissa appuntamenti per la manutenzione del tuo dispositivo. Servizio esclusivo Liquido Vape Shop Monterotondo." />
+    <meta property="og:url" content="https://www.liquidovapeshop.it/myliquido" />
+    <meta property="og:site_name" content="LIQUIDO Vape Shop" />
+    <meta property="og:locale" content="it_IT" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="MyLiquido | Area clienti: Prenotazione Prodotti e Assistenza Svapo" />
+    <meta name="twitter:description"
+        content="Area riservata ai clienti: prenota prodotti in anteprima e fissa appuntamenti per la manutenzione del tuo dispositivo. Servizio esclusivo Liquido Vape Shop Monterotondo." />
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet" />
+    <!-- Material Symbols -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+
+    <!-- Tailwind Config -->
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#F8ED70",
+                        "background-light": "#333333",
+                        "background-dark": "#000000",
+                        "charcoal": "#333333",
+                        "surface": "#27271b",
+                        "surface-border": "#54543b",
+                        "input-bg": "#181811",
+                        "input-border": "#393928",
+                    },
+                    fontFamily: {
+                        "display": ["Plus Jakarta Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "2xl": "1rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+
+    <style type="text/tailwindcss">
+        :root {
+            --primary-color: #F8ED70;
+            --bg-dark: #000000;
+        }
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        .glass-effect {
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+        }
+        .text-bold-modern {
+            font-weight: 800;
+            letter-spacing: -0.02em;
+        }
+        .accent-glow {
+            box-shadow: 0 0 20px rgba(248, 237, 112, 0.2);
+        }
+        .accent-glow-strong:hover {
+            box-shadow: 0 0 30px rgba(248, 237, 112, 0.4);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        /* Modal animations */
+        .modal-overlay {
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+        .modal-content {
+            transform: scale(0.92) translateY(-16px);
+            opacity: 0;
+            transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease;
+        }
+        .modal-overlay.active .modal-content {
+            transform: scale(1) translateY(0);
+            opacity: 1;
+        }
+        /* Service card hover */
+        .service-card {
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.4s ease;
+        }
+        .service-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 24px 48px -12px rgba(0, 0, 0, 0.5);
+        }
+        /* Badge pill */
+        .badge-pill {
+            background: rgba(248, 237, 112, 0.12);
+            border: 1px solid rgba(248, 237, 112, 0.3);
+            color: #F8ED70;
+            font-size: 0.65rem;
+            font-weight: 800;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            padding: 0.25rem 0.85rem;
+            border-radius: 9999px;
+            display: inline-block;
+        }
+        /* Input focus glow */
+        .input-field {
+            background: #181811;
+            border: 1px solid #393928;
+            border-radius: 0.5rem;
+            padding: 0.75rem 1rem;
+            color: white;
+            width: 100%;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            outline: none;
+        }
+        .input-field:focus {
+            border-color: #F8ED70;
+            box-shadow: 0 0 0 3px rgba(248, 237, 112, 0.1);
+        }
+        .input-field::placeholder { color: #555540; }
+        /* Scroll fade-in */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+        }
+        .fade-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        html, body { overflow-x: hidden; }
+    </style>
+
+    <link rel="icon" type="image/png" href="./assets/images/Goccia%20LIQUIDO/GOCCIA%20Y_W.png" />
+</head>
+
+<body class="bg-white text-background-dark transition-colors duration-300">
+    <!-- Top navigation and header loaded dynamically via component-loader.js -->
+
+    <!-- Main Content -->
+    <main class="pt-[42px]">
+
+        <!-- ─── HERO SECTION ─── -->
+        <section class="relative bg-black overflow-hidden min-h-[420px] flex items-center">
+            <!-- Subtle grain overlay -->
+            <div class="absolute inset-0 opacity-[0.04]" style="background-image: url('data:image/svg+xml,%3Csvg viewBox=%220 0 256 256%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noise%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.9%22 numOctaves=%224%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noise)%22/%3E%3C/svg%3E'); background-size: 200px;"></div>
+            <!-- Gold gradient accent -->
+            <div class="absolute inset-0 bg-gradient-to-br from-[#F8ED70]/5 via-transparent to-transparent"></div>
+            <!-- Bottom fade -->
+            <div class="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-black to-transparent"></div>
+
+            <div class="relative z-10 max-w-[1440px] mx-auto px-6 lg:px-20 py-20 w-full">
+                <div class="text-center">
+                    <div class="mb-5">
+                        <span class="badge-pill">Servizi Premium</span>
+                    </div>
+                    <h1 class="text-6xl lg:text-8xl text-bold-modern tracking-tighter uppercase text-white mb-6 leading-none">
+                        My<span class="text-primary">Liquido</span>
+                    </h1>
+                    <p class="text-[#baba9c] text-lg max-w-xl mx-auto leading-relaxed">
+                        La tua area riservata, dedicata a servizi esclusivi pensati per te.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ─── CONTENT AREA ─── -->
+        <div class="bg-black">
+
+            <!-- Auth Section (shown when NOT logged in) -->
+            <section id="auth-section" class="max-w-[1440px] mx-auto px-6 lg:px-20 py-20">
+                <!-- Two service preview cards -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16 fade-up">
+                    <!-- Card 1 -->
+                    <div class="service-card bg-[#27271b] border border-[#54543b] rounded-2xl p-8 relative overflow-hidden">
+                        <div class="absolute top-0 right-0 w-48 h-48 bg-primary/5 rounded-full -translate-y-1/2 translate-x-1/2 blur-2xl pointer-events-none"></div>
+                        <span class="material-symbols-outlined text-primary text-4xl mb-4 block">inventory_2</span>
+                        <h3 class="text-white font-black text-xl uppercase tracking-wide mb-2">Ordina un Prodotto</h3>
+                        <p class="text-[#baba9c] text-sm leading-relaxed">Inviaci la foto del prodotto che desideri. Lo troverai in negozio in 24/48 ore.</p>
+                    </div>
+                    <!-- Card 2 -->
+                    <div class="service-card bg-[#27271b] border border-[#54543b] rounded-2xl p-8 relative overflow-hidden">
+                        <div class="absolute top-0 right-0 w-48 h-48 bg-primary/5 rounded-full -translate-y-1/2 translate-x-1/2 blur-2xl pointer-events-none"></div>
+                        <span class="material-symbols-outlined text-primary text-4xl mb-4 block">build_circle</span>
+                        <h3 class="text-white font-black text-xl uppercase tracking-wide mb-2">Manutenzione</h3>
+                        <p class="text-[#baba9c] text-sm leading-relaxed">Prenota un appuntamento per pulizia, sostituzione coil e manutenzione completa del tuo dispositivo.</p>
+                    </div>
+                </div>
+
+                <!-- Login prompt box -->
+                <div class="max-w-md mx-auto fade-up" style="transition-delay: 0.15s;">
+                    <div class="text-center mb-8">
+                        <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-[#27271b] border border-[#54543b] mb-5">
+                            <span class="material-symbols-outlined text-primary text-3xl">lock</span>
+                        </div>
+                        <h2 class="text-white text-2xl font-black uppercase tracking-wide mb-2">Accedi a MyLiquido</h2>
+                        <p class="text-[#baba9c] text-sm">Registrati o accedi per utilizzare i servizi premium</p>
+                    </div>
+                    <div class="bg-[#27271b] border border-[#54543b] rounded-2xl p-8">
+                        <div class="flex flex-col sm:flex-row gap-3">
+                            <button id="btn-open-login"
+                                class="flex-1 bg-primary hover:bg-white text-background-dark px-6 py-3 rounded-sm font-black text-xs uppercase tracking-widest transition-all accent-glow-strong">
+                                Accedi
+                            </button>
+                            <button id="btn-open-signup"
+                                class="flex-1 bg-white/5 border border-white/10 hover:bg-white/10 text-white px-6 py-3 rounded-sm font-black text-xs uppercase tracking-widest transition-all">
+                                Registrati
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Services Section (shown when logged in) -->
+            <section id="services-section" class="hidden max-w-[1440px] mx-auto px-6 lg:px-20 py-16">
+
+                <!-- User Bar -->
+                <div class="bg-[#27271b] border border-[#54543b] rounded-2xl p-5 mb-12 flex justify-between items-center fade-up">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center">
+                            <span class="material-symbols-outlined text-primary text-xl">account_circle</span>
+                        </div>
+                        <div>
+                            <p class="text-[#baba9c] text-xs uppercase tracking-wider font-semibold">Benvenuto</p>
+                            <span id="user-display-name" class="font-black text-base text-white">Utente</span>
+                        </div>
+                    </div>
+                    <button id="btn-logout"
+                        class="flex items-center gap-2 text-[#baba9c] hover:text-white text-xs font-bold uppercase tracking-wider transition-colors bg-white/5 border border-white/10 hover:bg-white/10 px-4 py-2 rounded-lg">
+                        <span class="material-symbols-outlined text-sm">logout</span>
+                        Esci
+                    </button>
+                </div>
+
+                <!-- Service 1: Special Product Request -->
+                <div id="special-request" class="mb-10 fade-up">
+                    <div class="bg-primary rounded-2xl p-8 lg:p-12 relative overflow-hidden">
+                        <!-- decorative blob -->
+                        <div class="absolute -top-16 -right-16 w-64 h-64 bg-white/10 rounded-full blur-3xl pointer-events-none"></div>
+                        <div class="relative z-10 max-w-3xl mx-auto">
+                            <div class="flex flex-col items-center justify-center gap-3 mb-6 text-center">
+                                <div class="w-14 h-14 rounded-2xl bg-background-dark/10 flex items-center justify-center mb-1">
+                                    <span class="material-symbols-outlined text-background-dark text-3xl">inventory_2</span>
+                                </div>
+                                <h2 class="text-3xl md:text-4xl font-black uppercase tracking-wide text-background-dark">Ordina il tuo prodotto</h2>
+                            </div>
+                            <p class="text-background-dark/70 font-medium text-base leading-relaxed text-center mb-10">
+                                Hai bisogno di un prodotto specifico che non trovi nel nostro catalogo?<br />
+                                Carica un'immagine di ciò che desideri — lo troverai in negozio in <strong>24/48 ore</strong>.
+                            </p>
+                            <form id="product-request-form" class="flex flex-col gap-5">
+                                <!-- Image upload -->
+                                <div class="flex flex-col gap-2">
+                                    <label class="text-sm font-black uppercase tracking-wider text-background-dark">Immagine del Prodotto</label>
+                                    <input type="file" id="product-image" accept="image/jpeg,image/jpg,image/png,image/webp" class="hidden" />
+                                    <label for="product-image"
+                                        class="flex flex-col items-center justify-center border-2 border-dashed border-black/20 bg-white/80 hover:bg-white rounded-xl p-8 cursor-pointer transition-all hover:border-black/50 hover:shadow-md">
+                                        <span class="material-symbols-outlined text-background-dark text-4xl mb-2">cloud_upload</span>
+                                        <span class="text-sm font-bold text-black">Clicca per caricare un'immagine</span>
+                                        <span class="text-xs text-black/60 mt-1">JPG, PNG o WEBP · max 5MB</span>
+                                    </label>
+                                    <div id="image-preview" class="hidden mt-3">
+                                        <img id="preview-img" src="" alt="Preview" class="max-w-xs rounded-xl border border-black/10 shadow-md" />
+                                        <button type="button" id="remove-image"
+                                            class="mt-2 text-xs text-red-700 hover:text-red-900 font-bold flex items-center gap-1">
+                                            <span class="material-symbols-outlined text-sm">delete</span>Rimuovi immagine
+                                        </button>
+                                    </div>
+                                    <div id="image-progress" class="hidden mt-2">
+                                        <div class="bg-black/10 rounded-full h-1.5 overflow-hidden">
+                                            <div id="progress-bar" class="bg-background-dark h-full transition-all duration-300" style="width: 0%"></div>
+                                        </div>
+                                        <p class="text-xs text-background-dark mt-1 font-bold">Caricamento in corso…</p>
+                                    </div>
+                                </div>
+                                <!-- Message -->
+                                <div class="flex flex-col gap-2">
+                                    <label class="text-sm font-black uppercase tracking-wider text-background-dark">Messaggio</label>
+                                    <textarea id="product-message" rows="4"
+                                        class="bg-white/90 hover:bg-white border border-black/10 rounded-xl p-3 text-black focus:outline-none focus:ring-2 focus:ring-black resize-none transition-all placeholder:text-black/40"
+                                        placeholder="Descrivi di cosa hai bisogno…"></textarea>
+                                </div>
+                                <div id="product-error" class="hidden text-red-700 text-sm font-bold text-center"></div>
+                                <button type="submit"
+                                    class="bg-background-dark hover:bg-black text-primary px-8 py-4 rounded-xl font-black text-xs uppercase tracking-widest transition-all flex items-center justify-center gap-2 mt-1 accent-glow-strong">
+                                    <span>Invia Richiesta su WhatsApp</span>
+                                    <span class="material-symbols-outlined text-sm">send</span>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Service 2: Maintenance Service -->
+                <div id="maintenance-service" class="mb-16 fade-up" style="transition-delay: 0.1s;">
+                    <div class="bg-[#27271b] border border-[#54543b] rounded-2xl p-8 lg:p-12 relative overflow-hidden">
+                        <div class="absolute -bottom-16 -left-16 w-64 h-64 bg-primary/5 rounded-full blur-3xl pointer-events-none"></div>
+                        <div class="relative z-10 max-w-2xl mx-auto text-center">
+                            <div class="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-primary/10 border border-primary/20 mb-5">
+                                <span class="material-symbols-outlined text-primary text-3xl">build_circle</span>
+                            </div>
+                            <h2 class="text-white text-3xl md:text-4xl font-black mb-4 uppercase tracking-wide">Servizio di Manutenzione</h2>
+                            <p class="text-[#baba9c] text-base leading-relaxed mb-10">
+                                La tua vape ha bisogno di attenzione?<br />
+                                Prenota un appuntamento per cambiare coil, sostituire il cotone, e per una pulizia completa.
+                            </p>
+                            <form id="maintenance-request-form" class="flex flex-col gap-5 text-left">
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                                    <div class="flex flex-col gap-2">
+                                        <label class="text-sm font-semibold text-[#baba9c] uppercase tracking-wider text-xs">Data</label>
+                                        <input type="date" id="maintenance-date" class="input-field" min="" required />
+                                    </div>
+                                    <div class="flex flex-col gap-2">
+                                        <label class="text-sm font-semibold text-[#baba9c] uppercase tracking-wider text-xs">Ora</label>
+                                        <input type="time" id="maintenance-time" class="input-field" required />
+                                    </div>
+                                </div>
+                                <div class="flex flex-col gap-2">
+                                    <label class="text-sm font-semibold text-[#baba9c] uppercase tracking-wider text-xs">Descrizione</label>
+                                    <textarea id="maintenance-description" rows="4" class="input-field resize-none"
+                                        placeholder="Descrivi di cosa hai bisogno…"></textarea>
+                                </div>
+                                <div id="maintenance-error" class="hidden text-red-400 text-sm text-center"></div>
+                                <button type="submit"
+                                    class="bg-primary hover:bg-white text-background-dark px-8 py-4 rounded-sm font-black text-xs uppercase tracking-widest transition-all flex items-center justify-center gap-2 mt-1 accent-glow-strong">
+                                    <span>Prenota su WhatsApp</span>
+                                    <span class="material-symbols-outlined text-sm">calendar_today</span>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+        <!-- /bg-black -->
+
+    </main>
+
+    <!-- ═══════════════════════════════════════
+         MODAL OVERLAY
+    ════════════════════════════════════════ -->
+    <div id="modal-overlay" class="modal-overlay fixed inset-0 z-[100] bg-black/80 backdrop-blur-sm">
+
+        <!-- Login Modal -->
+        <div id="login-modal" class="modal-content hidden fixed inset-0 flex items-center justify-center p-4">
+            <div class="bg-[#18180f] border border-[#54543b] rounded-2xl p-8 max-w-md w-full relative shadow-2xl">
+                <button id="close-login-modal"
+                    class="absolute top-4 right-4 text-[#baba9c] hover:text-white transition-colors w-8 h-8 flex items-center justify-center rounded-lg hover:bg-white/10">
+                    <span class="material-symbols-outlined text-xl">close</span>
+                </button>
+                <div class="mb-7">
+                    <div class="w-10 h-10 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center mb-4">
+                        <span class="material-symbols-outlined text-primary text-xl">login</span>
+                    </div>
+                    <h2 class="text-2xl font-black text-white uppercase tracking-wide mb-1">Accedi</h2>
+                    <p class="text-[#baba9c] text-sm">Inserisci le tue credenziali per accedere</p>
+                </div>
+                <form id="login-form" class="flex flex-col gap-4">
+                    <div class="flex flex-col gap-1.5">
+                        <label class="text-xs font-semibold text-[#baba9c] uppercase tracking-wider">Email</label>
+                        <input type="email" id="login-email" class="input-field"
+                            placeholder="email@example.com" required />
+                    </div>
+                    <div class="flex flex-col gap-1.5">
+                        <div class="flex justify-between items-center">
+                            <label class="text-xs font-semibold text-[#baba9c] uppercase tracking-wider">Password</label>
+                            <button type="button" id="btn-forgot-password"
+                                class="text-xs text-primary hover:text-white transition-colors font-semibold">
+                                Password dimenticata?
+                            </button>
+                        </div>
+                        <input type="password" id="login-password" class="input-field"
+                            placeholder="••••••••" required />
+                    </div>
+                    <div id="login-error" class="hidden text-red-400 text-sm bg-red-400/10 rounded-lg px-3 py-2"></div>
+                    <button type="submit"
+                        class="bg-primary hover:bg-white text-background-dark px-6 py-3 rounded-sm font-black text-xs uppercase tracking-widest transition-all mt-1 accent-glow-strong">
+                        Accedi
+                    </button>
+                    <p class="text-center text-sm text-[#baba9c]">
+                        Non hai un account?
+                        <button type="button" id="switch-to-signup"
+                            class="text-primary hover:text-white font-bold transition-colors">Registrati</button>
+                    </p>
+                </form>
+            </div>
+        </div>
+
+        <!-- Signup Modal -->
+        <div id="signup-modal" class="modal-content hidden fixed inset-0 flex items-center justify-center p-4 overflow-y-auto">
+            <div class="bg-[#18180f] border border-[#54543b] rounded-2xl p-8 max-w-md w-full relative shadow-2xl my-8">
+                <button id="close-signup-modal"
+                    class="absolute top-4 right-4 text-[#baba9c] hover:text-white transition-colors w-8 h-8 flex items-center justify-center rounded-lg hover:bg-white/10">
+                    <span class="material-symbols-outlined text-xl">close</span>
+                </button>
+                <div class="mb-6">
+                    <h2 class="text-2xl font-black text-primary uppercase tracking-wide text-center mb-1">Registrati</h2>
+                    <p class="text-[#baba9c] text-sm text-center">Crea un account per accedere ai servizi premium</p>
+                </div>
+                <form id="signup-form" class="flex flex-col gap-4">
+                    <div class="flex flex-col gap-1.5">
+                        <label class="text-xs font-semibold text-[#baba9c] uppercase tracking-wider">Nome e Cognome</label>
+                        <input type="text" id="signup-name" class="input-field"
+                            placeholder="Mario Rossi" required />
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="flex flex-col gap-1.5">
+                            <label class="text-xs font-semibold text-[#baba9c] uppercase tracking-wider">Data di nascita</label>
+                            <input type="date" id="signup-dob" class="input-field" required />
+                        </div>
+                        <div class="flex flex-col gap-1.5">
+                            <label class="text-xs font-semibold text-[#baba9c] uppercase tracking-wider">Sesso</label>
+                            <select id="signup-gender" class="input-field" required>
+                                <option value="" disabled selected>Seleziona</option>
+                                <option value="M">Maschio</option>
+                                <option value="F">Femmina</option>
+                                <option value="O">Altro</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="flex flex-col gap-1.5">
+                            <label class="text-xs font-semibold text-[#baba9c] uppercase tracking-wider">Telefono</label>
+                            <input type="tel" id="signup-phone" class="input-field"
+                                placeholder="+39" required />
+                        </div>
+                        <div class="flex flex-col gap-1.5">
+                            <label class="text-xs font-semibold text-[#baba9c] uppercase tracking-wider">Città</label>
+                            <input type="text" id="signup-city" class="input-field"
+                                placeholder="Roma" required />
+                        </div>
+                    </div>
+                    <div class="flex flex-col gap-1.5">
+                        <label class="text-xs font-semibold text-[#baba9c] uppercase tracking-wider">Email</label>
+                        <input type="email" id="signup-email" class="input-field"
+                            placeholder="email@example.com" required />
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="flex flex-col gap-1.5">
+                            <label class="text-xs font-semibold text-[#baba9c] uppercase tracking-wider">Password</label>
+                            <input type="password" id="signup-password" class="input-field"
+                                placeholder="••••••••" minlength="6" required />
+                        </div>
+                        <div class="flex flex-col gap-1.5">
+                            <label class="text-xs font-semibold text-[#baba9c] uppercase tracking-wider">Conferma</label>
+                            <input type="password" id="signup-password-confirm" class="input-field"
+                                placeholder="••••••••" minlength="6" required />
+                        </div>
+                    </div>
+
+                    <!-- Optional Preferences -->
+                    <div class="mt-1 p-3 bg-black/30 border border-primary/20 rounded-xl relative overflow-visible group cursor-pointer hover:bg-black/50 transition-colors">
+                        <div class="flex justify-between items-center text-primary font-bold text-sm">
+                            <div class="flex items-center gap-2">
+                                <span class="material-symbols-outlined text-sm">stars</span>
+                                Le tue Preferenze <span class="text-[#baba9c] font-normal">(Opzionale)</span>
+                            </div>
+                            <span class="material-symbols-outlined text-sm transition-transform group-hover:rotate-180">expand_more</span>
+                        </div>
+                        <div class="absolute bottom-full left-0 w-full mb-3 bg-[#1f1f15] border border-primary/40 rounded-xl p-5 shadow-[0_0_30px_rgba(0,0,0,0.9)] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50">
+                            <div class="flex flex-col gap-4">
+                                <div class="flex flex-col gap-1.5">
+                                    <label class="text-xs font-semibold text-primary uppercase tracking-wider">Liquidi Preferiti</label>
+                                    <input type="text" id="signup-liquids" class="input-field text-sm"
+                                        placeholder="Es. Tabaccosi, Fruttati…" />
+                                </div>
+                                <div class="flex flex-col gap-1.5">
+                                    <label class="text-xs font-semibold text-primary uppercase tracking-wider">Dispositivi Utilizzati</label>
+                                    <input type="text" id="signup-devices" class="input-field text-sm"
+                                        placeholder="Es. Pod Mod, Rigenerabili…" />
+                                </div>
+                            </div>
+                            <div class="absolute -bottom-2.5 left-1/2 transform -translate-x-1/2 w-5 h-5 bg-[#1f1f15] border-b border-r border-primary/40 rotate-45"></div>
+                        </div>
+                    </div>
+
+                    <div id="signup-error" class="hidden text-red-400 text-sm bg-red-400/10 rounded-lg px-3 py-2"></div>
+                    <button type="submit"
+                        class="bg-primary hover:bg-white text-background-dark px-6 py-3 rounded-sm font-black text-xs uppercase tracking-widest transition-all mt-1 accent-glow-strong">
+                        Registrati
+                    </button>
+                    <p class="text-center text-sm text-[#baba9c]">
+                        Hai già un account?
+                        <button type="button" id="switch-to-login"
+                            class="text-primary hover:text-white font-bold transition-colors">Accedi</button>
+                    </p>
+                </form>
+            </div>
+        </div>
+
+        <!-- Forgot Password Modal -->
+        <div id="forgot-password-modal" class="modal-content hidden fixed inset-0 flex items-center justify-center p-4">
+            <div class="bg-[#18180f] border border-[#54543b] rounded-2xl p-8 max-w-md w-full relative shadow-2xl">
+                <button id="close-forgot-password-modal"
+                    class="absolute top-4 right-4 text-[#baba9c] hover:text-white transition-colors w-8 h-8 flex items-center justify-center rounded-lg hover:bg-white/10">
+                    <span class="material-symbols-outlined text-xl">close</span>
+                </button>
+                <div class="mb-7">
+                    <div class="w-10 h-10 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center mb-4">
+                        <span class="material-symbols-outlined text-primary text-xl">lock_reset</span>
+                    </div>
+                    <h2 class="text-2xl font-black text-primary uppercase tracking-wide text-center mb-1">Reset Password</h2>
+                    <p class="text-[#baba9c] text-sm text-center">Inserisci la tua email per ricevere il link di reset</p>
+                </div>
+                <form id="forgot-password-form" class="flex flex-col gap-4">
+                    <div class="flex flex-col gap-1.5">
+                        <label class="text-xs font-semibold text-[#baba9c] uppercase tracking-wider">Email</label>
+                        <input type="email" id="forgot-password-email" class="input-field"
+                            placeholder="email@example.com" required />
+                    </div>
+                    <div id="forgot-password-message"
+                        class="hidden text-sm text-center px-3 py-3 rounded-xl font-medium"></div>
+                    <button type="submit"
+                        class="bg-primary hover:bg-white text-background-dark px-6 py-3 rounded-sm font-black text-xs uppercase tracking-widest transition-all accent-glow-strong">
+                        Invia Email di Reset
+                    </button>
+                    <p class="text-center text-sm text-[#baba9c]">
+                        Ti sei ricordato la password?
+                        <button type="button" id="switch-to-login-from-forgot"
+                            class="text-primary hover:text-white font-bold transition-colors">Accedi</button>
+                    </p>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer loaded dynamically -->
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-analytics-compat.js"></script>
+
+    <!-- Services -->
+    <script src="./shared/js/component-loader.js"></script>
+    <script src="./src/js/services/firebase-config.js"></script>
+    <script src="./src/js/services/firebase-auth.js"></script>
+    <script src="./src/js/services/cloudinary-config.js"></script>
+    <script src="./src/js/services/cloudinary-service.js"></script>
+    <script src="./src/js/modules/myliquido-services.js"></script>
+    <script src="./src/js/pages/myliquido-page.js"></script>
+
+    <script>
+        // Initialize theme toggle
+        if (typeof ThemeToggle !== 'undefined') {
+            ThemeToggle.init();
+        }
+
+        // Scroll fade-in animation
+        const fadeEls = document.querySelectorAll('.fade-up');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(e => {
+                if (e.isIntersecting) {
+                    e.target.classList.add('visible');
+                    observer.unobserve(e.target);
+                }
+            });
+        }, { threshold: 0.12 });
+        fadeEls.forEach(el => observer.observe(el));
+
+        // Trigger visible for elements already in view
+        document.addEventListener('DOMContentLoaded', () => {
+            fadeEls.forEach(el => {
+                const rect = el.getBoundingClientRect();
+                if (rect.top < window.innerHeight) el.classList.add('visible');
+            });
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,31 @@
+<IfModule mod_rewrite.c>
+RewriteEngine On
+
+# 301 Redirects for old URLs to new clean URLs
+RewriteRule ^public/index\.html$ / [R=301,L]
+RewriteRule ^public/products\.html$ /liquidi [R=301,L]
+RewriteRule ^public/brands\.html$ /dispositivi [R=301,L]
+RewriteRule ^public/about\.html$ /chi-siamo [R=301,L]
+RewriteRule ^public/contact\.html$ /contatti [R=301,L]
+RewriteRule ^public/faq\.html$ /faq [R=301,L]
+RewriteRule ^public/myliquido\.html$ /myliquido [R=301,L]
+
+# Serve public/index.html for the root domain
+RewriteRule ^$ public/index.html [L]
+
+# Clean URLs routing (if the requested URL is not an existing file or directory)
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+RewriteRule ^liquidi/?$ public/products.html [L]
+RewriteRule ^dispositivi/?$ public/brands.html [L]
+RewriteRule ^chi-siamo/?$ public/about.html [L]
+RewriteRule ^contatti/?$ public/contact.html [L]
+RewriteRule ^faq/?$ public/faq.html [L]
+RewriteRule ^myliquido/?$ public/myliquido.html [L]
+
+# Optional: if you want to remove .html from all other files
+# RewriteCond %{REQUEST_FILENAME}\.html -f
+# RewriteRule ^(.*)$ $1.html [L]
+
+</IfModule>
