@@ -674,7 +674,7 @@
                     updateSelectedSectionsDisplay();
                     document.getElementById('product-lines-container').innerHTML = '';
                 } else {
-                    window.location.href = 'index.html';
+                    window.location.href = "/";
                 }
             } catch (error) {
                 console.error('Error saving brand:', error);

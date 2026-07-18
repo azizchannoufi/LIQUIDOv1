@@ -9,7 +9,7 @@
  * @param {string} activeClass - Class to add to active link
  */
 function setActiveNav(navSelector = 'nav', activeClass = 'text-primary') {
-    const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+    const currentPage = window.location.pathname.split('/').pop() || "/";
     const navLinks = document.querySelectorAll(`${navSelector} a`);
 
     navLinks.forEach(link => {
@@ -20,8 +20,8 @@ function setActiveNav(navSelector = 'nav', activeClass = 'text-primary') {
 
         // Add active class if href matches current page
         if (href === currentPage ||
-            (currentPage === '' && href === 'index.html') ||
-            (currentPage === 'index.html' && href === 'index.html')) {
+            (currentPage === '' && href === "/") ||
+            (currentPage === "/" && href === "/")) {
             link.classList.add(activeClass);
 
             // Add underline indicator for some navigation styles

@@ -26,7 +26,7 @@
 
         const depth = segments.length - adminIndex - 1; // how many folders below /admin/
         const prefix = depth > 0 ? '../'.repeat(depth) : '';
-        return prefix + 'index.html';
+        return prefix + "/";
     }
 
     // ── Overlay helpers ───────────────────────────────────────────────────────

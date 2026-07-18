@@ -16,6 +16,35 @@ app.use(cors({
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Redirects for old URLs to new SEO-friendly URLs
+const redirects = {
+  '/public/index.html': '/',
+  '/public/products.html': '/liquidi',
+  '/public/brands.html': '/dispositivi',
+  '/public/about.html': '/chi-siamo',
+  '/public/contact.html': '/contatti',
+  '/public/faq.html': '/faq',
+  '/public/myliquido.html': '/myliquido'
+};
+
+app.use((req, res, next) => {
+  const urlPath = req.path;
+  if (redirects[urlPath]) {
+    const search = req.url.substring(req.path.length);
+    return res.redirect(301, redirects[urlPath] + search);
+  }
+  next();
+});
+
+// Clean URL Routes
+app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'public', 'index.html')));
+app.get('/liquidi', (req, res) => res.sendFile(path.join(__dirname, 'public', 'products.html')));
+app.get('/dispositivi', (req, res) => res.sendFile(path.join(__dirname, 'public', 'brands.html')));
+app.get('/chi-siamo', (req, res) => res.sendFile(path.join(__dirname, 'public', 'about.html')));
+app.get('/contatti', (req, res) => res.sendFile(path.join(__dirname, 'public', 'contact.html')));
+app.get('/faq', (req, res) => res.sendFile(path.join(__dirname, 'public', 'faq.html')));
+app.get('/myliquido', (req, res) => res.sendFile(path.join(__dirname, 'public', 'myliquido.html')));
+
 // Serve static files
 app.use(express.static(__dirname));
 
@@ -152,7 +181,7 @@ app.get('*', (req, res) => {
   if (req.path.startsWith('/api/')) {
     return res.status(404).json({ error: 'API endpoint not found' });
   }
-  res.sendFile(path.join(__dirname, 'index.html'));
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 // Start server

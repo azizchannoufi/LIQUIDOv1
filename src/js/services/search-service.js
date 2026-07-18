@@ -15,26 +15,26 @@ class LiquidoSearchService {
     _getStaticIndex() {
         return [
             // ── Pages ──
-            { type: 'page', title: 'Home', description: 'Pagina principale di LIQUIDO Vape Shop', url: 'index.html', icon: 'home', keywords: ['home', 'home page', 'liquido', 'vape shop'] },
-            { type: 'page', title: 'Liquidi', description: 'Scopri tutti i nostri e-liquid e brand partner', url: 'products.html', icon: 'water_drop', keywords: ['liquidi', 'e-liquid', 'liquido', 'gusti', 'fruttati', 'tabaccosi', 'cremosi', 'ghiacciati', 'prodotti'] },
-            { type: 'page', title: 'Dispositivi', description: 'Mod, pod e kit vape disponibili nel nostro store', url: 'brands.html', icon: 'vaping_rooms', keywords: ['dispositivi', 'mod', 'pod', 'kit', 'device', 'vape', 'sigaretta elettronica', 'brand'] },
-            { type: 'page', title: 'Chi Siamo', description: 'La storia e i valori di LIQUIDO Vape Shop', url: 'about.html', icon: 'store', keywords: ['chi siamo', 'about', 'storia', 'negozio', 'boutique', 'liquido'] },
-            { type: 'page', title: 'Contatti', description: 'Orari, indirizzo e come contattarci', url: 'contact.html', icon: 'location_on', keywords: ['contatti', 'indirizzo', 'orari', 'telefono', 'dove siamo', 'monterotondo'] },
-            { type: 'page', title: 'FAQ', description: 'Domande frequenti su vaping, liquidi e dispositivi', url: 'faq.html', icon: 'help', keywords: ['faq', 'domande', 'frequenti', 'aiuto', 'informazioni'] },
-            { type: 'page', title: 'MyLiquido', description: 'Accedi al tuo account personale', url: 'myliquido.html', icon: 'account_circle', keywords: ['account', 'accedi', 'registrati', 'myliquido', 'profilo'] },
+            { type: 'page', title: 'Home', description: 'Pagina principale di LIQUIDO Vape Shop', url: "/", icon: 'home', keywords: ['home', 'home page', 'liquido', 'vape shop'] },
+            { type: 'page', title: 'Liquidi', description: 'Scopri tutti i nostri e-liquid e brand partner', url: "/liquidi", icon: 'water_drop', keywords: ['liquidi', 'e-liquid', 'liquido', 'gusti', 'fruttati', 'tabaccosi', 'cremosi', 'ghiacciati', 'prodotti'] },
+            { type: 'page', title: 'Dispositivi', description: 'Mod, pod e kit vape disponibili nel nostro store', url: "/dispositivi", icon: 'vaping_rooms', keywords: ['dispositivi', 'mod', 'pod', 'kit', 'device', 'vape', 'sigaretta elettronica', 'brand'] },
+            { type: 'page', title: 'Chi Siamo', description: 'La storia e i valori di LIQUIDO Vape Shop', url: "/chi-siamo", icon: 'store', keywords: ['chi siamo', 'about', 'storia', 'negozio', 'boutique', 'liquido'] },
+            { type: 'page', title: 'Contatti', description: 'Orari, indirizzo e come contattarci', url: "/contatti", icon: 'location_on', keywords: ['contatti', 'indirizzo', 'orari', 'telefono', 'dove siamo', 'monterotondo'] },
+            { type: 'page', title: 'FAQ', description: 'Domande frequenti su vaping, liquidi e dispositivi', url: "/faq", icon: 'help', keywords: ['faq', 'domande', 'frequenti', 'aiuto', 'informazioni'] },
+            { type: 'page', title: 'MyLiquido', description: 'Accedi al tuo account personale', url: "/myliquido", icon: 'account_circle', keywords: ['account', 'accedi', 'registrati', 'myliquido', 'profilo'] },
 
             // ── FAQ ──
-            { type: 'faq', title: 'Quali sono i migliori liquidi vape?', description: 'Scopri la nostra selezione premium di e-liquid', url: 'faq.html', icon: 'quiz', keywords: ['migliori liquidi', 'selezione', 'premium', 'marche'] },
-            { type: 'faq', title: 'Come conservare i liquidi vape?', description: 'Consigli per la corretta conservazione', url: 'faq.html', icon: 'quiz', keywords: ['conservare', 'conservazione', 'temperatura', 'scadenza'] },
-            { type: 'faq', title: 'Quale livello di nicotina scegliere?', description: 'Guida alla scelta del livello di nicotina', url: 'faq.html', icon: 'quiz', keywords: ['nicotina', 'livello', 'mg', 'principiante', 'fumatore'] },
-            { type: 'faq', title: 'Come pulire il dispositivo vape?', description: 'Guida alla pulizia e manutenzione', url: 'faq.html', icon: 'quiz', keywords: ['pulizia', 'pulire', 'manutenzione', 'tank', 'coil'] },
-            { type: 'faq', title: 'Differenza tra mod vape e pod vape?', description: 'Scopri le differenze tra i dispositivi', url: 'faq.html', icon: 'quiz', keywords: ['mod', 'pod', 'differenza', 'dispositivo', 'scegliere'] },
-            { type: 'faq', title: 'Come iniziare a svapare?', description: 'Guida per principianti al vaping', url: 'faq.html', icon: 'quiz', keywords: ['iniziare', 'principiante', 'primo', 'svapare', 'starter'] },
-            { type: 'faq', title: 'Metodi di pagamento accettati', description: 'Contanti, carte di credito e digitali', url: 'faq.html', icon: 'quiz', keywords: ['pagamento', 'carta', 'contanti', 'pos', 'metodi'] },
-            { type: 'faq', title: 'Orari e sede del negozio', description: 'Via Adige 43C, Monterotondo (RM)', url: 'contact.html', icon: 'quiz', keywords: ['orari', 'apertura', 'chiusura', 'sede', 'dove', 'indirizzo', 'monterotondo'] },
-            { type: 'faq', title: 'Servizi di pulizia e manutenzione vape', description: 'Pulizia professionale in negozio', url: 'faq.html', icon: 'quiz', keywords: ['pulizia', 'manutenzione', 'servizio', 'assistenza', 'tecnico'] },
-            { type: 'faq', title: 'Sali di nicotina vs nicotina freebase', description: 'Differenze tra i tipi di nicotina', url: 'faq.html', icon: 'quiz', keywords: ['sali', 'nicotina', 'freebase', 'nicotine salts', 'throat hit'] },
-            { type: 'faq', title: 'Liquidi in aereo: regole', description: 'Come viaggiare con la sigaretta elettronica', url: 'faq.html', icon: 'quiz', keywords: ['aereo', 'viaggio', 'bagaglio', 'regole', 'trasportare'] },
+            { type: 'faq', title: 'Quali sono i migliori liquidi vape?', description: 'Scopri la nostra selezione premium di e-liquid', url: "/faq", icon: 'quiz', keywords: ['migliori liquidi', 'selezione', 'premium', 'marche'] },
+            { type: 'faq', title: 'Come conservare i liquidi vape?', description: 'Consigli per la corretta conservazione', url: "/faq", icon: 'quiz', keywords: ['conservare', 'conservazione', 'temperatura', 'scadenza'] },
+            { type: 'faq', title: 'Quale livello di nicotina scegliere?', description: 'Guida alla scelta del livello di nicotina', url: "/faq", icon: 'quiz', keywords: ['nicotina', 'livello', 'mg', 'principiante', 'fumatore'] },
+            { type: 'faq', title: 'Come pulire il dispositivo vape?', description: 'Guida alla pulizia e manutenzione', url: "/faq", icon: 'quiz', keywords: ['pulizia', 'pulire', 'manutenzione', 'tank', 'coil'] },
+            { type: 'faq', title: 'Differenza tra mod vape e pod vape?', description: 'Scopri le differenze tra i dispositivi', url: "/faq", icon: 'quiz', keywords: ['mod', 'pod', 'differenza', 'dispositivo', 'scegliere'] },
+            { type: 'faq', title: 'Come iniziare a svapare?', description: 'Guida per principianti al vaping', url: "/faq", icon: 'quiz', keywords: ['iniziare', 'principiante', 'primo', 'svapare', 'starter'] },
+            { type: 'faq', title: 'Metodi di pagamento accettati', description: 'Contanti, carte di credito e digitali', url: "/faq", icon: 'quiz', keywords: ['pagamento', 'carta', 'contanti', 'pos', 'metodi'] },
+            { type: 'faq', title: 'Orari e sede del negozio', description: 'Via Adige 43C, Monterotondo (RM)', url: "/contatti", icon: 'quiz', keywords: ['orari', 'apertura', 'chiusura', 'sede', 'dove', 'indirizzo', 'monterotondo'] },
+            { type: 'faq', title: 'Servizi di pulizia e manutenzione vape', description: 'Pulizia professionale in negozio', url: "/faq", icon: 'quiz', keywords: ['pulizia', 'manutenzione', 'servizio', 'assistenza', 'tecnico'] },
+            { type: 'faq', title: 'Sali di nicotina vs nicotina freebase', description: 'Differenze tra i tipi di nicotina', url: "/faq", icon: 'quiz', keywords: ['sali', 'nicotina', 'freebase', 'nicotine salts', 'throat hit'] },
+            { type: 'faq', title: 'Liquidi in aereo: regole', description: 'Come viaggiare con la sigaretta elettronica', url: "/faq", icon: 'quiz', keywords: ['aereo', 'viaggio', 'bagaglio', 'regole', 'trasportare'] },
         ];
     }
 

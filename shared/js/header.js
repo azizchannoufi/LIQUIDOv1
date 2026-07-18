@@ -24,8 +24,8 @@ function initHeaderLogic() {
     function isHomePage() {
         const path = window.location.pathname;
         return path === '/' ||
-               path.endsWith('/index.html') ||
-               path.endsWith('/public/index.html');
+               path.endsWith("/") ||
+               path.endsWith("/");
     }
 
     function updatePlaceholder() {
@@ -188,7 +188,7 @@ function initHeaderLogic() {
     }
     // --- Active Link Highlighting ---
     function highlightActiveLink() {
-        const currentPath = window.location.pathname.split('/').pop() || 'index.html';
+        const currentPath = window.location.pathname.split('/').pop() || "/";
         const navLinks = header.querySelectorAll('nav a');
 
         navLinks.forEach(link => {
@@ -312,7 +312,7 @@ function initHeaderLogic() {
                              <p class="text-gray-500 text-sm px-6 leading-relaxed">Accedi al tuo account per gestire i tuoi ordini e richiedere servizi esclusivi MyLiquido.</p>
                         </div>
                         <div class="w-full space-y-4 pt-4 px-2">
-                            <a href="myliquido.html" class="block w-full bg-primary hover:bg-primary/80 text-gray-900 font-extrabold uppercase text-xs tracking-[0.15em] py-4 rounded shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-0.5">
+                            <a href="/myliquido" class="block w-full bg-primary hover:bg-primary/80 text-gray-900 font-extrabold uppercase text-xs tracking-[0.15em] py-4 rounded shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-0.5">
                                 Accedi / Registrati
                             </a>
                         </div>

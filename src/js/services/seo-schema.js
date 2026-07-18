@@ -192,12 +192,12 @@
             this.injectSchema(this.getOrganizationSchema());
             
             // Add LocalBusiness schema on relevant pages
-            if (path.includes('index.html') || path.includes('contact.html') || path.includes('about.html')) {
+            if (path.includes("/") || path.includes("/contatti") || path.includes("/chi-siamo")) {
                 this.injectSchema(this.getLocalBusinessSchema());
             }
             
             // Add FAQPage schema on FAQ page
-            if (path.includes('faq.html')) {
+            if (path.includes("/faq")) {
                 this.injectSchema(this.getFAQPageSchema());
             }
         }

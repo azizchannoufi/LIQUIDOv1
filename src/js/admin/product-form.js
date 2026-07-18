@@ -574,7 +574,7 @@
                     document.getElementById('product-line').disabled = true;
                     hideNewBrandForm();
                 } else {
-                    window.location.href = 'index.html';
+                    window.location.href = "/";
                 }
             } catch (error) {
                 console.error('Error saving product:', error);

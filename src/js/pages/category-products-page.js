@@ -48,7 +48,7 @@
         if (!categoryName) {
             console.error('Missing required URL parameters: category');
             if (productsGrid) {
-                productsGrid.innerHTML = '<p class="text-red-400 col-span-full text-center py-12">Categoria non trovata. Torna alla <a href="products.html" class="text-primary hover:underline">pagina prodotti</a>.</p>';
+                productsGrid.innerHTML = '<p class="text-red-400 col-span-full text-center py-12">Categoria non trovata. Torna alla <a href="/liquidi" class="text-primary hover:underline">pagina prodotti</a>.</p>';
             }
             return;
         }

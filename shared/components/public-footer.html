@@ -93,15 +93,15 @@
             <div class="space-y-6">
                 <h4 class="text-sm font-bold uppercase tracking-widest text-primary">ESPLORA</h4>
                 <ul class="flex flex-col gap-3 text-sm font-medium">
-                    <li><a class="hover:text-primary transition-colors uppercase" href="products.html">Liquidi</a></li>
-                    <li><a class="hover:text-primary transition-colors uppercase" href="brands.html">Dispositivi</a>
+                    <li><a class="hover:text-primary transition-colors uppercase" href="/liquidi">Liquidi</a></li>
+                    <li><a class="hover:text-primary transition-colors uppercase" href="/dispositivi">Dispositivi</a>
                     </li>
                     <li><a class="hover:text-primary transition-colors uppercase" href="index.html#nuovi-arrivi">Nuovi
                             Arrivi</a></li>
-                    <li><a class="hover:text-primary transition-colors uppercase" href="myliquido.html">MyLiquido</a>
+                    <li><a class="hover:text-primary transition-colors uppercase" href="/myliquido">MyLiquido</a>
                     </li>
                     <li>
-                        <a class="hover:text-primary transition-colors uppercase" href="myliquido.html"
+                        <a class="hover:text-primary transition-colors uppercase" href="/myliquido"
                             id="footer-riparazioni-link"
                             onclick="(function(e){
                                 e.preventDefault();
@@ -109,11 +109,11 @@
                                 var base = window.location.pathname.includes('/public/') ? '' : 'public/';
                                 window.location.href = user
                                     ? base + 'myliquido.html#maintenance-service'
-                                    : base + 'myliquido.html';
+                                    : base + "/myliquido";
                             })(event)">Riparazioni</a>
                     </li>
-                    <li><a class="hover:text-primary transition-colors uppercase" href="contact.html">Contatti</a></li>
-                    <li><a class="hover:text-primary transition-colors uppercase" href="faq.html">FAQ</a></li>
+                    <li><a class="hover:text-primary transition-colors uppercase" href="/contatti">Contatti</a></li>
+                    <li><a class="hover:text-primary transition-colors uppercase" href="/faq">FAQ</a></li>
                 </ul>
             </div>
 
