@@ -19,6 +19,7 @@ class StoreInfoAdmin {
             { id: 'store-info-phone',           key: 'phone' },
             { id: 'store-info-email',           key: 'email' },
             { id: 'store-info-address',         key: 'address' },
+            { id: 'store-info-topbar-text',     key: 'topbarText' },
             { id: 'store-info-mon-fri-morning-open',    key: 'hours_mon_fri_morning_open' },
             { id: 'store-info-mon-fri-morning-close',   key: 'hours_mon_fri_morning_close' },
             { id: 'store-info-mon-fri-afternoon-open',  key: 'hours_mon_fri_afternoon_open' },

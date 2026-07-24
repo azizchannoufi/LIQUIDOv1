@@ -107,6 +107,26 @@ class StoreInfoService {
             topNavEl.textContent = topNavText;
         }
 
+        // Apply Topbar Text (Promo)
+        const topbarTextEl = document.getElementById('store-display-topbar-text');
+        const topNavDefault = document.getElementById('top-nav-default');
+        const topNavPromo = document.getElementById('top-nav-promo');
+        
+        if (topbarTextEl && this.storeInfo.topbarText) {
+            topbarTextEl.textContent = this.storeInfo.topbarText;
+            if (topNavDefault) topNavDefault.classList.add('hidden');
+            if (topNavPromo) {
+                topNavPromo.classList.remove('hidden');
+                topNavPromo.classList.add('flex');
+            }
+        } else {
+            if (topNavDefault) topNavDefault.classList.remove('hidden');
+            if (topNavPromo) {
+                topNavPromo.classList.add('hidden');
+                topNavPromo.classList.remove('flex');
+            }
+        }
+
         // Apply Phone Text
         const phoneEl = document.getElementById('store-display-phone');
         if (phoneEl && this.storeInfo.phone) {
