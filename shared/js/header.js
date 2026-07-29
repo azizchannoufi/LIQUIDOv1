@@ -16,6 +16,14 @@ function initHeaderLogic() {
     function getTopNavHeight() {
         const topNav = document.getElementById('public-top-nav') ||
                        document.querySelector('nav.fixed[class*="z-[70]"]');
+        if (topNav && !topNav.dataset.clickBound) {
+            topNav.dataset.clickBound = "true";
+            topNav.style.cursor = 'pointer';
+            topNav.addEventListener('click', function(e) {
+                if (e.target.closest('a[target="_blank"]')) return;
+                window.location.href = '/myliquido';
+            });
+        }
         return topNav ? topNav.getBoundingClientRect().height : 0;
     }
 
