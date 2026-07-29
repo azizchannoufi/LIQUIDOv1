@@ -9,15 +9,51 @@ class StoreInfoService {
         this.firestore = null;
         this.storeInfo = null;
         this.DOC_PATH = { collection: 'settings', doc: 'storeInfo' };
+        this.unsubscribe = null;
+        this.initialized = false;
     }
 
     async init() {
+        if (this.initialized && this.storeInfo) {
+            this.applyToPage();
+            return;
+        }
         try {
             const firebase = await window.initializeFirebase();
             this.firestore = firebase.firestore;
-            await this.loadInfo();
+            this.initialized = true;
+            this.listenToInfo();
         } catch (e) {
             console.error('StoreInfoService: init error', e);
+        }
+    }
+
+    listenToInfo() {
+        if (!this.firestore) return;
+        try {
+            const docRef = this.firestore
+                .collection(this.DOC_PATH.collection)
+                .doc(this.DOC_PATH.doc);
+
+            if (this.unsubscribe) {
+                this.unsubscribe();
+            }
+
+            this.unsubscribe = docRef.onSnapshot(
+                (doc) => {
+                    if (doc.exists) {
+                        this.storeInfo = doc.data();
+                        this.applyToPage();
+                    }
+                },
+                (error) => {
+                    console.warn('StoreInfoService: listener error, falling back to loadInfo', error);
+                    this.loadInfo().then(() => this.applyToPage());
+                }
+            );
+        } catch (e) {
+            console.warn('StoreInfoService: listen error', e);
+            this.loadInfo().then(() => this.applyToPage());
         }
     }
 
@@ -112,7 +148,9 @@ class StoreInfoService {
         const topNavDefault = document.getElementById('top-nav-default');
         const topNavPromo = document.getElementById('top-nav-promo');
         
-        if (topbarTextEl && this.storeInfo.topbarText) {
+        const hasTopbarText = this.storeInfo.topbarText && this.storeInfo.topbarText.trim().length > 0;
+        
+        if (topbarTextEl && hasTopbarText) {
             topbarTextEl.textContent = this.storeInfo.topbarText;
             if (topNavDefault) topNavDefault.classList.add('hidden');
             if (topNavPromo) {
@@ -141,10 +179,8 @@ class StoreInfoService {
 
         // Update WhatsApp links
         if (this.storeInfo.phone) {
-            // strip non-numeric characters for WhatsApp link
             const waNumber = this.storeInfo.phone.replace(/\D/g, '');
             document.querySelectorAll('a[href^="https://wa.me/"]').forEach(link => {
-                // If it contains a text parameter, keep it
                 const url = new URL(link.href);
                 const textParam = url.searchParams.get('text');
                 let newHref = `https://wa.me/${waNumber}`;
@@ -154,6 +190,9 @@ class StoreInfoService {
                 link.href = newHref;
             });
         }
+
+        // Dispatch window resize event to update sticky header positions
+        window.dispatchEvent(new Event('resize'));
     }
 }
 

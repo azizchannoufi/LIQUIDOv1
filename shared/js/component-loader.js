@@ -1,7 +1,99 @@
 /**
- * LIQUIDO Component Loader
- * Dynamically loads HTML components into designated containers
+ * Helper to resolve relative path based on location and component loader script tag
  */
+function resolveAssetPath(relativePath) {
+    const loaderScript = document.querySelector('script[src*="component-loader.js"]');
+    let prefix = '';
+    if (loaderScript) {
+        const src = loaderScript.getAttribute('src');
+        if (src.startsWith('../')) {
+            prefix = '../';
+        } else if (src.startsWith('./')) {
+            prefix = './';
+        }
+    }
+    const cleanPath = relativePath.replace(/^(\.\/|\.\.\/)+/, '');
+    return prefix ? prefix + cleanPath : cleanPath;
+}
+
+/**
+ * Robust fetch component HTML trying multiple potential path strategies
+ */
+async function fetchComponentHtml(relativePath, cacheBuster = '') {
+    const primary = resolveAssetPath(relativePath);
+    const clean = relativePath.replace(/^(\.\/|\.\.\/)+/, '');
+    const candidatePaths = Array.from(new Set([
+        primary,
+        './' + clean,
+        '../' + clean,
+        '/' + clean
+    ]));
+
+    for (const path of candidatePaths) {
+        try {
+            const res = await fetch(path + cacheBuster);
+            if (res.ok) {
+                return await res.text();
+            }
+        } catch (e) {
+            // try next candidate path
+        }
+    }
+    throw new Error(`Failed to fetch component from paths: ${candidatePaths.join(', ')}`);
+}
+
+/**
+ * Load script asynchronously and return Promise
+ */
+function loadScriptAsync(src) {
+    return new Promise((resolve) => {
+        const existing = document.querySelector(`script[src="${src}"]`);
+        if (existing) {
+            if (existing.dataset.loaded === 'true' || typeof firebase !== 'undefined') {
+                resolve();
+            } else {
+                existing.addEventListener('load', () => resolve(), { once: true });
+                existing.addEventListener('error', () => resolve(), { once: true });
+            }
+            return;
+        }
+        const script = document.createElement('script');
+        script.src = src;
+        script.onload = () => {
+            script.dataset.loaded = 'true';
+            resolve();
+        };
+        script.onerror = () => resolve();
+        document.body.appendChild(script);
+    });
+}
+
+/**
+ * Helper to initialize and bind StoreInfoService to the page
+ */
+async function loadStoreInfoService() {
+    try {
+        if (typeof firebase === 'undefined') {
+            await loadScriptAsync('https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js');
+            await loadScriptAsync('https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js');
+        }
+
+        if (typeof initializeFirebase === 'undefined') {
+            await loadScriptAsync(resolveAssetPath('src/js/services/firebase-config.js'));
+        }
+
+        if (!window.storeInfoService) {
+            await loadScriptAsync(resolveAssetPath('src/js/services/store-info-service.js'));
+        }
+
+        if (window.storeInfoService) {
+            await window.storeInfoService.init();
+            window.storeInfoService.applyToPage();
+        }
+    } catch (e) {
+        console.warn('loadStoreInfoService error:', e);
+    }
+}
 
 /**
  * Load an HTML component into a container element
@@ -18,12 +110,7 @@ async function loadComponent(elementId, componentPath, options = {}) {
         }
 
         const cacheBuster = '?v=' + new Date().getTime();
-        const response = await fetch(componentPath + cacheBuster);
-        if (!response.ok) {
-            throw new Error(`Failed to load component: ${response.statusText}`);
-        }
-
-        const html = await response.text();
+        const html = await fetchComponentHtml(componentPath, cacheBuster);
         container.innerHTML = html;
 
         // Execute callback if provided
@@ -59,13 +146,11 @@ async function loadComponentsInParallel(components) {
 async function loadTopNav() {
     try {
         const cacheBuster = '?v=' + new Date().getTime();
-        const response = await fetch('../shared/components/public-top-nav.html' + cacheBuster);
-        if (!response.ok) {
-            throw new Error(`Failed to load top nav: ${response.statusText}`);
-        }
-
-        const html = await response.text();
+        const html = await fetchComponentHtml('shared/components/public-top-nav.html', cacheBuster);
         document.body.insertAdjacentHTML('afterbegin', html);
+
+        // Fetch store info from Firebase and apply topbar promo text / store hours
+        loadStoreInfoService();
     } catch (error) {
         console.error('Error loading top navigation:', error);
     }
@@ -78,13 +163,8 @@ async function loadTopNav() {
 async function loadHeader() {
     try {
         const cacheBuster = '?v=' + new Date().getTime();
-        const response = await fetch('../shared/components/public-header.html' + cacheBuster);
-        if (!response.ok) {
-            throw new Error(`Failed to load header: ${response.statusText}`);
-        }
-
-        const html = await response.text();
-        // Insert after top nav (which is the first element in body)
+        const html = await fetchComponentHtml('shared/components/public-header.html', cacheBuster);
+        
         const topNav = document.body.firstElementChild;
         if (topNav) {
             topNav.insertAdjacentHTML('afterend', html);
@@ -93,29 +173,17 @@ async function loadHeader() {
         }
 
         // Load header logic script
-        const script = document.createElement('script');
-        script.src = '../shared/js/header.js';
-        document.body.appendChild(script);
+        const headerScriptPath = resolveAssetPath('shared/js/header.js');
+        loadScriptAsync(headerScriptPath);
 
         // Load search dependencies lazily (for live search dropdown)
-        // Only load if not already present on the page
-        function lazyScript(src) {
-            if (document.querySelector(`script[src="${src}"]`)) return; // already loaded
-            const s = document.createElement('script');
-            s.src = src;
-            s.defer = true;
-            document.body.appendChild(s);
-        }
-
-        // Firebase needs to be loaded first
         if (typeof firebase === 'undefined') {
-            // Load firebase compat scripts if not present
-            lazyScript('https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js');
-            lazyScript('https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js');
+            loadScriptAsync('https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js');
+            loadScriptAsync('https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js');
         }
-        lazyScript('../src/js/services/firebase-config.js');
-        lazyScript('../src/js/services/firebase-catalog-service.js');
-        lazyScript('../src/js/services/search-service.js');
+        loadScriptAsync(resolveAssetPath('src/js/services/firebase-config.js'));
+        loadScriptAsync(resolveAssetPath('src/js/services/firebase-catalog-service.js'));
+        loadScriptAsync(resolveAssetPath('src/js/services/search-service.js'));
 
     } catch (error) {
         console.error('Error loading header:', error);
@@ -129,12 +197,7 @@ async function loadHeader() {
 async function loadFooter() {
     try {
         const cacheBuster = '?v=' + new Date().getTime();
-        const response = await fetch('../shared/components/public-footer.html' + cacheBuster);
-        if (!response.ok) {
-            throw new Error(`Failed to load footer: ${response.statusText}`);
-        }
-
-        const html = await response.text();
+        const html = await fetchComponentHtml('shared/components/public-footer.html', cacheBuster);
         const main = document.querySelector('main');
         if (main) {
             main.insertAdjacentHTML('afterend', html);
@@ -144,23 +207,12 @@ async function loadFooter() {
 
         // Ensure site-texts-service is loaded
         if (!window.siteTextsService) {
-            await new Promise(resolve => {
-                let attempts = 0;
-                const checkDeps = setInterval(() => {
-                    attempts++;
-                    if (typeof firebase !== 'undefined' && typeof initializeFirebase === 'function') {
-                        clearInterval(checkDeps);
-                        const script = document.createElement('script');
-                        script.src = '../src/js/services/site-texts-service.js';
-                        script.onload = () => resolve();
-                        script.onerror = () => resolve();
-                        document.body.appendChild(script);
-                    } else if (attempts > 50) {
-                        clearInterval(checkDeps);
-                        resolve();
-                    }
-                }, 100);
-            });
+            if (typeof firebase === 'undefined') {
+                await loadScriptAsync('https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js');
+                await loadScriptAsync('https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js');
+            }
+            await loadScriptAsync(resolveAssetPath('src/js/services/firebase-config.js'));
+            await loadScriptAsync(resolveAssetPath('src/js/services/site-texts-service.js'));
         }
 
         // Apply dynamic texts to footer if site-texts-service is loaded
@@ -194,16 +246,9 @@ async function loadFooter() {
 async function loadCookieBanner() {
     try {
         const cacheBuster = '?v=' + new Date().getTime();
-        const response = await fetch('../shared/components/cookie-banner.html' + cacheBuster);
-        if (!response.ok) {
-            throw new Error(`Failed to load cookie banner: ${response.statusText}`);
-        }
-
-        const html = await response.text();
+        const html = await fetchComponentHtml('shared/components/cookie-banner.html', cacheBuster);
         document.body.insertAdjacentHTML('beforeend', html);
 
-        // The script inside the HTML won't run automatically when inserted via innerHTML/insertAdjacentHTML
-        // We need to extract and run it manually
         const tempDiv = document.createElement('div');
         tempDiv.innerHTML = html;
         const scripts = tempDiv.querySelectorAll('script');
