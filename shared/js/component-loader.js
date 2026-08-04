@@ -73,6 +73,14 @@ function loadScriptAsync(src) {
  */
 async function loadStoreInfoService() {
     try {
+        if (!window.storeInfoService) {
+            await loadScriptAsync(resolveAssetPath('src/js/services/store-info-service.js'));
+        }
+
+        if (window.storeInfoService) {
+            window.storeInfoService.applyToPage();
+        }
+
         if (typeof firebase === 'undefined') {
             await loadScriptAsync('https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js');
             await loadScriptAsync('https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js');
@@ -80,10 +88,6 @@ async function loadStoreInfoService() {
 
         if (typeof initializeFirebase === 'undefined') {
             await loadScriptAsync(resolveAssetPath('src/js/services/firebase-config.js'));
-        }
-
-        if (!window.storeInfoService) {
-            await loadScriptAsync(resolveAssetPath('src/js/services/store-info-service.js'));
         }
 
         if (window.storeInfoService) {

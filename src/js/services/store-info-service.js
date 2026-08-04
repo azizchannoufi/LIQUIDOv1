@@ -11,11 +11,31 @@ class StoreInfoService {
         this.DOC_PATH = { collection: 'settings', doc: 'storeInfo' };
         this.unsubscribe = null;
         this.initialized = false;
+
+        // Try reading cached storeInfo from localStorage immediately
+        try {
+            const cached = localStorage.getItem('liquido_store_info');
+            if (cached) {
+                this.storeInfo = JSON.parse(cached);
+            }
+        } catch (e) {}
+    }
+
+    _saveToCache(data) {
+        try {
+            if (data) {
+                localStorage.setItem('liquido_store_info', JSON.stringify(data));
+            }
+        } catch (e) {}
     }
 
     async init() {
-        if (this.initialized && this.storeInfo) {
+        // Apply cached store info immediately to prevent any flash of old content
+        if (this.storeInfo) {
             this.applyToPage();
+        }
+
+        if (this.initialized) {
             return;
         }
         try {
@@ -43,6 +63,7 @@ class StoreInfoService {
                 (doc) => {
                     if (doc.exists) {
                         this.storeInfo = doc.data();
+                        this._saveToCache(this.storeInfo);
                         this.applyToPage();
                     }
                 },
@@ -65,6 +86,7 @@ class StoreInfoService {
             const doc = await docRef.get();
             if (doc.exists) {
                 this.storeInfo = doc.data();
+                this._saveToCache(this.storeInfo);
             }
         } catch (e) {
             console.warn('StoreInfoService: load settings error', e);
@@ -147,6 +169,7 @@ class StoreInfoService {
         const topbarTextEl = document.getElementById('store-display-topbar-text');
         const topNavDefault = document.getElementById('top-nav-default');
         const topNavPromo = document.getElementById('top-nav-promo');
+        const publicTopNav = document.getElementById('public-top-nav');
         
         const hasTopbarText = this.storeInfo.topbarText && this.storeInfo.topbarText.trim().length > 0;
         
@@ -163,6 +186,10 @@ class StoreInfoService {
                 topNavPromo.classList.add('hidden');
                 topNavPromo.classList.remove('flex');
             }
+        }
+
+        if (publicTopNav) {
+            publicTopNav.classList.remove('hidden');
         }
 
         // Apply Phone Text

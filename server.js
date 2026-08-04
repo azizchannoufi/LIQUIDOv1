@@ -37,13 +37,13 @@ app.use((req, res, next) => {
 });
 
 // Clean URL Routes
-app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'public', 'index.html')));
-app.get('/liquidi', (req, res) => res.sendFile(path.join(__dirname, 'public', 'products.html')));
-app.get('/dispositivi', (req, res) => res.sendFile(path.join(__dirname, 'public', 'brands.html')));
-app.get('/chi-siamo', (req, res) => res.sendFile(path.join(__dirname, 'public', 'about.html')));
-app.get('/contatti', (req, res) => res.sendFile(path.join(__dirname, 'public', 'contact.html')));
-app.get('/faq', (req, res) => res.sendFile(path.join(__dirname, 'public', 'faq.html')));
-app.get('/myliquido', (req, res) => res.sendFile(path.join(__dirname, 'public', 'myliquido.html')));
+app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'index.html')));
+app.get('/liquidi', (req, res) => res.sendFile(path.join(__dirname, 'liquidi.html')));
+app.get('/dispositivi', (req, res) => res.sendFile(path.join(__dirname, 'dispositivi.html')));
+app.get('/chi-siamo', (req, res) => res.sendFile(path.join(__dirname, 'chi-siamo.html')));
+app.get('/contatti', (req, res) => res.sendFile(path.join(__dirname, 'contatti.html')));
+app.get('/faq', (req, res) => res.sendFile(path.join(__dirname, 'faq.html')));
+app.get('/myliquido', (req, res) => res.sendFile(path.join(__dirname, 'myliquido.html')));
 
 // Serve static files
 app.use(express.static(__dirname));
@@ -130,7 +130,7 @@ app.get('/produit/:slug', async (req, res) => {
     }
 
     // Read the HTML template
-    const htmlPath = path.join(__dirname, 'public', 'product-detail.html');
+    const htmlPath = path.join(__dirname, 'product-detail.html');
     let htmlContent = fs.readFileSync(htmlPath, 'utf8');
 
     const imageUrl = product.imageUrl || (product.images && product.images.length > 0 ? product.images[0] : '');
@@ -181,7 +181,7 @@ app.get('*', (req, res) => {
   if (req.path.startsWith('/api/')) {
     return res.status(404).json({ error: 'API endpoint not found' });
   }
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+  res.sendFile(path.join(__dirname, 'index.html'));
 });
 
 // Start server
